@@ -1,0 +1,16 @@
+<svg width="800" height="500" viewBox="0 0 800 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="30" y="30" width="740" height="440" rx="40" stroke="#222" stroke-width="4" fill="#f8fafc"/>
+  <rect x="60" y="190" width="100" height="120" stroke="#222" stroke-width="3" fill="none"/>
+  <rect x="640" y="190" width="100" height="120" stroke="#222" stroke-width="3" fill="none"/>
+  <line x1="400" y1="30" x2="400" y2="470" stroke="#222" stroke-width="3"/>
+  <!-- Mittlinje borttagen -->
+  <circle cx="400" cy="250" r="12" stroke="#222" stroke-width="3" fill="none"/>
+  <!-- Målburar centrerade på bakre linjen -->
+  <rect x="80" y="215" width="40" height="70" stroke="#222" stroke-width="2" fill="none"/>
+  <rect x="680" y="215" width="40" height="70" stroke="#222" stroke-width="2" fill="none"/>
+  <text x="400" y="20" text-anchor="middle" font-size="18" fill="#222">FBC Nyköping - Innebandyplan (liggande)</text>
+  <circle cx="60" cy="60" r="8" fill="#222"/>
+  <circle cx="60" cy="440" r="8" fill="#222"/>
+  <circle cx="740" cy="60" r="8" fill="#222"/>
+  <circle cx="740" cy="440" r="8" fill="#222"/>
+</svg>

@@ -1,0 +1,359 @@
+/* League Table Styles */
+.league-table {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  margin: 1rem 0;
+}
+
+.table-header {
+  background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
+  color: white;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.header-title h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.season {
+  background: #b8f27c;
+  color: #1a1a1a;
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-left: 0.5rem;
+}
+
+.header-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-size: 0.8rem;
+  color: #ccc;
+}
+
+.offline-indicator {
+  background: #ff6b7d;
+  color: white;
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  animation: blink 2s infinite;
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.table th {
+  background: #f8f9fa;
+  color: #333;
+  font-weight: 600;
+  padding: 0.8rem 0.5rem;
+  text-align: left;
+  border-bottom: 2px solid #e9ecef;
+  white-space: nowrap;
+}
+
+.table th.pos { width: 60px; text-align: center; }
+.table th.team { min-width: 120px; }
+.table th.played, .table th.points, .table th.wins, 
+.table th.draws, .table th.losses { width: 40px; text-align: center; }
+.table th.goals { width: 80px; text-align: center; }
+.table th.form { width: 100px; text-align: center; }
+
+.table-row {
+  transition: background-color 0.2s ease;
+}
+
+.table-row:hover {
+  background-color: #f8f9fa;
+}
+
+.table-row.highlighted {
+  background-color: #e8f5e8;
+  font-weight: 600;
+}
+
+.table-row.highlighted:hover {
+  background-color: #d4f0d4;
+}
+
+.table-row.promotion {
+  border-left: 4px solid #b8f27c;
+}
+
+.table-row.relegation {
+  border-left: 4px solid #dc3545;
+}
+
+.table td {
+  padding: 0.8rem 0.5rem;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.pos {
+  text-align: center;
+  position: relative;
+}
+
+.position {
+  font-weight: 600;
+  color: #333;
+}
+
+.trend {
+  font-size: 0.8rem;
+  margin-left: 0.3rem;
+}
+
+.trend.up { color: #28a745; }
+.trend.down { color: #dc3545; }
+
+.team-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.team-name {
+  font-weight: 500;
+}
+
+.team-badge {
+  font-size: 0.8rem;
+}
+
+.played, .points, .wins, .draws, .losses {
+  text-align: center;
+}
+
+.points strong {
+  color: #1a1a1a;
+  font-size: 1.1rem;
+}
+
+.goals {
+  text-align: center;
+}
+
+.goals-detail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.goal-diff {
+  color: #666;
+  font-size: 0.8rem;
+}
+
+.form-indicators {
+  display: flex;
+  justify-content: center;
+  gap: 0.2rem;
+}
+
+.form-result {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: white;
+}
+
+.form-result.w { background-color: #28a745; }
+.form-result.d { background-color: #ffc107; color: #333; }
+.form-result.l { background-color: #dc3545; }
+
+.table-footer {
+  padding: 0.8rem 1rem;
+  background: #f8f9fa;
+  text-align: center;
+  color: #666;
+  font-size: 0.9rem;
+  border-top: 1px solid #e9ecef;
+}
+
+.table-legend {
+  padding: 1rem;
+  background: #f8f9fa;
+  border-top: 1px solid #e9ecef;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+}
+
+.legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+}
+
+.legend-item.promotion .legend-color {
+  background-color: #b8f27c;
+}
+
+.legend-item.relegation .legend-color {
+  background-color: #dc3545;
+}
+
+.legend-abbreviations {
+  flex-basis: 100%;
+  text-align: center;
+  color: #666;
+  margin-top: 0.5rem;
+}
+
+.refresh-button {
+  width: 100%;
+  padding: 0.8rem;
+  background: #b8f27c;
+  color: #1a1a1a;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.refresh-button:hover:not(:disabled) {
+  background: #a6e066;
+}
+
+.refresh-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Loading state */
+.loading-spinner {
+  text-align: center;
+  padding: 2rem;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #b8f27c;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Error state */
+.error-message {
+  text-align: center;
+  padding: 2rem;
+  color: #dc3545;
+}
+
+.retry-button {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background-color 0.2s ease;
+}
+
+.retry-button:hover {
+  background: #c82333;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .table-header {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .header-info {
+    align-items: center;
+  }
+  
+  .table {
+    font-size: 0.8rem;
+  }
+  
+  .table th, .table td {
+    padding: 0.5rem 0.3rem;
+  }
+  
+  .team-name {
+    font-size: 0.8rem;
+  }
+  
+  .form-indicators {
+    gap: 0.1rem;
+  }
+  
+  .form-result {
+    width: 15px;
+    height: 15px;
+    font-size: 0.6rem;
+  }
+  
+  .table-legend {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+  }
+  
+  .legend-abbreviations {
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .table th.wins, .table th.draws, .table th.losses,
+  .table td.wins, .table td.draws, .table td.losses {
+    display: none;
+  }
+  
+  .goals-detail {
+    font-size: 0.8rem;
+  }
+  
+  .goal-diff {
+    font-size: 0.7rem;
+  }
+}

@@ -1,0 +1,420 @@
+/* RehabPlan.css */
+
+.rehab-plan {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.rehab-plan-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.injury-info {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.injury-type, .severity, .body-part {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.injury-type {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+
+.severity {
+  background: #fff3e0;
+  color: #f57c00;
+}
+
+.body-part {
+  background: #f3e5f5;
+  color: #7b1fa2;
+}
+
+.plan-basic-info {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+}
+
+.date-range {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.rehab-phases {
+  margin-bottom: 30px;
+}
+
+.phase-tabs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.phase-tab {
+  padding: 15px 10px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.phase-tab:hover {
+  border-color: #2196f3;
+  transform: translateY(-2px);
+}
+
+.phase-tab.active {
+  border-color: #2196f3;
+  background: #e3f2fd;
+}
+
+.phase-name {
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.phase-duration {
+  font-size: 12px;
+  color: #666;
+}
+
+.current-phase {
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.phase-info {
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.exercises-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.exercises-list {
+  display: grid;
+  gap: 15px;
+}
+
+.exercise-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 15px;
+  background: #fafafa;
+}
+
+.exercise-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.exercise-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.exercise-type {
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.exercise-type.strength { background: #ffebee; color: #c62828; }
+.exercise-type.stretching { background: #e8f5e8; color: #2e7d32; }
+.exercise-type.mobility { background: #e3f2fd; color: #1976d2; }
+.exercise-type.balance { background: #fff3e0; color: #f57c00; }
+.exercise-type.cardio { background: #fce4ec; color: #ad1457; }
+.exercise-type.functional { background: #f3e5f5; color: #7b1fa2; }
+
+.btn-remove {
+  background: #f44336;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.exercise-details {
+  margin-top: 10px;
+}
+
+.exercise-params {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.exercise-params span {
+  font-size: 12px;
+  padding: 2px 6px;
+  background: #e0e0e0;
+  border-radius: 4px;
+}
+
+.intensity.low { background: #c8e6c9; color: #2e7d32; }
+.intensity.medium { background: #fff3c4; color: #f57c00; }
+.intensity.high { background: #ffcdd2; color: #c62828; }
+
+.exercise-description {
+  font-size: 14px;
+  color: #666;
+  margin: 8px 0;
+}
+
+.exercise-instructions, .exercise-precautions {
+  font-size: 13px;
+  margin: 5px 0;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+.exercise-instructions {
+  background: #e3f2fd;
+  border-left: 4px solid #2196f3;
+}
+
+.exercise-precautions {
+  background: #fff3e0;
+  border-left: 4px solid #ff9800;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: white;
+  border-radius: 8px;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  width: 90%;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.btn-close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #666;
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+.exercise-templates {
+  margin-bottom: 20px;
+}
+
+.template-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.template-btn {
+  padding: 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 12px;
+}
+
+.template-btn:hover {
+  border-color: #2196f3;
+  background: #e3f2fd;
+}
+
+.exercise-form .form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 20px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.plan-goals {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+}
+
+.goals-restrictions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.plan-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  padding-top: 20px;
+  border-top: 2px solid #e0e0e0;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: #333;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.btn-primary {
+  background: #2196f3;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #1976d2;
+}
+
+.btn-primary:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background: #f5f5f5;
+  color: #333;
+  border: 1px solid #ddd;
+}
+
+.btn-secondary:hover {
+  background: #e0e0e0;
+}
+
+.btn-sm {
+  padding: 6px 12px;
+  font-size: 12px;
+}
+
+@media (max-width: 768px) {
+  .rehab-plan {
+    padding: 15px;
+  }
+
+  .rehab-plan-header {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+
+  .phase-tabs {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .date-range,
+  .goals-restrictions {
+    grid-template-columns: 1fr;
+  }
+
+  .plan-actions {
+    flex-direction: column;
+  }
+
+  .modal {
+    width: 95%;
+    margin: 10px;
+  }
+
+  .exercise-form .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .template-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}

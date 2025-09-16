@@ -1,0 +1,69 @@
+{
+  "short_name": "FBC Nyköping",
+  "name": "FBC Nyköping Lagapp",
+  "description": "Officiell lagapp för FBC Nyköping - hantera träningar, matcher, statistik och mer",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "logo192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "logo512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#22c55e",
+  "background_color": "#f8fafc",
+  "categories": ["sports", "lifestyle"],
+  "lang": "sv",
+  "scope": "/",
+  "prefer_related_applications": false,
+  "shortcuts": [
+    {
+      "name": "Aktiviteter",
+      "short_name": "Aktiviteter",
+      "description": "Se kommande träningar och matcher",
+      "url": "/activities",
+      "icons": [
+        {
+          "src": "logo192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Statistik",
+      "short_name": "Statistik",
+      "description": "Visa lagstatistik",
+      "url": "/statistics",
+      "icons": [
+        {
+          "src": "logo192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Liga",
+      "short_name": "Liga",
+      "description": "Se ligatabellen",
+      "url": "/league",
+      "icons": [
+        {
+          "src": "logo192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,362 @@
+/* HealthProfileManager.css */
+
+.health-profile-manager {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.profile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.profile-sections {
+  display: grid;
+  gap: 25px;
+}
+
+.profile-section {
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f8f9fa;
+  padding: 15px 20px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.section-header h4 {
+  margin: 0;
+  color: #333;
+}
+
+.btn-edit {
+  background: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.btn-edit:hover {
+  background: #1976d2;
+}
+
+.section-content {
+  padding: 20px;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.info-item label {
+  font-weight: 600;
+  color: #666;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.info-item span {
+  color: #333;
+}
+
+.allergies-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+.allergy-tag {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: #fff3e0;
+  color: #f57c00;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.btn-remove-tag {
+  background: none;
+  border: none;
+  color: #f57c00;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.add-allergy input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.medications-list, .conditions-list, .contacts-list {
+  display: grid;
+  gap: 15px;
+}
+
+.medication-card, .condition-card, .contact-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 15px;
+  background: #fafafa;
+}
+
+.medication-header, .condition-header, .contact-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.medication-header h5, .condition-header h5, .contact-header h5 {
+  margin: 0;
+  color: #333;
+}
+
+.condition-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.severity, .status {
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.severity.mild { background: #e8f5e8; color: #2e7d32; }
+.severity.moderate { background: #fff3e0; color: #f57c00; }
+.severity.severe { background: #ffebee; color: #c62828; }
+
+.status.controlled { background: #e8f5e8; color: #2e7d32; }
+.status.active { background: #fff3e0; color: #f57c00; }
+.status.chronic { background: #f3e5f5; color: #7b1fa2; }
+
+.contact-name {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.primary-badge {
+  background: #2196f3;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.btn-remove {
+  background: #f44336;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.medication-details, .condition-details, .contact-details {
+  display: grid;
+  gap: 8px;
+}
+
+.detail-item {
+  display: flex;
+  gap: 10px;
+  font-size: 14px;
+}
+
+.detail-item label {
+  font-weight: 600;
+  color: #666;
+  min-width: 100px;
+}
+
+.detail-item a {
+  color: #2196f3;
+  text-decoration: none;
+}
+
+.detail-item a:hover {
+  text-decoration: underline;
+}
+
+.edit-form {
+  display: grid;
+  gap: 20px;
+}
+
+.form-section {
+  padding: 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  background: #f8f9fa;
+}
+
+.form-section h5 {
+  margin: 0 0 15px 0;
+  color: #333;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: #333;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.medical-info-display {
+  display: grid;
+  gap: 20px;
+}
+
+.info-section {
+  padding: 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  background: #f8f9fa;
+}
+
+.info-section h5 {
+  margin: 0 0 15px 0;
+  color: #333;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.btn-primary {
+  background: #2196f3;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #1976d2;
+}
+
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+}
+
+.add-form {
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 20px;
+  background: #f8f9fa;
+  margin-top: 15px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+  cursor: pointer;
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: auto;
+}
+
+@media (max-width: 768px) {
+  .health-profile-manager {
+    padding: 15px;
+  }
+
+  .profile-header {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+
+  .section-header {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .condition-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+
+  .contact-name {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}

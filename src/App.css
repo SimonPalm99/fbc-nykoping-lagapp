@@ -1,0 +1,203 @@
+/* Responsiv chat window */
+.chat-window-responsive {
+  max-width: 400px;
+  width: 100%;
+}
+@media (max-width: 600px) {
+  .chat-window-responsive {
+    max-width: 100vw;
+    height: 60vh;
+    min-height: 320px;
+  }
+}
+/* Mobilanpassning och sidomeny för FBC Nyköping Lagapp */
+
+body {
+  margin: 0;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  background: linear-gradient(135deg, #0a0a0a 0%, #0f172a 50%, #111827 100%);
+  color: #f8fafc;
+}
+
+.fbc-header {
+  width: 100vw;
+  max-width: 800px;
+  margin: 0 auto;
+  border-radius: 0 0 2rem 2rem;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  padding: 2rem 0.5rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@media (max-width: 600px) {
+  .fbc-header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.2rem 0.5rem;
+    border-radius: 0 0 1.2rem 1.2rem;
+  }
+  .fbc-header-logo {
+    width: 48px !important;
+    height: 48px !important;
+  }
+  .fbc-header-title h1 {
+    font-size: 1.3rem !important;
+  }
+  .fbc-header-title p {
+    font-size: 0.9rem !important;
+  }
+}
+
+/* Sidomeny mobil */
+.fbc-sidemenu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 80vw;
+  max-width: 320px;
+  height: 100vh;
+  background: #111827;
+  color: #f8fafc;
+  box-shadow: -4px 0 24px rgba(0,0,0,0.25);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 1.2rem;
+  animation: sidemenu-in 0.2s ease;
+}
+@keyframes sidemenu-in {
+  from { right: -100vw; }
+  to { right: 0; }
+}
+
+.fbc-sidemenu-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: #ef4444;
+  color: #fff;
+  border: none;
+  border-radius: 1rem;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Responsiv aktivitet/kort */
+.fbc-activity-card {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  border-radius: 1.2rem;
+  box-shadow: 0 2px 16px rgba(34,197,94,0.10);
+}
+
+.fbc-home {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  border-radius: 1.2rem;
+  box-shadow: 0 2px 16px rgba(34,197,94,0.10);
+}
+
+.fbc-header-row {
+  padding: 1.5rem;
+  background: rgba(17,24,39,0.95);
+  color: #fff;
+  display: flex;
+}
+
+.fbc-header-profile-row {
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+@media (max-width: 600px) {
+  /* Removed empty ruleset for .fbc-header-profile-info */
+  .fbc-activity-card {
+    padding: 1rem;
+  }
+  .fbc-header-profile-info p:first-child {
+    border-radius: 0.7rem;
+  }
+  /* Removed empty ruleset for .fbc-header-profile-info p:last-child */
+}
+
+.fbc-dialog {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+/* Removed empty ruleset for .fbc-header-profile-avatar */
+
+.fbc-dialog-content {
+  background: #1e293b;
+  color: #f8fafc;
+  border-radius: 1.2rem;
+  padding: 2rem 1.2rem;
+  max-width: 90vw;
+  width: 350px;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.25);
+}
+
+/* Removed empty ruleset for .fbc-logout-btn */
+
+@media (max-width: 600px) {
+  .fbc-hamburger-btn {
+    padding: 1.2rem 0.7rem;
+    width: 90vw;
+    border-radius: 0.7rem;
+  }
+}
+
+.fbc-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+  justify-content: center;
+  margin: 2rem auto;
+  max-width: 600px;
+}
+
+/* Removed empty ruleset for .fbc-hamburger-bar */
+
+.fbc-stat-card {
+  background: #1e293b;
+  color: #22c55e;
+  border-radius: 1rem;
+  padding: 0.7rem 0.8rem;
+  min-width: 90px;
+  font-size: 0.95rem;
+}
+
+/* Removed empty ruleset for .fbc-activity-title */
+
+.fbc-activity-type {
+  padding: 1.2rem 1.5rem;
+  min-width: 120px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(34,197,94,0.10);
+}
+
+/* Removed empty ruleset for .fbc-activity-date, .fbc-activity-location, .fbc-activity-gathering */
+
+@media (max-width: 600px) {
+  /* Removed empty ruleset for .fbc-stats */
+  .fbc-activity-description {
+    gap: 0.7rem;
+    margin: 1rem auto;
+  }
+}
+
+/* Lägg till egna stilar för .fbc-absence-btn här om du vill */
