@@ -36,121 +36,6 @@ const Welcome: React.FC = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  // Demo-login
-  const handleDemoLogin = async (role: 'player' | 'coach') => {
-    // Mockad demo-login: logga alltid in utan backend
-    // Hämta fullständig demo-användare från AuthContext mock-databas
-    const demoUsers = {
-      player: {
-        id: 'demo-player',
-        email: 'erik@demo.se',
-        name: 'Simon Palm',
-        jerseyNumber: 99,
-        position: 'Forward',
-        role: 'player',
-        status: 'approved',
-        createdAt: '2024-01-01',
-        approvedAt: '2024-01-01',
-        favoritePosition: 'Forward',
-        aboutMe: 'Demo-konto för att testa spelarfunktioner',
-        phone: '070-123-4567',
-        statistics: {
-          gamesPlayed: 10,
-          goals: 8,
-          assists: 5,
-          points: 13,
-          shots: 45,
-          shotPercentage: 17.8,
-          plusMinus: 6,
-          penaltyMinutes: 2,
-          blocks: 3,
-          steals: 8
-        },
-        totalGamificationPoints: 250,
-        emergencyContact: {
-          name: 'Demo Kontakt',
-          phone: '070-987-6543',
-          relation: 'Förälder'
-        },
-        badges: [],
-        stats: {
-          totalTrainings: 50,
-          totalMatches: 25,
-          totalGoals: 15,
-          totalAssists: 20
-        },
-        notifications: {
-          activities: true,
-          forum: true,
-          statistics: true,
-          fines: true
-        },
-        personalTrainingLog: []
-      },
-      coach: {
-        id: 'demo-leader',
-        email: 'sara@demo.se',
-        name: 'Simon Palm',
-        jerseyNumber: 1,
-        position: 'Målvakt',
-        role: 'leader',
-        status: 'approved',
-        createdAt: '2024-01-01',
-        approvedAt: '2024-01-01',
-        favoritePosition: 'Målvakt',
-        aboutMe: 'Demo-konto för att testa ledarfunktioner',
-        phone: '070-555-1234',
-        statistics: {
-          gamesPlayed: 20,
-          goals: 2,
-          assists: 15,
-          points: 17,
-          shots: 25,
-          shotPercentage: 8.0,
-          plusMinus: 12,
-          penaltyMinutes: 0,
-          blocks: 45,
-          steals: 30
-        },
-        totalGamificationPoints: 500,
-        emergencyContact: {
-          name: 'Demo Partner',
-          phone: '070-555-9876',
-          relation: 'Make'
-        },
-        badges: [
-          {
-            id: 'badge-leader',
-            name: 'Lagledare',
-            description: 'Erfaren lagledare',
-            icon: '👨‍💼',
-            color: '#FF9800',
-            earnedDate: '2024-01-01',
-            type: 'special'
-          }
-        ],
-        stats: {
-          totalTrainings: 100,
-          totalMatches: 60,
-          totalGoals: 5,
-          totalAssists: 40
-        },
-        notifications: {
-          activities: true,
-          forum: true,
-          statistics: true,
-          fines: false
-        },
-        personalTrainingLog: []
-      }
-    };
-    const demoUser = demoUsers[role];
-    localStorage.setItem('fbc_user', JSON.stringify(demoUser));
-    localStorage.setItem('fbc_rememberMe', 'true');
-    // Sätt mockad isAuthenticated flagga
-    localStorage.setItem('fbc_isAuthenticated', 'true');
-    navigate("/"); // Navigera till Home-sidan
-  };
 
   // Login
   const handleLogin = async (e: React.FormEvent) => {
@@ -383,14 +268,6 @@ const Welcome: React.FC = () => {
           </form>
         )}
 
-        {/* Demo-login visas endast på startsidan, inte i registreringsflödet */}
-        {activeTab === 'login' && (
-          <div style={{ margin: "2rem 0 1rem 0", textAlign: "center" }}>
-            <p style={{ color: "#fff", fontSize: "1rem", marginBottom: "0.5rem", fontWeight: 600, textShadow: "0 1px 2px #1b5e20" }}>Testa appen som demo-användare:</p>
-            <button onClick={() => handleDemoLogin('player')} style={{ marginRight: "1rem", padding: "0.8rem 1.5rem", borderRadius: "14px", background: "linear-gradient(135deg, #1b5e20 0%, #263238 100%)", color: "#fff", fontWeight: 800, border: "none", cursor: "pointer", boxShadow: "0 2px 8px #101820", transition: "background 0.2s" }}>Demo Spelare</button>
-            <button onClick={() => handleDemoLogin('coach')} style={{ padding: "0.8rem 1.5rem", borderRadius: "14px", background: "linear-gradient(135deg, #263238 0%, #1b5e20 100%)", color: "#fff", fontWeight: 800, border: "none", cursor: "pointer", boxShadow: "0 2px 8px #101820", transition: "background 0.2s" }}>Demo Ledare</button>
-          </div>
-        )}
 
         {/* Registreringsflöde med validering och utan favoritposition */}
         {activeTab === 'register' && !registerSuccess && (
