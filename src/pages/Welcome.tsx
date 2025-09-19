@@ -369,7 +369,7 @@ const Welcome: React.FC = () => {
                   >Ledare</button>
                 </div>
                 <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1rem" }}>
-                  <input type="text" value={registerData.firstName} onChange={e => setRegisterData({ ...registerData, firstName: e.target.value })} placeholder="Förnamn" required aria-label="Förnamn" tabIndex={0} style={{ flex: 1, padding: "1rem", borderRadius: "12px", border: "none" }} />
+                  <input type="text" value={registerData.firstName} onChange={e => setRegisterData({ ...registerData, firstName: e.target.value })} placeholder="Förnamn*" required aria-label="Förnamn" tabIndex={0} style={{ flex: 1, padding: "1rem", borderRadius: "12px", border: "none" }} />
                   <input type="text" value={registerData.lastName} onChange={e => setRegisterData({ ...registerData, lastName: e.target.value })} placeholder="Efternamn" required aria-label="Efternamn" tabIndex={0} style={{ flex: 1, padding: "1rem", borderRadius: "12px", border: "none" }} />
                 </div>
                 <input type="email" value={registerData.email} onChange={e => setRegisterData({ ...registerData, email: e.target.value })} placeholder="E-post" required aria-label="E-post" tabIndex={0} style={{ width: "100%", padding: "1rem", marginBottom: "1rem", borderRadius: "12px", border: "none" }} />
