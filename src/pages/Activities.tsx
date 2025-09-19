@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Activities.css';
 import { useLocation } from 'react-router-dom';
 import { useTitle } from '../hooks/useTitle';
-import { activities as realActivities } from '../data/realActivities';
+// ...existing code...
 import { activitiesAPI } from '../services/apiService';
 import { Activity, ActivityComment } from '../types/activity';
 import { useUser } from '../context/UserContext';
@@ -33,7 +33,7 @@ const Activities: React.FC = () => {
   const scrollToId = params.get('id');
   const activityRefs = React.useRef<Record<string, HTMLDivElement | null>>({});
   // const { user } = useAuth(); // Oanvänd variabel borttagen
-  const [activities, setActivities] = useState<Activity[]>(realActivities);
+  const [activities, setActivities] = useState<Activity[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [commentError, setCommentError] = useState<Record<string, string>>({});
@@ -47,16 +47,16 @@ const Activities: React.FC = () => {
     activitiesAPI.getAll()
       .then(res => {
         if (res && Array.isArray(res.data)) {
-          setActivities(res.data.length > 0 ? res.data : realActivities);
+          setActivities(res.data.length > 0 ? res.data : []);
         } else {
-          setActivities(realActivities);
-          setError('Kunde inte hämta aktiviteter från server. Visar lokala aktiviteter.');
+          setActivities([]);
+          setError('Kunde inte hämta aktiviteter från server.');
         }
         setLoading(false);
       })
       .catch(() => {
         setError('Kunde inte hämta aktiviteter från server. Visar lokala aktiviteter.');
-        setActivities(realActivities);
+  setActivities([]);
         setLoading(false);
       });
   }, []);

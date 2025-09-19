@@ -1,0 +1,1640 @@
+[
+  {
+    "id": "training-20250728-Måndag",
+    "title": "Träning Måndag",
+    "type": "träning",
+    "date": "2025-07-28",
+    "startTime": "20:30",
+    "location": "Sporthallen",
+    "description": "Måndag (2025-07-28) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20250729-Tisdag",
+    "title": "Träning Tisdag",
+    "type": "träning",
+    "date": "2025-07-29",
+    "startTime": "19:30",
+    "location": "Sporthallen",
+    "description": "Tisdag (2025-07-29) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20250731-Torsdag",
+    "title": "Träning Torsdag",
+    "type": "träning",
+    "date": "2025-07-31",
+    "startTime": "20:45",
+    "location": "Sporthallen",
+    "description": "Torsdag (2025-07-31) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20250804-Måndag",
+    "title": "Träning Måndag",
+    "type": "träning",
+    "date": "2025-08-04",
+    "startTime": "20:30",
+    "location": "Sporthallen",
+    "description": "Måndag (2025-08-04) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20250805-Tisdag",
+    "title": "Träning Tisdag",
+    "type": "träning",
+    "date": "2025-08-05",
+    "startTime": "19:30",
+    "location": "Sporthallen",
+    "description": "Tisdag (2025-08-05) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20250807-Torsdag",
+    "title": "Träning Torsdag",
+    "type": "träning",
+    "date": "2025-08-07",
+    "startTime": "20:45",
+    "location": "Sporthallen",
+    "description": "Torsdag (2025-08-07) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20250811-Måndag",
+    "title": "Träning Måndag",
+    "type": "träning",
+    "date": "2025-08-11",
+    "startTime": "20:30",
+    "location": "Sporthallen",
+    "description": "Måndag (2025-08-11) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20250812-Tisdag",
+    "title": "Träning Tisdag",
+    "type": "träning",
+    "date": "2025-08-12",
+    "startTime": "19:30",
+    "location": "Sporthallen",
+    "description": "Tisdag (2025-08-12) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20250814-Torsdag",
+    "title": "Träning Torsdag",
+    "type": "träning",
+    "date": "2025-08-14",
+    "startTime": "20:45",
+    "location": "Sporthallen",
+    "description": "Torsdag (2025-08-14) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20250818-Måndag",
+    "title": "Träning Måndag",
+    "type": "träning",
+    "date": "2025-08-18",
+    "startTime": "20:30",
+    "location": "Sporthallen",
+    "description": "Måndag (2025-08-18) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20250819-Tisdag",
+    "title": "Träning Tisdag",
+    "type": "träning",
+    "date": "2025-08-19",
+    "startTime": "19:30",
+    "location": "Sporthallen",
+    "description": "Tisdag (2025-08-19) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20250821-Torsdag",
+    "title": "Träning Torsdag",
+    "type": "träning",
+    "date": "2025-08-21",
+    "startTime": "20:45",
+    "location": "Sporthallen",
+    "description": "Torsdag (2025-08-21) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20250825-Måndag",
+    "title": "Träning Måndag",
+    "type": "träning",
+    "date": "2025-08-25",
+    "startTime": "20:30",
+    "location": "Sporthallen",
+    "description": "Måndag (2025-08-25) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20250826-Tisdag",
+    "title": "Träning Tisdag",
+    "type": "träning",
+    "date": "2025-08-26",
+    "startTime": "19:30",
+    "location": "Sporthallen",
+    "description": "Tisdag (2025-08-26) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20250828-Torsdag",
+    "title": "Träning Torsdag",
+    "type": "träning",
+    "date": "2025-08-28",
+    "startTime": "20:45",
+    "location": "Sporthallen",
+    "description": "Torsdag (2025-08-28) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20250901-Måndag",
+    "title": "Träning Måndag",
+    "type": "träning",
+    "date": "2025-09-01",
+    "startTime": "20:30",
+    "location": "Sporthallen",
+    "description": "Måndag (2025-09-01) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20250902-Tisdag",
+    "title": "Träning Tisdag",
+    "type": "träning",
+    "date": "2025-09-02",
+    "startTime": "19:30",
+    "location": "Sporthallen",
+    "description": "Tisdag (2025-09-02) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20250904-Torsdag",
+    "title": "Träning Torsdag",
+    "type": "träning",
+    "date": "2025-09-04",
+    "startTime": "20:45",
+    "location": "Sporthallen",
+    "description": "Torsdag (2025-09-04) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20250908-Måndag",
+    "title": "Träning Måndag",
+    "type": "träning",
+    "date": "2025-09-08",
+    "startTime": "20:30",
+    "location": "Sporthallen",
+    "description": "Måndag (2025-09-08) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20250909-Tisdag",
+    "title": "Träning Tisdag",
+    "type": "träning",
+    "date": "2025-09-09",
+    "startTime": "19:30",
+    "location": "Sporthallen",
+    "description": "Tisdag (2025-09-09) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20250911-Torsdag",
+    "title": "Träning Torsdag",
+    "type": "träning",
+    "date": "2025-09-11",
+    "startTime": "20:45",
+    "location": "Sporthallen",
+    "description": "Torsdag (2025-09-11) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20250915-Måndag",
+    "title": "Träning Måndag",
+    "type": "träning",
+    "date": "2025-09-15",
+    "startTime": "20:30",
+    "location": "Sporthallen",
+    "description": "Måndag (2025-09-15) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20250916-Tisdag",
+    "title": "Träning Tisdag",
+    "type": "träning",
+    "date": "2025-09-16",
+    "startTime": "19:30",
+    "location": "Sporthallen",
+    "description": "Tisdag (2025-09-16) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20250918-Torsdag",
+    "title": "Träning Torsdag",
+    "type": "träning",
+    "date": "2025-09-18",
+    "startTime": "20:45",
+    "location": "Sporthallen",
+    "description": "Torsdag (2025-09-18) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20250922-Måndag",
+    "title": "Träning Måndag",
+    "type": "träning",
+    "date": "2025-09-22",
+    "startTime": "20:30",
+    "location": "Sporthallen",
+    "description": "Måndag (2025-09-22) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20250923-Tisdag",
+    "title": "Träning Tisdag",
+    "type": "träning",
+    "date": "2025-09-23",
+    "startTime": "19:30",
+    "location": "Sporthallen",
+    "description": "Tisdag (2025-09-23) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20250925-Torsdag",
+    "title": "Träning Torsdag",
+    "type": "träning",
+    "date": "2025-09-25",
+    "startTime": "20:45",
+    "location": "Sporthallen",
+    "description": "Torsdag (2025-09-25) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20250929-Måndag",
+    "title": "Träning Måndag",
+    "type": "träning",
+    "date": "2025-09-29",
+    "startTime": "20:30",
+    "location": "Sporthallen",
+    "description": "Måndag (2025-09-29) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20250930-Tisdag",
+    "title": "Träning Tisdag",
+    "type": "träning",
+    "date": "2025-09-30",
+    "startTime": "19:30",
+    "location": "Sporthallen",
+    "description": "Tisdag (2025-09-30) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20251002-Torsdag",
+    "title": "Träning Torsdag",
+    "type": "träning",
+    "date": "2025-10-02",
+    "startTime": "20:45",
+    "location": "Sporthallen",
+    "description": "Torsdag (2025-10-02) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20251006-Måndag",
+    "title": "Träning Måndag",
+    "type": "träning",
+    "date": "2025-10-06",
+    "startTime": "20:30",
+    "location": "Sporthallen",
+    "description": "Måndag (2025-10-06) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20251007-Tisdag",
+    "title": "Träning Tisdag",
+    "type": "träning",
+    "date": "2025-10-07",
+    "startTime": "19:30",
+    "location": "Sporthallen",
+    "description": "Tisdag (2025-10-07) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20251009-Torsdag",
+    "title": "Träning Torsdag",
+    "type": "träning",
+    "date": "2025-10-09",
+    "startTime": "20:45",
+    "location": "Sporthallen",
+    "description": "Torsdag (2025-10-09) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20251013-Måndag",
+    "title": "Träning Måndag",
+    "type": "träning",
+    "date": "2025-10-13",
+    "startTime": "20:30",
+    "location": "Sporthallen",
+    "description": "Måndag (2025-10-13) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20251014-Tisdag",
+    "title": "Träning Tisdag",
+    "type": "träning",
+    "date": "2025-10-14",
+    "startTime": "19:30",
+    "location": "Sporthallen",
+    "description": "Tisdag (2025-10-14) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20251016-Torsdag",
+    "title": "Träning Torsdag",
+    "type": "träning",
+    "date": "2025-10-16",
+    "startTime": "20:45",
+    "location": "Sporthallen",
+    "description": "Torsdag (2025-10-16) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20251020-Måndag",
+    "title": "Träning Måndag",
+    "type": "träning",
+    "date": "2025-10-20",
+    "startTime": "20:30",
+    "location": "Sporthallen",
+    "description": "Måndag (2025-10-20) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20251021-Tisdag",
+    "title": "Träning Tisdag",
+    "type": "träning",
+    "date": "2025-10-21",
+    "startTime": "19:30",
+    "location": "Sporthallen",
+    "description": "Tisdag (2025-10-21) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20251023-Torsdag",
+    "title": "Träning Torsdag",
+    "type": "träning",
+    "date": "2025-10-23",
+    "startTime": "20:45",
+    "location": "Sporthallen",
+    "description": "Torsdag (2025-10-23) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20251027-Måndag",
+    "title": "Träning Måndag",
+    "type": "träning",
+    "date": "2025-10-27",
+    "startTime": "20:30",
+    "location": "Sporthallen",
+    "description": "Måndag (2025-10-27) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20251028-Tisdag",
+    "title": "Träning Tisdag",
+    "type": "träning",
+    "date": "2025-10-28",
+    "startTime": "19:30",
+    "location": "Sporthallen",
+    "description": "Tisdag (2025-10-28) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20251030-Torsdag",
+    "title": "Träning Torsdag",
+    "type": "träning",
+    "date": "2025-10-30",
+    "startTime": "20:45",
+    "location": "Sporthallen",
+    "description": "Torsdag (2025-10-30) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20251103-Måndag",
+    "title": "Träning Måndag",
+    "type": "träning",
+    "date": "2025-11-03",
+    "startTime": "20:30",
+    "location": "Sporthallen",
+    "description": "Måndag (2025-11-03) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20251104-Tisdag",
+    "title": "Träning Tisdag",
+    "type": "träning",
+    "date": "2025-11-04",
+    "startTime": "19:30",
+    "location": "Sporthallen",
+    "description": "Tisdag (2025-11-04) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20251106-Torsdag",
+    "title": "Träning Torsdag",
+    "type": "träning",
+    "date": "2025-11-06",
+    "startTime": "20:45",
+    "location": "Sporthallen",
+    "description": "Torsdag (2025-11-06) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20251110-Måndag",
+    "title": "Träning Måndag",
+    "type": "träning",
+    "date": "2025-11-10",
+    "startTime": "20:30",
+    "location": "Sporthallen",
+    "description": "Måndag (2025-11-10) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20251111-Tisdag",
+    "title": "Träning Tisdag",
+    "type": "träning",
+    "date": "2025-11-11",
+    "startTime": "19:30",
+    "location": "Sporthallen",
+    "description": "Tisdag (2025-11-11) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20251113-Torsdag",
+    "title": "Träning Torsdag",
+    "type": "träning",
+    "date": "2025-11-13",
+    "startTime": "20:45",
+    "location": "Sporthallen",
+    "description": "Torsdag (2025-11-13) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20251117-Måndag",
+    "title": "Träning Måndag",
+    "type": "träning",
+    "date": "2025-11-17",
+    "startTime": "20:30",
+    "location": "Sporthallen",
+    "description": "Måndag (2025-11-17) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20251118-Tisdag",
+    "title": "Träning Tisdag",
+    "type": "träning",
+    "date": "2025-11-18",
+    "startTime": "19:30",
+    "location": "Sporthallen",
+    "description": "Tisdag (2025-11-18) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20251120-Torsdag",
+    "title": "Träning Torsdag",
+    "type": "träning",
+    "date": "2025-11-20",
+    "startTime": "20:45",
+    "location": "Sporthallen",
+    "description": "Torsdag (2025-11-20) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20251124-Måndag",
+    "title": "Träning Måndag",
+    "type": "träning",
+    "date": "2025-11-24",
+    "startTime": "20:30",
+    "location": "Sporthallen",
+    "description": "Måndag (2025-11-24) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20251125-Tisdag",
+    "title": "Träning Tisdag",
+    "type": "träning",
+    "date": "2025-11-25",
+    "startTime": "19:30",
+    "location": "Sporthallen",
+    "description": "Tisdag (2025-11-25) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20251127-Torsdag",
+    "title": "Träning Torsdag",
+    "type": "träning",
+    "date": "2025-11-27",
+    "startTime": "20:45",
+    "location": "Sporthallen",
+    "description": "Torsdag (2025-11-27) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20251201-Måndag",
+    "title": "Träning Måndag",
+    "type": "träning",
+    "date": "2025-12-01",
+    "startTime": "20:30",
+    "location": "Sporthallen",
+    "description": "Måndag (2025-12-01) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20251202-Tisdag",
+    "title": "Träning Tisdag",
+    "type": "träning",
+    "date": "2025-12-02",
+    "startTime": "19:30",
+    "location": "Sporthallen",
+    "description": "Tisdag (2025-12-02) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20251204-Torsdag",
+    "title": "Träning Torsdag",
+    "type": "träning",
+    "date": "2025-12-04",
+    "startTime": "20:45",
+    "location": "Sporthallen",
+    "description": "Torsdag (2025-12-04) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20251208-Måndag",
+    "title": "Träning Måndag",
+    "type": "träning",
+    "date": "2025-12-08",
+    "startTime": "20:30",
+    "location": "Sporthallen",
+    "description": "Måndag (2025-12-08) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20251209-Tisdag",
+    "title": "Träning Tisdag",
+    "type": "träning",
+    "date": "2025-12-09",
+    "startTime": "19:30",
+    "location": "Sporthallen",
+    "description": "Tisdag (2025-12-09) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20251211-Torsdag",
+    "title": "Träning Torsdag",
+    "type": "träning",
+    "date": "2025-12-11",
+    "startTime": "20:45",
+    "location": "Sporthallen",
+    "description": "Torsdag (2025-12-11) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20251215-Måndag",
+    "title": "Träning Måndag",
+    "type": "träning",
+    "date": "2025-12-15",
+    "startTime": "20:30",
+    "location": "Sporthallen",
+    "description": "Måndag (2025-12-15) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20251216-Tisdag",
+    "title": "Träning Tisdag",
+    "type": "träning",
+    "date": "2025-12-16",
+    "startTime": "19:30",
+    "location": "Sporthallen",
+    "description": "Tisdag (2025-12-16) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20251218-Torsdag",
+    "title": "Träning Torsdag",
+    "type": "träning",
+    "date": "2025-12-18",
+    "startTime": "20:45",
+    "location": "Sporthallen",
+    "description": "Torsdag (2025-12-18) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20251222-Måndag",
+    "title": "Träning Måndag",
+    "type": "träning",
+    "date": "2025-12-22",
+    "startTime": "20:30",
+    "location": "Sporthallen",
+    "description": "Måndag (2025-12-22) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20251223-Tisdag",
+    "title": "Träning Tisdag",
+    "type": "träning",
+    "date": "2025-12-23",
+    "startTime": "19:30",
+    "location": "Sporthallen",
+    "description": "Tisdag (2025-12-23) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20251225-Torsdag",
+    "title": "Träning Torsdag",
+    "type": "träning",
+    "date": "2025-12-25",
+    "startTime": "20:45",
+    "location": "Sporthallen",
+    "description": "Torsdag (2025-12-25) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20251229-Måndag",
+    "title": "Träning Måndag",
+    "type": "träning",
+    "date": "2025-12-29",
+    "startTime": "20:30",
+    "location": "Sporthallen",
+    "description": "Måndag (2025-12-29) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20251230-Tisdag",
+    "title": "Träning Tisdag",
+    "type": "träning",
+    "date": "2025-12-30",
+    "startTime": "19:30",
+    "location": "Sporthallen",
+    "description": "Tisdag (2025-12-30) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20260101-Torsdag",
+    "title": "Träning Torsdag",
+    "type": "träning",
+    "date": "2026-01-01",
+    "startTime": "20:45",
+    "location": "Sporthallen",
+    "description": "Torsdag (2026-01-01) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20260105-Måndag",
+    "title": "Träning Måndag",
+    "type": "träning",
+    "date": "2026-01-05",
+    "startTime": "20:30",
+    "location": "Sporthallen",
+    "description": "Måndag (2026-01-05) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20260106-Tisdag",
+    "title": "Träning Tisdag",
+    "type": "träning",
+    "date": "2026-01-06",
+    "startTime": "19:30",
+    "location": "Sporthallen",
+    "description": "Tisdag (2026-01-06) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20260108-Torsdag",
+    "title": "Träning Torsdag",
+    "type": "träning",
+    "date": "2026-01-08",
+    "startTime": "20:45",
+    "location": "Sporthallen",
+    "description": "Torsdag (2026-01-08) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20260112-Måndag",
+    "title": "Träning Måndag",
+    "type": "träning",
+    "date": "2026-01-12",
+    "startTime": "20:30",
+    "location": "Sporthallen",
+    "description": "Måndag (2026-01-12) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20260113-Tisdag",
+    "title": "Träning Tisdag",
+    "type": "träning",
+    "date": "2026-01-13",
+    "startTime": "19:30",
+    "location": "Sporthallen",
+    "description": "Tisdag (2026-01-13) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20260115-Torsdag",
+    "title": "Träning Torsdag",
+    "type": "träning",
+    "date": "2026-01-15",
+    "startTime": "20:45",
+    "location": "Sporthallen",
+    "description": "Torsdag (2026-01-15) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20260119-Måndag",
+    "title": "Träning Måndag",
+    "type": "träning",
+    "date": "2026-01-19",
+    "startTime": "20:30",
+    "location": "Sporthallen",
+    "description": "Måndag (2026-01-19) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20260120-Tisdag",
+    "title": "Träning Tisdag",
+    "type": "träning",
+    "date": "2026-01-20",
+    "startTime": "19:30",
+    "location": "Sporthallen",
+    "description": "Tisdag (2026-01-20) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20260122-Torsdag",
+    "title": "Träning Torsdag",
+    "type": "träning",
+    "date": "2026-01-22",
+    "startTime": "20:45",
+    "location": "Sporthallen",
+    "description": "Torsdag (2026-01-22) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20260126-Måndag",
+    "title": "Träning Måndag",
+    "type": "träning",
+    "date": "2026-01-26",
+    "startTime": "20:30",
+    "location": "Sporthallen",
+    "description": "Måndag (2026-01-26) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20260127-Tisdag",
+    "title": "Träning Tisdag",
+    "type": "träning",
+    "date": "2026-01-27",
+    "startTime": "19:30",
+    "location": "Sporthallen",
+    "description": "Tisdag (2026-01-27) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20260129-Torsdag",
+    "title": "Träning Torsdag",
+    "type": "träning",
+    "date": "2026-01-29",
+    "startTime": "20:45",
+    "location": "Sporthallen",
+    "description": "Torsdag (2026-01-29) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20260202-Måndag",
+    "title": "Träning Måndag",
+    "type": "träning",
+    "date": "2026-02-02",
+    "startTime": "20:30",
+    "location": "Sporthallen",
+    "description": "Måndag (2026-02-02) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20260203-Tisdag",
+    "title": "Träning Tisdag",
+    "type": "träning",
+    "date": "2026-02-03",
+    "startTime": "19:30",
+    "location": "Sporthallen",
+    "description": "Tisdag (2026-02-03) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20260205-Torsdag",
+    "title": "Träning Torsdag",
+    "type": "träning",
+    "date": "2026-02-05",
+    "startTime": "20:45",
+    "location": "Sporthallen",
+    "description": "Torsdag (2026-02-05) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20260209-Måndag",
+    "title": "Träning Måndag",
+    "type": "träning",
+    "date": "2026-02-09",
+    "startTime": "20:30",
+    "location": "Sporthallen",
+    "description": "Måndag (2026-02-09) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20260210-Tisdag",
+    "title": "Träning Tisdag",
+    "type": "träning",
+    "date": "2026-02-10",
+    "startTime": "19:30",
+    "location": "Sporthallen",
+    "description": "Tisdag (2026-02-10) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20260212-Torsdag",
+    "title": "Träning Torsdag",
+    "type": "träning",
+    "date": "2026-02-12",
+    "startTime": "20:45",
+    "location": "Sporthallen",
+    "description": "Torsdag (2026-02-12) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20260216-Måndag",
+    "title": "Träning Måndag",
+    "type": "träning",
+    "date": "2026-02-16",
+    "startTime": "20:30",
+    "location": "Sporthallen",
+    "description": "Måndag (2026-02-16) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20260217-Tisdag",
+    "title": "Träning Tisdag",
+    "type": "träning",
+    "date": "2026-02-17",
+    "startTime": "19:30",
+    "location": "Sporthallen",
+    "description": "Tisdag (2026-02-17) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20260219-Torsdag",
+    "title": "Träning Torsdag",
+    "type": "träning",
+    "date": "2026-02-19",
+    "startTime": "20:45",
+    "location": "Sporthallen",
+    "description": "Torsdag (2026-02-19) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20260223-Måndag",
+    "title": "Träning Måndag",
+    "type": "träning",
+    "date": "2026-02-23",
+    "startTime": "20:30",
+    "location": "Sporthallen",
+    "description": "Måndag (2026-02-23) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20260224-Tisdag",
+    "title": "Träning Tisdag",
+    "type": "träning",
+    "date": "2026-02-24",
+    "startTime": "19:30",
+    "location": "Sporthallen",
+    "description": "Tisdag (2026-02-24) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20260226-Torsdag",
+    "title": "Träning Torsdag",
+    "type": "träning",
+    "date": "2026-02-26",
+    "startTime": "20:45",
+    "location": "Sporthallen",
+    "description": "Torsdag (2026-02-26) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20260302-Måndag",
+    "title": "Träning Måndag",
+    "type": "träning",
+    "date": "2026-03-02",
+    "startTime": "20:30",
+    "location": "Sporthallen",
+    "description": "Måndag (2026-03-02) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20260303-Tisdag",
+    "title": "Träning Tisdag",
+    "type": "träning",
+    "date": "2026-03-03",
+    "startTime": "19:30",
+    "location": "Sporthallen",
+    "description": "Tisdag (2026-03-03) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20260305-Torsdag",
+    "title": "Träning Torsdag",
+    "type": "träning",
+    "date": "2026-03-05",
+    "startTime": "20:45",
+    "location": "Sporthallen",
+    "description": "Torsdag (2026-03-05) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20260309-Måndag",
+    "title": "Träning Måndag",
+    "type": "träning",
+    "date": "2026-03-09",
+    "startTime": "20:30",
+    "location": "Sporthallen",
+    "description": "Måndag (2026-03-09) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20260310-Tisdag",
+    "title": "Träning Tisdag",
+    "type": "träning",
+    "date": "2026-03-10",
+    "startTime": "19:30",
+    "location": "Sporthallen",
+    "description": "Tisdag (2026-03-10) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "training-20260312-Torsdag",
+    "title": "Träning Torsdag",
+    "type": "träning",
+    "date": "2026-03-12",
+    "startTime": "20:45",
+    "location": "Sporthallen",
+    "description": "Torsdag (2026-03-12) • Samlingstid 30 min innan",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "ordinarie"
+    ],
+    "important": false
+  },
+  {
+    "id": "friendly-20250809",
+    "title": "FBC Nyköping vs Ledberg Innebandy",
+    "type": "match",
+    "date": "2025-08-09",
+    "startTime": "14:00",
+    "location": "Gnesta Sporthall",
+    "description": "Träningsmatch. Samling 12:30 (1,5 timme före matchstart).",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "träningsmatch",
+      "förberedelse"
+    ],
+    "important": false,
+    "color": "#4CAF50"
+  },
+  {
+    "id": "friendly-20250816",
+    "title": "FBC Nyköping vs Linköping Innebandy",
+    "type": "match",
+    "date": "2025-08-16",
+    "startTime": "14:00",
+    "location": "Nyköpings Sporthall",
+    "description": "Träningsmatch på hemmaplan. Samling 12:30 (1,5 timme före matchstart).",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "träningsmatch",
+      "hemma"
+    ],
+    "important": false,
+    "color": "#4CAF50"
+  },
+  {
+    "id": "friendly-20250823",
+    "title": "Bergs IK vs FBC Nyköping",
+    "type": "match",
+    "date": "2025-08-23",
+    "startTime": "13:00",
+    "location": "Vasa Arena",
+    "description": "Träningsmatch på bortaplan. Samling 11:30 (1,5 timme före matchstart).",
+    "createdBy": "coach1",
+    "participants": [],
+    "comments": [],
+    "tags": [
+      "träningsmatch",
+      "borta"
+    ],
+    "important": false,
+    "color": "#4CAF50"
+  }
+]

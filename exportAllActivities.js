@@ -86,7 +86,7 @@ const matches = [
   // ... (lägg till resten av matcherna från realActivities.ts här, samma format) ...
 ];
 
+// Generera alla aktiviteter
 const activities = [...generateTrainings(), ...matches];
-
-fs.writeFileSync('activities.json', JSON.stringify(activities, null, 2));
-console.log(`Exporterat ${activities.length} aktiviteter till activities.json!`);
+fs.writeFileSync('realActivities.json', JSON.stringify(activities, null, 2));
+console.log('✅ Export klar: realActivities.json');
