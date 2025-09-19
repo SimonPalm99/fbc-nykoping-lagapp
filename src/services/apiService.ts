@@ -242,7 +242,7 @@ export const apiService = new APIService({
 // Specific API services
 export const authAPI = {
   login: (credentials: { email: string; password: string }) =>
-    apiService.post<{ user: any; token: string }>('/auth/login', credentials),
+    apiService.post<{ user: any; token: string }>('/users/login', credentials),
 
   register: (userData: any) =>
     apiService.post<{ user: any }>('/users/register', userData),
