@@ -356,11 +356,11 @@ const Welcome: React.FC = () => {
                   >Spelare</button>
                   <button
                     type="button"
-                    onClick={() => setRegisterData({ ...registerData, role: "leader" })}
+                    onClick={() => setRegisterData({ ...registerData, role: "coach" })}
                     style={{
                       padding: "0.7rem 1.2rem",
                       borderRadius: "10px",
-                      background: registerData.role === "leader" ? "#2E7D32" : "#263238",
+                      background: registerData.role === "coach" ? "#2E7D32" : "#263238",
                       color: "#fff",
                       fontWeight: 700,
                       border: "none",
