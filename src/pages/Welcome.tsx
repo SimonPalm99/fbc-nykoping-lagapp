@@ -95,9 +95,21 @@ const Welcome: React.FC = () => {
     e.preventDefault();
     if (!validateStep()) return;
     setLoading(true);
-    let dataToSend = { ...registerData };
-    if (imagePreview) {
-      dataToSend.profileImageUrl = imagePreview;
+    // Skapa rätt payload till backend
+    let dataToSend: any = {
+      email: registerData.email,
+      password: registerData.password,
+      confirmPassword: registerData.confirmPassword,
+      role: registerData.role,
+      profileImageUrl: imagePreview || registerData.profileImageUrl
+    };
+    // Skapa name från firstName + lastName
+    if (registerData.firstName && registerData.lastName) {
+      dataToSend.name = `${registerData.firstName} ${registerData.lastName}`;
+    } else if (registerData.firstName) {
+      dataToSend.name = registerData.firstName;
+    } else if (registerData.lastName) {
+      dataToSend.name = registerData.lastName;
     }
     try {
       const res = await authAPI.register(dataToSend);
