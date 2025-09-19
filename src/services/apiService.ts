@@ -243,13 +243,13 @@ export const apiService = new APIService({
 export const authAPI = {
   login: (credentials: { email: string; password: string }) =>
     apiService.post<{ user: any; token: string }>('/auth/login', credentials),
-  
+
   register: (userData: any) =>
-    apiService.post<{ user: any }>('/auth/register', userData),
-  
+    apiService.post<{ user: any }>('/users/register', userData),
+
   refresh: (token: string) =>
     apiService.post<{ token: string }>('/auth/refresh', { token }),
-  
+
   logout: () =>
     apiService.post<{}>('/auth/logout', {})
 };

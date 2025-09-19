@@ -90,7 +90,7 @@ class AuthService {
    */
   async login(credentials: LoginCredentials): Promise<AuthResponse> {
     try {
-      const response = await apiService.post<AuthResponse>('/auth/login', credentials);
+  const response = await apiService.post<AuthResponse>('/users/login', credentials);
       
       this.storeTokens(response.data.tokens);
       this.storeUser(response.data.user);
@@ -112,7 +112,7 @@ class AuthService {
         throw new Error('Lösenorden matchar inte');
       }
 
-      const response = await apiService.post<AuthResponse>('/auth/register', userData);
+  const response = await apiService.post<AuthResponse>('/users/register', userData);
       
       this.storeTokens(response.data.tokens);
       this.storeUser(response.data.user);

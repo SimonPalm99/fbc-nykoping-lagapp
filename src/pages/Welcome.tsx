@@ -4,7 +4,8 @@ import { authAPI } from "../services/apiService";
 import { useNavigate } from "react-router-dom";
 
 const initialRegister = {
-  name: "",
+  firstName: "",
+  lastName: "",
   email: "",
   password: "",
   confirmPassword: "",
@@ -64,7 +65,8 @@ const Welcome: React.FC = () => {
   const validateStep = () => {
     if (registerStep === 1) {
       return (
-        registerData.name.trim() &&
+        registerData.firstName.trim() &&
+        registerData.lastName.trim() &&
         registerData.email.trim() &&
         registerData.password.trim() &&
         registerData.confirmPassword.trim() &&
@@ -366,7 +368,10 @@ const Welcome: React.FC = () => {
                     }}
                   >Ledare</button>
                 </div>
-                <input type="text" value={registerData.name} onChange={e => setRegisterData({ ...registerData, name: e.target.value })} placeholder="Namn" required aria-label="Namn" tabIndex={0} style={{ width: "100%", padding: "1rem", marginBottom: "1rem", borderRadius: "12px", border: "none" }} />
+                <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1rem" }}>
+                  <input type="text" value={registerData.firstName} onChange={e => setRegisterData({ ...registerData, firstName: e.target.value })} placeholder="Förnamn" required aria-label="Förnamn" tabIndex={0} style={{ flex: 1, padding: "1rem", borderRadius: "12px", border: "none" }} />
+                  <input type="text" value={registerData.lastName} onChange={e => setRegisterData({ ...registerData, lastName: e.target.value })} placeholder="Efternamn" required aria-label="Efternamn" tabIndex={0} style={{ flex: 1, padding: "1rem", borderRadius: "12px", border: "none" }} />
+                </div>
                 <input type="email" value={registerData.email} onChange={e => setRegisterData({ ...registerData, email: e.target.value })} placeholder="E-post" required aria-label="E-post" tabIndex={0} style={{ width: "100%", padding: "1rem", marginBottom: "1rem", borderRadius: "12px", border: "none" }} />
                 <input type="password" value={registerData.password} onChange={e => setRegisterData({ ...registerData, password: e.target.value })} placeholder="Lösenord" required aria-label="Lösenord" tabIndex={0} style={{ width: "100%", padding: "1rem", marginBottom: "1rem", borderRadius: "12px", border: "none" }} />
                 <input type="password" value={registerData.confirmPassword} onChange={e => setRegisterData({ ...registerData, confirmPassword: e.target.value })} placeholder="Bekräfta lösenord" required aria-label="Bekräfta lösenord" tabIndex={0} style={{ width: "100%", padding: "1rem", marginBottom: "1.5rem", borderRadius: "12px", border: "none" }} />
