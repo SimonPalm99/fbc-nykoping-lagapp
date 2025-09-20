@@ -190,9 +190,7 @@ const Activities: React.FC = () => {
         </div>
         {/* Aktivitetslistan */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem', transition: 'all 0.5s' }}>
-          <pre style={{ background: '#222', color: '#fff', padding: '1rem', borderRadius: '1rem', marginBottom: '1rem', fontSize: '0.95rem', maxHeight: 300, overflow: 'auto' }}>
-            {JSON.stringify(activities, null, 2)}
-          </pre>
+          {/* Debug-utskrift borttagen. */}
           {filteredActivities.length === 0 ? (
             <div style={{ background: fbcTheme.cardBg, borderRadius: '1.2rem', padding: '2rem', textAlign: 'center', color: fbcTheme.text.secondary, boxShadow: '0 2px 12px #22c55e22' }}>
               Inga aktiviteter att visa
