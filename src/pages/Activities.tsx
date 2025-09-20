@@ -46,6 +46,7 @@ const Activities: React.FC = () => {
     setLoading(true);
     activitiesAPI.getAll()
       .then(res => {
+        console.log('API-svar /activities:', res);
         if (res && Array.isArray(res.data)) {
           setActivities(res.data.length > 0 ? res.data : []);
         } else {
@@ -54,9 +55,10 @@ const Activities: React.FC = () => {
         }
         setLoading(false);
       })
-      .catch(() => {
+      .catch((err) => {
+        console.error('API-fel /activities:', err);
         setError('Kunde inte hämta aktiviteter från server. Visar lokala aktiviteter.');
-  setActivities([]);
+        setActivities([]);
         setLoading(false);
       });
   }, []);
@@ -79,15 +81,13 @@ const Activities: React.FC = () => {
     return new Date(date.getFullYear(), date.getMonth(), date.getDate());
   }
   const todayDate = stripTime(new Date());
-  const filteredActivities = allActivities.filter(activity => {
-    const activityDate = stripTime(new Date(activity.date));
-    const typeMatch = typeFilter === 'alla' ? true : activity.type === typeFilter;
-    if (filter === 'upcoming') {
-      return activityDate >= todayDate && typeMatch;
-    } else {
-      return activityDate < todayDate && typeMatch;
-    }
+  allActivities.forEach(a => {
+    console.log('Aktivitet:', a.title, 'Datum:', a.date, 'Typ:', a.type);
   });
+  console.log('Datum idag:', todayDate);
+  // Visa ALLA aktiviteter oavsett datum och typ
+  const filteredActivities = allActivities;
+  console.log('Alla aktiviteter:', allActivities.length, 'Filtrerade:', filteredActivities.length);
 
   // Hantera expanderade kort
   const [expandedId, setExpandedId] = useState<string | null>(null);
@@ -190,6 +190,9 @@ const Activities: React.FC = () => {
         </div>
         {/* Aktivitetslistan */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem', transition: 'all 0.5s' }}>
+          <pre style={{ background: '#222', color: '#fff', padding: '1rem', borderRadius: '1rem', marginBottom: '1rem', fontSize: '0.95rem', maxHeight: 300, overflow: 'auto' }}>
+            {JSON.stringify(activities, null, 2)}
+          </pre>
           {filteredActivities.length === 0 ? (
             <div style={{ background: fbcTheme.cardBg, borderRadius: '1.2rem', padding: '2rem', textAlign: 'center', color: fbcTheme.text.secondary, boxShadow: '0 2px 12px #22c55e22' }}>
               Inga aktiviteter att visa
@@ -202,12 +205,13 @@ const Activities: React.FC = () => {
                 const expanded = expandedId === activity.id;
                 const comments = activityComments[activity.id] || [];
                 const commentInput = commentInputs[activity.id] || "";
+                const activityId = activity.id;
                 return (
                   <div
-                    key={activity.id}
-                    ref={el => { activityRefs.current[activity.id] = el; }}
+                    key={activityId}
+                    ref={el => { activityRefs.current[activityId] = el; }}
                     className={`activity-card${expanded ? ' expanded' : ''}`}
-                    onClick={() => setExpandedId(expanded ? null : activity.id)}
+                    onClick={() => setExpandedId(expanded ? null : activityId)}
                   >
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                       <div style={{ fontWeight: 'bold', fontSize: '1.02rem', color: isMatch ? fbcTheme.accent : fbcTheme.text.primary }}>{activity.title}</div>

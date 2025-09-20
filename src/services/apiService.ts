@@ -233,7 +233,7 @@ export class APIService {
 
 // Default API service instance
 export const apiService = new APIService({
-  baseURL: process.env.REACT_APP_API_URL || 'https://fbc-backend-qdil.onrender.com/api',
+  baseURL: process.env.REACT_APP_API_URL || 'https://fbc-backend-qdil.onrender.com:10000/api',
   timeout: 10000, // 10 seconds
   retries: 3,
   retryDelay: 1000 // 1 second base delay

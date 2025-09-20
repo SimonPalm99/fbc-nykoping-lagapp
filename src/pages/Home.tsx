@@ -329,6 +329,14 @@ const Home: React.FC = () => {
               <ActivityCard
                 activity={nextActivity}
                 styles={styles}
+                onCheckIn={() => {
+                  // Här kan du lägga logik för check in, t.ex. API-anrop eller popup
+                  alert('Du har checkat in på aktiviteten!');
+                }}
+                onCheckOut={() => {
+                  // Här kan du lägga logik för check ut, t.ex. API-anrop eller popup
+                  alert('Du har checkat ut från aktiviteten!');
+                }}
                 onAbsence={() => {
                   setAbsenceActivity(nextActivity);
                   setShowAbsencePopup(true);
