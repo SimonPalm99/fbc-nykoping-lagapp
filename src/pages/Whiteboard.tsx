@@ -379,7 +379,7 @@ const Whiteboard: React.FC = () => {
     setExerciseSteps(prev => [
       ...prev,
       {
-        markers: placedMarkers.map(m => ({ ...m })),
+  markers: placedMarkers.map((m: any) => ({ ...m })),
         lines: markerPaths.map(path => ({ ...path }))
         }
       ]);
@@ -718,7 +718,7 @@ const Whiteboard: React.FC = () => {
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
           <div style={{ fontWeight: 900, fontSize: "1.08rem", color: "#222", marginBottom: 6 }}>Markörer</div>
           <div style={{ display: "flex", gap: 6 }}>
-            {MARKERS.map(m => (
+            {MARKERS.map((m: any) => (
               <button key={m.key} onClick={() => { setPendingMarker(m.key); setMarker(""); setTool('hand'); }} style={{ background: pendingMarker===m.key ? m.color : "#f5f5f5", color: pendingMarker===m.key ? "#fff" : "#222", borderRadius: 6, border: pendingMarker===m.key ? `2px solid ${m.color}` : "1.5px solid #ddd", fontWeight: 700, fontSize: isMobile ? "1.25rem" : "1.02rem", padding: isMobile ? "1rem 2rem" : "0.45rem 0.9rem", cursor: "pointer", boxShadow: pendingMarker===m.key ? `0 2px 8px ${m.color}33` : "none", minWidth: isMobile ? 64 : 44, minHeight: isMobile ? 54 : 38, display: "flex", alignItems: "center", justifyContent: "center" }}>{m.label}</button>
             ))}
           </div>
@@ -746,7 +746,7 @@ const Whiteboard: React.FC = () => {
       <button onClick={() => setCurrentExerciseStep(s => Math.min(exerciseSteps.length-1, s+1))} style={{ background: "#1976d2", color: "#fff", borderRadius: 8, border: "none", fontWeight: 700, fontSize: "1.15rem", padding: "0.7rem 1.5rem", cursor: "pointer", minWidth: 120 }}>
         Framåt →
       </button>
-      <button onClick={() => { setExerciseSteps([]); setMarkerPaths([]); setCurrentExerciseStep(0); setPlacedMarkers(placedMarkers.map(m => ({ ...m }))); }} style={{ background: "#e53935", color: "#fff", borderRadius: 8, border: "none", fontWeight: 700, fontSize: "1.15rem", padding: "0.7rem 1.5rem", cursor: "pointer", minWidth: 120 }}>
+  <button onClick={() => { setExerciseSteps([]); setMarkerPaths([]); setCurrentExerciseStep(0); setPlacedMarkers(placedMarkers.map((m: any) => ({ ...m }))); }} style={{ background: "#e53935", color: "#fff", borderRadius: 8, border: "none", fontWeight: 700, fontSize: "1.15rem", padding: "0.7rem 1.5rem", cursor: "pointer", minWidth: 120 }}>
         Börja om
       </button>
       <button onClick={() => alert('Övning sparad!')} style={{ background: "#388E3C", color: "#fff", borderRadius: 8, border: "none", fontWeight: 700, fontSize: "1.15rem", padding: "0.7rem 1.5rem", cursor: "pointer", minWidth: 120 }}>
