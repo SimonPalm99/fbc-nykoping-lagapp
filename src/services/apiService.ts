@@ -1,3 +1,16 @@
+export const chatRoomAPI = {
+  // Skapa ny grupp
+  create: (room: { name: string; description?: string; avatar?: string; participants: string[]; creatorId: string }) =>
+    apiService.post<any>('/chatrooms', room),
+
+  // Hämta alla grupper där användaren är deltagare
+  getRoomsForUser: (userId: string) =>
+    apiService.get<any[]>(`/chatrooms/user/${userId}`),
+
+  // Ta bort grupp
+  delete: (id: string) =>
+    apiService.delete<any>(`/chatrooms/${id}`)
+};
 export const matchAPI = {
   getAll: () => apiService.get<any[]>('/matches'),
   getById: (id: string) => apiService.get<any>(`/matches/${id}`),
