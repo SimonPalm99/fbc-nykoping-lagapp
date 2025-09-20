@@ -56,32 +56,38 @@ const Forum: React.FC = () => {
 	const [newPostMedia, setNewPostMedia] = useState('');
 	const [newPollOptions, setNewPollOptions] = useState<string[]>(['']);
 	const [pushMessage, setPushMessage] = useState('');
+	// Paginering
+	const [currentPage, setCurrentPage] = useState(1);
+	const [totalPages, setTotalPages] = useState(1);
+	const POSTS_PER_PAGE = 20;
 
-	// Ladda inlägg från backend vid mount
+	// Ladda inlägg från backend vid mount och sidbyte
 	useEffect(() => {
-		forumAPI.getPosts(1, 20).then(res => {
+		setLoading(true);
+		forumAPI.getPosts(currentPage, POSTS_PER_PAGE).then(res => {
 			if (res.success && res.data?.posts) {
 				setPosts(res.data.posts);
+				setTotalPages(res.data.totalPages || 1);
 			}
 			setLoading(false);
 		});
-	}, []);
+	}, [currentPage]);
 	const [commentText, setCommentText] = useState('');
 	const [showImportant, setShowImportant] = useState(false);
 	// Lägg till state för filuppladdning och förhandsvisning
 	const [newPostFile, setNewPostFile] = useState<File | null>(null);
 	const [newPostPreview, setNewPostPreview] = useState<string>('');
 
-	// Sortera: Viktiga först, sedan senaste
-	let filteredPosts = posts.slice();
-	if (showImportant) {
-		filteredPosts = filteredPosts.filter(post => post.pinned);
-	}
-	filteredPosts = filteredPosts.sort((a, b) => {
-		if (a.pinned && !b.pinned) return -1;
-		if (!a.pinned && b.pinned) return 1;
-		return new Date(b.date).getTime() - new Date(a.date).getTime();
-	});
+		// Sortera: Viktiga först, sedan senaste
+		let filteredPosts = posts.slice();
+		if (showImportant) {
+			filteredPosts = filteredPosts.filter(post => post.pinned);
+		}
+		filteredPosts = filteredPosts.sort((a, b) => {
+			if (a.pinned && !b.pinned) return -1;
+			if (!a.pinned && b.pinned) return 1;
+			return new Date(b.date).getTime() - new Date(a.date).getTime();
+		});
 
 	return (
 		<div style={{
@@ -232,17 +238,17 @@ const Forum: React.FC = () => {
 					</div>
 				)}
 				<button onClick={() => setShowNewPostForm(true)} style={{ background: fbcTheme.accent, color: '#fff', border: 'none', borderRadius: 8, padding: '0.7rem 1.5rem', fontWeight: 600, fontSize: '1.1rem', cursor: 'pointer', marginBottom: '2rem', width: '100%', boxShadow: '0 2px 8px #22c55e44', transition: 'background 0.2s' }}>Nytt inlägg</button>
-				{/* Visa inlägg med media, omröstning, kommentarer och nålning */}
-				<div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', width: '100%' }}>
-					{loading ? (
-						<div style={{ background: fbcTheme.cardBg, borderRadius: '1.2rem', padding: '2rem', textAlign: 'center', color: fbcTheme.text.secondary, boxShadow: '0 2px 12px #22c55e22' }}>
-							Laddar inlägg...
-						</div>
-					) : filteredPosts.length === 0 ? (
-						<div style={{ background: fbcTheme.cardBg, borderRadius: '1.2rem', padding: '2rem', textAlign: 'center', color: fbcTheme.text.secondary, boxShadow: '0 2px 12px #22c55e22' }}>
-							Inga inlägg att visa
-						</div>
-					) : (
+						{/* Visa inlägg med media, omröstning, kommentarer och nålning */}
+						<div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', width: '100%' }}>
+							{loading ? (
+								<div style={{ background: fbcTheme.cardBg, borderRadius: '1.2rem', padding: '2rem', textAlign: 'center', color: fbcTheme.text.secondary, boxShadow: '0 2px 12px #22c55e22' }}>
+									Laddar inlägg...
+								</div>
+							) : filteredPosts.length === 0 ? (
+								<div style={{ background: fbcTheme.cardBg, borderRadius: '1.2rem', padding: '2rem', textAlign: 'center', color: fbcTheme.text.secondary, boxShadow: '0 2px 12px #22c55e22' }}>
+									Inga inlägg att visa
+								</div>
+							) : (
 									filteredPosts.map((post, idx) => (
 										<div
 											key={post.id}
@@ -478,9 +484,23 @@ const Forum: React.FC = () => {
 									</div>
 								</div>
 							</div>
-						))
-					)}
-				</div>
+								))
+							)}
+							{/* Paginering */}
+							<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem', margin: '2rem 0' }}>
+								<button
+									onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+									disabled={currentPage === 1}
+									style={{ background: fbcTheme.accent, color: '#fff', border: 'none', borderRadius: 8, padding: '0.5rem 1.2rem', fontWeight: 600, fontSize: '1rem', cursor: currentPage === 1 ? 'not-allowed' : 'pointer', opacity: currentPage === 1 ? 0.5 : 1 }}
+								>Föregående</button>
+								<span style={{ color: fbcTheme.text.secondary, fontWeight: 600, fontSize: '1.05rem' }}>Sida {currentPage} av {totalPages}</span>
+								<button
+									onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+									disabled={currentPage === totalPages}
+									style={{ background: fbcTheme.accent, color: '#fff', border: 'none', borderRadius: 8, padding: '0.5rem 1.2rem', fontWeight: 600, fontSize: '1rem', cursor: currentPage === totalPages ? 'not-allowed' : 'pointer', opacity: currentPage === totalPages ? 0.5 : 1 }}
+								>Nästa</button>
+							</div>
+						</div>
 			</div>
 		{/* Responsivitet och animationer */}
 		<style>{`
