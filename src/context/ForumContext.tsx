@@ -1,3 +1,9 @@
+// ...existing code...
+export const useForum = () => {
+  const ctx = React.useContext(ForumContext);
+  if (!ctx) throw new Error("useForum måste användas inom ForumProvider");
+  return ctx;
+};
 import React, { createContext, useState, ReactNode } from "react";
 
 import { forumAPI } from '../services/apiService';
