@@ -134,18 +134,18 @@ const Chat: React.FC = () => {
                 {/* Meddelanden */}
                 <div className="fbc-chat-messages" style={{ flex: 1, overflowY: "auto", padding: "2rem 2.5rem 1.5rem 2.5rem", background: isDark ? "#162816" : "#F8F9FA" }}>
                   <div style={{ display: "flex", flexDirection: "column", gap: "1.2rem" }}>
-                  {messages.map((message, idx) => (
-                    <div key={message._id || idx} style={{ display: "flex", flexDirection: user && message.sender === user.id ? "row-reverse" : "row", alignItems: "flex-end", gap: "0.7rem" }}>
-                      <div style={{ width: 38, height: 38, borderRadius: "50%", background: styles.gradients.primary, display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, color: "white", fontSize: "1.1rem", boxShadow: "0 2px 8px rgba(46,125,50,0.10)" }}>
-                        {user && message.sender === user.id ? user.name.charAt(0).toUpperCase() : "?"}
+                    {messages.map((m: any, idx) => (
+                      <div key={m._id || idx} style={{ display: "flex", flexDirection: user && m.sender === user.id ? "row-reverse" : "row", alignItems: "flex-end", gap: "0.7rem" }}>
+                        <div style={{ width: 38, height: 38, borderRadius: "50%", background: styles.gradients.primary, display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, color: "white", fontSize: "1.1rem", boxShadow: "0 2px 8px rgba(46,125,50,0.10)" }}>
+                          {user && m.sender === user.id ? user.name.charAt(0).toUpperCase() : "?"}
+                        </div>
+                        <div style={{ maxWidth: "70%", background: user && m.sender === user.id ? styles.gradients.primary : styles.cardBackground, color: user && m.sender === user.id ? "#fff" : styles.textPrimary, padding: "0.85rem 1.2rem", borderRadius: "1.2rem", boxShadow: "0 2px 8px rgba(46,125,50,0.10)", position: "relative" }}>
+                          <div style={{ fontWeight: 700, fontSize: "1.02rem", marginBottom: "0.15rem", color: user && m.sender === user.id ? styles.fbcGold : styles.primaryGreen }}>{user && m.sender === user.id ? user.name : ""}</div>
+                          <div style={{ fontSize: "1.08rem", wordBreak: "break-word" }}>{m.content}</div>
+                          <div style={{ fontSize: "0.85rem", color: styles.textSecondary, marginTop: "0.3rem" }}>{new Date(m.createdAt).toLocaleString()}</div>
+                        </div>
                       </div>
-                      <div style={{ maxWidth: "70%", background: user && message.sender === user.id ? styles.gradients.primary : styles.cardBackground, color: user && message.sender === user.id ? "#fff" : styles.textPrimary, padding: "0.85rem 1.2rem", borderRadius: "1.2rem", boxShadow: "0 2px 8px rgba(46,125,50,0.10)", position: "relative" }}>
-                        <div style={{ fontWeight: 700, fontSize: "1.02rem", marginBottom: "0.15rem", color: user && message.sender === user.id ? styles.fbcGold : styles.primaryGreen }}>{user && message.sender === user.id ? user.name : ""}</div>
-                        <div style={{ fontSize: "1.08rem", wordBreak: "break-word" }}>{message.content}</div>
-                        <div style={{ fontSize: "0.85rem", color: styles.textSecondary, marginTop: "0.3rem" }}>{new Date(message.createdAt).toLocaleString()}</div>
-                      </div>
-                    </div>
-                  ))}
+                    ))}
                   </div>
                 </div>
                 {/* Meddelandeinmatning */}
