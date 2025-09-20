@@ -24,7 +24,7 @@ const Chat: React.FC = () => {
     <section style={{ background: "#262626", borderRadius: 10, padding: 14, margin: "16px 0", maxWidth: 500 }}>
       <h2>Lagchatt</h2>
       <div style={{ maxHeight: 200, overflowY: "auto", background: "#181818", borderRadius: 6, padding: 8, marginBottom: 8 }}>
-        {chat.map(m =>
+  {chat.map((m: any) =>
           <div key={m.id} style={{ marginBottom: 4 }}>
             <span style={{ fontWeight: 600, color: "#6fe" }}>{users.find(u => u.id === m.userId)?.name || m.userId}</span>:
             <span style={{ marginLeft: 4 }}>{m.content}</span>
