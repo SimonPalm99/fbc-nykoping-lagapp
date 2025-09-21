@@ -162,6 +162,7 @@ export class APIService {
             'Content-Type': 'application/json',
             ...options.headers,
           },
+          credentials: 'include',
         });
 
         clearTimeout(timeoutId);
@@ -255,7 +256,7 @@ export const apiService = new APIService({
 // Specific API services
 export const authAPI = {
   login: (credentials: { email: string; password: string }) =>
-    apiService.post<{ user: any; token: string }>('/users/login', credentials),
+    apiService.post<{ user: any; tokens: any }>('/users/login', credentials),
 
   register: (userData: any) =>
     apiService.post<{ user: any }>('/users/register', userData),
@@ -328,8 +329,18 @@ export const forumAPI = {
   getPost: (id: string) =>
     apiService.get<any>(`/forum/posts/${id}`),
   
-  createPost: (post: any) =>
-    apiService.post<any>('/forum/posts', post),
+  createPost: (post: any) => {
+    // Hämta token från localStorage
+    const token = localStorage.getItem('fbc_access_token');
+    return apiService.request<any>('/forum/posts', {
+      method: 'POST',
+      body: JSON.stringify(post),
+      headers: {
+        'Content-Type': 'application/json',
+        ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+      }
+    }, false);
+  },
   
   updatePost: (id: string, post: any) =>
     apiService.put<any>(`/forum/posts/${id}`, post),
