@@ -208,7 +208,7 @@ const Forum: React.FC = () => {
 									mediaUrl = newPostPreview;
 								}
 								const newPost: ForumPost = {
-									id: Date.now().toString(),
+									id: crypto.randomUUID(), // Generate a temporary unique id
 									title: newPostTitle,
 									content: newPostContent,
 									author: authUser.id,
