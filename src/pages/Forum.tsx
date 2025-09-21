@@ -196,20 +196,20 @@ const Forum: React.FC = () => {
 								if (newPostFile) {
 									mediaUrl = newPostPreview;
 								}
-								const newPost: ForumPost = {
-									id: Date.now().toString(),
-									title: newPostTitle,
-									content: newPostContent,
-									author: authUser?.name?.trim() || 'Du',
-									date: new Date().toISOString(),
-									pinned: false,
-									media: mediaUrl,
-									poll: poll,
-									pollVotes: poll ? Array(poll.length).fill(0) : undefined,
-									pollVoters: [],
-									likes: 0,
-									comments: [],
-								};
+												const newPost: ForumPost = {
+													id: Date.now().toString(),
+													title: newPostTitle,
+													content: newPostContent,
+													author: authUser?._id || authUser?.id || '', // Skicka ObjectId från backend
+													date: new Date().toISOString(),
+													pinned: false,
+													media: mediaUrl,
+													poll: poll,
+													pollVotes: poll ? Array(poll.length).fill(0) : undefined,
+													pollVoters: [],
+													likes: 0,
+													comments: [],
+												};
 								try {
 									const res = await forumAPI.createPost(newPost);
 									if (res && res.success && res.data) {
@@ -343,7 +343,7 @@ const Forum: React.FC = () => {
 														}
 														if (!pollVotes || typeof pollVotes[i] !== 'number') return;
 														// Max 1 röst per användare
-														const user = 'Du';
+														const user = authUser?.id || '';
 														if (Array.isArray(newPosts[idx]?.pollVoters) && newPosts[idx]?.pollVoters?.includes(user)) {
 															setPushMessage('Du har redan röstat!');
 															setTimeout(() => setPushMessage(''), 2000);
@@ -446,7 +446,7 @@ const Forum: React.FC = () => {
 																		comment.replies = [];
 																	}
 																	if (Array.isArray(comment.replies)) {
-																		comment.replies.push({ author: 'Du', text: e.currentTarget.value, date: new Date().toISOString(), likes: 0 });
+																		comment.replies.push({ author: authUser?.id || '', text: e.currentTarget.value, date: new Date().toISOString(), likes: 0 });
 																		setPosts(newPosts);
 																		e.currentTarget.value = '';
 																	}
@@ -466,7 +466,7 @@ const Forum: React.FC = () => {
 											if (!commentText.trim()) return;
 											const postId = posts[idx]?.id;
 											if (postId) {
-												const comment = { author: authUser?.name || 'Du', text: commentText, date: new Date().toISOString(), likes: 0, replies: [] };
+												const comment = { author: authUser?.id || '', text: commentText, date: new Date().toISOString(), likes: 0, replies: [] };
 												try {
 													const res = await forumAPI.addComment(postId, comment);
 													if (res && res.success) {
