@@ -109,9 +109,14 @@ const Home: React.FC = () => {
     setActivitiesError(null);
     apiService.get('/activities').then((res: any) => {
       if (res.success && Array.isArray(res.data)) {
-        const now = new Date();
+        const today = new Date();
+        today.setHours(0,0,0,0);
         const sorted = res.data
-          .filter((a: any) => new Date(a.date) >= now)
+          .filter((a: any) => {
+            const activityDate = new Date(a.date);
+            activityDate.setHours(0,0,0,0);
+            return activityDate >= today;
+          })
           .sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime())
           .slice(0, 3);
         setUpcomingActivities(sorted);

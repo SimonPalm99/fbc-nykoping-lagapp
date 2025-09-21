@@ -65,17 +65,33 @@ const Activities: React.FC = () => {
   // Sort all activities by date (ascending)
   let allActivities = [...activities];
   if (filter === 'past') {
-    allActivities = allActivities.sort((a, b) => {
-      const dateA = new Date(a.date + (a.startTime ? 'T' + a.startTime : ''));
-      const dateB = new Date(b.date + (b.startTime ? 'T' + b.startTime : ''));
-      return dateB.getTime() - dateA.getTime(); // Nyaste först
-    });
+    allActivities = allActivities
+      .filter(a => {
+        const activityDate = new Date(a.date);
+        activityDate.setHours(0,0,0,0);
+        const today = new Date();
+        today.setHours(0,0,0,0);
+        return activityDate <= today;
+      })
+      .sort((a, b) => {
+        const dateA = new Date(a.date + (a.startTime ? 'T' + a.startTime : ''));
+        const dateB = new Date(b.date + (b.startTime ? 'T' + b.startTime : ''));
+        return dateB.getTime() - dateA.getTime(); // Nyaste först
+      });
   } else {
-    allActivities = allActivities.sort((a, b) => {
-      const dateA = new Date(a.date + (a.startTime ? 'T' + a.startTime : ''));
-      const dateB = new Date(b.date + (b.startTime ? 'T' + b.startTime : ''));
-      return dateA.getTime() - dateB.getTime(); // Äldsta först
-    });
+    allActivities = allActivities
+      .filter(a => {
+        const activityDate = new Date(a.date);
+        activityDate.setHours(0,0,0,0);
+        const today = new Date();
+        today.setHours(0,0,0,0);
+        return activityDate >= today;
+      })
+      .sort((a, b) => {
+        const dateA = new Date(a.date + (a.startTime ? 'T' + a.startTime : ''));
+        const dateB = new Date(b.date + (b.startTime ? 'T' + b.startTime : ''));
+        return dateA.getTime() - dateB.getTime(); // Äldsta först
+      });
   }
   function stripTime(date: Date) {
     return new Date(date.getFullYear(), date.getMonth(), date.getDate());
