@@ -44,9 +44,6 @@ export type ForumPost = {
 
 const Forum: React.FC = () => {
 	const { user: authUser } = useUser();
-	function isValidObjectId(id: string | undefined): boolean {
-		return !!id && /^[a-fA-F0-9]{24}$/.test(id);
-	}
 	// Felsökningslogg: visa authUser i konsolen
 	React.useEffect(() => {
 		console.log('Forum DEBUG: authUser', authUser);
@@ -198,9 +195,9 @@ const Forum: React.FC = () => {
 							<button type="button" onClick={() => setNewPollOptions([...newPollOptions, ''])} style={{ background: fbcTheme.accent, color: '#fff', border: 'none', borderRadius: 8, padding: '0.5rem 1rem', fontWeight: 600, fontSize: '0.95rem', cursor: 'pointer', marginTop: '0.5rem' }}>Lägg till alternativ</button>
 						</div>
 						<button
-							disabled={!authUser || !authUser.id || typeof authUser.id !== 'string' || !isValidObjectId(authUser.id)}
+							disabled={!authUser || !authUser.id}
 							onClick={async () => {
-								if (!authUser || !authUser.id || typeof authUser.id !== 'string' || !isValidObjectId(authUser.id)) {
+								if (!authUser || !authUser.id) {
 									setPushMessage('Fel: Du är inte korrekt inloggad! Logga ut och in igen.');
 									setTimeout(() => setPushMessage(''), 3500);
 									return;
@@ -246,7 +243,7 @@ const Forum: React.FC = () => {
 									setTimeout(() => setPushMessage(''), 2000);
 								}
 							}}
-							style={{ background: fbcTheme.accent, color: '#fff', border: 'none', borderRadius: 8, padding: '0.7rem 1.5rem', fontWeight: 600, fontSize: '1.1rem', cursor: 'pointer', marginTop: '1rem', opacity: (!authUser || !authUser.id || typeof authUser.id !== 'string' || !isValidObjectId(authUser.id)) ? 0.5 : 1 }}
+							style={{ background: fbcTheme.accent, color: '#fff', border: 'none', borderRadius: 8, padding: '0.7rem 1.5rem', fontWeight: 600, fontSize: '1.1rem', cursor: 'pointer', marginTop: '1rem', opacity: (!authUser || !authUser.id) ? 0.5 : 1 }}
 						>Publicera</button>
 					</div>
 				)}
