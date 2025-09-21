@@ -44,6 +44,13 @@ export type ForumPost = {
 
 const Forum: React.FC = () => {
 	const { user: authUser } = useUser();
+	function isValidObjectId(id: string | undefined): boolean {
+		return !!id && /^[a-fA-F0-9]{24}$/.test(id);
+	}
+	// Felsökningslogg: visa authUser i konsolen
+	React.useEffect(() => {
+		console.log('Forum DEBUG: authUser', authUser);
+	}, [authUser]);
 	useTitle('Forum - FBC Nyköping');
 	const [posts, setPosts] = useState<ForumPost[]>([]);
 	const [loading, setLoading] = useState(true);
@@ -72,7 +79,7 @@ const Forum: React.FC = () => {
 			setLoading(false);
 		});
 	}, [currentPage]);
-	const [commentText, setCommentText] = useState('');
+	// const [commentText, setCommentText] = useState('');
 	const [showImportant, setShowImportant] = useState(false);
 	// Lägg till state för filuppladdning och förhandsvisning
 	const [newPostFile, setNewPostFile] = useState<File | null>(null);
@@ -177,9 +184,10 @@ const Forum: React.FC = () => {
 									<img src={newPostPreview} alt="Förhandsvisning" style={{ maxWidth: '100%', borderRadius: 12, boxShadow: '0 2px 12px #22c55e44', border: `2px solid ${fbcTheme.accent}` }} />
 								) : (
 									<video src={newPostPreview} controls style={{ maxWidth: '100%', borderRadius: 12, boxShadow: '0 2px 12px #22c55e44', border: `2px solid ${fbcTheme.accent}` }} />
-								)}
-							</div>
-						)}
+									)}
+								</div>
+							)
+						}
 						<div style={{ marginBottom: '1rem' }}>
 							<label style={{ color: fbcTheme.text.secondary, fontWeight: 'bold' }}>Omröstning (valfritt):</label>
 							{newPollOptions.map((opt, i) => (
@@ -190,30 +198,35 @@ const Forum: React.FC = () => {
 							<button type="button" onClick={() => setNewPollOptions([...newPollOptions, ''])} style={{ background: fbcTheme.accent, color: '#fff', border: 'none', borderRadius: 8, padding: '0.5rem 1rem', fontWeight: 600, fontSize: '0.95rem', cursor: 'pointer', marginTop: '0.5rem' }}>Lägg till alternativ</button>
 						</div>
 						<button
+							disabled={!authUser || !authUser.id || typeof authUser.id !== 'string' || !isValidObjectId(authUser.id)}
 							onClick={async () => {
+								if (!authUser || !authUser.id || typeof authUser.id !== 'string' || !isValidObjectId(authUser.id)) {
+									setPushMessage('Fel: Du är inte korrekt inloggad! Logga ut och in igen.');
+									setTimeout(() => setPushMessage(''), 3500);
+									return;
+								}
 								const poll = newPollOptions.filter(opt => opt.trim()).length > 1 ? newPollOptions.filter(opt => opt.trim()) : undefined;
 								let mediaUrl = newPostMedia;
 								if (newPostFile) {
 									mediaUrl = newPostPreview;
 								}
-												const newPost: ForumPost = {
-													id: Date.now().toString(),
-													title: newPostTitle,
-													content: newPostContent,
-													  author: authUser?._id || '', // Skicka alltid MongoDB ObjectId
-													date: new Date().toISOString(),
-													pinned: false,
-													media: mediaUrl,
-													poll: poll,
-													pollVotes: poll ? Array(poll.length).fill(0) : undefined,
-													pollVoters: [],
-													likes: 0,
-													comments: [],
-												};
+								const newPost: ForumPost = {
+									id: Date.now().toString(),
+									title: newPostTitle,
+									content: newPostContent,
+									author: authUser.id,
+									date: new Date().toISOString(),
+									pinned: false,
+									media: mediaUrl,
+									poll: poll,
+									pollVotes: poll ? Array(poll.length).fill(0) : undefined,
+									pollVoters: [],
+									likes: 0,
+									comments: [],
+								};
 								try {
 									const res = await forumAPI.createPost(newPost);
 									if (res && res.success && res.data) {
-										// Hämta nya inlägg från backend
 										const postsRes = await forumAPI.getPosts(1, 20);
 										if (postsRes.success && postsRes.data?.posts) {
 											setPosts(postsRes.data.posts);
@@ -233,7 +246,7 @@ const Forum: React.FC = () => {
 									setTimeout(() => setPushMessage(''), 2000);
 								}
 							}}
-							style={{ background: fbcTheme.accent, color: '#fff', border: 'none', borderRadius: 8, padding: '0.7rem 1.5rem', fontWeight: 600, fontSize: '1.1rem', cursor: 'pointer', marginTop: '1rem' }}
+							style={{ background: fbcTheme.accent, color: '#fff', border: 'none', borderRadius: 8, padding: '0.7rem 1.5rem', fontWeight: 600, fontSize: '1.1rem', cursor: 'pointer', marginTop: '1rem', opacity: (!authUser || !authUser.id || typeof authUser.id !== 'string' || !isValidObjectId(authUser.id)) ? 0.5 : 1 }}
 						>Publicera</button>
 					</div>
 				)}
@@ -385,106 +398,11 @@ const Forum: React.FC = () => {
 										style={{ background: fbcTheme.accentDark, color: fbcTheme.accentLight, border: 'none', borderRadius: 8, padding: '0.3rem 1rem', fontWeight: 600, cursor: 'pointer', fontSize: '1rem', boxShadow: '0 2px 8px #22c55e44', transition: 'background 0.2s' }}
 									>👍 {post.likes}</button>
 								</div>
-								<div style={{ display: 'flex', gap: '1.2rem', alignItems: 'center', marginTop: '0.5rem', flexWrap: 'wrap' }}>
-									<button onClick={() => {
-										const newPosts = [...posts];
-										if (!newPosts[idx]) return;
-										if (typeof newPosts[idx]?.pinned === 'boolean') {
-											newPosts[idx]!.pinned = !newPosts[idx]!.pinned;
-										}
-										setPosts(newPosts);
-										setPushMessage(newPosts[idx] && typeof newPosts[idx]?.pinned === 'boolean' && newPosts[idx]?.pinned ? 'Inlägg nålat som viktigt!' : 'Inlägg är inte längre nålat.');
-										setTimeout(() => setPushMessage(''), 2000);
-									}} style={{ background: post.pinned ? fbcTheme.accent : '#222', color: '#fff', border: 'none', borderRadius: 8, padding: '0.5rem 1.2rem', fontWeight: 600, cursor: 'pointer', fontSize: '1rem' }}>
-										{post.pinned ? 'Ta bort från Viktigt' : 'Nåla som Viktigt'}
-									</button>
-									<span style={{ color: fbcTheme.text.secondary, fontSize: '0.95rem' }}>Kommentarer: {post.comments ? post.comments.length : 0}</span>
-								</div>
-								{/* Kommentarer */}
-								<div style={{ marginTop: '1rem', background: 'rgba(34,197,94,0.07)', borderRadius: 10, padding: '1rem 0.7rem' }}>
-									<strong style={{ color: fbcTheme.accent, fontSize: '1.08rem' }}>Kommentarer:</strong>
-									{post.comments && post.comments.length > 0 ? (
-										post.comments.map((c, i) => (
-											<div key={i} style={{ background: fbcTheme.accentDark, borderRadius: 8, padding: '0.5rem 1rem', color: fbcTheme.text.primary, margin: '0.5rem 0', boxShadow: '0 2px 8px #22c55e22', display: 'flex', alignItems: 'center', gap: '0.7rem' }}>
-												<img src={fbcLogo} alt="Profil" style={{ width: 28, height: 28, borderRadius: '50%', objectFit: 'cover', border: '2px solid #22c55e', boxShadow: '0 2px 8px #22c55e22' }} />
-												<span style={{ fontWeight: 'bold', color: fbcTheme.accent }}>{c.author}</span>: {c.text} <span style={{ color: fbcTheme.text.secondary, fontSize: '0.85rem' }}>({new Date(c.date).toLocaleDateString('sv-SE')})</span>
-												<button onClick={() => {
-													const newPosts = [...posts];
-													const comments = Array.isArray(newPosts[idx]?.comments) ? newPosts[idx]?.comments : undefined;
-													const comment = comments && comments[i] ? comments[i] : undefined;
-													if (comment && typeof comment.likes === 'number') {
-														comment.likes++;
-														setPosts(newPosts);
-													}
-												}} style={{ background: fbcTheme.accentDark, color: fbcTheme.accentLight, border: 'none', borderRadius: 8, padding: '0.2rem 0.7rem', fontWeight: 600, cursor: 'pointer', fontSize: '0.95rem', marginLeft: '0.5rem', boxShadow: '0 2px 8px #22c55e22' }}>👍 {typeof c.likes === 'number' ? c.likes : 0}</button>
-												{/* Svarstråd */}
-												<div style={{ marginTop: '0.5rem', marginLeft: '1.5rem' }}>
-													{Array.isArray(c.replies) && c.replies.length > 0 && c.replies.map((r, ri) => (
-														<div key={ri} style={{ background: fbcTheme.accentDark, borderRadius: 8, padding: '0.4rem 1rem', color: fbcTheme.text.primary, margin: '0.3rem 0', boxShadow: '0 2px 8px #22c55e22' }}>
-															<span style={{ fontWeight: 'bold', color: fbcTheme.accent }}>{r.author}</span>: {r.text} <span style={{ color: fbcTheme.text.secondary, fontSize: '0.8rem' }}>({new Date(r.date).toLocaleDateString('sv-SE')})</span>
-															<button onClick={() => {
-																const newPosts = [...posts];
-																const comments = Array.isArray(newPosts[idx]?.comments) ? newPosts[idx]?.comments : undefined;
-																const comment = comments && comments[i] ? comments[i] : undefined;
-																const replies = comment && Array.isArray(comment.replies) ? comment.replies : undefined;
-																const reply = replies && replies[ri] ? replies[ri] : undefined;
-																if (reply && typeof reply.likes === 'number') {
-																	reply.likes++;
-																	setPosts(newPosts);
-																}
-															}} style={{ background: fbcTheme.accentDark, color: fbcTheme.accentLight, border: 'none', borderRadius: 8, padding: '0.2rem 0.7rem', fontWeight: 600, cursor: 'pointer', fontSize: '0.9rem', marginLeft: '0.5rem', boxShadow: '0 2px 8px #22c55e22' }}>👍 {typeof r.likes === 'number' ? r.likes : 0}</button>
+								{/* ...existing code... */}
+								{/* Knappar och formulär ska vara barn till div, inte direkt kod! */}
+																{/* Remove or replace this button with the correct variable if needed */}
 														</div>
-													))}
-													<input type="text" placeholder="Svara..." style={{ width: '70%', marginTop: '0.3rem', padding: '0.3rem', borderRadius: 8, border: `1px solid ${fbcTheme.accentDark}`, background: fbcTheme.cardBg, color: fbcTheme.text.primary }}
-														onKeyDown={e => {
-															if (e.key === 'Enter' && e.currentTarget.value.trim()) {
-																const newPosts = [...posts];
-																const comments = Array.isArray(newPosts[idx]?.comments) ? newPosts[idx]?.comments : undefined;
-																const comment = comments && comments[i] ? comments[i] : undefined;
-																if (comment) {
-																	if (!Array.isArray(comment.replies)) {
-																		comment.replies = [];
-																	}
-																	if (Array.isArray(comment.replies)) {
-																		comment.replies.push({ author: authUser?.id || '', text: e.currentTarget.value, date: new Date().toISOString(), likes: 0 });
-																		setPosts(newPosts);
-																		e.currentTarget.value = '';
-																	}
-																}
-															}
-														}}
-													/>
-												</div>
-											</div>
 										))
-									) : (
-										<div style={{ color: fbcTheme.text.secondary, fontSize: '0.95rem', margin: '0.5rem 0' }}>Inga kommentarer än.</div>
-									)}
-									<div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
-										<input type="text" value={commentText} onChange={e => setCommentText(e.target.value)} placeholder="Skriv en kommentar..." style={{ flex: 1, padding: '0.5rem', borderRadius: 8, border: `1px solid ${fbcTheme.accentDark}`, background: fbcTheme.cardBg, color: fbcTheme.text.primary }} />
-										<button onClick={async () => {
-											if (!commentText.trim()) return;
-											const postId = posts[idx]?.id;
-											if (postId) {
-												const comment = { author: authUser?.id || '', text: commentText, date: new Date().toISOString(), likes: 0, replies: [] };
-												try {
-													const res = await forumAPI.addComment(postId, comment);
-													if (res && res.success) {
-														const postsRes = await forumAPI.getPosts(1, 20);
-														if (postsRes.success && postsRes.data?.posts) {
-															setPosts(postsRes.data.posts);
-														}
-														setCommentText('');
-														setPushMessage('Ny kommentar publicerad!');
-														setTimeout(() => setPushMessage(''), 2000);
-													}
-												} catch {}
-											}
-										}} style={{ background: fbcTheme.accent, color: '#fff', border: 'none', borderRadius: 8, padding: '0.5rem 1.2rem', fontWeight: 600, cursor: 'pointer', fontSize: '1rem', boxShadow: '0 2px 8px #22c55e44', transition: 'background 0.2s' }}>Kommentera</button>
-									</div>
-								</div>
-							</div>
-								))
 							)}
 							{/* Paginering */}
 							<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem', margin: '2rem 0' }}>
