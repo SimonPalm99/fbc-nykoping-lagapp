@@ -381,8 +381,10 @@ const Welcome: React.FC = () => {
                   >Ledare</button>
                 </div>
                 <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1rem" }}>
-                  <input type="text" value={registerData.firstName} onChange={e => setRegisterData({ ...registerData, firstName: e.target.value })} placeholder="Förnamn*" required aria-label="Förnamn" tabIndex={0} style={{ flex: 1, padding: "1rem", borderRadius: "12px", border: "none" }} />
-                  <input type="text" value={registerData.lastName} onChange={e => setRegisterData({ ...registerData, lastName: e.target.value })} placeholder="Efternamn" required aria-label="Efternamn" tabIndex={0} style={{ flex: 1, padding: "1rem", borderRadius: "12px", border: "none" }} />
+                  <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", width: "100%" }}>
+                    <input type="text" value={registerData.firstName} onChange={e => setRegisterData({ ...registerData, firstName: e.target.value })} placeholder="Förnamn*" required aria-label="Förnamn" tabIndex={0} style={{ width: "100%", padding: "1rem", borderRadius: "12px", border: "none" }} />
+                    <input type="text" value={registerData.lastName} onChange={e => setRegisterData({ ...registerData, lastName: e.target.value })} placeholder="Efternamn" required aria-label="Efternamn" tabIndex={0} style={{ width: "100%", padding: "1rem", borderRadius: "12px", border: "none" }} />
+                  </div>
                 </div>
                 <input type="email" value={registerData.email} onChange={e => setRegisterData({ ...registerData, email: e.target.value })} placeholder="E-post" required aria-label="E-post" tabIndex={0} style={{ width: "100%", padding: "1rem", marginBottom: "1rem", borderRadius: "12px", border: "none" }} />
                 <input type="password" value={registerData.password} onChange={e => setRegisterData({ ...registerData, password: e.target.value })} placeholder="Lösenord" required aria-label="Lösenord" tabIndex={0} style={{ width: "100%", padding: "1rem", marginBottom: "1rem", borderRadius: "12px", border: "none" }} />
