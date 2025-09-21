@@ -80,6 +80,24 @@ export interface AuthResponse {
 }
 
 class AuthService {
+  /**
+   * Hämta aktuell användare från backend med token
+   */
+  async getCurrentUserFromBackend(token: string): Promise<any> {
+    try {
+      // Anropa backend med token i headern
+      const res = await apiService.request<any>('/users/me', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      }, false);
+      return res;
+    } catch (err) {
+      return { success: false, error: (typeof err === 'object' && err && 'message' in err) ? (err as any).message : 'Kunde inte hämta användare' };
+    }
+  }
   private readonly TOKEN_KEY = 'fbc_access_token';
   private readonly REFRESH_TOKEN_KEY = 'fbc_refresh_token';
   private readonly USER_KEY = 'fbc_user';
@@ -90,11 +108,8 @@ class AuthService {
    */
   async login(credentials: LoginCredentials): Promise<AuthResponse> {
     try {
-  const response = await apiService.post<AuthResponse>('/users/login', credentials);
-      
-      this.storeTokens(response.data.tokens);
+      const response = await apiService.post<AuthResponse>('/users/login', credentials);
       this.storeUser(response.data.user);
-      
       return response.data;
     } catch (error) {
       console.error('Login failed:', error);
@@ -370,3 +385,4 @@ class AuthService {
 }
 
 export const authService = new AuthService();
+export const getCurrentUserFromBackend = authService.getCurrentUserFromBackend.bind(authService);

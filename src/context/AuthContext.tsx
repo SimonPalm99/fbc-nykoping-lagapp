@@ -45,401 +45,48 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const toast = useToast();
 
-  // Mock databas för användare (skulle vara riktig databas i produktion)
-  const [users, setUsers] = useState<User[]>([
-    {
-      id: 'user-1',
-      email: 'simon@fbcnykoping.se',
-      name: 'Simon Andersson',
-      jerseyNumber: 17,
-      position: 'Center',
-      role: 'leader',
-      status: 'approved',
-      createdAt: '2024-01-15',
-      approvedAt: '2024-01-15',
-      favoritePosition: 'Center',
-      aboutMe: 'Lagkapten och centerforward med passion för spelet',
-      phone: '0701234567',
-      statistics: {
-        gamesPlayed: 18,
-        goals: 15,
-        assists: 12,
-        points: 27,
-        shots: 85,
-        shotPercentage: 17.6,
-        plusMinus: 8,
-        penaltyMinutes: 6,
-        blocks: 4,
-        steals: 12
-      },
-      totalGamificationPoints: 485,
-      emergencyContact: {
-        name: 'Anna Andersson',
-        phone: '0709876543',
-        relation: 'Maka'
-      },
-      badges: [
-        {
-          id: 'badge-1',
-          name: '100 Träningar',
-          description: 'Genomfört 100 träningar',
-          icon: '🏃‍♂️',
-          color: '#22c55e',
-          earnedDate: '2024-03-15',
-          type: 'training'
-        }
-      ],
-      stats: {
-        totalTrainings: 125,
-        totalMatches: 45,
-        totalGoals: 32,
-        totalAssists: 28
-      },
-      notifications: {
-        activities: true,
-        forum: true,
-        statistics: true,
-        fines: false
-      },
-      personalTrainingLog: []
-    },
-    {
-      id: 'user-2',
-      email: 'erik@fbcnykoping.se',
-      name: 'Erik Karlsson',
-      jerseyNumber: 23,
-      position: 'Back',
-      role: 'player',
-      status: 'approved',
-      createdAt: '2024-02-01',
-      approvedAt: '2024-02-02',
-      approvedBy: 'user-1',
-      favoritePosition: 'Vänsterback',
-      aboutMe: 'Snabb back som älskar att anfalla',
-      statistics: {
-        gamesPlayed: 16,
-        goals: 3,
-        assists: 8,
-        points: 11,
-        shots: 42,
-        shotPercentage: 7.1,
-        plusMinus: 5,
-        penaltyMinutes: 12,
-        blocks: 18,
-        steals: 25
-      },
-      totalGamificationPoints: 320,
-      badges: [],
-      stats: {
-        totalTrainings: 89,
-        totalMatches: 38,
-        totalGoals: 12,
-        totalAssists: 45
-      },
-      notifications: {
-        activities: true,
-        forum: true,
-        statistics: true,
-        fines: true
-      },
-      personalTrainingLog: []
-    },
-    {
-      id: 'user-3',
-      email: 'anna@example.com',
-      name: 'Anna Johansson',
-      jerseyNumber: 9,
-      position: 'Forward',
-      role: 'player',
-      status: 'pending',
-      createdAt: '2024-06-25',
-      aboutMe: 'Ny spelare som kommer från AIK',
-      previousClubs: [
-        {
-          name: 'AIK Innebandy',
-          startYear: 2018,
-          endYear: 2021,
-          division: 'Division 2',
-          achievements: ['Vann serien 2020']
-        }
-      ],
-      statistics: {
-        gamesPlayed: 0,
-        goals: 0,
-        assists: 0,
-        points: 0,
-        shots: 0,
-        shotPercentage: 0,
-        plusMinus: 0,
-        penaltyMinutes: 0,
-        blocks: 0,
-        steals: 0
-      },
-      totalGamificationPoints: 50,
-      notifications: {
-        activities: true,
-        forum: true,
-        statistics: true,
-        fines: true
-      },
-      personalTrainingLog: []
-    },
-    // Demo-användare för testning
-    {
-      id: 'demo-player',
-      email: 'erik@demo.se',
-      name: 'Simon Palm', // Ändrat namn
-      jerseyNumber: 99,
-      position: 'Forward',
-      role: 'player',
-      status: 'approved',
-      createdAt: '2024-01-01',
-      approvedAt: '2024-01-01',
-      favoritePosition: 'Forward',
-      aboutMe: 'Demo-konto för att testa spelarfunktioner',
-      phone: '070-123-4567',
-      statistics: {
-        gamesPlayed: 10,
-        goals: 8,
-        assists: 5,
-        points: 13,
-        shots: 45,
-        shotPercentage: 17.8,
-        plusMinus: 6,
-        penaltyMinutes: 2,
-        blocks: 3,
-        steals: 8
-      },
-      totalGamificationPoints: 250,
-      emergencyContact: {
-        name: 'Demo Kontakt',
-        phone: '070-987-6543',
-        relation: 'Förälder'
-      },
-      badges: [],
-      stats: {
-        totalTrainings: 50,
-        totalMatches: 25,
-        totalGoals: 15,
-        totalAssists: 20
-      },
-      notifications: {
-        activities: true,
-        forum: true,
-        statistics: true,
-        fines: true
-      },
-      personalTrainingLog: []
-    },
-    {
-      id: 'demo-leader',
-      email: 'sara@demo.se',
-      name: 'Simon Palm', // Ändrat namn
-      jerseyNumber: 1,
-      position: 'Målvakt',
-      role: 'leader',
-      status: 'approved',
-      createdAt: '2024-01-01',
-      approvedAt: '2024-01-01',
-      favoritePosition: 'Målvakt',
-      aboutMe: 'Demo-konto för att testa ledarfunktioner',
-      phone: '070-555-1234',
-      statistics: {
-        gamesPlayed: 20,
-        goals: 2,
-        assists: 15,
-        points: 17,
-        shots: 25,
-        shotPercentage: 8.0,
-        plusMinus: 12,
-        penaltyMinutes: 0,
-        blocks: 45,
-        steals: 30
-      },
-      totalGamificationPoints: 500,
-      emergencyContact: {
-        name: 'Demo Partner',
-        phone: '070-555-9876',
-        relation: 'Make'
-      },
-      badges: [
-        {
-          id: 'badge-leader',
-          name: 'Lagledare',
-          description: 'Erfaren lagledare',
-          icon: '👨‍💼',
-          color: '#FF9800',
-          earnedDate: '2024-01-01',
-          type: 'special'
-        }
-      ],
-      stats: {
-        totalTrainings: 100,
-        totalMatches: 60,
-        totalGoals: 5,
-        totalAssists: 40
-      },
-      notifications: {
-        activities: true,
-        forum: true,
-        statistics: true,
-        fines: false
-      },
-      personalTrainingLog: []
-    },
-    {
-      id: 'demo-admin',
-      email: 'admin@demo.se',
-      name: 'Demo Admin',
-      jerseyNumber: 0,
-      position: 'Admin',
-      role: 'admin',
-      status: 'approved',
-      createdAt: '2024-01-01',
-      approvedAt: '2024-01-01',
-      favoritePosition: 'Admin',
-      aboutMe: 'Demo-konto för att testa admin-funktioner',
-      phone: '070-000-0000',
-      statistics: {
-        gamesPlayed: 0,
-        goals: 0,
-        assists: 0,
-        points: 0,
-        shots: 0,
-        shotPercentage: 0,
-        plusMinus: 0,
-        penaltyMinutes: 0,
-        blocks: 0,
-        steals: 0
-      },
-      totalGamificationPoints: 1000,
-      emergencyContact: {
-        name: 'Demo Admin Kontakt',
-        phone: '070-000-0001',
-        relation: 'Partner'
-      },
-      badges: [],
-      stats: {
-        totalTrainings: 0,
-        totalMatches: 0,
-        totalGoals: 0,
-        totalAssists: 0
-      },
-      notifications: {
-        activities: true,
-        forum: true,
-        statistics: true,
-        fines: true
-      },
-      personalTrainingLog: []
-    },
-    {
-      id: 'demo-pending',
-      email: 'pending@fbcnykoping.se',
-      name: 'Demo Väntande',
-      jerseyNumber: 88,
-      position: 'Center',
-      role: 'player',
-      status: 'pending',
-      createdAt: '2024-06-29',
-      favoritePosition: 'Center',
-      aboutMe: 'Demo-konto för att testa väntande medlemsfunktioner',
-      phone: '070-888-9999',
-      statistics: {
-        gamesPlayed: 0,
-        goals: 0,
-        assists: 0,
-        points: 0,
-        shots: 0,
-        shotPercentage: 0,
-        plusMinus: 0,
-        penaltyMinutes: 0,
-        blocks: 0,
-        steals: 0
-      },
-      totalGamificationPoints: 25,
-      emergencyContact: {
-        name: 'Demo Anhörig',
-        phone: '070-888-0000',
-        relation: 'Syskon'
-      },
-      badges: [],
-      stats: {
-        totalTrainings: 0,
-        totalMatches: 0,
-        totalGoals: 0,
-        totalAssists: 0
-      },
-      notifications: {
-        activities: true,
-        forum: false,
-        statistics: false,
-        fines: false
-      },
-      personalTrainingLog: []
-    }
-  ]);
+  // Ta bort mock/demo-användare. Använd tom array eller hämta från backend i produktion.
+  const [users, setUsers] = useState<User[]>([]);
 
-  // Simulera inloggning med localStorage
+  // Vid mount: hämta aktuell användare från backend med token
   useEffect(() => {
-    const checkAuthStatus = () => {
-      // För mockad demo-login: hämta användare från localStorage om backend inte är tillgänglig
-      const localUser = localStorage.getItem('fbc_user');
-      if (localUser) {
-        try {
-          const user = JSON.parse(localUser);
-          setAuthState({
-            user,
-            isAuthenticated: true,
-            isLoading: false,
-            error: null
-          });
-        } catch {
-          localStorage.removeItem('fbc_user');
-          setAuthState({
-            user: null,
-            isAuthenticated: false,
-            isLoading: false,
-            error: null
-          });
+    const fetchUser = async () => {
+      try {
+        const token = authService.getAccessToken();
+        if (!token) {
+          setAuthState({ user: null, isAuthenticated: false, isLoading: false, error: null });
+          return;
         }
-      } else if (authService.isAuthenticated()) {
-        setAuthState({
-          user: authService.getCurrentUser(),
-          isAuthenticated: true,
-          isLoading: false,
-          error: null
-        });
-        authService.setupTokenRefresh();
-      } else {
-        setAuthState({
-          user: null,
-          isAuthenticated: false,
-          isLoading: false,
-          error: null
-        });
+        // Hämta användarinfo från backend
+        const res = await authService.getCurrentUserFromBackend(token);
+        if (res && res.success && res.data) {
+          const userObj = { ...res.data, id: res.data._id || res.data.id };
+          setAuthState({ user: userObj, isAuthenticated: true, isLoading: false, error: null });
+        } else {
+          setAuthState({ user: null, isAuthenticated: false, isLoading: false, error: null });
+        }
+      } catch {
+        setAuthState({ user: null, isAuthenticated: false, isLoading: false, error: null });
       }
     };
-    checkAuthStatus();
+    fetchUser();
   }, []);
 
   const login = async (credentials: LoginCredentials): Promise<boolean> => {
     setAuthState(prev => ({ ...prev, isLoading: true, error: null }));
     try {
       const response = await authService.login(credentials);
+      const user = {
+        ...response.user,
+        id: response.user.id
+      };
       setAuthState({
-        user: response.user,
+        user,
         isAuthenticated: true,
         isLoading: false,
         error: null
       });
-      if (credentials.rememberMe) {
-        localStorage.setItem('fbc_rememberMe', 'true');
-      } else {
-        localStorage.removeItem('fbc_rememberMe');
-      }
-      authService.setupTokenRefresh();
-      toast.success(`Välkommen tillbaka, ${response.user.name}!`);
+      toast.success(`Välkommen tillbaka, ${user.name}!`);
       return true;
     } catch (error: any) {
       setAuthState(prev => ({ ...prev, isLoading: false, error: error.message || 'Något gick fel vid inloggning' }));
@@ -549,7 +196,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   const logout = () => {
-    localStorage.removeItem('fbc_user');
+  // Ingen localStorage, logga ut via backend/token
     setAuthState({
       user: null,
       isAuthenticated: false,
@@ -564,7 +211,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
     try {
       const updatedUser = { ...authState.user, ...updates };
-      localStorage.setItem('fbc_user', JSON.stringify(updatedUser));
       
       setAuthState(prev => ({
         ...prev,
