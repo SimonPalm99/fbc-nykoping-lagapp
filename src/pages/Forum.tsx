@@ -200,7 +200,7 @@ const Forum: React.FC = () => {
 													id: Date.now().toString(),
 													title: newPostTitle,
 													content: newPostContent,
-													author: authUser?._id || authUser?.id || '', // Skicka ObjectId från backend
+													  author: authUser?._id || '', // Skicka alltid MongoDB ObjectId
 													date: new Date().toISOString(),
 													pinned: false,
 													media: mediaUrl,

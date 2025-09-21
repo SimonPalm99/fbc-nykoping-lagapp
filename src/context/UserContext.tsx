@@ -37,7 +37,12 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       // Hämta profil från backend
       const res = await healthAPI.getProfile(userId);
       if (res.success && res.data) {
-        setUser(res.data);
+        // Spara både id och _id om de finns
+        setUser({
+          ...res.data,
+          id: res.data.id || res.data._id,
+          _id: res.data._id || res.data.id
+        });
       } else {
         setUser(null);
       }
