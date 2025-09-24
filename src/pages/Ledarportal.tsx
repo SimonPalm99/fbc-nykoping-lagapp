@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useTheme } from "../context/ThemeContext";
 import axios from "axios";
 import { checkQuestionAPI } from "../services/apiService";
+import stylesModule from "./Ledarportal.module.css";
 interface CheckInOut {
   activityId: string;
   activityTitle: string;
@@ -41,7 +42,7 @@ interface Absence {
 }
 
 interface PendingUser {
-  _id: string;
+  id: string;
   name: string;
   email: string;
   role: string;
@@ -58,6 +59,15 @@ const Ledarportal: React.FC = () => {
   const [selectedActivityId, setSelectedActivityId] = useState<string|null>(null);
   const { isDark } = useTheme();
   const styles = getStyles(isDark);
+  // Set background and text color via CSS variables for root element
+  useEffect(() => {
+    const root = document.querySelector(`.${stylesModule.ledarportalRoot}`) as HTMLElement | null;
+    if (root) {
+      root.style.setProperty('--ledarportal-bg', styles.gradients.body);
+      root.style.setProperty('--ledarportal-text', styles.textPrimary);
+      root.style.setProperty('--ledarportal-primary-green', styles.primaryGreen);
+    }
+  }, [isDark, styles.gradients.body, styles.textPrimary, styles.primaryGreen]);
   const [absences, setAbsences] = useState<Absence[]>([]);
   const [pendingUsers, setPendingUsers] = useState<PendingUser[]>([]);
   const [loadingPending, setLoadingPending] = useState(true);
@@ -92,7 +102,7 @@ const Ledarportal: React.FC = () => {
   useEffect(() => {
     axios.get("/api/users/pending")
       .then((res) => {
-  setPendingUsers(res.data as PendingUser[]);
+        setPendingUsers(res.data as PendingUser[]);
         setLoadingPending(false);
       })
       .catch(() => {
@@ -103,134 +113,139 @@ const Ledarportal: React.FC = () => {
 
   const handleApprove = async (userId: string) => {
     try {
-      await axios.patch(`/api/users/${userId}/approve`);
-      setPendingUsers(users => users.filter(u => u._id !== userId));
+      // Here you would call your API to approve the user, e.g.:
+      // await axios.post(`/api/users/approve/${userId}`);
+      setPendingUsers(users => users.filter(u => u.id !== userId));
     } catch {
       setErrorPending("Kunde inte godkänna användare.");
     }
   };
 
   return (
-    <div style={{ minHeight: "100vh", background: styles.gradients.body, color: styles.textPrimary, fontFamily: "inherit", padding: "1.2rem 0", position: "relative", overflow: "hidden" }}>
-      <div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: 180, background: "linear-gradient(135deg, #22c55e 0%, #0a0a0a 100%)", opacity: 0.18, zIndex: 0, pointerEvents: "none" }} />
-      <header style={{
-        width: "100%",
-        maxWidth: 900,
-        margin: "0 auto",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "flex-start",
-        justifyContent: "flex-start",
-        padding: "0.3rem 0.5rem 0.2rem 0.5rem",
-        borderBottom: `2px solid ${styles.primaryGreen}`,
-        background: "linear-gradient(120deg, #2E7D32 0%, #388E3C 100%)",
-        borderRadius: "0 0 1rem 1rem",
-        boxShadow: "0 2px 8px rgba(46, 125, 50, 0.10)",
-        position: "relative",
-        overflow: "hidden",
-        minHeight: "56px"
-      }}>
-        <div style={{ width: "100%", textAlign: "center", fontWeight: 900, fontSize: "1.35rem", color: "#fff", letterSpacing: "1px", textShadow: "0 2px 8px #2E7D32, 0 0px 2px #000", marginBottom: "0.3rem", zIndex: 2 }}>
-          Ledarportal
-        </div>
-        <div style={{ width: "100%", textAlign: "center", color: styles.textSecondary, fontSize: "1.05rem", marginBottom: "0.2rem" }}>
-          Här får du som ledare tillgång till information som bara är för ledare: frånvaroanmälan, svar från check in/check ut, enkätsvar och mer.
-        </div>
+    <div className={stylesModule.ledarportalRoot}>
+      <header className={`${stylesModule.ledarportalHeader} ${stylesModule.ledarportalHeaderStyled}`}>
+        <div className={stylesModule.ledarportalTitle}>Ledarportal</div>
+        <div className={stylesModule.ledarportalSubtitle}>{/* color handled by CSS */}Här får du som ledare tillgång till information som bara är för ledare: frånvaroanmälan, svar från check in/check ut, enkätsvar och mer.</div>
       </header>
-      <section style={{ maxWidth: 900, margin: "2rem auto 2rem auto", padding: "0 1rem" }}>
-        <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-          <div style={{ background: styles.cardBackground, borderRadius: "1.2rem", boxShadow: "0 4px 16px rgba(46, 125, 50, 0.18)", border: `2px solid ${styles.primaryGreen}`, padding: "1.2rem 1.5rem" }}>
-            <div style={{ fontWeight: 700, fontSize: "1.15rem", color: styles.primaryGreen }}>Frånvaroanmälningar</div>
+      <section className={stylesModule.ledarportalSection}>
+        <div className={stylesModule.ledarportalCardsWrapper}>
+          <div className={stylesModule.cardAbsence}>
+            <div className={stylesModule.cardTitleAbsence}>Frånvaroanmälningar</div>
             {absences.length === 0 ? (
-              <div style={{ color: styles.textSecondary, fontSize: "0.98rem" }}>Inga frånvaroanmälningar ännu.</div>
+              <div className={stylesModule.cardAbsenceEmpty}>Inga frånvaroanmälningar ännu.</div>
             ) : (
-              <div style={{ display: "flex", flexDirection: "column", gap: "1rem", marginTop: "1rem" }}>
+              <div className={stylesModule.cardAbsenceList}>
                 {absences.map((a, idx) => (
-                  <div key={idx} style={{ background: styles.gradients.cardHover, borderRadius: "1rem", padding: "1rem 1.2rem", boxShadow: "0 2px 8px rgba(46,125,50,0.10)", border: `1.5px solid ${styles.primaryGreen}`, display: "flex", flexDirection: "column", gap: "0.3rem" }}>
-                    <div style={{ fontWeight: 700, color: styles.primaryGreen, fontSize: "1.05rem" }}>{a.userName} ({a.reason})</div>
-                    <div style={{ color: styles.textSecondary, fontSize: "0.98rem" }}>Aktivitet: {a.activityTitle}</div>
-                    {a.comment && <div style={{ color: styles.textSecondary, fontSize: "0.95rem" }}>Kommentar: {a.comment}</div>}
-                    <div style={{ color: styles.textSecondary, fontSize: "0.85rem" }}>Anmäld: {new Date(a.date).toLocaleString('sv-SE')}</div>
+                  <div key={idx} className={stylesModule.cardAbsenceItem}>
+                    <div className={stylesModule.cardAbsenceUser}>{a.userName} ({a.reason})</div>
+                    <div className={stylesModule.cardAbsenceActivity}>Aktivitet: {a.activityTitle}</div>
+                    {a.comment && <div className={stylesModule.cardAbsenceComment}>Kommentar: {a.comment}</div>}
+                    <div className={stylesModule.cardAbsenceDate}>Anmäld: {new Date(a.date).toLocaleString('sv-SE')}</div>
                   </div>
                 ))}
               </div>
             )}
           </div>
-          <div style={{ background: styles.cardBackground, borderRadius: "1.2rem", boxShadow: "0 4px 16px rgba(46, 125, 50, 0.18)", border: `2px solid ${styles.primaryGreen}`, padding: "1.2rem 1.5rem", position: "relative" }}>
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-              <div style={{ fontWeight: 700, fontSize: "1.15rem", color: styles.primaryGreen }}>Check in / Check ut</div>
-              <button onClick={() => setShowEditQuestions(v => !v)} style={{ background: styles.primaryGreen, color: '#fff', borderRadius: 8, border: 'none', fontWeight: 700, fontSize: '0.98rem', padding: '0.4rem 1.1rem', cursor: 'pointer', boxShadow: '0 2px 8px #2E7D3233', marginLeft: 'auto' }}>{showEditQuestions ? 'Stäng redigering' : 'Redigera frågor'}</button>
+          <div className={stylesModule.cardCheckInOut}>
+            <div className={stylesModule.cardCheckInOutHeader}>
+              <div className={stylesModule.cardCheckInOutTitle}>Check in / Check ut</div>
+              <button onClick={() => setShowEditQuestions(v => !v)} className={stylesModule.cardCheckInOutEditBtn}>{showEditQuestions ? 'Stäng redigering' : 'Redigera frågor'}</button>
             </div>
             {/* Admin-sektion för redigering */}
             {showEditQuestions && (
-              <div style={{ margin: '1.2rem 0', background: styles.gradients.cardHover, borderRadius: 12, padding: '1.2rem' }}>
-                <div style={{ fontWeight: 700, color: styles.primaryGreen, fontSize: '1.08rem', marginBottom: '0.7rem' }}>Redigera frågor för check in/check ut</div>
+              <div className={stylesModule.cardCheckInOutEditSection}>
+                <div className={stylesModule.cardCheckInOutEditTitle}>Redigera frågor för check in/check ut</div>
                 {/* Lista befintliga frågor */}
                 {questions.map(q => (
-                  <div key={q._id} style={{ marginBottom: '1.1rem', background: '#fff', borderRadius: 8, padding: '0.7rem 1.1rem', boxShadow: '0 2px 8px #2E7D3233', border: `1.5px solid ${styles.primaryGreen}` }}>
-                    <div style={{ fontWeight: 700, color: styles.primaryGreen }}>{q.type === 'in' ? 'Check in' : 'Check ut'}-fråga</div>
-                    <div style={{ fontWeight: 600 }}>{q.text}</div>
-                    <div style={{ margin: '0.5rem 0' }}>
-                      Svarsalternativ:
-                      <ul style={{ margin: 0, paddingLeft: 18 }}>
+                  <div key={q._id} className={stylesModule.cardCheckInOutEditItem}>
+                    <div className={stylesModule.cardCheckInOutEditItemType}>{q.type === 'in' ? 'Check in' : 'Check ut'}-fråga</div>
+                    <div className={stylesModule.cardCheckInOutEditItemText}>{q.text}</div>
+                    <div className={stylesModule.cardCheckInOutEditItemOptions}>Svarsalternativ:
+                      <ul className={stylesModule.cardCheckInOutEditItemOptionsList}>
                         {q.options.map((opt: string, idx: number) => <li key={idx}>{opt}</li>)}
                       </ul>
                     </div>
-                    <button onClick={() => setEditQuestion(q)} style={{ marginRight: 8, background: styles.primaryGreen, color: '#fff', borderRadius: 8, border: 'none', fontWeight: 700, fontSize: '0.95rem', padding: '0.3rem 0.8rem', cursor: 'pointer' }}>Redigera</button>
-                    <button onClick={async () => { await checkQuestionAPI.delete(q._id); setQuestions(questions.filter(qq => qq._id !== q._id)); }} style={{ background: '#e53935', color: '#fff', borderRadius: 8, border: 'none', fontWeight: 700, fontSize: '0.95rem', padding: '0.3rem 0.8rem', cursor: 'pointer' }}>Ta bort</button>
+                    <button onClick={() => setEditQuestion(q)} className={stylesModule.cardCheckInOutEditBtn}>Redigera</button>
+                    <button onClick={async () => { await checkQuestionAPI.delete(q._id); setQuestions(questions.filter(qq => qq._id !== q._id)); }} className={stylesModule.cardCheckInOutDeleteBtn}>Ta bort</button>
                   </div>
                 ))}
                 {/* Redigera vald fråga */}
                 {editQuestion && (
-                  <div style={{ marginBottom: '1.1rem', background: '#fff', borderRadius: 8, padding: '0.7rem 1.1rem', boxShadow: '0 2px 8px #2E7D3233', border: `1.5px solid ${styles.primaryGreen}` }}>
-                    <div style={{ fontWeight: 700, color: styles.primaryGreen }}>Redigera fråga</div>
-                    <input value={editQuestion.text} onChange={e => setEditQuestion({ ...editQuestion, text: e.target.value })} style={{ width: '100%', marginBottom: 8, padding: 6, borderRadius: 6, border: '1px solid #ccc' }} />
-                    <div style={{ marginBottom: 8 }}>
-                      Svarsalternativ:
+                  <div className={stylesModule.cardCheckInOutEditItem}>
+                    <div className={stylesModule.cardCheckInOutEditItemType}>Redigera fråga</div>
+                    <label htmlFor="edit-question-text" className={stylesModule.cardCheckInOutEditLabel}>Frågetext</label>
+                    <input
+                      id="edit-question-text"
+                      value={editQuestion.text}
+                      onChange={e => setEditQuestion({ ...editQuestion, text: e.target.value })}
+                      className={stylesModule.editQuestionInput}
+                      placeholder="Frågetext"
+                      title="Redigera frågetext"
+                    />
+                    <div className={stylesModule.cardCheckInOutEditOptions}>Svarsalternativ:
                       {editQuestion.options.map((opt: string, idx: number) => (
-                        <div key={idx} style={{ display: 'flex', gap: 6, marginBottom: 4 }}>
-                          <input value={opt} onChange={e => {
-                            const opts = [...editQuestion.options];
-                            opts[idx] = e.target.value;
-                            setEditQuestion({ ...editQuestion, options: opts });
-                          }} style={{ flex: 1, padding: 6, borderRadius: 6, border: '1px solid #ccc' }} />
-                          <button onClick={() => setEditQuestion({ ...editQuestion, options: editQuestion.options.filter((_: any, i: number) => i !== idx) })} style={{ background: '#e53935', color: '#fff', borderRadius: 6, border: 'none', fontWeight: 700, fontSize: '0.95rem', padding: '0.2rem 0.6rem', cursor: 'pointer' }}>Ta bort</button>
+                        <div key={idx} className={stylesModule.cardCheckInOutEditOptionRow}>
+                          <input
+                            value={opt}
+                            onChange={e => {
+                              const opts = [...editQuestion.options];
+                              opts[idx] = e.target.value;
+                              setEditQuestion({ ...editQuestion, options: opts });
+                            }}
+                            className={stylesModule.editQuestionOptionInput}
+                            title="Redigera svarsalternativ"
+                            placeholder="Svarsalternativ"
+                          />
+                          <button
+                            onClick={() => setEditQuestion({ ...editQuestion, options: editQuestion.options.filter((_: any, i: number) => i !== idx) })}
+                            className={stylesModule.cardCheckInOutDeleteBtn}
+                          >Ta bort</button>
                         </div>
                       ))}
-                      <button onClick={() => setEditQuestion({ ...editQuestion, options: [...editQuestion.options, ''] })} style={{ background: styles.primaryGreen, color: '#fff', borderRadius: 6, border: 'none', fontWeight: 700, fontSize: '0.95rem', padding: '0.2rem 0.6rem', cursor: 'pointer', marginTop: 4 }}>Lägg till svarsalternativ</button>
+                      <button onClick={() => setEditQuestion({ ...editQuestion, options: [...editQuestion.options, ''] })} className={stylesModule.cardCheckInOutAddOptionBtn}>Lägg till svarsalternativ</button>
                     </div>
-                    <button onClick={async () => { await checkQuestionAPI.update(editQuestion._id, editQuestion); setEditQuestion(null); checkQuestionAPI.getAll().then(res => { if (res.success && res.data) setQuestions(res.data); }); }} style={{ background: styles.primaryGreen, color: '#fff', borderRadius: 8, border: 'none', fontWeight: 700, fontSize: '0.95rem', padding: '0.3rem 0.8rem', cursor: 'pointer', marginRight: 8 }}>Spara</button>
-                    <button onClick={() => setEditQuestion(null)} style={{ background: '#aaa', color: '#fff', borderRadius: 8, border: 'none', fontWeight: 700, fontSize: '0.95rem', padding: '0.3rem 0.8rem', cursor: 'pointer' }}>Avbryt</button>
+                    <button onClick={async () => { await checkQuestionAPI.update(editQuestion._id, editQuestion); setEditQuestion(null); checkQuestionAPI.getAll().then(res => { if (res.success && res.data) setQuestions(res.data); }); }} className={stylesModule.cardCheckInOutEditBtn}>Spara</button>
+                    <button onClick={() => setEditQuestion(null)} className={stylesModule.cardCheckInOutCancelBtn}>Avbryt</button>
                   </div>
                 )}
                 {/* Lägg till ny fråga */}
-                <div style={{ marginBottom: '1.1rem', background: '#fff', borderRadius: 8, padding: '0.7rem 1.1rem', boxShadow: '0 2px 8px #2E7D3233', border: `1.5px solid ${styles.primaryGreen}` }}>
-                  <div style={{ fontWeight: 700, color: styles.primaryGreen }}>Lägg till ny fråga</div>
-                  <select value={newQuestion.type} onChange={e => setNewQuestion({ ...newQuestion, type: e.target.value })} style={{ marginBottom: 8, padding: 6, borderRadius: 6, border: '1px solid #ccc' }}>
+                <div className={stylesModule.cardCheckInOutEditItem}>
+                  <div className={stylesModule.cardCheckInOutEditItemType}>Lägg till ny fråga</div>
+                  <select
+                    value={newQuestion.type}
+                    onChange={e => setNewQuestion({ ...newQuestion, type: e.target.value })}
+                    className={stylesModule.selectInput}
+                    title="Typ av fråga"
+                  >
                     <option value="in">Check in</option>
                     <option value="out">Check ut</option>
                   </select>
-                  <input value={newQuestion.text} onChange={e => setNewQuestion({ ...newQuestion, text: e.target.value })} placeholder="Frågetext" style={{ width: '100%', marginBottom: 8, padding: 6, borderRadius: 6, border: '1px solid #ccc' }} />
-                  <div style={{ marginBottom: 8 }}>
-                    Svarsalternativ:
+                  <input value={newQuestion.text} onChange={e => setNewQuestion({ ...newQuestion, text: e.target.value })} placeholder="Frågetext" className={stylesModule.editQuestionInput} />
+                  <div className={stylesModule.cardCheckInOutEditOptions}>Svarsalternativ:
                     {newQuestion.options.map((opt, idx) => (
-                      <div key={idx} style={{ display: 'flex', gap: 6, marginBottom: 4 }}>
-                        <input value={opt} onChange={e => {
-                          const opts = [...newQuestion.options];
-                          opts[idx] = e.target.value;
-                          setNewQuestion({ ...newQuestion, options: opts });
-                        }} style={{ flex: 1, padding: 6, borderRadius: 6, border: '1px solid #ccc' }} />
-                        <button onClick={() => setNewQuestion({ ...newQuestion, options: newQuestion.options.filter((_: any, i: number) => i !== idx) })} style={{ background: '#e53935', color: '#fff', borderRadius: 6, border: 'none', fontWeight: 700, fontSize: '0.95rem', padding: '0.2rem 0.6rem', cursor: 'pointer' }}>Ta bort</button>
+                      <div key={idx} className={stylesModule.cardCheckInOutEditOptionRow}>
+                        <input
+                          value={opt}
+                          onChange={e => {
+                            const opts = [...newQuestion.options];
+                            opts[idx] = e.target.value;
+                            setNewQuestion({ ...newQuestion, options: opts });
+                          }}
+                          className={stylesModule.optionInput}
+                          title="Svarsalternativ"
+                          placeholder="Svarsalternativ"
+                        />
+                        <button onClick={() => setNewQuestion({ ...newQuestion, options: newQuestion.options.filter((_: any, i: number) => i !== idx) })} className={stylesModule.cardCheckInOutDeleteBtn}>Ta bort</button>
                       </div>
                     ))}
-                    <button onClick={() => setNewQuestion({ ...newQuestion, options: [...newQuestion.options, ''] })} style={{ background: styles.primaryGreen, color: '#fff', borderRadius: 6, border: 'none', fontWeight: 700, fontSize: '0.95rem', padding: '0.2rem 0.6rem', cursor: 'pointer', marginTop: 4 }}>Lägg till svarsalternativ</button>
+                    <button onClick={() => setNewQuestion({ ...newQuestion, options: [...newQuestion.options, ''] })} className={stylesModule.cardCheckInOutAddOptionBtn}>Lägg till svarsalternativ</button>
                   </div>
-                  <button onClick={async () => { await checkQuestionAPI.create(newQuestion); setNewQuestion({ type: 'in', text: '', options: [''] }); checkQuestionAPI.getAll().then(res => { if (res.success && res.data) setQuestions(res.data); }); }} style={{ background: styles.primaryGreen, color: '#fff', borderRadius: 8, border: 'none', fontWeight: 700, fontSize: '0.95rem', padding: '0.3rem 0.8rem', cursor: 'pointer' }}>Spara ny fråga</button>
+                  <button onClick={async () => { await checkQuestionAPI.create(newQuestion); setNewQuestion({ type: 'in', text: '', options: [''] }); checkQuestionAPI.getAll().then(res => { if (res.success && res.data) setQuestions(res.data); }); }} className={stylesModule.cardCheckInOutEditBtn}>Spara ny fråga</button>
                 </div>
               </div>
             )}
             {checks.length === 0 ? (
-              <div style={{ color: styles.textSecondary, fontSize: "0.98rem" }}>Inga check in/check ut-svar ännu.</div>
+              <div className={stylesModule.cardCheckInOutEmpty}>Inga check in/check ut-svar ännu.</div>
             ) : (
               <div>
                 {/* Gruppera aktiviteter */}
@@ -239,21 +254,21 @@ const Ledarportal: React.FC = () => {
                     .map(([id, title]) => ({ id, title }));
                   return (
                     <div>
-                      <div style={{ marginBottom: "1.2rem" }}>
-                        <div style={{ fontWeight: 700, color: styles.primaryGreen, fontSize: "1.08rem", marginBottom: "0.5rem" }}>Tidigare aktiviteter</div>
-                        <div style={{ display: "flex", flexWrap: "wrap", gap: "0.7rem" }}>
-                          {activities.map(act => (
-                            <button key={act.id} onClick={() => setSelectedActivityId(act.id)} style={{ background: selectedActivityId===act.id ? styles.primaryGreen : styles.cardBackground, color: selectedActivityId===act.id ? '#fff' : styles.textPrimary, borderRadius: 10, border: `2px solid ${styles.primaryGreen}`, fontWeight: 700, fontSize: "1.05rem", padding: "0.5rem 1.2rem", cursor: "pointer" }}>{act.title}</button>
-                          ))}
+                        <div className={stylesModule.cardCheckInOutActivitiesHeader}>
+                          <div className={stylesModule.cardCheckInOutActivitiesTitle}>Tidigare aktiviteter</div>
+                          <div className={stylesModule.cardCheckInOutActivitiesList}>
+                            {activities.map(act => (
+                              <button key={act.id} onClick={() => setSelectedActivityId(act.id)} className={selectedActivityId===act.id ? stylesModule.cardCheckInOutActivityBtnActive : stylesModule.cardCheckInOutActivityBtn}>{act.title}</button>
+                            ))}
+                          </div>
                         </div>
-                      </div>
                       {/* Visa svar och snitt för vald aktivitet */}
                       {selectedActivityId && (
-                        <div style={{ marginTop: "1.2rem" }}>
-                          <div style={{ fontWeight: 700, color: styles.primaryGreen, fontSize: "1.08rem", marginBottom: "0.5rem" }}>Svar för aktivitet</div>
+                        <div className={stylesModule.cardCheckInOutActivityAnswersWrapper}>
+                          <div className={stylesModule.cardCheckInOutActivityAnswersTitle}>Svar för aktivitet</div>
                           {(() => {
                             const activityChecks = checks.filter(c => c.activityId === selectedActivityId);
-                            if (activityChecks.length === 0) return <div style={{ color: styles.textSecondary }}>Inga svar för denna aktivitet.</div>;
+                            if (activityChecks.length === 0) return <div className={stylesModule.cardCheckInOutActivityAnswersEmpty}>Inga svar för denna aktivitet.</div>;
                             // Snittvärden
                             const avgBody = activityChecks.reduce((sum, c) => sum + c.bodyFeeling, 0) / activityChecks.length;
                             const avgMental = activityChecks.reduce((sum, c) => sum + c.mentalFeeling, 0) / activityChecks.length;
@@ -261,16 +276,19 @@ const Ledarportal: React.FC = () => {
                             const getColor = (val: number) => val <= 1.5 ? '#e53935' : val <= 2.5 ? '#FFB300' : val <= 3.5 ? '#FBC02D' : '#2E7D32';
                             return (
                               <div>
-                                <div style={{ display: "flex", gap: "2rem", marginBottom: "1.2rem" }}>
-                                  <div style={{ fontWeight: 700, fontSize: "1.05rem", color: styles.textPrimary }}>Snitt kropp: <span style={{ color: getColor(avgBody), fontWeight: 900 }}>{avgBody.toFixed(2)}</span></div>
-                                  <div style={{ fontWeight: 700, fontSize: "1.05rem", color: styles.textPrimary }}>Snitt mentalt: <span style={{ color: getColor(avgMental), fontWeight: 900 }}>{avgMental.toFixed(2)}</span></div>
+                                <div className={stylesModule.cardCheckInOutActivityStats}>
+                                  <div className={stylesModule.cardCheckInOutActivityAvgBody}>Snitt kropp: <span className={getColor(avgBody) === '#e53935' ? stylesModule.avgRed : getColor(avgBody) === '#FFB300' ? stylesModule.avgGold : getColor(avgBody) === '#FBC02D' ? stylesModule.avgYellow : stylesModule.avgGreen}>{avgBody.toFixed(2)}</span></div>
+                                  <div className={stylesModule.cardCheckInOutActivityAvgMental}>Snitt mentalt: <span className={getColor(avgMental) === '#e53935' ? stylesModule.avgRed : getColor(avgMental) === '#FFB300' ? stylesModule.avgGold : getColor(avgMental) === '#FBC02D' ? stylesModule.avgYellow : stylesModule.avgGreen}>{avgMental.toFixed(2)}</span></div>
                                 </div>
-                                <div style={{ display: "flex", flexDirection: "column", gap: "0.7rem" }}>
+                                <div className={stylesModule.cardCheckInOutActivityList}>
                                   {activityChecks.map((c, idx) => (
-                                    <div key={idx} style={{ background: styles.gradients.cardHover, borderRadius: "1rem", padding: "0.7rem 1.2rem", boxShadow: "0 2px 8px rgba(46,125,50,0.10)", border: `1.5px solid ${styles.primaryGreen}`, display: "flex", flexDirection: "column", gap: "0.2rem" }}>
-                                      <div style={{ fontWeight: 700, color: styles.primaryGreen, fontSize: "1.05rem" }}>{c.userName} ({c.type === 'in' ? 'Check in' : 'Check ut'})</div>
-                                      <div style={{ color: styles.textSecondary, fontSize: "0.98rem" }}>Kropp: <span style={{ color: getColor(c.bodyFeeling), fontWeight: 700 }}>{c.bodyFeeling}</span> | Mentalt: <span style={{ color: getColor(c.mentalFeeling), fontWeight: 700 }}>{c.mentalFeeling}</span></div>
-                                      <div style={{ color: styles.textSecondary, fontSize: "0.85rem" }}>Tid: {new Date(c.date).toLocaleString('sv-SE')}</div>
+                                    <div key={idx} className={stylesModule.cardCheckInOutActivityItem}>
+                                      <div className={stylesModule.cardCheckInOutActivityUser}>{c.userName} ({c.type === 'in' ? 'Check in' : 'Check ut'})</div>
+                                      <div className={stylesModule.cardCheckInOutActivityFeelings}>
+                                        Kropp: <span className={getColor(c.bodyFeeling) === '#e53935' ? stylesModule.avgRed : getColor(c.bodyFeeling) === '#FFB300' ? stylesModule.avgGold : getColor(c.bodyFeeling) === '#FBC02D' ? stylesModule.avgYellow : stylesModule.avgGreen}>{c.bodyFeeling}</span> |
+                                        Mentalt: <span className={getColor(c.mentalFeeling) === '#e53935' ? stylesModule.avgRed : getColor(c.mentalFeeling) === '#FFB300' ? stylesModule.avgGold : getColor(c.mentalFeeling) === '#FBC02D' ? stylesModule.avgYellow : stylesModule.avgGreen}>{c.mentalFeeling}</span>
+                                      </div>
+                                      <div className={stylesModule.cardCheckInOutActivityDate}>Tid: {new Date(c.date).toLocaleString('sv-SE')}</div>
                                     </div>
                                   ))}
                                 </div>
@@ -280,14 +298,14 @@ const Ledarportal: React.FC = () => {
                         </div>
                       )}
                       {/* Snitt över tid (tabell) */}
-                      <div style={{ marginTop: "2.2rem" }}>
-                        <div style={{ fontWeight: 700, color: styles.primaryGreen, fontSize: "1.08rem", marginBottom: "0.5rem" }}>Snitt över tid</div>
-                        <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                      <div className={stylesModule.cardCheckInOutActivityTableWrapper}>
+                        <div className={stylesModule.cardCheckInOutActivityTableTitle}>Snitt över tid</div>
+                        <table className={stylesModule.cardCheckInOutActivityTable}>
                           <thead>
-                            <tr style={{ background: styles.gradients.cardHover }}>
-                              <th style={{ padding: "0.5rem", border: `1px solid ${styles.primaryGreen}` }}>Aktivitet</th>
-                              <th style={{ padding: "0.5rem", border: `1px solid ${styles.primaryGreen}` }}>Snitt kropp</th>
-                              <th style={{ padding: "0.5rem", border: `1px solid ${styles.primaryGreen}` }}>Snitt mentalt</th>
+                            <tr className={stylesModule.cardCheckInOutActivityTableHeader}>
+                              <th className={stylesModule.cardCheckInOutActivityTableCell}>Aktivitet</th>
+                              <th className={stylesModule.cardCheckInOutActivityTableCell}>Snitt kropp</th>
+                              <th className={stylesModule.cardCheckInOutActivityTableCell}>Snitt mentalt</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -299,9 +317,9 @@ const Ledarportal: React.FC = () => {
                               const getColor = (val: number) => val <= 1.5 ? '#e53935' : val <= 2.5 ? '#FFB300' : val <= 3.5 ? '#FBC02D' : '#2E7D32';
                               return (
                                 <tr key={act.id}>
-                                  <td style={{ padding: "0.5rem", border: `1px solid ${styles.primaryGreen}` }}>{act.title}</td>
-                                  <td style={{ padding: "0.5rem", border: `1px solid ${styles.primaryGreen}`, color: getColor(avgBody), fontWeight: 700 }}>{avgBody.toFixed(2)}</td>
-                                  <td style={{ padding: "0.5rem", border: `1px solid ${styles.primaryGreen}`, color: getColor(avgMental), fontWeight: 700 }}>{avgMental.toFixed(2)}</td>
+                                  <td className={stylesModule.cardCheckInOutActivityTableCell}>{act.title}</td>
+                                  <td className={`${stylesModule.cardCheckInOutActivityTableCell} ${getColor(avgBody) === '#e53935' ? stylesModule.avgRed : getColor(avgBody) === '#FFB300' ? stylesModule.avgGold : getColor(avgBody) === '#FBC02D' ? stylesModule.avgYellow : stylesModule.avgGreen}`}>{avgBody.toFixed(2)}</td>
+                                  <td className={`${stylesModule.cardCheckInOutActivityTableCell} ${getColor(avgMental) === '#e53935' ? stylesModule.avgRed : getColor(avgMental) === '#FFB300' ? stylesModule.avgGold : getColor(avgMental) === '#FBC02D' ? stylesModule.avgYellow : stylesModule.avgGreen}`}>{avgMental.toFixed(2)}</td>
                                 </tr>
                               );
                             })}
@@ -314,26 +332,26 @@ const Ledarportal: React.FC = () => {
               </div>
             )}
           </div>
-          <div style={{ background: styles.cardBackground, borderRadius: "1.2rem", boxShadow: "0 4px 16px rgba(46, 125, 50, 0.18)", border: `2px solid ${styles.primaryGreen}`, padding: "1.2rem 1.5rem" }}>
-            <div style={{ fontWeight: 700, fontSize: "1.15rem", color: styles.primaryGreen }}>Enkätsvar</div>
-            <div style={{ color: styles.textSecondary, fontSize: "0.98rem" }}>Här visas svaren från olika enkäter och undersökningar.</div>
+          <div className={stylesModule.cardSurvey}>
+            <div className={stylesModule.cardSurveyTitle}>Enkätsvar</div>
+            <div className={stylesModule.cardSurveyDesc}>Här visas svaren från olika enkäter och undersökningar.</div>
           </div>
-          <div style={{ background: styles.cardBackground, borderRadius: "1.2rem", boxShadow: "0 4px 16px rgba(46, 125, 50, 0.18)", border: `2px solid ${styles.primaryGreen}`, padding: "1.2rem 1.5rem" }}>
-            <div style={{ fontWeight: 700, fontSize: "1.15rem", color: styles.primaryGreen }}>Nya ansökningar</div>
+          <div className={stylesModule.cardPendingUsers}>
+            <div className={stylesModule.cardPendingUsersTitle}>Nya ansökningar</div>
             {loadingPending ? (
-              <div style={{ color: styles.textSecondary, fontSize: "0.98rem" }}>Laddar...</div>
+              <div className={stylesModule.cardPendingUsersLoading}>Laddar...</div>
             ) : errorPending ? (
-              <div style={{ color: "#e53935", fontSize: "0.98rem" }}>{errorPending}</div>
+              <div className={stylesModule.cardPendingUsersError}>{errorPending}</div>
             ) : pendingUsers.length === 0 ? (
-              <div style={{ color: styles.textSecondary, fontSize: "0.98rem" }}>Inga nya ansökningar.</div>
+              <div className={stylesModule.cardPendingUsersEmpty}>Inga nya ansökningar.</div>
             ) : (
-              <div style={{ display: "flex", flexDirection: "column", gap: "1rem", marginTop: "1rem" }}>
+              <div className={stylesModule.cardPendingUsersList}>
                 {pendingUsers.map(user => (
-                  <div key={user._id} style={{ background: styles.gradients.cardHover, borderRadius: "1rem", padding: "1rem 1.2rem", boxShadow: "0 2px 8px rgba(46,125,50,0.10)", border: `1.5px solid ${styles.primaryGreen}`, display: "flex", flexDirection: "column", gap: "0.3rem" }}>
-                    <div style={{ fontWeight: 700, color: styles.primaryGreen, fontSize: "1.05rem" }}>{user.name} ({user.role})</div>
-                    <div style={{ color: styles.textSecondary, fontSize: "0.98rem" }}>E-post: {user.email}</div>
-                    <div style={{ color: styles.textSecondary, fontSize: "0.95rem" }}>Status: {user.status}</div>
-                    <button onClick={() => handleApprove(user._id)} style={{ marginTop: "0.7rem", padding: "0.6rem 1.2rem", borderRadius: "10px", background: styles.primaryGreen, color: "#fff", fontWeight: 700, border: "none", cursor: "pointer", boxShadow: "0 2px 8px #2E7D3233" }}>Godkänn</button>
+                  <div key={user.id} className={stylesModule.cardPendingUsersItem}>
+                    <div className={stylesModule.cardPendingUsersName}>{user.name} ({user.role})</div>
+                    <div className={stylesModule.cardPendingUsersEmail}>E-post: {user.email}</div>
+                    <div className={stylesModule.cardPendingUsersStatus}>Status: {user.status}</div>
+                    <button onClick={() => handleApprove(user.id)} className={stylesModule.cardPendingUsersApproveBtn}>Godkänn</button>
                   </div>
                 ))}
               </div>
@@ -341,20 +359,14 @@ const Ledarportal: React.FC = () => {
           </div>
         </div>
       </section>
-      <footer style={{ maxWidth: 900, margin: "0 auto", padding: "1.5rem 1rem", borderTop: `2px solid ${styles.primaryGreen}`, display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem", fontSize: "0.9rem", color: styles.textSecondary }}>
-        <div style={{ textAlign: "center" }}>
+      <footer className={stylesModule.ledarportalFooter}>
+        <div className={stylesModule.ledarportalFooterCopyright}>
           &copy; {new Date().getFullYear()} FBC - Alla rättigheter förbehållna.
         </div>
-        <div style={{ display: "flex", gap: "1.5rem", flexWrap: "wrap", justifyContent: "center", alignItems: "center" }}>
-          <a href="/privacy-policy" style={{ color: styles.textSecondary, textDecoration: "none", transition: "color 0.2s" }} onMouseEnter={e => e.currentTarget.style.color = "#FFB300"} onMouseLeave={e => e.currentTarget.style.color = styles.textSecondary}>
-            Policy för personuppgifter
-          </a>
-          <a href="/terms-of-service" style={{ color: styles.textSecondary, textDecoration: "none", transition: "color 0.2s" }} onMouseEnter={e => e.currentTarget.style.color = "#FFB300"} onMouseLeave={e => e.currentTarget.style.color = styles.textSecondary}>
-            Användarvillkor
-          </a>
-          <a href="/cookie-policy" style={{ color: styles.textSecondary, textDecoration: "none", transition: "color 0.2s" }} onMouseEnter={e => e.currentTarget.style.color = "#FFB300"} onMouseLeave={e => e.currentTarget.style.color = styles.textSecondary}>
-            Cookiepolicy
-          </a>
+        <div className={stylesModule.ledarportalFooterLinks}>
+          <a href="/privacy-policy" className={stylesModule.ledarportalFooterLink}>Policy för personuppgifter</a>
+          <a href="/terms-of-service" className={stylesModule.ledarportalFooterLink}>Användarvillkor</a>
+          <a href="/cookie-policy" className={stylesModule.ledarportalFooterLink}>Cookiepolicy</a>
         </div>
       </footer>
     </div>

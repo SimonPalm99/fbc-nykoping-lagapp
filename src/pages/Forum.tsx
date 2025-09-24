@@ -5,18 +5,6 @@ import { forumAPI } from '../services/apiService';
 import { useUser } from '../context/UserContext';
 import { useTitle } from '../hooks/useTitle';
 
-// 1. Mörkare design och modernare kort:
-const fbcTheme = {
-	background: 'linear-gradient(135deg, #0A0A0A 0%, #1B2E1B 100%)',
-	cardBg: 'rgba(16,32,16,0.97)',
-	accent: '#2E7D32', // primaryGreen från Home
-	accentDark: '#388E3C', // accentGreen från Home
-	accentLight: '#4CAF50', // accentGreen från Home
-	text: {
-		primary: '#F1F8E9',
-		secondary: '#C8E6C9',
-	}
-};
 
 export type ForumComment = {
 	author: string;
@@ -94,105 +82,107 @@ const Forum: React.FC = () => {
 		});
 
 	return (
-		<div style={{
-			minHeight: '100vh',
-			background: fbcTheme.background,
-			color: fbcTheme.text.primary,
-			padding: '2rem 0.5rem',
-			width: '100%',
-			fontFamily: 'inherit',
-			position: 'relative',
-		}}>
+		<div className="forum-root">
 			{/* Glassmorphism overlay */}
-			<div style={{
-				position: 'fixed',
-				top: 0,
-				left: 0,
-				width: '100vw',
-				height: '100vh',
-				pointerEvents: 'none',
-				zIndex: 0,
-				background: 'radial-gradient(circle at 60% 20%, rgba(34,197,94,0.10) 0%, rgba(34,197,94,0.03) 70%, transparent 100%)',
-				backdropFilter: 'blur(2px)',
-			}} />
-			<div style={{ maxWidth: 800, margin: '0 auto', width: '100%', position: 'relative', zIndex: 1 }}>
+			<div className="forum-glassmorphism-overlay" />
+			<div className="forum-main-container">
 				{/* FBC-rubrik */}
-				<div style={{ textAlign: 'center', marginBottom: '2.2rem', marginTop: '-0.5rem' }}>
-					<h1 style={{
-						color: fbcTheme.text.primary,
-						fontWeight: 900,
-						fontSize: '2.3rem',
-						letterSpacing: '0.02em',
-						textShadow: '0 2px 12px rgba(34,197,94,0.25)',
-						marginBottom: '0.3rem',
-					}}>
+				<div className="forum-header">
+					<h1 className="forum-title">
 						Forum & Diskussion
 					</h1>
-					<div style={{ color: fbcTheme.text.secondary, fontSize: '1.15rem', fontWeight: 500 }}>
+					<div className="forum-subtitle">
 						Här kan du diskutera, ställa frågor och dela information med laget.
 					</div>
 				</div>
 				{/* Push-notis */}
 				{pushMessage && (
-					<div style={{ background: fbcTheme.accent, color: '#fff', padding: '1rem', borderRadius: 12, marginBottom: '1rem', fontWeight: 'bold', textAlign: 'center', maxWidth: 400 }}>
+					<div className="forum-push-message">
 						{pushMessage}
 					</div>
 				)}
 				{/* Viktigt/Forum filter */}
-				<div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-					<button onClick={() => setShowImportant(false)} style={{ background: !showImportant ? fbcTheme.accent : 'rgba(34,197,94,0.10)', color: !showImportant ? '#fff' : fbcTheme.accent, border: `2px solid ${fbcTheme.accent}`, borderRadius: '1rem', padding: '0.5rem 1.2rem', cursor: 'pointer', fontWeight: 'bold', fontSize: '1rem', boxShadow: !showImportant ? '0 2px 8px #22c55e44' : 'none', transition: 'background 0.2s' }}>Forum</button>
-					<button onClick={() => setShowImportant(true)} style={{ background: showImportant ? fbcTheme.accent : 'rgba(34,197,94,0.10)', color: showImportant ? '#fff' : fbcTheme.accent, border: `2px solid ${fbcTheme.accent}`, borderRadius: '1rem', padding: '0.5rem 1.2rem', cursor: 'pointer', fontWeight: 'bold', fontSize: '1rem', boxShadow: showImportant ? '0 2px 8px #22c55e44' : 'none', transition: 'background 0.2s' }}>Viktigt</button>
+				<div className="forum-filter-bar">
+					<button
+						onClick={() => setShowImportant(false)}
+						className={`forum-filter-btn${!showImportant ? ' active' : ''}`}
+					>
+						Forum
+					</button>
+					<button
+						onClick={() => setShowImportant(true)}
+						className={`forum-filter-btn${showImportant ? ' active' : ''}`}
+					>
+						Viktigt
+					</button>
 				</div>
 				{/* Nytt inlägg: media och omröstning */}
 				{showNewPostForm && (
-					<div style={{ background: fbcTheme.cardBg, borderRadius: '1.2rem', padding: '2rem', marginBottom: '2rem', boxShadow: '0 2px 12px #22c55e44', width: '100%', backdropFilter: 'blur(6px)', border: `2px solid ${fbcTheme.accent}` }}>
-						<h3 style={{ color: fbcTheme.accent, fontSize: '1.3rem', fontWeight: 'bold', marginBottom: '1.5rem' }}>Nytt inlägg</h3>
+					<div className="forum-new-post-form">
+						<h3 className="forum-new-post-title">Nytt inlägg</h3>
+						<label htmlFor="newPostTitle" className="forum-label-title">Titel</label>
 						<input
+							id="newPostTitle"
 							type="text"
 							placeholder="Titel"
+							aria-label="Titel"
 							value={newPostTitle}
 							onChange={e => setNewPostTitle(e.target.value)}
-							style={{ width: '100%', padding: '0.7rem', borderRadius: 8, border: '1px solid #444', marginBottom: '1rem', fontSize: '1rem', background: fbcTheme.cardBg, color: fbcTheme.text.primary }}
+							className="forum-input-title"
 						/>
 						<textarea
 							placeholder="Skriv ditt inlägg här..."
 							value={newPostContent}
 							onChange={e => setNewPostContent(e.target.value)}
-							style={{ width: '100%', minHeight: 80, borderRadius: 8, border: '1px solid #444', marginBottom: '1rem', fontSize: '1rem', background: fbcTheme.cardBg, color: fbcTheme.text.primary }}
+							className="forum-new-post-textarea"
 						/>
-						{/* Filuppladdning och förhandsvisning */}
-						<input
-							type="file"
-							accept="image/*,video/*"
-							style={{ marginBottom: '1rem' }}
-							onChange={e => {
-								const file = e.target.files?.[0];
-								setNewPostFile(file || null);
-								if (file) {
-									setNewPostPreview(URL.createObjectURL(file));
-								} else {
-									setNewPostPreview('');
-								}
-							}}
-						/>
+									{/* Filuppladdning och förhandsvisning */}
+									<div className="forum-upload-section">
+										<label htmlFor="newPostFile" className="forum-upload-label">Ladda upp fil</label>
+										<input
+											id="newPostFile"
+											type="file"
+											accept="image/*,video/*"
+											aria-label="Ladda upp fil"
+											className="forum-upload-input"
+											onChange={e => {
+												const file = e.target.files?.[0];
+												setNewPostFile(file || null);
+												if (file) {
+													setNewPostPreview(URL.createObjectURL(file));
+												} else {
+													setNewPostPreview('');
+												}
+											}}
+										/>
+									</div>
 						{newPostPreview && (
-							<div style={{ marginBottom: '1rem' }}>
+							<div className="forum-new-post-preview">
 								{newPostFile?.type.startsWith('image') ? (
-									<img src={newPostPreview} alt="Förhandsvisning" style={{ maxWidth: '100%', borderRadius: 12, boxShadow: '0 2px 12px #22c55e44', border: `2px solid ${fbcTheme.accent}` }} />
+									<img src={newPostPreview} alt="Förhandsvisning" className="forum-new-post-preview-img" />
 								) : (
-									<video src={newPostPreview} controls style={{ maxWidth: '100%', borderRadius: 12, boxShadow: '0 2px 12px #22c55e44', border: `2px solid ${fbcTheme.accent}` }} />
+									<video src={newPostPreview} controls className="forum-new-post-preview-video" />
 									)}
 								</div>
 							)
 						}
-						<div style={{ marginBottom: '1rem' }}>
-							<label style={{ color: fbcTheme.text.secondary, fontWeight: 'bold' }}>Omröstning (valfritt):</label>
-							{newPollOptions.map((opt, i) => (
-								<input key={i} type="text" value={opt} placeholder={`Alternativ ${i+1}`} onChange={e => {
-									const arr = [...newPollOptions]; arr[i] = e.target.value; setNewPollOptions(arr);
-								}} style={{ width: '100%', marginBottom: '0.5rem', padding: '0.5rem', borderRadius: 8, border: '1px solid #444', background: fbcTheme.cardBg, color: fbcTheme.text.primary }} />
-							))}
-							<button type="button" onClick={() => setNewPollOptions([...newPollOptions, ''])} style={{ background: fbcTheme.accent, color: '#fff', border: 'none', borderRadius: 8, padding: '0.5rem 1rem', fontWeight: 600, fontSize: '0.95rem', cursor: 'pointer', marginTop: '0.5rem' }}>Lägg till alternativ</button>
+						<div className="forum-poll-section">
+							<label className="forum-poll-label">Omröstning (valfritt):</label>
+										{newPollOptions.map((opt, i) => (
+											<div key={i}>
+												<label htmlFor={`pollOption${i}`} className="forum-poll-option-label">{`Alternativ ${i+1}`}</label>
+												<input id={`pollOption${i}`} type="text" value={opt} placeholder={`Alternativ ${i+1}`} aria-label={`Alternativ ${i+1}`} onChange={e => {
+													const arr = [...newPollOptions]; arr[i] = e.target.value; setNewPollOptions(arr);
+												}} className="forum-poll-option-input" />
+											</div>
+										))}
+							<button
+								type="button"
+								onClick={() => setNewPollOptions([...newPollOptions, ''])}
+								className="forum-poll-add-option-btn"
+							>
+								Lägg till alternativ
+							</button>
 						</div>
 						<button
 							disabled={!authUser || !authUser.id}
@@ -243,158 +233,155 @@ const Forum: React.FC = () => {
 									setTimeout(() => setPushMessage(''), 2000);
 								}
 							}}
-							style={{ background: fbcTheme.accent, color: '#fff', border: 'none', borderRadius: 8, padding: '0.7rem 1.5rem', fontWeight: 600, fontSize: '1.1rem', cursor: 'pointer', marginTop: '1rem', opacity: (!authUser || !authUser.id) ? 0.5 : 1 }}
+							className={`forum-publish-btn${(!authUser || !authUser.id) ? ' disabled' : ''}`}
 						>Publicera</button>
 					</div>
 				)}
-				<button onClick={() => setShowNewPostForm(true)} style={{ background: fbcTheme.accent, color: '#fff', border: 'none', borderRadius: 8, padding: '0.7rem 1.5rem', fontWeight: 600, fontSize: '1.1rem', cursor: 'pointer', marginBottom: '2rem', width: '100%', boxShadow: '0 2px 8px #22c55e44', transition: 'background 0.2s' }}>Nytt inlägg</button>
+				<button
+					onClick={() => setShowNewPostForm(true)}
+					className="forum-new-post-btn"
+				>
+					Nytt inlägg
+				</button>
 						{/* Visa inlägg med media, omröstning, kommentarer och nålning */}
-						<div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', width: '100%' }}>
+						<div className="forum-posts-list">
 							{loading ? (
-								<div style={{ background: fbcTheme.cardBg, borderRadius: '1.2rem', padding: '2rem', textAlign: 'center', color: fbcTheme.text.secondary, boxShadow: '0 2px 12px #22c55e22' }}>
+								<div className="forum-loading-message">
 									Laddar inlägg...
 								</div>
 							) : filteredPosts.length === 0 ? (
-								<div style={{ background: fbcTheme.cardBg, borderRadius: '1.2rem', padding: '2rem', textAlign: 'center', color: fbcTheme.text.secondary, boxShadow: '0 2px 12px #22c55e22' }}>
+								<div className="forum-loading-message">
 									Inga inlägg att visa
 								</div>
 							) : (
 									filteredPosts.map((post, idx) => (
-										<div
-											key={post.id}
-											style={{
-												background: fbcTheme.cardBg,
-												borderRadius: '1rem',
-												boxShadow: '0 2px 8px #22c55e44',
-												padding: '1.2rem 1rem',
-												borderLeft: post.pinned ? `4px solid ${fbcTheme.accent}` : 'none',
-												display: 'flex',
-												flexDirection: 'column',
-												gap: '0.7rem',
-												position: 'relative',
-												width: '100%',
-												backdropFilter: 'blur(4px)',
-												border: `2px solid ${post.pinned ? fbcTheme.accent : 'rgba(34,197,94,0.10)'}`,
-												transition: 'border 0.2s',
-											}}
-										>
+															<div
+																key={post.id}
+																className={`forum-post-card${post.pinned ? ' forum-post-card-pinned' : ''}`}
+															>
 								{/* Rollbaserade rättigheter: ledare kan redigera/ta bort allt, spelare bara sina egna */}
-								{authUser && (
-									  (authUser.role === 'leader' || (post.author && authUser.name && post.author.trim().toLowerCase() === authUser.name.trim().toLowerCase())) && (
-										<div style={{ display: 'flex', gap: '0.7rem', marginTop: '0.7rem' }}>
-											<button style={{ background: fbcTheme.accent, color: '#fff', borderRadius: 8, padding: '0.3rem 0.8rem', fontWeight: 600, fontSize: '0.95rem', border: 'none' }} onClick={() => { setEditPostId(post.id); setEditContent(post.content); }}>Redigera</button>
-											<button style={{ background: '#e53935', color: '#fff', borderRadius: 8, padding: '0.3rem 0.8rem', fontWeight: 600, fontSize: '0.95rem', border: 'none' }} onClick={() => setShowDeleteId(post.id)}>Ta bort</button>
-										</div>
-									)
-								)}
+												{authUser && (
+															(authUser.role === 'leader' || (post.author && authUser.name && post.author.trim().toLowerCase() === authUser.name.trim().toLowerCase())) && (
+														<div className="forum-post-actions">
+															<button className="forum-edit-btn" onClick={() => { setEditPostId(post.id); setEditContent(post.content); }}>Redigera</button>
+															<button className="forum-delete-btn" onClick={() => setShowDeleteId(post.id)}>Ta bort</button>
+														</div>
+													)
+												)}
 				{/* Modal för redigering */}
-				{editPostId && (
-					<div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', background: 'rgba(0,0,0,0.35)', zIndex: 300, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-						<div style={{ background: fbcTheme.cardBg, borderRadius: '1.2rem', padding: '2rem 2rem 1.5rem 2rem', boxShadow: '0 8px 32px #22c55e44', minWidth: 280, maxWidth: 400, border: `2px solid ${fbcTheme.accent}` }}>
-							<div style={{ fontWeight: 900, fontSize: '1.15rem', color: fbcTheme.accent, marginBottom: '1.2rem' }}>Redigera inlägg</div>
-							<textarea value={editContent} onChange={e => setEditContent(e.target.value)} style={{ width: '100%', minHeight: 80, fontSize: '1rem', borderRadius: 8, border: `1.5px solid ${fbcTheme.accent}`, marginBottom: '1.2rem', padding: '0.5rem', background: fbcTheme.cardBg, color: fbcTheme.text.primary }} />
-							<div style={{ display: 'flex', gap: '1.2rem', justifyContent: 'center' }}>
-												<button style={{ background: fbcTheme.accent, color: '#fff', borderRadius: 8, padding: '0.4rem 1.2rem', fontWeight: 700, fontSize: '1.05rem', border: 'none' }} onClick={() => {
-													const updatedPosts = posts.map(p => p.id === editPostId ? { ...p, content: editContent } : p);
-													setPosts(updatedPosts);
-													// borttaget: ingen localStorage
-													setEditPostId(null);
-													setEditContent("");
-													setPushMessage('Inlägg uppdaterat!');
-													setTimeout(() => setPushMessage(''), 2000);
-												}}>Spara</button>
-								<button style={{ background: '#e53935', color: '#fff', borderRadius: 8, padding: '0.4rem 1.2rem', fontWeight: 700, fontSize: '1.05rem', border: 'none' }} onClick={() => setEditPostId(null)}>Avbryt</button>
-							</div>
+								{editPostId && (
+										<div className="forum-modal-overlay">
+											<div className="forum-modal-edit">
+												<div className="forum-modal-title">Redigera inlägg</div>
+												<label htmlFor="editPostContent" className="forum-modal-label">Redigera innehåll</label>
+													<textarea
+														id="editPostContent"
+														className="forum-edit-textarea"
+														value={editContent}
+														onChange={e => setEditContent(e.target.value)}
+														placeholder="Redigera ditt inlägg här..."
+														title="Redigera innehåll"
+													/>
+													<div className="forum-modal-actions">
+														<button className="forum-modal-save-btn" onClick={() => {
+															const updatedPosts = posts.map(p => p.id === editPostId ? { ...p, content: editContent } : p);
+															setPosts(updatedPosts);
+															setEditPostId(null);
+															setEditContent("");
+															setPushMessage('Inlägg uppdaterat!');
+															setTimeout(() => setPushMessage(''), 2000);
+														}}>Spara</button>
+														<button className="forum-modal-cancel-btn" onClick={() => setEditPostId(null)}>Avbryt</button>
+													</div>
 						</div>
 					</div>
 				)}
 				{/* Modal för ta bort */}
-				{showDeleteId && (
-					<div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', background: 'rgba(0,0,0,0.35)', zIndex: 300, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-						<div style={{ background: fbcTheme.cardBg, borderRadius: '1.2rem', padding: '2rem 2rem 1.5rem 2rem', boxShadow: '0 8px 32px #22c55e44', minWidth: 280, maxWidth: 400, border: `2px solid #e53935` }}>
-							<div style={{ fontWeight: 900, fontSize: '1.15rem', color: '#e53935', marginBottom: '1.2rem' }}>Ta bort inlägg</div>
-							<div style={{ color: fbcTheme.text.secondary, fontSize: '1.05rem', marginBottom: '1.2rem' }}>Är du säker på att du vill ta bort detta inlägg?</div>
-							<div style={{ display: 'flex', gap: '1.2rem', justifyContent: 'center' }}>
-												<button style={{ background: '#e53935', color: '#fff', borderRadius: 8, padding: '0.4rem 1.2rem', fontWeight: 700, fontSize: '1.05rem', border: 'none' }} onClick={() => {
-													const updatedPosts = posts.filter(p => p.id !== showDeleteId);
-													setPosts(updatedPosts);
-													// borttaget: ingen localStorage
-													setShowDeleteId(null);
-													setPushMessage('Inlägg borttaget!');
-													setTimeout(() => setPushMessage(''), 2000);
-												}}>Ta bort</button>
-								<button style={{ background: fbcTheme.accent, color: '#fff', borderRadius: 8, padding: '0.4rem 1.2rem', fontWeight: 700, fontSize: '1.05rem', border: 'none' }} onClick={() => setShowDeleteId(null)}>Avbryt</button>
-							</div>
+								{showDeleteId && (
+										<div className="forum-modal-overlay">
+											<div className="forum-modal-delete">
+												<div className="forum-modal-title forum-modal-title-delete">Ta bort inlägg</div>
+												<div className="forum-modal-delete-text">Är du säker på att du vill ta bort detta inlägg?</div>
+												<div className="forum-modal-actions">
+													<button className="forum-modal-delete-btn" onClick={() => {
+														const updatedPosts = posts.filter(p => p.id !== showDeleteId);
+														setPosts(updatedPosts);
+														setShowDeleteId(null);
+														setPushMessage('Inlägg borttaget!');
+														setTimeout(() => setPushMessage(''), 2000);
+													}}>Ta bort</button>
+													<button className="forum-modal-cancel-btn" onClick={() => setShowDeleteId(null)}>Avbryt</button>
+												</div>
 						</div>
 					</div>
 				)}
-								{post.pinned && <span style={{ position: 'absolute', top: 16, right: 20, color: fbcTheme.accent, fontWeight: 'bold', fontSize: '1.1rem' }}>📌 Nålat</span>}
-								<div style={{ fontWeight: 'bold', fontSize: '1.15rem', color: fbcTheme.accent, textShadow: '0 2px 8px #22c55e22' }}>{post.title}</div>
-								<div style={{ color: fbcTheme.text.secondary, fontSize: '1rem', lineHeight: 1.6 }}>{post.content}</div>
-								{post.media && post.media.match(/.(jpg|jpeg|png|gif)$/i) && (
-									<img src={post.media} alt="Bild" style={{ maxWidth: '100%', borderRadius: 12, margin: '1rem 0', boxShadow: '0 2px 12px #22c55e44', border: `2px solid ${fbcTheme.accent}` }} />
+								{post.pinned && <span className="forum-post-pinned">📌 Nålat</span>}
+								<div className="forum-post-title">{post.title}</div>
+								<div className="forum-post-content">{post.content}</div>
+												{post.media && post.media.match(/.(jpg|jpeg|png|gif)$/i) && (
+													<img src={post.media} alt="Bild" className="forum-post-media-img" />
+												)}
+												{post.media && post.media.match(/.(mp4|webm|ogg)$/i) && (
+													<video src={post.media} controls className="forum-post-media-video" />
+												)}
+												{post.poll && post.poll.length > 1 && (
+													<div className="forum-post-poll">
+														<strong className="forum-post-poll-title">Omröstning:</strong>
+														{post.poll.map((opt: string, i: number) => (
+															<div key={i} className="forum-post-poll-option">
+																<span>{opt}</span>
+																<span className="forum-post-poll-votes">{post.pollVotes ? post.pollVotes[i] : 0} röster</span>
+																<button className="forum-post-poll-vote-btn"
+																	onClick={() => {
+																		const newPosts = [...posts];
+																		let pollVotes: number[] | undefined = undefined;
+																		if (Array.isArray(newPosts[idx]?.pollVotes)) {
+																			pollVotes = newPosts[idx]?.pollVotes;
+																		}
+																		if (!pollVotes || typeof pollVotes[i] !== 'number') return;
+																		// Max 1 röst per användare
+																		const user = authUser?.id || '';
+																		if (Array.isArray(newPosts[idx]?.pollVoters) && newPosts[idx]?.pollVoters?.includes(user)) {
+																			setPushMessage('Du har redan röstat!');
+																			setTimeout(() => setPushMessage(''), 2000);
+																			return;
+																		}
+																		pollVotes[i]++;
+																		if (Array.isArray(newPosts[idx]?.pollVoters)) {
+																			newPosts[idx]?.pollVoters?.push(user);
+																		}
+																		setPosts(newPosts);
+																		setPushMessage('Din röst är registrerad!');
+																		setTimeout(() => setPushMessage(''), 2000);
+																	}}
+																>Rösta</button>
+															</div>
+														))}
+													</div>
 								)}
-								{post.media && post.media.match(/.(mp4|webm|ogg)$/i) && (
-									<video src={post.media} controls style={{ maxWidth: '100%', borderRadius: 12, margin: '1rem 0', boxShadow: '0 2px 12px #22c55e44', border: `2px solid ${fbcTheme.accent}` }} />
-								)}
-								{post.poll && post.poll.length > 1 && (
-									<div style={{ margin: '1rem 0' }}>
-										<strong style={{ color: fbcTheme.accent }}>Omröstning:</strong>
-										{post.poll.map((opt: string, i: number) => (
-											<div key={i} style={{ margin: '0.5rem 0', background: '#222', borderRadius: 8, padding: '0.5rem 1rem', color: fbcTheme.text.primary, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-												<span>{opt}</span>
-												<span style={{ marginLeft: '1rem', color: fbcTheme.accent }}>{post.pollVotes ? post.pollVotes[i] : 0} röster</span>
-												<button style={{ marginLeft: '1rem', background: fbcTheme.accent, color: '#fff', border: 'none', borderRadius: 8, padding: '0.3rem 1rem', fontWeight: 600, fontSize: '0.95rem', cursor: 'pointer' }}
-													onClick={() => {
-														const newPosts = [...posts];
-														let pollVotes: number[] | undefined = undefined;
-														if (Array.isArray(newPosts[idx]?.pollVotes)) {
-															pollVotes = newPosts[idx]?.pollVotes;
-														}
-														if (!pollVotes || typeof pollVotes[i] !== 'number') return;
-														// Max 1 röst per användare
-														const user = authUser?.id || '';
-														if (Array.isArray(newPosts[idx]?.pollVoters) && newPosts[idx]?.pollVoters?.includes(user)) {
-															setPushMessage('Du har redan röstat!');
-															setTimeout(() => setPushMessage(''), 2000);
-															return;
-														}
-														pollVotes[i]++;
-														if (Array.isArray(newPosts[idx]?.pollVoters)) {
-															newPosts[idx]?.pollVoters?.push(user);
-														}
-														setPosts(newPosts);
-														setPushMessage('Din röst är registrerad!');
-														setTimeout(() => setPushMessage(''), 2000);
-													}}
-												>Rösta</button>
-											</div>
-										))}
-									</div>
-								)}
-								<div style={{ display: 'flex', alignItems: 'center', gap: '0.7rem', fontSize: '0.95rem', color: '#b6c2d6', fontWeight: 500 }}>
-									<img src={fbcLogo} alt="Profil" style={{ width: 34, height: 34, borderRadius: '50%', objectFit: 'cover', border: '2px solid #22c55e', boxShadow: '0 2px 8px #22c55e22' }} />
-									<span>{post.author}</span> • {new Date(post.date).toLocaleDateString('sv-SE')}
-								</div>
-								<div style={{ display: 'flex', gap: '1rem', alignItems: 'center', marginBottom: '0.5rem' }}>
-									<button
-										onClick={async () => {
-											try {
-												const postToLike = posts[idx];
-												if (postToLike) {
-													const res = await forumAPI.likePost(postToLike.id);
-													if (res && res.success) {
-														const postsRes = await forumAPI.getPosts(1, 20);
-														if (postsRes.success && postsRes.data?.posts) {
-															setPosts(postsRes.data.posts);
-														}
-													}
-												}
-											} catch {}
-										}}
-										style={{ background: fbcTheme.accentDark, color: fbcTheme.accentLight, border: 'none', borderRadius: 8, padding: '0.3rem 1rem', fontWeight: 600, cursor: 'pointer', fontSize: '1rem', boxShadow: '0 2px 8px #22c55e44', transition: 'background 0.2s' }}
-									>👍 {post.likes}</button>
-								</div>
+												<div className="forum-post-meta">
+													<img src={fbcLogo} alt="Profil" className="forum-post-meta-img" />
+													<span>{post.author}</span> • {new Date(post.date).toLocaleDateString('sv-SE')}
+												</div>
+												<div className="forum-post-actions-bar">
+													<button
+														onClick={async () => {
+															try {
+																const postToLike = posts[idx];
+																if (postToLike) {
+																	const res = await forumAPI.likePost(postToLike.id);
+																	if (res && res.success) {
+																		const postsRes = await forumAPI.getPosts(1, 20);
+																		if (postsRes.success && postsRes.data?.posts) {
+																			setPosts(postsRes.data.posts);
+																		}
+																	}
+																}
+															} catch {}
+														}}
+														className="forum-post-like-btn"
+													>👍 {post.likes}</button>
+												</div>
 								{/* ...existing code... */}
 								{/* Knappar och formulär ska vara barn till div, inte direkt kod! */}
 																{/* Remove or replace this button with the correct variable if needed */}
@@ -402,19 +389,19 @@ const Forum: React.FC = () => {
 										))
 							)}
 							{/* Paginering */}
-							<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem', margin: '2rem 0' }}>
-								<button
-									onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-									disabled={currentPage === 1}
-									style={{ background: fbcTheme.accent, color: '#fff', border: 'none', borderRadius: 8, padding: '0.5rem 1.2rem', fontWeight: 600, fontSize: '1rem', cursor: currentPage === 1 ? 'not-allowed' : 'pointer', opacity: currentPage === 1 ? 0.5 : 1 }}
-								>Föregående</button>
-								<span style={{ color: fbcTheme.text.secondary, fontWeight: 600, fontSize: '1.05rem' }}>Sida {currentPage} av {totalPages}</span>
-								<button
-									onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-									disabled={currentPage === totalPages}
-									style={{ background: fbcTheme.accent, color: '#fff', border: 'none', borderRadius: 8, padding: '0.5rem 1.2rem', fontWeight: 600, fontSize: '1rem', cursor: currentPage === totalPages ? 'not-allowed' : 'pointer', opacity: currentPage === totalPages ? 0.5 : 1 }}
-								>Nästa</button>
-							</div>
+											<div className="forum-pagination-bar">
+												<button
+													onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+													disabled={currentPage === 1}
+													className={`forum-pagination-btn${currentPage === 1 ? ' disabled' : ''}`}
+												>Föregående</button>
+												<span className="forum-pagination-info">Sida {currentPage} av {totalPages}</span>
+												<button
+													onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+													disabled={currentPage === totalPages}
+													className={`forum-pagination-btn${currentPage === totalPages ? ' disabled' : ''}`}
+												>Nästa</button>
+											</div>
 						</div>
 			</div>
 		{/* Responsivitet och animationer */}

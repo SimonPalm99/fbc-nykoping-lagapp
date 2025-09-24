@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { User, TrainingLog } from "../types/user";
 import { authAPI, healthAPI } from "../services/apiService";
+import { getCurrentUserFromBackend } from "../services/authService";
 
 interface UserContextType {
   user: User | null;
@@ -19,34 +20,33 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [users, setUsers] = useState<User[]>([]);
 
-  // Hämta aktuell användare från backend (t.ex. via token)
+  // Hämta aktuell användare från backend via token
   const refreshUser = async () => {
     try {
-      // Anta att token finns i localStorage
-      const token = localStorage.getItem("token");
+      // Hämta token från cookies eller sessionStorage (ingen localStorage)
+      const token = document.cookie.match(/(^|;)\s*fbc_access_token=([^;]*)/)?.[2] || sessionStorage.getItem("fbc_access_token");
+      console.log('UserContext DEBUG: token', token);
       if (!token) {
+        console.log('UserContext DEBUG: ingen token hittades');
         setUser(null);
         return;
       }
-      // Hämta userId från token eller localStorage
-      const userId = localStorage.getItem("userId");
-      if (!userId) {
-        setUser(null);
-        return;
-      }
-      // Hämta profil från backend
-      const res = await healthAPI.getProfile(userId);
+      // Hämta user från backend med token
+      const res = await getCurrentUserFromBackend(token);
+      console.log('UserContext DEBUG: respons från backend', res);
       if (res.success && res.data) {
-        // Spara både id och _id om de finns
-        setUser({
+        const userObj = {
           ...res.data,
-          id: res.data.id || res.data._id,
-          _id: res.data._id || res.data.id
-        });
+          id: res.data._id || res.data.id // alltid mappa till id
+        };
+        console.log('UserContext DEBUG: user från backend:', userObj);
+        setUser(userObj);
       } else {
+        console.log('UserContext DEBUG: Ingen user från backend, respons:', res);
         setUser(null);
       }
     } catch (err) {
+      console.log('UserContext DEBUG: error', err);
       setUser(null);
     }
   };
@@ -56,7 +56,10 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     // Hämta alla users från backend
     import('../services/apiService').then(({ usersAPI }) => {
       usersAPI.getAllUsers().then(res => {
-        if (res.success) setUsers(res.data);
+        if (res.success) {
+          const mappedUsers = res.data.map((u: any) => ({ ...u, id: u._id || u.id }));
+          setUsers(mappedUsers);
+        }
       });
     });
   }, []);
@@ -65,8 +68,10 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   const register = async (newUser: any) => {
     const res = await authAPI.register(newUser);
     if (res.success && res.data?.user) {
-      setUser(res.data.user);
-      localStorage.setItem("userId", res.data.user.id);
+      setUser({
+        ...res.data.user,
+        id: res.data.user._id || res.data.user.id
+      });
     }
   };
 

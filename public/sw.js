@@ -1,8 +1,8 @@
 const CACHE_NAME = 'fbc-nykoping-v1';
 const urlsToCache = [
   '/',
-  '/static/css/main.css',
-  '/static/js/main.js',
+  '/main.css',
+  '/main.js',
   '/manifest.json',
   '/fbc-logo.jpg',
   '/logo192.png',
