@@ -1,0 +1,110 @@
+/* CSS-modul för Welcome-sidan. Lägg till och justera klasser efter behov. */
+
+.welcomeRoot {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #1b5e20 0%, #263238 100%);
+}
+
+.welcomeCard {
+  background: rgba(16,32,16,0.97);
+  border-radius: 28px;
+  box-shadow: 0 6px 24px #1b5e20, 0 2px 8px #101820;
+  padding: 2.5rem 2rem;
+  max-width: 420px;
+  width: 100%;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.welcomeLogo {
+  width: 110px;
+  height: 110px;
+  border-radius: 28px;
+  box-shadow: 0 6px 24px #1b5e20, 0 2px 8px #101820;
+}
+
+.welcomeTitle {
+  font-size: 2.4rem;
+  font-weight: 900;
+  margin: 1rem 0 0.5rem 0;
+  color: #fff;
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 8px #1b5e20, 0 1px 2px #101820;
+}
+
+.welcomeSubtitle {
+  color: #fff;
+  font-size: 1.15rem;
+  font-weight: 600;
+  text-shadow: 0 1px 2px #1b5e20;
+}
+
+.welcomeTabBar {
+  display: flex;
+  margin-bottom: 2rem;
+  gap: 1rem;
+}
+
+.welcomeTabBtn {
+  padding: 0.8rem 2rem;
+  border-radius: 14px;
+  background: #263238;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.1rem;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.welcomeTabBtn.active {
+  background: #1b5e20;
+}
+
+.welcomeInput {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 14px;
+  border: none;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.welcomeCheckboxRow {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.welcomeCheckboxLabel {
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-left: 0.5rem;
+}
+
+.welcomeAlert {
+  color: #FFD600;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.welcomeLoginBtn {
+  width: 100%;
+  padding: 1.2rem;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #1b5e20 0%, #263238 100%);
+  color: #fff;
+  font-weight: 900;
+  font-size: 1.15rem;
+  border: none;
+  margin-top: 1rem;
+  cursor: pointer;
+  box-shadow: 0 2px 8px #1b5e20;
+}
+
+/* Lägg till fler klasser efter behov */

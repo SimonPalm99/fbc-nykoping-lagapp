@@ -3,6 +3,8 @@ import { useAuth } from "../context/AuthContext";
 import { authAPI } from "../services/apiService";
 import { useNavigate } from "react-router-dom";
 
+import styles from "./welcome.module.css";
+
 const initialRegister = {
   firstName: "",
   lastName: "",
@@ -21,6 +23,7 @@ const initialRegister = {
 };
 
 const Welcome: React.FC = () => {
+  // ...existing code...
   const [activeTab, setActiveTab] = useState<'login' | 'register'>('login');
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
@@ -157,78 +160,42 @@ const Welcome: React.FC = () => {
   };
 
   return (
-    <div style={{
-      minHeight: "100vh",
-      background: "linear-gradient(135deg, #101820 0%, #1b5e20 60%, #263238 100%)",
-      fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      padding: "2vw"
-    }} role="main">
-      <div style={{
-        background: "rgba(16,32,16,0.85)",
-        borderRadius: "32px",
-        boxShadow: "0 12px 48px rgba(27,94,32,0.18), 0 2px 8px #101820",
-        padding: "3.5rem 2.5rem 2.5rem 2.5rem",
-        maxWidth: "440px",
-        width: "100%",
-        position: "relative",
-        border: "2px solid #1b5e20"
-      }}>
+    <div className={styles.welcomeRoot} role="main">
+      <div className={styles.welcomeCard}>
         {/* FBC-logga och header */}
-        <div style={{ textAlign: "center", marginBottom: "2.5rem" }}>
-          <div style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: "0.5rem"
-          }}>
-            <img src="/fbc-logo.jpg" alt="FBC Nyköping" style={{ width: 110, height: 110, borderRadius: 28, boxShadow: "0 6px 24px #1b5e20, 0 2px 8px #101820" }} />
-            <h1 style={{ fontSize: "2.4rem", fontWeight: 900, margin: "1rem 0 0.5rem 0", color: "#fff", letterSpacing: "-0.02em", textShadow: "0 2px 8px #1b5e20, 0 1px 2px #101820" }}>
+        <div className={styles.welcomeHeader}>
+          <div className={styles.welcomeHeaderInner}>
+            <img src="/fbc-logo.jpg" alt="FBC Nyköping" className={styles.welcomeLogo} />
+            <h1 className={styles.welcomeTitle}>
               Välkommen till FBC Nyköping
             </h1>
-            <p style={{ color: "#fff", fontSize: "1.15rem", fontWeight: 600, textShadow: "0 1px 2px #1b5e20" }}>
+            <p className={styles.welcomeSubtitle}>
               Välkommen till FBC Nyköpings lagapp – här samlas allt för spelare och ledare. Logga in eller skapa ett konto för att ta del av träningar, matcher, statistik och klubbens gemenskap!
             </p>
           </div>
         </div>
 
         {/* Tabbar */}
-        <div style={{ display: "flex", marginBottom: "2rem", gap: "1rem" }} role="tablist">
+        <div className={styles.tabList} role="tablist">
           <button
-            aria-label="Logga in"
-            tabIndex={0}
+            role="tab"
+            id="login-tab"
+            aria-selected={activeTab === 'login' ? 'true' : 'false'}
+            aria-controls="login-panel"
+            tabIndex={activeTab === 'login' ? 0 : -1}
             onClick={() => setActiveTab('login')}
-            style={{
-              flex: 1,
-              padding: "1rem",
-              borderRadius: "16px",
-              border: "none",
-              background: activeTab === 'login' ? "linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%)" : "rgba(255,255,255,0.08)",
-              color: activeTab === 'login' ? "#fff" : "rgba(255,255,255,0.8)",
-              fontWeight: 800,
-              fontSize: "1.1rem",
-              cursor: "pointer"
-            }}
+            className={activeTab === 'login' ? styles.tabButtonActive : styles.tabButton}
           >
             Logga in
           </button>
           <button
-            aria-label="Registrera"
-            tabIndex={0}
+            role="tab"
+            id="register-tab"
+            aria-selected={activeTab === 'register' ? 'true' : 'false'}
+            aria-controls="register-panel"
+            tabIndex={activeTab === 'register' ? 0 : -1}
             onClick={() => setActiveTab('register')}
-            style={{
-              flex: 1,
-              padding: "1rem",
-              borderRadius: "16px",
-              border: "none",
-              background: activeTab === 'register' ? "linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%)" : "rgba(255,255,255,0.08)",
-              color: activeTab === 'register' ? "#fff" : "rgba(255,255,255,0.8)",
-              fontWeight: 800,
-              fontSize: "1.1rem",
-              cursor: "pointer"
-            }}
+            className={activeTab === 'register' ? styles.tabButtonActive : styles.tabButton}
           >
             Registrera
           </button>
@@ -236,7 +203,7 @@ const Welcome: React.FC = () => {
 
         {/* Login-formulär */}
         {activeTab === 'login' && !registerSuccess && (
-          <form onSubmit={handleLogin} aria-label="Logga in" role="form">
+          <form id="login-panel" onSubmit={handleLogin} aria-label="Logga in" className={styles.loginForm}>
             <input
               type="email"
               value={loginEmail}
@@ -244,7 +211,7 @@ const Welcome: React.FC = () => {
               placeholder="E-post"
               aria-label="E-post"
               tabIndex={0}
-              style={{ width: "100%", padding: "1rem", marginBottom: "1rem", borderRadius: "14px", border: "1.5px solid #1b5e20", fontSize: "1rem", background: "rgba(255,255,255,0.08)", color: "#fff", boxShadow: "0 1px 4px #101820" }}
+              className={styles.inputField}
               required
             />
             <input
@@ -254,29 +221,29 @@ const Welcome: React.FC = () => {
               placeholder="Lösenord"
               aria-label="Lösenord"
               tabIndex={0}
-              style={{ width: "100%", padding: "1rem", marginBottom: "1.5rem", borderRadius: "14px", border: "1.5px solid #1b5e20", fontSize: "1rem", background: "rgba(255,255,255,0.08)", color: "#fff", boxShadow: "0 1px 4px #101820" }}
+              className={styles.inputField}
               required
             />
-            <div style={{ display: "flex", alignItems: "center", marginBottom: "1rem" }}>
+            <div className={styles.rememberMeRow}>
               <input
                 type="checkbox"
                 id="rememberMe"
                 checked={rememberMe}
                 onChange={e => setRememberMe(e.target.checked)}
-                style={{ marginRight: 8 }}
+                className={styles.rememberMeCheckbox}
                 aria-label="Kom ihåg mig"
                 tabIndex={0}
               />
-              <label htmlFor="rememberMe" style={{ color: "#fff", fontSize: "1rem", fontWeight: 600 }}>
+              <label htmlFor="rememberMe" className={styles.rememberMeLabel}>
                 Kom ihåg mig
               </label>
             </div>
             {loginError && (
-              <div style={{ color: "#FFD600", fontWeight: 700, marginBottom: "1rem" }} role="alert">
+              <div className={styles.loginError} role="alert">
                 {loginError}
               </div>
             )}
-            <button type="submit" style={{ width: "100%", padding: "1.2rem", borderRadius: "18px", background: "linear-gradient(135deg, #1b5e20 0%, #263238 100%)", color: "#fff", fontWeight: 900, fontSize: "1.15rem", border: "none", cursor: loading ? "not-allowed" : "pointer", boxShadow: "0 2px 8px #101820", transition: "background 0.2s" }} aria-label="Logga in" tabIndex={0} disabled={loading}>
+            <button type="submit" className={styles.loginButton} aria-label="Logga in" tabIndex={0} disabled={loading}>
               {loading ? "Loggar in..." : "Logga in"}
             </button>
           </form>
@@ -285,135 +252,102 @@ const Welcome: React.FC = () => {
 
         {/* Registreringsflöde med validering och utan favoritposition */}
         {activeTab === 'register' && !registerSuccess && (
-          <form onSubmit={handleRegister} aria-label="Registrera" role="form">
+          <form id="register-panel" onSubmit={handleRegister} aria-label="Registrera">
             {/* Progress-bar för registrering */}
             {activeTab === 'register' && !registerSuccess && (
-              <div style={{ marginBottom: "1.5rem" }}>
-                <div style={{ height: 8, background: "rgba(255,255,255,0.15)", borderRadius: 8 }}>
-                  <div style={{
-                    width: `${registerStep * 33.33}%`,
-                    height: 8,
-                    background: "linear-gradient(90deg, #4CAF50 0%, #2E7D32 100%)",
-                    borderRadius: 8,
-                    transition: "width 0.3s"
-                  }} />
+              <div className={styles.registerProgressBarWrap}>
+                <div className={styles.registerProgressBarBg}>
+                  <div className={styles.registerProgressBar} data-width={registerStep * 33.33} />
                 </div>
-                <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, color: "#fff", marginTop: 4 }}>
+                <div className={styles.registerProgressBarLabels}>
                   <span>Profil</span>
                   <span>Spelinfo</span>
                   <span>Nödkontakt</span>
                 </div>
               </div>
             )}
-            <div style={{
-              background: "rgba(255,255,255,0.08)",
-              borderRadius: "16px",
-              padding: "1.5rem",
-              color: "#fff",
-              marginBottom: "1rem",
-              boxShadow: fade ? "0 2px 12px rgba(76,175,80,0.12)" : "none",
-              opacity: fade ? 1 : 0,
-              transition: "opacity 0.25s"
-            }}>
-              <h2 style={{ fontSize: "1.2rem", fontWeight: 800, marginBottom: "0.5rem" }}>Skapa personligt konto</h2>
-              <p style={{ fontSize: "1rem", marginBottom: "0.5rem" }}>
+            <div className={fade ? styles.registerContainerFade : styles.registerContainer}>
+              <h2 className={styles.registerTitle}>Skapa personligt konto</h2>
+              <p className={styles.registerDesc}>
                 Fyll i all information till din profil. Din ansökan måste godkännas av en ledare innan du får tillgång till appen.
               </p>
               {/* Status på ansökan */}
-              <div style={{ margin: "0.5rem 0 1rem 0", color: "#FFD600", fontWeight: 700, fontSize: "0.95rem" }}>
+              <div className={styles.registerStatus}>
                 {registerStep === 3 ? "Väntar på ledargodkännande..." : "Fyll i alla steg för att skicka ansökan"}
               </div>
             </div>
             {registerStep === 1 && (
-              <div style={{ opacity: fade ? 1 : 0, transition: "opacity 0.25s" }}>
+              <div className={fade ? styles.registerStepFadeVisible : styles.registerStepFade}>
                 {/* Profilbilds-uppladdning */}
-                <div style={{ textAlign: "center", marginBottom: "1rem" }}>
+                <div className={styles.profileImageUploadWrap}>
                   <input
                     type="file"
                     accept="image/*"
                     ref={fileInputRef}
-                    style={{ display: "none" }}
+                    className={styles.profileImageInput}
                     onChange={handleImageChange}
+                    title="Ladda upp profilbild"
                   />
                   <div
-                    style={{ cursor: "pointer", display: "inline-block" }}
+                    className={styles.profileImageUpload}
                     onClick={() => fileInputRef.current?.click()}
                   >
                     {imagePreview ? (
-                      <img src={imagePreview} alt="Profilbild" style={{ width: 72, height: 72, borderRadius: "50%", objectFit: "cover", boxShadow: "0 2px 8px rgba(76,175,80,0.18)" }} />
+                      <img src={imagePreview} alt="Profilbild" className={styles.profileImagePreview} />
                     ) : (
-                      <div style={{ width: 72, height: 72, borderRadius: "50%", background: "rgba(255,255,255,0.18)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 32, color: "#4CAF50" }}>
-                        +
-                      </div>
+                      <div className={styles.profileImagePlaceholder}>+</div>
                     )}
                   </div>
-                  <div style={{ fontSize: 13, color: "#fff", marginTop: 4 }}>Ladda upp profilbild</div>
+                  <div className={styles.profileImageLabel}>Ladda upp profilbild</div>
                 </div>
                 {/* Roll-väljare */}
-                <div style={{ marginBottom: "1rem", textAlign: "center" }}>
-                  <label style={{ color: "#fff", fontWeight: 700, marginRight: "1rem" }}>Jag är:</label>
+                <div className={styles.roleSelectorWrap}>
+                  <label className={styles.roleSelectorLabel}>Jag är:</label>
                   <button
                     type="button"
                     onClick={() => setRegisterData({ ...registerData, role: "player" })}
-                    style={{
-                      padding: "0.7rem 1.2rem",
-                      borderRadius: "10px",
-                      background: registerData.role === "player" ? "#2E7D32" : "#263238",
-                      color: "#fff",
-                      fontWeight: 700,
-                      border: "none",
-                      marginRight: "0.5rem",
-                      cursor: "pointer"
-                    }}
+                    className={registerData.role === "player" ? styles.roleButtonActive : styles.roleButton}
                   >Spelare</button>
                   <button
                     type="button"
-                    onClick={() => setRegisterData({ ...registerData, role: "coach" })}
-                    style={{
-                      padding: "0.7rem 1.2rem",
-                      borderRadius: "10px",
-                      background: registerData.role === "coach" ? "#2E7D32" : "#263238",
-                      color: "#fff",
-                      fontWeight: 700,
-                      border: "none",
-                      cursor: "pointer"
-                    }}
+                    onClick={() => setRegisterData({ ...registerData, role: "leader" })}
+                    className={registerData.role === "leader" ? styles.roleButtonActive : styles.roleButton}
                   >Ledare</button>
                 </div>
-                <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1rem" }}>
-                  <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", width: "100%" }}>
-                    <input type="text" value={registerData.firstName} onChange={e => setRegisterData({ ...registerData, firstName: e.target.value })} placeholder="Förnamn*" required aria-label="Förnamn" tabIndex={0} style={{ width: "100%", padding: "1rem", borderRadius: "12px", border: "none" }} />
-                    <input type="text" value={registerData.lastName} onChange={e => setRegisterData({ ...registerData, lastName: e.target.value })} placeholder="Efternamn" required aria-label="Efternamn" tabIndex={0} style={{ width: "100%", padding: "1rem", borderRadius: "12px", border: "none" }} />
+                <div className={styles.registerInputRow}>
+                  <div className={styles.registerInputCol}>
+                    <input type="text" value={registerData.firstName} onChange={e => setRegisterData({ ...registerData, firstName: e.target.value })} placeholder="Förnamn*" required aria-label="Förnamn" tabIndex={0} className={styles.inputField} />
+                    <input type="text" value={registerData.lastName} onChange={e => setRegisterData({ ...registerData, lastName: e.target.value })} placeholder="Efternamn" required aria-label="Efternamn" tabIndex={0} className={styles.inputField} />
                   </div>
                 </div>
-                <input type="email" value={registerData.email} onChange={e => setRegisterData({ ...registerData, email: e.target.value })} placeholder="E-post" required aria-label="E-post" tabIndex={0} style={{ width: "100%", padding: "1rem", marginBottom: "1rem", borderRadius: "12px", border: "none" }} />
-                <input type="password" value={registerData.password} onChange={e => setRegisterData({ ...registerData, password: e.target.value })} placeholder="Lösenord" required aria-label="Lösenord" tabIndex={0} style={{ width: "100%", padding: "1rem", marginBottom: "1rem", borderRadius: "12px", border: "none" }} />
-                <input type="password" value={registerData.confirmPassword} onChange={e => setRegisterData({ ...registerData, confirmPassword: e.target.value })} placeholder="Bekräfta lösenord" required aria-label="Bekräfta lösenord" tabIndex={0} style={{ width: "100%", padding: "1rem", marginBottom: "1.5rem", borderRadius: "12px", border: "none" }} />
-                <input type="text" value={registerData.phone} onChange={e => setRegisterData({ ...registerData, phone: e.target.value })} placeholder="Telefon" required aria-label="Telefon" tabIndex={0} style={{ width: "100%", padding: "1rem", marginBottom: "1.5rem", borderRadius: "12px", border: "none" }} />
-                <button type="button" onClick={nextStep} disabled={!validateStep() || loading} style={{ width: "100%", padding: "1rem", borderRadius: "14px", background: validateStep() && !loading ? "linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%)" : "#aaa", color: "#fff", fontWeight: 700, border: "none", marginBottom: "1rem", cursor: validateStep() && !loading ? "pointer" : "not-allowed" }} aria-label="Nästa" tabIndex={0}>
+                <input type="email" value={registerData.email} onChange={e => setRegisterData({ ...registerData, email: e.target.value })} placeholder="E-post" required aria-label="E-post" tabIndex={0} className={styles.inputField} />
+                <input type="password" value={registerData.password} onChange={e => setRegisterData({ ...registerData, password: e.target.value })} placeholder="Lösenord" required aria-label="Lösenord" tabIndex={0} className={styles.inputField} />
+                <input type="password" value={registerData.confirmPassword} onChange={e => setRegisterData({ ...registerData, confirmPassword: e.target.value })} placeholder="Bekräfta lösenord" required aria-label="Bekräfta lösenord" tabIndex={0} className={styles.inputField} />
+                <input type="text" value={registerData.phone} onChange={e => setRegisterData({ ...registerData, phone: e.target.value })} placeholder="Telefon" required aria-label="Telefon" tabIndex={0} className={styles.inputField} />
+                <button type="button" onClick={nextStep} disabled={!validateStep() || loading} className={styles.registerNextButton} aria-label="Nästa" tabIndex={0}>
                   Nästa
                 </button>
               </div>
             )}
             {registerStep === 2 && (
-              <div style={{ opacity: fade ? 1 : 0, transition: "opacity 0.25s" }}>
-                <input type="text" value={registerData.jerseyNumber} onChange={e => setRegisterData({ ...registerData, jerseyNumber: e.target.value })} placeholder="Tröjnummer" required aria-label="Tröjnummer" tabIndex={0} style={{ width: "100%", padding: "1rem", marginBottom: "1rem", borderRadius: "12px", border: "none" }} />
-                <input type="text" value={registerData.position} onChange={e => setRegisterData({ ...registerData, position: e.target.value })} placeholder="Position" required aria-label="Position" tabIndex={0} style={{ width: "100%", padding: "1rem", marginBottom: "1rem", borderRadius: "12px", border: "none" }} />
-                <textarea value={registerData.aboutMe} onChange={e => setRegisterData({ ...registerData, aboutMe: e.target.value })} placeholder="Om mig" required aria-label="Om mig" tabIndex={0} style={{ width: "100%", padding: "1rem", marginBottom: "1.5rem", borderRadius: "12px", border: "none" }} />
-                <div style={{ display: "flex", gap: "1rem" }}>
-                  <button type="button" onClick={prevStep} style={{ flex: 1, padding: "1rem", borderRadius: "14px", background: "rgba(189,189,189,0.6)", color: "#fff", fontWeight: 700, border: "none", cursor: "pointer" }} aria-label="Tillbaka" tabIndex={0}>Tillbaka</button>
-                  <button type="button" onClick={nextStep} disabled={!validateStep() || loading} style={{ flex: 1, padding: "1rem", borderRadius: "14px", background: validateStep() && !loading ? "linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%)" : "#aaa", color: "#fff", fontWeight: 700, border: "none", cursor: validateStep() && !loading ? "pointer" : "not-allowed" }} aria-label="Nästa" tabIndex={0}>Nästa</button>
+              <div className={styles.registerStepFade}>
+                <input type="text" value={registerData.jerseyNumber} onChange={e => setRegisterData({ ...registerData, jerseyNumber: e.target.value })} placeholder="Tröjnummer" required aria-label="Tröjnummer" tabIndex={0} className={styles.inputField} />
+                <input type="text" value={registerData.position} onChange={e => setRegisterData({ ...registerData, position: e.target.value })} placeholder="Position" required aria-label="Position" tabIndex={0} className={styles.inputField} />
+                <textarea value={registerData.aboutMe} onChange={e => setRegisterData({ ...registerData, aboutMe: e.target.value })} placeholder="Om mig" required aria-label="Om mig" tabIndex={0} className={styles.inputField} />
+                <div className={styles.registerButtonRow}>
+                  <button type="button" onClick={prevStep} className={styles.registerPrevButton} aria-label="Tillbaka" tabIndex={0}>Tillbaka</button>
+                  <button type="button" onClick={nextStep} disabled={!validateStep() || loading} className={styles.registerNextButton} aria-label="Nästa" tabIndex={0}>Nästa</button>
                 </div>
               </div>
             )}
             {registerStep === 3 && (
-              <div style={{ opacity: fade ? 1 : 0, transition: "opacity 0.25s" }}>
-                <input type="text" value={registerData.emergencyContactName} onChange={e => setRegisterData({ ...registerData, emergencyContactName: e.target.value })} placeholder="Nödkontakt namn" required aria-label="Nödkontakt namn" tabIndex={0} style={{ width: "100%", padding: "1rem", marginBottom: "1rem", borderRadius: "12px", border: "none" }} />
-                <input type="text" value={registerData.emergencyContactPhone} onChange={e => setRegisterData({ ...registerData, emergencyContactPhone: e.target.value })} placeholder="Nödkontakt telefon" required aria-label="Nödkontakt telefon" tabIndex={0} style={{ width: "100%", padding: "1rem", marginBottom: "1rem", borderRadius: "12px", border: "none" }} />
-                <input type="text" value={registerData.emergencyContactRelation} onChange={e => setRegisterData({ ...registerData, emergencyContactRelation: e.target.value })} placeholder="Relation" required aria-label="Relation" tabIndex={0} style={{ width: "100%", padding: "1rem", marginBottom: "1.5rem", borderRadius: "12px", border: "none" }} />
-                <div style={{ display: "flex", gap: "1rem" }}>
-                  <button type="button" onClick={prevStep} style={{ flex: 1, padding: "1rem", borderRadius: "14px", background: "rgba(189,189,189,0.6)", color: "#fff", fontWeight: 700, border: "none", cursor: "pointer" }} aria-label="Tillbaka" tabIndex={0}>Tillbaka</button>
-                  <button type="submit" disabled={!validateStep() || loading} style={{ flex: 1, padding: "1rem", borderRadius: "14px", background: validateStep() && !loading ? "linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%)" : "#aaa", color: "#fff", fontWeight: 700, border: "none", cursor: validateStep() && !loading ? "pointer" : "not-allowed" }} aria-label="Skicka ansökan" tabIndex={0}>
+              <div className={styles.registerStepFade}>
+                <input type="text" value={registerData.emergencyContactName} onChange={e => setRegisterData({ ...registerData, emergencyContactName: e.target.value })} placeholder="Nödkontakt namn" required aria-label="Nödkontakt namn" tabIndex={0} className={styles.inputField} />
+                <input type="text" value={registerData.emergencyContactPhone} onChange={e => setRegisterData({ ...registerData, emergencyContactPhone: e.target.value })} placeholder="Nödkontakt telefon" required aria-label="Nödkontakt telefon" tabIndex={0} className={styles.inputField} />
+                <input type="text" value={registerData.emergencyContactRelation} onChange={e => setRegisterData({ ...registerData, emergencyContactRelation: e.target.value })} placeholder="Relation" required aria-label="Relation" tabIndex={0} className={styles.inputField} />
+                <div className={styles.registerButtonRow}>
+                  <button type="button" onClick={prevStep} className={styles.registerPrevButton} aria-label="Tillbaka" tabIndex={0}>Tillbaka</button>
+                  <button type="submit" disabled={!validateStep() || loading} className={styles.registerNextButton} aria-label="Skicka ansökan" tabIndex={0}>
                     {loading ? "Skickar..." : "Skicka ansökan"}
                   </button>
                 </div>
@@ -424,29 +358,11 @@ const Welcome: React.FC = () => {
 
         {/* Bekräftelse-popup/modal */}
         {showModal && (
-          <div style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100vw",
-            height: "100vh",
-            background: "rgba(0,0,0,0.45)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            zIndex: 9999
-          }}>
-            <div style={{
-              background: "#fff",
-              borderRadius: 24,
-              padding: "2.5rem 2rem",
-              boxShadow: "0 8px 32px rgba(76,175,80,0.18)",
-              textAlign: "center",
-              minWidth: 280
-            }}>
-              <h2 style={{ color: "#4CAF50", fontWeight: 900, marginBottom: 12 }}>Ansökan skickad!</h2>
-              <p style={{ color: "#333", fontSize: "1.1rem", marginBottom: 8 }}>Din ansökan är mottagen och väntar på ledargodkännande.</p>
-              <p style={{ color: "#333", fontSize: "1rem" }}>Du får ett mail när du är godkänd.</p>
+          <div className={styles.modalOverlay}>
+            <div className={styles.modalContent}>
+              <h2 className={styles.modalTitle}>Ansökan skickad!</h2>
+              <p className={styles.modalText}>Din ansökan är mottagen och väntar på ledargodkännande.</p>
+              <p className={styles.modalText}>Du får ett mail när du är godkänd.</p>
             </div>
           </div>
         )}
