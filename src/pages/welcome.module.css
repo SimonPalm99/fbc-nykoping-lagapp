@@ -1,3 +1,58 @@
+/* Rollknappar */
+.roleSelectorWrap {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.2rem;
+}
+.roleSelectorLabel {
+  color: #fff;
+  font-size: 1.08rem;
+  font-weight: 600;
+}
+.roleButton {
+  padding: 0.7rem 2.2rem;
+  border-radius: 16px;
+  background: #222a22;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.08rem;
+  border: 2px solid #263238;
+  cursor: pointer;
+  box-shadow: 0 1px 4px #1b5e2022;
+  transition: background 0.2s, border 0.2s, color 0.2s;
+}
+.roleButton:hover, .roleButton:focus {
+  background: #263238;
+  border: 2px solid #43a047;
+  color: #FFD600;
+  outline: none;
+}
+.roleButtonActive {
+  background: linear-gradient(135deg, #43a047 0%, #1b5e20 100%);
+  color: #FFD600;
+  border: 2px solid #43a047;
+  box-shadow: 0 2px 12px #43a04744;
+}
+
+/* Bredare inputfält och bättre spacing */
+.registerInputRow {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  margin-bottom: 0.5rem;
+}
+.registerInputCol {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+/* Dold input för profilbild */
+.hiddenInput {
+  display: none;
+}
 /* CSS-modul för Welcome-sidan. Lägg till och justera klasser efter behov. */
 
 .welcomeRoot {
@@ -24,8 +79,37 @@
 .welcomeLogo {
   width: 110px;
   height: 110px;
-  border-radius: 28px;
+  border-radius: 50%;
   box-shadow: 0 6px 24px #1b5e20, 0 2px 8px #101820;
+  display: block;
+  margin: 0 auto 1rem auto;
+  border: 4px solid #fff;
+}
+
+.inputField {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 14px;
+  border: none;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  background: linear-gradient(135deg, #263238 0%, #1b5e20 100%);
+  color: #fff;
+  box-shadow: 0 2px 8px #1b5e2022;
+  transition: box-shadow 0.2s, background 0.2s;
+}
+.inputField:focus {
+  outline: none;
+  background: linear-gradient(135deg, #1b5e20 0%, #263238 100%);
+  box-shadow: 0 2px 16px #43a04744;
+}
+
+.welcomeHeader {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .welcomeTitle {
@@ -52,17 +136,35 @@
 
 .welcomeTabBtn {
   padding: 0.8rem 2rem;
-  border-radius: 14px;
-  background: #263238;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%);
   color: #fff;
   font-weight: 700;
-  font-size: 1.1rem;
-  border: none;
+  font-size: 1.12rem;
+  border: 1.5px solid #388e3c;
   cursor: pointer;
-  transition: background 0.2s;
+  box-shadow: 0 1px 4px #1b5e2022;
+  letter-spacing: 0.02em;
+  transition: background 0.2s, border 0.2s, box-shadow 0.2s, color 0.2s;
+}
+.welcomeTabBtn:hover, .welcomeTabBtn:focus {
+  background: linear-gradient(135deg, #388e3c 0%, #263238 100%);
+  border: 2px solid #43a047;
+  color: #fff;
+  box-shadow: 0 2px 12px #1b5e2044;
+  outline: none;
+}
+.welcomeTabBtn:hover, .welcomeTabBtn:focus {
+  background: linear-gradient(135deg, #388e3c 0%, #263238 100%);
+  transform: scale(1.04);
+  box-shadow: 0 4px 16px #1b5e20;
+  outline: none;
 }
 .welcomeTabBtn.active {
-  background: #1b5e20;
+  background: linear-gradient(135deg, #43a047 0%, #2e7d32 100%);
+  color: #fff;
+  border: 2px solid #43a047;
+  box-shadow: 0 2px 12px #43a04744;
 }
 
 .welcomeInput {
@@ -72,7 +174,64 @@
   border: none;
   margin-bottom: 1rem;
   font-size: 1.1rem;
+  background: linear-gradient(135deg, #263238 0%, #1b5e20 100%);
+  color: #fff;
+  box-shadow: 0 2px 8px #1b5e2022;
+  transition: box-shadow 0.2s, background 0.2s;
 }
+
+.welcomeInput:focus {
+  outline: none;
+  background: linear-gradient(135deg, #1b5e20 0%, #263238 100%);
+  box-shadow: 0 2px 16px #43a04744;
+}
+
+/* Profilbildsuppladdning - ny stil */
+.profileImageUploadWrap {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.profileImageUpload {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #263238 0%, #1b5e20 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 12px #1b5e2044;
+  cursor: pointer;
+  border: 3px solid #43a047;
+  margin: 0 auto 0.5rem auto;
+  transition: box-shadow 0.2s, border 0.2s;
+}
+.profileImageUpload:hover {
+  box-shadow: 0 4px 24px #43a04788;
+  border: 3px solid #FFD600;
+}
+.profileImagePreview {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 2px 12px #1b5e2044;
+}
+.profileImagePlaceholder {
+  font-size: 2.5rem;
+  color: #fff;
+  opacity: 0.7;
+}
+
+.profileImageLabel {
+  color: #fff;
+  font-size: 0.95rem;
+  text-align: center;
+  margin-top: 0.2rem;
+}
+
 
 .welcomeCheckboxRow {
   display: flex;
@@ -95,16 +254,77 @@
 
 .welcomeLoginBtn {
   width: 100%;
-  padding: 1.2rem;
+  padding: 1.1rem;
   border-radius: 18px;
-  background: linear-gradient(135deg, #1b5e20 0%, #263238 100%);
+  background: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%);
   color: #fff;
-  font-weight: 900;
-  font-size: 1.15rem;
-  border: none;
+  font-weight: 700;
+  font-size: 1.13rem;
+  border: 1.5px solid #388e3c;
   margin-top: 1rem;
   cursor: pointer;
-  box-shadow: 0 2px 8px #1b5e20;
+  box-shadow: 0 1px 4px #1b5e2022;
+  letter-spacing: 0.02em;
+  transition: background 0.2s, border 0.2s, box-shadow 0.2s, color 0.2s;
+}
+.welcomeLoginBtn:hover, .welcomeLoginBtn:focus {
+  background: linear-gradient(135deg, #388e3c 0%, #263238 100%);
+  border: 2px solid #43a047;
+  color: #fff;
+  box-shadow: 0 2px 12px #1b5e2044;
+  outline: none;
+}
+.welcomeLoginBtn:hover, .welcomeLoginBtn:focus {
+  background: linear-gradient(135deg, #388e3c 0%, #263238 100%);
+  transform: scale(1.03);
+  box-shadow: 0 4px 20px #1b5e20;
+  outline: none;
 }
 
 /* Lägg till fler klasser efter behov */
+
+@media (max-width: 600px) {
+  .welcomeRoot {
+    padding: 0.5rem;
+    min-height: 100vh;
+    align-items: flex-start;
+  }
+  .welcomeCard {
+    padding: 1.2rem 0.5rem;
+    max-width: 98vw;
+    border-radius: 18px;
+    box-shadow: 0 2px 8px #1b5e20;
+  }
+  .welcomeLogo {
+    width: 70px;
+    height: 70px;
+    border-radius: 16px;
+  }
+  .welcomeTitle {
+    font-size: 1.5rem;
+    margin: 0.7rem 0 0.3rem 0;
+  }
+  .welcomeSubtitle {
+    font-size: 1rem;
+    margin-bottom: 0.7rem;
+  }
+  .welcomeTabBar {
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  .welcomeTabBtn {
+    font-size: 1rem;
+    padding: 0.7rem 1rem;
+  }
+  .welcomeInput {
+    font-size: 1rem;
+    padding: 0.7rem;
+    border-radius: 10px;
+  }
+  .welcomeLoginBtn {
+    font-size: 1rem;
+    padding: 1rem;
+    border-radius: 12px;
+  }
+}

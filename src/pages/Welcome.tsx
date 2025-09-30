@@ -169,14 +169,16 @@ const Welcome: React.FC = () => {
             <h1 className={styles.welcomeTitle}>
               Välkommen till FBC Nyköping
             </h1>
-            <p className={styles.welcomeSubtitle}>
-              Välkommen till FBC Nyköpings lagapp – här samlas allt för spelare och ledare. Logga in eller skapa ett konto för att ta del av träningar, matcher, statistik och klubbens gemenskap!
-            </p>
+            {activeTab === 'login' && (
+              <p className={styles.welcomeSubtitle}>
+                Välkommen till FBC Nyköpings lagapp – här samlas allt för spelare och ledare. Logga in eller skapa ett konto för att ta del av träningar, matcher, statistik och klubbens gemenskap!
+              </p>
+            )}
           </div>
         </div>
 
         {/* Tabbar */}
-        <div className={styles.tabList} role="tablist">
+        <div className={styles.welcomeTabBar} role="tablist">
           <button
             role="tab"
             id="login-tab"
@@ -184,7 +186,7 @@ const Welcome: React.FC = () => {
             aria-controls="login-panel"
             tabIndex={activeTab === 'login' ? 0 : -1}
             onClick={() => setActiveTab('login')}
-            className={activeTab === 'login' ? styles.tabButtonActive : styles.tabButton}
+            className={activeTab === 'login' ? `${styles.welcomeTabBtn} ${styles.active}` : styles.welcomeTabBtn}
           >
             Logga in
           </button>
@@ -195,7 +197,7 @@ const Welcome: React.FC = () => {
             aria-controls="register-panel"
             tabIndex={activeTab === 'register' ? 0 : -1}
             onClick={() => setActiveTab('register')}
-            className={activeTab === 'register' ? styles.tabButtonActive : styles.tabButton}
+            className={activeTab === 'register' ? `${styles.welcomeTabBtn} ${styles.active}` : styles.welcomeTabBtn}
           >
             Registrera
           </button>
@@ -243,7 +245,7 @@ const Welcome: React.FC = () => {
                 {loginError}
               </div>
             )}
-            <button type="submit" className={styles.loginButton} aria-label="Logga in" tabIndex={0} disabled={loading}>
+            <button type="submit" className={styles.welcomeLoginBtn} aria-label="Logga in" tabIndex={0} disabled={loading}>
               {loading ? "Loggar in..." : "Logga in"}
             </button>
           </form>
@@ -284,7 +286,7 @@ const Welcome: React.FC = () => {
                     type="file"
                     accept="image/*"
                     ref={fileInputRef}
-                    className={styles.profileImageInput}
+                    className={`${styles.profileImageInput} ${styles.hiddenInput}`}
                     onChange={handleImageChange}
                     title="Ladda upp profilbild"
                   />
