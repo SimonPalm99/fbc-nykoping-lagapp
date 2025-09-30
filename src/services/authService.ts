@@ -109,6 +109,9 @@ class AuthService {
   async login(credentials: LoginCredentials): Promise<AuthResponse> {
     try {
       const response = await apiService.post<AuthResponse>('/users/login', credentials);
+      if (!response.success || !response.data?.tokens) {
+        throw new Error('Felaktiga inloggningsuppgifter');
+      }
       this.storeTokens(response.data.tokens); // Spara tokens direkt vid login
       this.storeUser(response.data.user);
       return response.data;
