@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { User, TrainingLog } from "../types/user";
 import { authAPI, healthAPI } from "../services/apiService";
-import { getCurrentUserFromBackend } from "../services/authService";
+// ...existing code...
 
 interface UserContextType {
   user: User | null;
@@ -23,30 +23,25 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   // Hämta aktuell användare från backend via token
   const refreshUser = async () => {
     try {
-      // Hämta token från cookies eller sessionStorage (ingen localStorage)
-      const token = document.cookie.match(/(^|;)\s*fbc_access_token=([^;]*)/)?.[2] || sessionStorage.getItem("fbc_access_token");
-      console.log('UserContext DEBUG: token', token);
-      if (!token) {
-        console.log('UserContext DEBUG: ingen token hittades');
-        setUser(null);
-        return;
-      }
-      // Hämta user från backend med token
-      const res = await getCurrentUserFromBackend(token);
-      console.log('UserContext DEBUG: respons från backend', res);
-      if (res.success && res.data) {
+      // Hämta user från backend, cookie skickas automatiskt
+      const res = await fetch(`${process.env.REACT_APP_API_BASE_URL || ''}/users/me`, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      const result = await res.json();
+      if (result.success && result.data) {
         const userObj = {
-          ...res.data,
-          id: res.data._id || res.data.id // alltid mappa till id
+          ...result.data,
+          id: result.data._id || result.data.id // alltid mappa till id
         };
-        console.log('UserContext DEBUG: user från backend:', userObj);
         setUser(userObj);
       } else {
-        console.log('UserContext DEBUG: Ingen user från backend, respons:', res);
         setUser(null);
       }
     } catch (err) {
-      console.log('UserContext DEBUG: error', err);
       setUser(null);
     }
   };

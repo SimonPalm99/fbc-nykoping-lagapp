@@ -52,15 +52,17 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const token = authService.getAccessToken();
-        if (!token) {
-          setAuthState({ user: null, isAuthenticated: false, isLoading: false, error: null });
-          return;
-        }
-        // Hämta användarinfo från backend
-        const res = await authService.getCurrentUserFromBackend(token);
-        if (res && res.success && res.data) {
-          const userObj = { ...res.data, id: res.data._id || res.data.id };
+        // Hämta användarinfo från backend, cookie skickas automatiskt
+        const res = await fetch(`${process.env.REACT_APP_API_BASE_URL || ''}/users/me`, {
+          method: 'GET',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        const result = await res.json();
+        if (result && result.success && result.data) {
+          const userObj = { ...result.data, id: result.data._id || result.data.id };
           setAuthState({ user: userObj, isAuthenticated: true, isLoading: false, error: null });
         } else {
           setAuthState({ user: null, isAuthenticated: false, isLoading: false, error: null });
