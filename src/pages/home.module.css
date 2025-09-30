@@ -61,7 +61,7 @@
   align-items: center;
   gap: 1rem;
   font-size: 0.9rem;
-  color: #4A5568;
+  color: #C8E6C9;
 }
 .homeFooterCopyright {
   text-align: center;
@@ -74,7 +74,7 @@
   align-items: center;
 }
 .homeFooterLink {
-  color: #4A5568;
+  color: #C8E6C9;
   text-decoration: none;
   transition: color 0.2s;
 }
@@ -97,7 +97,7 @@
 
 /* Logout popup styles */
 .homeLogoutPopup {
-  background: #fff;
+  background: rgba(16,32,16,0.97);
   border-radius: 1.5rem;
   padding: 2.5rem 2.5rem 2rem 2.5rem;
   box-shadow: 0 8px 32px rgba(46,125,50,0.18);
@@ -110,7 +110,7 @@
 .homeLogoutTitle {
   font-weight: 900;
   font-size: 1.35rem;
-  color: #2E7D32;
+  color: #22c55e;
   margin-bottom: 1.2rem;
   letter-spacing: 1px;
 }
@@ -119,7 +119,7 @@
   margin-right: 0.5rem;
 }
 .homeLogoutText {
-  color: #4A5568;
+  color: #C8E6C9;
   font-size: 1.05rem;
   margin-bottom: 1.5rem;
 }
@@ -138,7 +138,7 @@
 
 /* Absence modal styles */
 .homeAbsencePopup {
-  background: #fff;
+  background: rgba(16,32,16,0.97);
   border-radius: 1.2rem;
   padding: 2rem 2rem 1.5rem 2rem;
   box-shadow: 0 8px 32px rgba(46,125,50,0.18);
@@ -153,13 +153,13 @@
   margin-bottom: 1.2rem;
 }
 .homeAbsenceText {
-  color: #4A5568;
+  color: #C8E6C9;
   font-size: 1.05rem;
   margin-bottom: 1.2rem;
 }
 .homeAbsenceLabel {
   font-weight: 700;
-  color: #2E7D32;
+  color: #22c55e;
   margin-bottom: 0.5rem;
   display: block;
 }
@@ -167,7 +167,7 @@
   width: 100%;
   font-size: 1rem;
   border-radius: 8px;
-  border: 1.5px solid #2E7D32;
+  border: 1.5px solid #22c55e;
   margin-bottom: 1.2rem;
   padding: 0.5rem;
 }
@@ -176,7 +176,7 @@
   min-height: 60px;
   font-size: 1rem;
   border-radius: 8px;
-  border: 1.5px solid #2E7D32;
+  border: 1.5px solid #22c55e;
   margin-bottom: 1.2rem;
   padding: 0.5rem;
 }
@@ -219,11 +219,11 @@
 .homeForumTitle {
   font-weight: 900;
   font-size: 1.18rem;
-  color: #2E7D32;
+  color: #22c55e;
   letter-spacing: 1px;
 }
 .homeForumBtn {
-  background: #2E7D32;
+  background: #22c55e;
   color: white;
   border: none;
   border-radius: 8px;
@@ -237,8 +237,8 @@
 
 .homeRoot {
   min-height: 100vh;
-  background: linear-gradient(135deg, #22c55e 0%, #0a0a0a 100%);
-  color: #f8fafc;
+  background: linear-gradient(135deg, #0A0A0A 0%, #0D1B0D 30%, #1B2E1B 100%);
+  color: #F1F8E9;
   font-family: inherit;
   padding: 1.2rem 0;
   position: relative;
@@ -379,7 +379,7 @@
 }
 
 .homeEmpty {
-  color: #4A5568;
+  color: #C8E6C9;
   font-size: 1.05rem;
 }
 
