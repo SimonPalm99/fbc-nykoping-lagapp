@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import stylesCss from "./home.module.css";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
 import { useUser } from "../context/UserContext";
@@ -254,149 +255,149 @@ const Home: React.FC = () => {
     setAbsenceSubmitting(false);
   };
 
-  return (
-    <div className="homeRoot">
-      {/* Grön gradient-overlay överst */}
-      <div className="homeGradientTop" />
-      {/* Header och innehåll här */}
-      <header className="homeHeader">
-					{/* Snygg välkomsttext högst upp */}
-          <div className="homeWelcomeText">
-						Välkommen {authUser?.name}!
-					</div>
-					{/* FBC-logga över hela headern i bakgrunden */}
-          <img src="/fbc-logo.jpg" alt="FBC logga" className="homeHeaderLogo" />
-					{/* Profilkort med badges */}
-          <ProfileCard user={authUser} styles={styles} />
-					{/* Knapprad längst ner i headern */}
-          <div className="homeHeaderBtnRow">
-      <button className="fbc-btn fbc-btn-logout homeLogoutBtn" onClick={() => setShowLogoutConfirm(true)} aria-label="Logga ut">Logga ut</button>
-      <button className="fbc-btn homeMenuBtn" onClick={() => setMenuOpen(true)} aria-label="Meny">
-  <span className="homeMenuIcon" tabIndex={0} aria-label="Öppna meny" role="button">
-          <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-        </span>
-      </button>
-					</div>
-				</header>
-				{/* Popup: logga ut-bekräftelse */}
-				{showLogoutConfirm && (
-          <div className="homePopupOverlay">
-            <div className="homeLogoutPopup">
-              <div className="homeLogoutTitle">
-                <span className="homeLogoutIcon">🔒</span> Bekräfta utloggning
-              </div>
-              <div className="homeLogoutText">Är du säker på att du vill logga ut?</div>
-              <div className="homeLogoutBtnRow">
-                <button className="fbc-btn fbc-btn-logout homeLogoutPopupBtn" onClick={() => {
-                  logout();
-                  setShowLogoutConfirm(false);
-                  navigate("/");
-                }}>Logga ut</button>
-                <button className="fbc-btn homeLogoutPopupBtn homeLogoutPopupBtnCancel" onClick={() => setShowLogoutConfirm(false)}>Avbryt</button>
-              </div>
-						</div>
-					</div>
-				)}
-        {/* Kommande aktiviteter */}
-        <section className="homeSection">
-          <div className="homeSectionHeader">
-            <span className="homeSectionTitle">Nästa aktivitet</span>
-            <button className="homeSectionBtn" onClick={() => navigate("/activities")} aria-label="Se alla aktiviteter" tabIndex={0}>
-              Se alla aktiviteter
-            </button>
+return (
+    <>
+    {/* Grön gradient-overlay överst */}
+    <div className={stylesCss.homeGradientTop} />
+    {/* Header och innehåll här */}
+    <header className={stylesCss.homeHeader}>
+      {/* Snygg välkomsttext högst upp */}
+      <div className={stylesCss.homeWelcomeText}>
+        Välkommen {authUser?.name}!
+      </div>
+      {/* FBC-logga över hela headern i bakgrunden */}
+      <img src="/fbc-logo.jpg" alt="FBC logga" className={stylesCss.homeHeaderLogo} />
+      {/* Profilkort med badges */}
+      <ProfileCard user={authUser} styles={styles} />
+      {/* Knapprad längst ner i headern */}
+      <div className={stylesCss.homeHeaderBtnRow}>
+        <button className={`fbc-btn fbc-btn-logout ${stylesCss.homeLogoutBtn}`} onClick={() => setShowLogoutConfirm(true)} aria-label="Logga ut">Logga ut</button>
+        <button className={`fbc-btn ${stylesCss.homeMenuBtn}`} onClick={() => setMenuOpen(true)} aria-label="Meny">
+          <span className={stylesCss.homeMenuIcon} tabIndex={0} aria-label="Öppna meny" role="button">
+            <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </span>
+        </button>
+      </div>
+    </header>
+    {/* Popup: logga ut-bekräftelse */}
+    {showLogoutConfirm && (
+      <div className={stylesCss.homePopupOverlay}>
+        <div className={stylesCss.homeLogoutPopup}>
+          <div className={stylesCss.homeLogoutTitle}>
+            <span className={stylesCss.homeLogoutIcon}>🔒</span> Bekräfta utloggning
           </div>
-          <div className="homeForumList">
-            {/* Loading/error för aktiviteter */}
-            {activitiesLoading ? (
-              <div className="homeLoading">Laddar aktiviteter...</div>
-            ) : activitiesError ? (
-              <div className="homeError">{activitiesError}</div>
-            ) : nextActivity ? (
-              <ActivityCard
-                activity={nextActivity}
-                styles={styles}
-                onCheckIn={() => {
-                  // Här kan du lägga logik för check in, t.ex. API-anrop eller popup
-                  alert('Du har checkat in på aktiviteten!');
-                }}
-                onCheckOut={() => {
-                  // Här kan du lägga logik för check ut, t.ex. API-anrop eller popup
-                  alert('Du har checkat ut från aktiviteten!');
-                }}
-                onAbsence={() => {
-                  setAbsenceActivity(nextActivity);
-                  setShowAbsencePopup(true);
-                }}
-              />
-            ) : (
-              <div className="homeEmpty">Ingen kommande aktivitet</div>
-            )}
+          <div className={stylesCss.homeLogoutText}>Är du säker på att du vill logga ut?</div>
+          <div className={stylesCss.homeLogoutBtnRow}>
+            <button className={`fbc-btn fbc-btn-logout ${stylesCss.homeLogoutPopupBtn}`} onClick={() => {
+              logout();
+              setShowLogoutConfirm(false);
+              navigate("/");
+            }}>Logga ut</button>
+            <button className={`fbc-btn ${stylesCss.homeLogoutPopupBtn} ${stylesCss.homeLogoutPopupBtnCancel}`} onClick={() => setShowLogoutConfirm(false)}>Avbryt</button>
           </div>
-        </section>
+        </div>
+      </div>
+    )}
+    {/* Kommande aktiviteter */}
+    <section className={stylesCss.homeSection}>
+      <div className={stylesCss.homeSectionHeader}>
+        <span className={stylesCss.homeSectionTitle}>Nästa aktivitet</span>
+        <button className={stylesCss.homeSectionBtn} onClick={() => navigate("/activities")} aria-label="Se alla aktiviteter" tabIndex={0}>
+          Se alla aktiviteter
+        </button>
+      </div>
+      <div className={stylesCss.homeForumList}>
+        {/* Loading/error för aktiviteter */}
+        {activitiesLoading ? (
+          <div className={stylesCss.homeLoading}>Laddar aktiviteter...</div>
+        ) : activitiesError ? (
+          <div className={stylesCss.homeError}>{activitiesError}</div>
+        ) : nextActivity ? (
+          <ActivityCard
+            activity={nextActivity}
+            styles={styles}
+            onCheckIn={() => {
+              // Här kan du lägga logik för check in, t.ex. API-anrop eller popup
+              alert('Du har checkat in på aktiviteten!');
+            }}
+            onCheckOut={() => {
+              // Här kan du lägga logik för check ut, t.ex. API-anrop eller popup
+              alert('Du har checkat ut från aktiviteten!');
+            }}
+            onAbsence={() => {
+              setAbsenceActivity(nextActivity);
+              setShowAbsencePopup(true);
+            }}
+          />
+        ) : (
+          <div className={stylesCss.homeEmpty}>Ingen kommande aktivitet</div>
+        )}
+      </div>
+    </section>
 
         {/* Popup för frånvaroanmälan */}
         {showAbsencePopup && absenceActivity && (
-          <div className="homePopupOverlay">
-            <div className="homeAbsencePopup">
-              <div className="homeAbsenceTitle">Frånvaroanmälan</div>
-              <div className="homeAbsenceText">
+          <div className={stylesCss.homePopupOverlay}>
+            <div className={stylesCss.homeAbsencePopup}>
+              <div className={stylesCss.homeAbsenceTitle}>Frånvaroanmälan</div>
+              <div className={stylesCss.homeAbsenceText}>
                 Du anmäler frånvaro för: <b>{absenceActivity.title}</b>
               </div>
-              <label className="homeAbsenceLabel">Anledning</label>
-              <input type="text" value={absenceReason} onChange={e => setAbsenceReason(e.target.value)} className="homeAbsenceInput" placeholder="Sjuk, bortrest, etc." />
-              <label className="homeAbsenceLabel">Kommentar (valfritt)</label>
-              <textarea value={absenceComment} onChange={e => setAbsenceComment(e.target.value)} className="homeAbsenceTextarea" placeholder="Exempel: Krya på dig!" />
-              <div className="homeAbsenceBtnRow">
-                <button className="fbc-btn homeAbsenceSendBtn" onClick={handleAbsenceSubmit} disabled={absenceSubmitting || !absenceReason}>
+              <label className={stylesCss.homeAbsenceLabel}>Anledning</label>
+              <input type="text" value={absenceReason} onChange={e => setAbsenceReason(e.target.value)} className={stylesCss.homeAbsenceInput} placeholder="Sjuk, bortrest, etc." />
+              <label className={stylesCss.homeAbsenceLabel}>Kommentar (valfritt)</label>
+              <textarea value={absenceComment} onChange={e => setAbsenceComment(e.target.value)} className={stylesCss.homeAbsenceTextarea} placeholder="Exempel: Krya på dig!" />
+              <div className={stylesCss.homeAbsenceBtnRow}>
+                <button className={`fbc-btn ${stylesCss.homeAbsenceSendBtn}`} onClick={handleAbsenceSubmit} disabled={absenceSubmitting || !absenceReason}>
                   {absenceSubmitting ? "Skickar..." : "Skicka frånvaro"}
                 </button>
-                <button className="fbc-btn fbc-btn-logout homeAbsenceCancelBtn" onClick={() => setShowAbsencePopup(false)} disabled={absenceSubmitting}>Avbryt</button>
+                <button className={`fbc-btn fbc-btn-logout ${stylesCss.homeAbsenceCancelBtn}`} onClick={() => setShowAbsencePopup(false)} disabled={absenceSubmitting}>Avbryt</button>
               </div>
             </div>
           </div>
         )}
 
 				{/* Forumsektion, nu först */}
-  <section className="homeForumSection">
-  <div className="homeForumHeader">
-  <span className="homeForumTitle">Forum</span>
-        <button className="homeForumBtn" onClick={() => navigate('/forum')} aria-label="Se alla foruminlägg" tabIndex={0}>
+    <section className={stylesCss.homeForumSection}>
+      <div className={stylesCss.homeForumHeader}>
+        <span className={stylesCss.homeForumTitle}>Forum</span>
+        <button className={stylesCss.homeForumBtn} onClick={() => navigate('/forum')} aria-label="Se alla foruminlägg" tabIndex={0}>
           Se alla inlägg
         </button>
       </div>
-  <div className="homeForumList">
+      <div className={stylesCss.homeForumList}>
         {/* Visa endast senaste inlägget, om det finns */}
         {forumLoading ? (
-          <div className="homeLoading">Laddar forum...</div>
+          <div className={stylesCss.homeLoading}>Laddar forum...</div>
         ) : forumError ? (
-          <div className="homeError">{forumError}</div>
+          <div className={stylesCss.homeError}>{forumError}</div>
         ) : forumPosts.length === 0 ? (
-          <div className="homeEmpty">Inga inlägg ännu.</div>
+          <div className={stylesCss.homeEmpty}>Inga inlägg ännu.</div>
         ) : (
-          forumPosts[0] ? <ForumPostCard post={forumPosts[0]} styles={styles} /> : null
+          forumPosts[0] !== undefined ? <ForumPostCard post={forumPosts[0]!} styles={styles} /> : null
         )}
         {/* Modal för redigering */}
         {editPostId && (
-          <div className="homePopupOverlay">
-            <div className="homeAbsencePopup">
-              <div className="homeAbsenceTitle homeEditTitle">Redigera inlägg</div>
-              <textarea value={editContent} onChange={e => setEditContent(e.target.value)} className="homeEditTextarea" placeholder="Redigera inlägg..." />
-              <div className="homeAbsenceBtnRow">
-                <button className="fbc-btn homeEditSaveBtn" onClick={handleSaveEdit}>Spara</button>
-                <button className="fbc-btn fbc-btn-logout homeEditCancelBtn" onClick={() => setEditPostId(null)}>Avbryt</button>
+          <div className={stylesCss.homePopupOverlay}>
+            <div className={stylesCss.homeAbsencePopup}>
+              <div className={`${stylesCss.homeAbsenceTitle} ${stylesCss.homeEditTitle}`}>Redigera inlägg</div>
+              <textarea value={editContent} onChange={e => setEditContent(e.target.value)} className={stylesCss.homeEditTextarea} placeholder="Redigera inlägg..." />
+              <div className={stylesCss.homeAbsenceBtnRow}>
+                <button className={`fbc-btn ${stylesCss.homeEditSaveBtn}`} onClick={handleSaveEdit}>Spara</button>
+                <button className={`fbc-btn fbc-btn-logout ${stylesCss.homeEditCancelBtn}`} onClick={() => setEditPostId(null)}>Avbryt</button>
               </div>
             </div>
           </div>
         )}
         {/* Modal för ta bort */}
         {showDeleteId && (
-          <div className="homePopupOverlay">
-            <div className="homeAbsencePopup">
-              <div className="homeAbsenceTitle homeDeleteTitle">Ta bort inlägg</div>
-              <div className="homeAbsenceText">Är du säker på att du vill ta bort detta inlägg?</div>
-              <div className="homeAbsenceBtnRow">
-                <button className="fbc-btn fbc-btn-logout homeDeleteBtn" onClick={() => handleDeletePost(showDeleteId)}>Ta bort</button>
-                <button className="fbc-btn homeDeleteCancelBtn" onClick={() => setShowDeleteId(null)}>Avbryt</button>
+          <div className={stylesCss.homePopupOverlay}>
+            <div className={stylesCss.homeAbsencePopup}>
+              <div className={`${stylesCss.homeAbsenceTitle} ${stylesCss.homeDeleteTitle}`}>Ta bort inlägg</div>
+              <div className={stylesCss.homeAbsenceText}>Är du säker på att du vill ta bort detta inlägg?</div>
+              <div className={stylesCss.homeAbsenceBtnRow}>
+                <button className={`fbc-btn fbc-btn-logout ${stylesCss.homeDeleteBtn}`} onClick={() => handleDeletePost(showDeleteId)}>Ta bort</button>
+                <button className={`fbc-btn ${stylesCss.homeDeleteCancelBtn}`} onClick={() => setShowDeleteId(null)}>Avbryt</button>
               </div>
             </div>
           </div>
@@ -409,24 +410,24 @@ const Home: React.FC = () => {
     {/* Meny-popup med modern stil */}
 <MenuPopup open={menuOpen} onClose={() => setMenuOpen(false)} menuItems={menuItems} styles={styles} navigate={navigate} />
 				{/* Footer med copyright och länk till policyer */}
-        <footer className="homeFooter">
-          <div className="homeFooterCopyright">
+        <footer className={stylesCss.homeFooter}>
+          <div className={stylesCss.homeFooterCopyright}>
             &copy; {new Date().getFullYear()} FBC - Alla rättigheter förbehållna.
           </div>
-          <div className="homeFooterLinks">
-            <a href="/privacy-policy" className="homeFooterLink" onClick={e => { e.preventDefault(); navigate('/privacy-policy'); }}>
+          <div className={stylesCss.homeFooterLinks}>
+            <a href="/privacy-policy" className={stylesCss.homeFooterLink} onClick={e => { e.preventDefault(); navigate('/privacy-policy'); }}>
               Policy för personuppgifter
             </a>
-            <a href="/terms-of-service" className="homeFooterLink" onClick={e => { e.preventDefault(); navigate('/terms-of-service'); }}>
+            <a href="/terms-of-service" className={stylesCss.homeFooterLink} onClick={e => { e.preventDefault(); navigate('/terms-of-service'); }}>
               Användarvillkor
             </a>
-            <a href="/cookie-policy" className="homeFooterLink" onClick={e => { e.preventDefault(); navigate('/cookie-policy'); }}>
+            <a href="/cookie-policy" className={stylesCss.homeFooterLink} onClick={e => { e.preventDefault(); navigate('/cookie-policy'); }}>
               Cookiepolicy
             </a>
           </div>
         </footer>
-			</div>
-		);
-	};
+    </>
+    );
+  };
 
 export default React.memo(Home);
