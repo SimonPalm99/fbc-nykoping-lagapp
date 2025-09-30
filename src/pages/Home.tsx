@@ -255,40 +255,24 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div style={{ minHeight: "100vh", background: styles.gradients.body, color: "#f8fafc", fontFamily: "inherit", padding: "1.2rem 0", position: "relative", overflow: "hidden" }}>
+    <div className="homeRoot">
       {/* Grön gradient-overlay överst */}
-      <div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: 180, background: "linear-gradient(135deg, #22c55e 0%, #0a0a0a 100%)", opacity: 0.18, zIndex: 0, pointerEvents: "none" }} />
+      <div className="homeGradientTop" />
       {/* Header och innehåll här */}
-      <header style={{
-  width: "100%",
-  maxWidth: 900,
-  margin: "0 auto",
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "flex-start",
-  justifyContent: "flex-start",
-  padding: "0.3rem 0.5rem 0.2rem 0.5rem",
-  borderBottom: `2px solid ${styles.primaryGreen}`,
-  background: "linear-gradient(120deg, #2E7D32 0%, #388E3C 100%)",
-  borderRadius: "0 0 1rem 1rem",
-  boxShadow: "0 2px 8px rgba(46, 125, 50, 0.10)",
-  position: "relative",
-  overflow: "hidden",
-  minHeight: "56px"
-}}>
+      <header className="homeHeader">
 					{/* Snygg välkomsttext högst upp */}
-					<div style={{ width: "100%", textAlign: "center", fontWeight: 900, fontSize: "1.35rem", color: "#fff", letterSpacing: "1px", textShadow: "0 2px 8px #2E7D32, 0 0px 2px #000", marginBottom: "0.3rem", zIndex: 2 }}>
+          <div className="homeWelcomeText">
 						Välkommen {authUser?.name}!
 					</div>
 					{/* FBC-logga över hela headern i bakgrunden */}
-					<img src="/fbc-logo.jpg" alt="FBC logga" style={{ position: "absolute", left: 0, top: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.10, zIndex: 0, pointerEvents: "none", filter: "blur(1px) grayscale(0.2)" }} />
+          <img src="/fbc-logo.jpg" alt="FBC logga" className="homeHeaderLogo" />
 					{/* Profilkort med badges */}
           <ProfileCard user={authUser} styles={styles} />
 					{/* Knapprad längst ner i headern */}
-					<div style={{ width: "100%", display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: "1.2rem", marginTop: "0.7rem", zIndex: 2 }}>
-      <button className="fbc-btn fbc-btn-logout" onClick={() => setShowLogoutConfirm(true)} aria-label="Logga ut" style={{ padding: "0.6rem 1.2rem", fontSize: "0.95rem", backgroundColor: "#e53935", color: "#222" }}>Logga ut</button>
-      <button className="fbc-btn" onClick={() => setMenuOpen(true)} style={{ position: "relative", padding: "0.6rem 1rem", fontSize: "1.2rem", backgroundColor: styles.primaryGreen, borderRadius: "50%", boxShadow: "0 2px 8px rgba(46,125,50,0.18)", transition: "transform 0.2s", color: "#222" }} aria-label="Meny">
-        <span style={{ display: "flex", alignItems: "center", justifyContent: "center" }} tabIndex={0} aria-label="Öppna meny" role="button">
+          <div className="homeHeaderBtnRow">
+      <button className="fbc-btn fbc-btn-logout homeLogoutBtn" onClick={() => setShowLogoutConfirm(true)} aria-label="Logga ut">Logga ut</button>
+      <button className="fbc-btn homeMenuBtn" onClick={() => setMenuOpen(true)} aria-label="Meny">
+  <span className="homeMenuIcon" tabIndex={0} aria-label="Öppna meny" role="button">
           <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
         </span>
       </button>
@@ -296,40 +280,37 @@ const Home: React.FC = () => {
 				</header>
 				{/* Popup: logga ut-bekräftelse */}
 				{showLogoutConfirm && (
-					<div style={{ position: "fixed", top: 0, left: 0, width: "100vw", height: "100vh", background: "rgba(0,0,0,0.35)", zIndex: 200, display: "flex", alignItems: "center", justifyContent: "center" }}>
-						<div style={{ background: "#fff", borderRadius: "1.5rem", padding: "2.5rem 2.5rem 2rem 2.5rem", boxShadow: "0 8px 32px rgba(46,125,50,0.18)", textAlign: "center", minWidth: 280, maxWidth: 90, border: "2px solid #FFB300", position: "relative" }}>
-							<div style={{ fontWeight: 900, fontSize: "1.35rem", color: "#2E7D32", marginBottom: "1.2rem", letterSpacing: "1px" }}>
-								<span style={{ fontSize: "2.2rem", marginRight: "0.5rem" }}>🔒</span> Bekräfta utloggning
-							</div>
-							<div style={{ color: "#4A5568", fontSize: "1.05rem", marginBottom: "1.5rem" }}>
-								Är du säker på att du vill logga ut?
-							</div>
-							<div style={{ display: "flex", justifyContent: "center", gap: "1.2rem" }}>
-								<button className="fbc-btn fbc-btn-logout" style={{ minWidth: 110, fontSize: "1.05rem" }} onClick={() => {
-									logout();
-									setShowLogoutConfirm(false);
-									navigate("/");
-								}}>Logga ut</button>
-								<button className="fbc-btn" style={{ minWidth: 110, fontSize: "1.05rem", background: "#4CAF50" }} onClick={() => setShowLogoutConfirm(false)}>Avbryt</button>
-							</div>
+          <div className="homePopupOverlay">
+            <div className="homeLogoutPopup">
+              <div className="homeLogoutTitle">
+                <span className="homeLogoutIcon">🔒</span> Bekräfta utloggning
+              </div>
+              <div className="homeLogoutText">Är du säker på att du vill logga ut?</div>
+              <div className="homeLogoutBtnRow">
+                <button className="fbc-btn fbc-btn-logout homeLogoutPopupBtn" onClick={() => {
+                  logout();
+                  setShowLogoutConfirm(false);
+                  navigate("/");
+                }}>Logga ut</button>
+                <button className="fbc-btn homeLogoutPopupBtn homeLogoutPopupBtnCancel" onClick={() => setShowLogoutConfirm(false)}>Avbryt</button>
+              </div>
 						</div>
 					</div>
 				)}
         {/* Kommande aktiviteter */}
-        <section style={{ maxWidth: 900, margin: "2rem auto 2rem auto", padding: "0 1rem" }}>
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "0.7rem" }}>
-            <span style={{ fontWeight: 900, fontSize: "1.18rem", color: styles.primaryGreen, letterSpacing: "1px" }}>Nästa aktivitet</span>
-            <button onClick={() => navigate("/activities")}
-              style={{ background: styles.primaryGreen, color: "white", border: "none", borderRadius: "8px", padding: "0.25rem 0.9rem", fontWeight: 600, fontSize: "0.95rem", cursor: "pointer", boxShadow: "0 2px 8px rgba(46,125,50,0.10)" }} aria-label="Se alla aktiviteter" tabIndex={0}>
+        <section className="homeSection">
+          <div className="homeSectionHeader">
+            <span className="homeSectionTitle">Nästa aktivitet</span>
+            <button className="homeSectionBtn" onClick={() => navigate("/activities")} aria-label="Se alla aktiviteter" tabIndex={0}>
               Se alla aktiviteter
             </button>
           </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: "1.2rem" }}>
+          <div className="homeForumList">
             {/* Loading/error för aktiviteter */}
             {activitiesLoading ? (
-              <div style={{ color: styles.primaryGreen, fontWeight: 700, fontSize: '1.05rem' }}>Laddar aktiviteter...</div>
+              <div className="homeLoading">Laddar aktiviteter...</div>
             ) : activitiesError ? (
-              <div style={{ color: '#e53935', fontWeight: 700, fontSize: '1.05rem' }}>{activitiesError}</div>
+              <div className="homeError">{activitiesError}</div>
             ) : nextActivity ? (
               <ActivityCard
                 activity={nextActivity}
@@ -348,75 +329,74 @@ const Home: React.FC = () => {
                 }}
               />
             ) : (
-              <div style={{ color: styles.textSecondary, fontSize: "1.05rem" }}>Ingen kommande aktivitet</div>
+              <div className="homeEmpty">Ingen kommande aktivitet</div>
             )}
           </div>
         </section>
 
         {/* Popup för frånvaroanmälan */}
         {showAbsencePopup && absenceActivity && (
-          <div style={{ position: "fixed", top: 0, left: 0, width: "100vw", height: "100vh", background: "rgba(0,0,0,0.35)", zIndex: 300, display: "flex", alignItems: "center", justifyContent: "center" }}>
-            <div style={{ background: "#fff", borderRadius: "1.2rem", padding: "2rem 2rem 1.5rem 2rem", boxShadow: "0 8px 32px rgba(46,125,50,0.18)", minWidth: 280, maxWidth: 400, border: `2px solid ${styles.fbcGold}` }}>
-              <div style={{ fontWeight: 900, fontSize: "1.15rem", color: styles.fbcGold, marginBottom: "1.2rem" }}>Frånvaroanmälan</div>
-              <div style={{ color: styles.textSecondary, fontSize: "1.05rem", marginBottom: "1.2rem" }}>
+          <div className="homePopupOverlay">
+            <div className="homeAbsencePopup">
+              <div className="homeAbsenceTitle">Frånvaroanmälan</div>
+              <div className="homeAbsenceText">
                 Du anmäler frånvaro för: <b>{absenceActivity.title}</b>
               </div>
-              <label style={{ fontWeight: 700, color: styles.primaryGreen, marginBottom: "0.5rem", display: "block" }}>Anledning</label>
-              <input type="text" value={absenceReason} onChange={e => setAbsenceReason(e.target.value)} style={{ width: "100%", fontSize: "1rem", borderRadius: 8, border: `1.5px solid ${styles.primaryGreen}`, marginBottom: "1.2rem", padding: "0.5rem" }} placeholder="Sjuk, bortrest, etc." />
-              <label style={{ fontWeight: 700, color: styles.primaryGreen, marginBottom: "0.5rem", display: "block" }}>Kommentar (valfritt)</label>
-              <textarea value={absenceComment} onChange={e => setAbsenceComment(e.target.value)} style={{ width: "100%", minHeight: 60, fontSize: "1rem", borderRadius: 8, border: `1.5px solid ${styles.primaryGreen}`, marginBottom: "1.2rem", padding: "0.5rem" }} placeholder="Exempel: Krya på dig!" />
-              <div style={{ display: "flex", gap: "1.2rem", justifyContent: "center" }}>
-                <button className="fbc-btn" style={{ background: styles.fbcGold, color: '#222', borderRadius: 8, padding: '0.4rem 1.2rem', fontWeight: 700, fontSize: '1.05rem', border: 'none' }} onClick={handleAbsenceSubmit} disabled={absenceSubmitting || !absenceReason}>
+              <label className="homeAbsenceLabel">Anledning</label>
+              <input type="text" value={absenceReason} onChange={e => setAbsenceReason(e.target.value)} className="homeAbsenceInput" placeholder="Sjuk, bortrest, etc." />
+              <label className="homeAbsenceLabel">Kommentar (valfritt)</label>
+              <textarea value={absenceComment} onChange={e => setAbsenceComment(e.target.value)} className="homeAbsenceTextarea" placeholder="Exempel: Krya på dig!" />
+              <div className="homeAbsenceBtnRow">
+                <button className="fbc-btn homeAbsenceSendBtn" onClick={handleAbsenceSubmit} disabled={absenceSubmitting || !absenceReason}>
                   {absenceSubmitting ? "Skickar..." : "Skicka frånvaro"}
                 </button>
-                <button className="fbc-btn fbc-btn-logout" style={{ background: '#e53935', color: '#fff', borderRadius: 8, padding: '0.4rem 1.2rem', fontWeight: 700, fontSize: '1.05rem', border: 'none' }} onClick={() => setShowAbsencePopup(false)} disabled={absenceSubmitting}>Avbryt</button>
+                <button className="fbc-btn fbc-btn-logout homeAbsenceCancelBtn" onClick={() => setShowAbsencePopup(false)} disabled={absenceSubmitting}>Avbryt</button>
               </div>
             </div>
           </div>
         )}
 
 				{/* Forumsektion, nu först */}
-				<section style={{ maxWidth: 900, margin: '0 auto 2rem auto', padding: '0 1rem' }}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.7rem' }}>
-        <span style={{ fontWeight: 900, fontSize: '1.18rem', color: styles.primaryGreen, letterSpacing: '1px' }}>Forum</span>
-        <button onClick={() => navigate('/forum')}
-          style={{ background: styles.primaryGreen, color: 'white', border: 'none', borderRadius: '8px', padding: '0.25rem 0.9rem', fontWeight: 600, fontSize: '0.95rem', cursor: 'pointer', boxShadow: '0 2px 8px rgba(46,125,50,0.10)' }} aria-label="Se alla foruminlägg" tabIndex={0}>
+  <section className="homeForumSection">
+  <div className="homeForumHeader">
+  <span className="homeForumTitle">Forum</span>
+        <button className="homeForumBtn" onClick={() => navigate('/forum')} aria-label="Se alla foruminlägg" tabIndex={0}>
           Se alla inlägg
         </button>
       </div>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
+  <div className="homeForumList">
         {/* Visa endast senaste inlägget, om det finns */}
         {forumLoading ? (
-          <div style={{ color: styles.primaryGreen, fontWeight: 700, fontSize: '1.05rem' }}>Laddar forum...</div>
+          <div className="homeLoading">Laddar forum...</div>
         ) : forumError ? (
-          <div style={{ color: '#e53935', fontWeight: 700, fontSize: '1.05rem' }}>{forumError}</div>
+          <div className="homeError">{forumError}</div>
         ) : forumPosts.length === 0 ? (
-          <div style={{ color: styles.textSecondary, fontSize: '1.05rem' }}>Inga inlägg ännu.</div>
+          <div className="homeEmpty">Inga inlägg ännu.</div>
         ) : (
           forumPosts[0] ? <ForumPostCard post={forumPosts[0]} styles={styles} /> : null
         )}
         {/* Modal för redigering */}
         {editPostId && (
-          <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', background: 'rgba(0,0,0,0.35)', zIndex: 300, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <div style={{ background: '#fff', borderRadius: '1.2rem', padding: '2rem 2rem 1.5rem 2rem', boxShadow: '0 8px 32px rgba(46,125,50,0.18)', minWidth: 280, maxWidth: 400, border: `2px solid ${styles.primaryGreen}` }}>
-              <div style={{ fontWeight: 900, fontSize: '1.15rem', color: styles.primaryGreen, marginBottom: '1.2rem' }}>Redigera inlägg</div>
-              <textarea value={editContent} onChange={e => setEditContent(e.target.value)} style={{ width: '100%', minHeight: 80, fontSize: '1rem', borderRadius: 8, border: `1.5px solid ${styles.primaryGreen}`, marginBottom: '1.2rem', padding: '0.5rem' }} />
-              <div style={{ display: 'flex', gap: '1.2rem', justifyContent: 'center' }}>
-                <button className="fbc-btn" style={{ background: styles.primaryGreen, color: '#fff', borderRadius: 8, padding: '0.4rem 1.2rem', fontWeight: 700, fontSize: '1.05rem', border: 'none' }} onClick={handleSaveEdit}>Spara</button>
-                <button className="fbc-btn fbc-btn-logout" style={{ background: '#e53935', color: '#fff', borderRadius: 8, padding: '0.4rem 1.2rem', fontWeight: 700, fontSize: '1.05rem', border: 'none' }} onClick={() => setEditPostId(null)}>Avbryt</button>
+          <div className="homePopupOverlay">
+            <div className="homeAbsencePopup">
+              <div className="homeAbsenceTitle homeEditTitle">Redigera inlägg</div>
+              <textarea value={editContent} onChange={e => setEditContent(e.target.value)} className="homeEditTextarea" placeholder="Redigera inlägg..." />
+              <div className="homeAbsenceBtnRow">
+                <button className="fbc-btn homeEditSaveBtn" onClick={handleSaveEdit}>Spara</button>
+                <button className="fbc-btn fbc-btn-logout homeEditCancelBtn" onClick={() => setEditPostId(null)}>Avbryt</button>
               </div>
             </div>
           </div>
         )}
         {/* Modal för ta bort */}
         {showDeleteId && (
-          <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', background: 'rgba(0,0,0,0.35)', zIndex: 300, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <div style={{ background: '#fff', borderRadius: '1.2rem', padding: '2rem 2rem 1.5rem 2rem', boxShadow: '0 8px 32px rgba(46,125,50,0.18)', minWidth: 280, maxWidth: 400, border: `2px solid #e53935` }}>
-              <div style={{ fontWeight: 900, fontSize: '1.15rem', color: '#e53935', marginBottom: '1.2rem' }}>Ta bort inlägg</div>
-              <div style={{ color: styles.textSecondary, fontSize: '1.05rem', marginBottom: '1.2rem' }}>Är du säker på att du vill ta bort detta inlägg?</div>
-              <div style={{ display: 'flex', gap: '1.2rem', justifyContent: 'center' }}>
-                <button className="fbc-btn fbc-btn-logout" style={{ background: '#e53935', color: '#fff', borderRadius: 8, padding: '0.4rem 1.2rem', fontWeight: 700, fontSize: '1.05rem', border: 'none' }} onClick={() => handleDeletePost(showDeleteId)}>Ta bort</button>
-                <button className="fbc-btn" style={{ background: styles.primaryGreen, color: '#fff', borderRadius: 8, padding: '0.4rem 1.2rem', fontWeight: 700, fontSize: '1.05rem', border: 'none' }} onClick={() => setShowDeleteId(null)}>Avbryt</button>
+          <div className="homePopupOverlay">
+            <div className="homeAbsencePopup">
+              <div className="homeAbsenceTitle homeDeleteTitle">Ta bort inlägg</div>
+              <div className="homeAbsenceText">Är du säker på att du vill ta bort detta inlägg?</div>
+              <div className="homeAbsenceBtnRow">
+                <button className="fbc-btn fbc-btn-logout homeDeleteBtn" onClick={() => handleDeletePost(showDeleteId)}>Ta bort</button>
+                <button className="fbc-btn homeDeleteCancelBtn" onClick={() => setShowDeleteId(null)}>Avbryt</button>
               </div>
             </div>
           </div>
@@ -429,22 +409,22 @@ const Home: React.FC = () => {
     {/* Meny-popup med modern stil */}
 <MenuPopup open={menuOpen} onClose={() => setMenuOpen(false)} menuItems={menuItems} styles={styles} navigate={navigate} />
 				{/* Footer med copyright och länk till policyer */}
-				<footer style={{ maxWidth: 900, margin: "0 auto", padding: "1.5rem 1rem", borderTop: `2px solid ${styles.primaryGreen}`, display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem", fontSize: "0.9rem", color: styles.textSecondary }}>
-					<div style={{ textAlign: "center" }}>
-						&copy; {new Date().getFullYear()} FBC - Alla rättigheter förbehållna.
-					</div>
-					<div style={{ display: "flex", gap: "1.5rem", flexWrap: "wrap", justifyContent: "center", alignItems: "center" }}>
-            <a href="/privacy-policy" style={{ color: styles.textSecondary, textDecoration: "none", transition: "color 0.2s" }} onClick={e => { e.preventDefault(); navigate('/privacy-policy'); }} onMouseEnter={e => e.currentTarget.style.color = "#FFB300"} onMouseLeave={e => e.currentTarget.style.color = styles.textSecondary}>
+        <footer className="homeFooter">
+          <div className="homeFooterCopyright">
+            &copy; {new Date().getFullYear()} FBC - Alla rättigheter förbehållna.
+          </div>
+          <div className="homeFooterLinks">
+            <a href="/privacy-policy" className="homeFooterLink" onClick={e => { e.preventDefault(); navigate('/privacy-policy'); }}>
               Policy för personuppgifter
             </a>
-            <a href="/terms-of-service" style={{ color: styles.textSecondary, textDecoration: "none", transition: "color 0.2s" }} onClick={e => { e.preventDefault(); navigate('/terms-of-service'); }} onMouseEnter={e => e.currentTarget.style.color = "#FFB300"} onMouseLeave={e => e.currentTarget.style.color = styles.textSecondary}>
+            <a href="/terms-of-service" className="homeFooterLink" onClick={e => { e.preventDefault(); navigate('/terms-of-service'); }}>
               Användarvillkor
             </a>
-            <a href="/cookie-policy" style={{ color: styles.textSecondary, textDecoration: "none", transition: "color 0.2s" }} onClick={e => { e.preventDefault(); navigate('/cookie-policy'); }} onMouseEnter={e => e.currentTarget.style.color = "#FFB300"} onMouseLeave={e => e.currentTarget.style.color = styles.textSecondary}>
+            <a href="/cookie-policy" className="homeFooterLink" onClick={e => { e.preventDefault(); navigate('/cookie-policy'); }}>
               Cookiepolicy
             </a>
-					</div>
-				</footer>
+          </div>
+        </footer>
 			</div>
 		);
 	};

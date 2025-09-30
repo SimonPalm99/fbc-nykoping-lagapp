@@ -1,0 +1,386 @@
+/* Forum edit/delete modal */
+.homeEditTitle {
+  color: #2E7D32;
+}
+.homeEditTextarea {
+  width: 100%;
+  min-height: 80px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1.5px solid #2E7D32;
+  margin-bottom: 1.2rem;
+  padding: 0.5rem;
+}
+.homeEditSaveBtn {
+  background: #2E7D32;
+  color: #fff;
+  border-radius: 8px;
+  padding: 0.4rem 1.2rem;
+  font-weight: 700;
+  font-size: 1.05rem;
+  border: none;
+}
+.homeEditCancelBtn {
+  background: #e53935;
+  color: #fff;
+  border-radius: 8px;
+  padding: 0.4rem 1.2rem;
+  font-weight: 700;
+  font-size: 1.05rem;
+  border: none;
+}
+.homeDeleteTitle {
+  color: #e53935;
+}
+.homeDeleteBtn {
+  background: #e53935;
+  color: #fff;
+  border-radius: 8px;
+  padding: 0.4rem 1.2rem;
+  font-weight: 700;
+  font-size: 1.05rem;
+  border: none;
+}
+.homeDeleteCancelBtn {
+  background: #2E7D32;
+  color: #fff;
+  border-radius: 8px;
+  padding: 0.4rem 1.2rem;
+  font-weight: 700;
+  font-size: 1.05rem;
+  border: none;
+}
+/* Footer styles */
+.homeFooter {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem;
+  border-top: 2px solid #2E7D32;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.9rem;
+  color: #4A5568;
+}
+.homeFooterCopyright {
+  text-align: center;
+}
+.homeFooterLinks {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+.homeFooterLink {
+  color: #4A5568;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.homeFooterLink:hover {
+  color: #FFB300;
+}
+/* Popup overlay for modals */
+.homePopupOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.35);
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Logout popup styles */
+.homeLogoutPopup {
+  background: #fff;
+  border-radius: 1.5rem;
+  padding: 2.5rem 2.5rem 2rem 2.5rem;
+  box-shadow: 0 8px 32px rgba(46,125,50,0.18);
+  text-align: center;
+  min-width: 280px;
+  max-width: 400px;
+  border: 2px solid #FFB300;
+  position: relative;
+}
+.homeLogoutTitle {
+  font-weight: 900;
+  font-size: 1.35rem;
+  color: #2E7D32;
+  margin-bottom: 1.2rem;
+  letter-spacing: 1px;
+}
+.homeLogoutIcon {
+  font-size: 2.2rem;
+  margin-right: 0.5rem;
+}
+.homeLogoutText {
+  color: #4A5568;
+  font-size: 1.05rem;
+  margin-bottom: 1.5rem;
+}
+.homeLogoutBtnRow {
+  display: flex;
+  justify-content: center;
+  gap: 1.2rem;
+}
+.homeLogoutPopupBtn {
+  min-width: 110px;
+  font-size: 1.05rem;
+}
+.homeLogoutPopupBtnCancel {
+  background: #4CAF50;
+}
+
+/* Absence modal styles */
+.homeAbsencePopup {
+  background: #fff;
+  border-radius: 1.2rem;
+  padding: 2rem 2rem 1.5rem 2rem;
+  box-shadow: 0 8px 32px rgba(46,125,50,0.18);
+  min-width: 280px;
+  max-width: 400px;
+  border: 2px solid #FFB300;
+}
+.homeAbsenceTitle {
+  font-weight: 900;
+  font-size: 1.15rem;
+  color: #FFB300;
+  margin-bottom: 1.2rem;
+}
+.homeAbsenceText {
+  color: #4A5568;
+  font-size: 1.05rem;
+  margin-bottom: 1.2rem;
+}
+.homeAbsenceLabel {
+  font-weight: 700;
+  color: #2E7D32;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+.homeAbsenceInput {
+  width: 100%;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1.5px solid #2E7D32;
+  margin-bottom: 1.2rem;
+  padding: 0.5rem;
+}
+.homeAbsenceTextarea {
+  width: 100%;
+  min-height: 60px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1.5px solid #2E7D32;
+  margin-bottom: 1.2rem;
+  padding: 0.5rem;
+}
+.homeAbsenceBtnRow {
+  display: flex;
+  gap: 1.2rem;
+  justify-content: center;
+}
+.homeAbsenceSendBtn {
+  background: #FFB300;
+  color: #222;
+  border-radius: 8px;
+  padding: 0.4rem 1.2rem;
+  font-weight: 700;
+  font-size: 1.05rem;
+  border: none;
+}
+.homeAbsenceCancelBtn {
+  background: #e53935;
+  color: #fff;
+  border-radius: 8px;
+  padding: 0.4rem 1.2rem;
+  font-weight: 700;
+  font-size: 1.05rem;
+  border: none;
+}
+
+/* Forum section styles */
+.homeForumSection {
+  max-width: 900px;
+  margin: 0 auto 2rem auto;
+  padding: 0 1rem;
+}
+.homeForumHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.7rem;
+}
+.homeForumTitle {
+  font-weight: 900;
+  font-size: 1.18rem;
+  color: #2E7D32;
+  letter-spacing: 1px;
+}
+.homeForumBtn {
+  background: #2E7D32;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.25rem 0.9rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(46,125,50,0.10);
+}
+/* Home page styles extracted from inline styles in Home.tsx */
+
+.homeRoot {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #22c55e 0%, #0a0a0a 100%);
+  color: #f8fafc;
+  font-family: inherit;
+  padding: 1.2rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.homeGradientTop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 180px;
+  background: linear-gradient(135deg, #22c55e 0%, #0a0a0a 100%);
+  opacity: 0.18;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.homeHeader {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0.3rem 0.5rem 0.2rem 0.5rem;
+  border-bottom: 2px solid #22c55e;
+  background: linear-gradient(120deg, #2E7D32 0%, #388E3C 100%);
+  border-radius: 0 0 1rem 1rem;
+  box-shadow: 0 2px 8px rgba(46, 125, 50, 0.10);
+  position: relative;
+  overflow: hidden;
+  min-height: 56px;
+}
+
+.homeWelcomeText {
+  width: 100%;
+  text-align: center;
+  font-weight: 900;
+  font-size: 1.35rem;
+  color: #fff;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 8px #2E7D32, 0 0px 2px #000;
+  margin-bottom: 0.3rem;
+  z-index: 2;
+}
+
+.homeHeaderLogo {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.10;
+  z-index: 0;
+  pointer-events: none;
+  filter: blur(1px) grayscale(0.2);
+}
+
+.homeHeaderBtnRow {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1.2rem;
+  margin-top: 0.7rem;
+  z-index: 2;
+}
+
+.homeLogoutBtn {
+  padding: 0.6rem 1.2rem;
+  font-size: 0.95rem;
+  background-color: #e53935;
+  color: #222;
+}
+
+.homeMenuBtn {
+  position: relative;
+  padding: 0.6rem 1rem;
+  font-size: 1.2rem;
+  background-color: #22c55e;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(46,125,50,0.18);
+  transition: transform 0.2s;
+  color: #222;
+}
+
+.homeSection {
+  max-width: 900px;
+  margin: 2rem auto 2rem auto;
+  padding: 0 1rem;
+}
+
+.homeSectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.7rem;
+}
+
+.homeSectionTitle {
+  font-weight: 900;
+  font-size: 1.18rem;
+  color: #22c55e;
+  letter-spacing: 1px;
+}
+
+.homeSectionBtn {
+  background: #22c55e;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.25rem 0.9rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(46,125,50,0.10);
+}
+
+.homeForumList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.homeLoading {
+  color: #22c55e;
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.homeError {
+  color: #e53935;
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.homeEmpty {
+  color: #4A5568;
+  font-size: 1.05rem;
+}
+
+/* Add more classes as needed for popups, buttons, etc. */
