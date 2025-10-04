@@ -196,6 +196,7 @@ export const TrainingLog: React.FC<TrainingLogProps> = ({
                 value={formData.date || ''}
                 onChange={(e) => setFormData({...formData, date: e.target.value})}
                 required
+                title="Välj datum för träningen"
               />
             </div>
             
@@ -204,6 +205,7 @@ export const TrainingLog: React.FC<TrainingLogProps> = ({
               <select
                 value={formData.type || 'skills'}
                 onChange={(e) => setFormData({...formData, type: e.target.value as any})}
+                title="Välj typ av träning"
               >
                 {trainingTypes.map(type => (
                   <option key={type.value} value={type.value}>
@@ -222,6 +224,8 @@ export const TrainingLog: React.FC<TrainingLogProps> = ({
                 value={formData.duration || ''}
                 onChange={(e) => setFormData({...formData, duration: parseInt(e.target.value)})}
                 required
+                title="Ange varaktighet i minuter"
+                placeholder="Minuter"
               />
             </div>
           </div>
@@ -236,6 +240,7 @@ export const TrainingLog: React.FC<TrainingLogProps> = ({
                 value={formData.intensity || 3}
                 onChange={(e) => setFormData({...formData, intensity: parseInt(e.target.value) as any})}
                 className="slider"
+                title="Välj intensitet"
               />
               <div className="slider-labels">
                 <span>Mycket lätt</span>
@@ -252,6 +257,7 @@ export const TrainingLog: React.FC<TrainingLogProps> = ({
                 value={formData.feeling || 3}
                 onChange={(e) => setFormData({...formData, feeling: parseInt(e.target.value) as any})}
                 className="slider"
+                title="Välj känsla"
               />
               <div className="slider-labels">
                 <span>Dåligt</span>
@@ -277,6 +283,8 @@ export const TrainingLog: React.FC<TrainingLogProps> = ({
                       stats: { ...formData.stats, ...(value > 0 && { goals: value }) }
                     });
                   }}
+                  title="Antal mål"
+                  placeholder="Mål"
                 />
               </div>
               <div className="form-group">
@@ -292,6 +300,8 @@ export const TrainingLog: React.FC<TrainingLogProps> = ({
                       stats: { ...formData.stats, ...(value > 0 && { shots: value }) }
                     });
                   }}
+                  title="Antal skott"
+                  placeholder="Skott"
                 />
               </div>
               <div className="form-group">
@@ -307,6 +317,8 @@ export const TrainingLog: React.FC<TrainingLogProps> = ({
                       stats: { ...formData.stats, ...(value > 0 && { assists: value }) }
                     });
                   }}
+                  title="Antal assist"
+                  placeholder="Assist"
                 />
               </div>
             </div>
@@ -329,6 +341,8 @@ export const TrainingLog: React.FC<TrainingLogProps> = ({
                       stats: { ...formData.stats, ...(value > 0 && { distance: value }) }
                     });
                   }}
+                  title="Distans i kilometer"
+                  placeholder="km"
                 />
               </div>
             </div>
@@ -350,6 +364,8 @@ export const TrainingLog: React.FC<TrainingLogProps> = ({
                       stats: { ...formData.stats, ...(value > 0 && { weight: value }) }
                     });
                   }}
+                  title="Max vikt i kg"
+                  placeholder="kg"
                 />
               </div>
             </div>

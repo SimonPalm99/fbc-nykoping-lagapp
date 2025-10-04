@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./MatchPlanEdit.css";
 
 export interface MatchPlan {
   id: string;
@@ -47,7 +48,7 @@ const MatchPlanEdit: React.FC<Props> = ({ initialPlan, onSave }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ border: "1px solid #bbb", borderRadius: 8, padding: 12, maxWidth: 430 }}>
+    <form onSubmit={handleSubmit} className="matchplan-edit-form">
       <h3>Redigera Matchplan</h3>
       <label>
         Datum:
@@ -69,7 +70,7 @@ const MatchPlanEdit: React.FC<Props> = ({ initialPlan, onSave }) => {
             name="lineup"
             value={pos}
             onChange={e => handleChange(e, idx)}
-            style={{ margin: "2px 0", display: "block" }}
+            className="matchplan-lineup-input"
           />
         ))}
       </label>
@@ -77,7 +78,8 @@ const MatchPlanEdit: React.FC<Props> = ({ initialPlan, onSave }) => {
         Taktik / Anteckning:
         <textarea name="tactics" value={plan.tactics} onChange={handleChange} rows={4} />
       </label>
-      <button type="submit" style={{ marginTop: 8 }}>Spara plan</button>
+      <button type="submit" className="matchplan-save-btn">Spara plan</button>
+      <button type="submit" className="matchplan-save-btn matchplan-save-btn-margin">Spara plan</button>
     </form>
   );
 };

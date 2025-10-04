@@ -16,35 +16,21 @@ const Skeleton: React.FC<SkeletonProps> = ({
   return (
     <div
       className={`skeleton ${className}`}
-      style={{
-        width,
-        height,
-        borderRadius,
-        background: 'linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%)',
-        backgroundSize: '200% 100%',
-        animation: 'shimmer 1.5s infinite',
-        opacity: 0.7
-      }}
+      data-width={width}
+      data-height={height}
+      data-radius={borderRadius}
     />
   );
 };
 
 // Activity Card Skeleton
 export const ActivityCardSkeleton: React.FC = () => (
-  <div style={{
-    background: 'var(--card-background)',
-    borderRadius: '16px',
-    padding: '1.25rem',
-    border: '1px solid var(--border-color)',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '0.75rem'
-  }}>
-    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+  <div className={"activityCardSkeleton"}>
+    <div className={"activityCardSkeletonRow"}>
       <Skeleton width="44px" height="44px" borderRadius="12px" />
-      <div style={{ flex: 1 }}>
+      <div className={"activityCardSkeletonText"}>
         <Skeleton width="70%" height="1.1rem" />
-        <div style={{ marginTop: '0.5rem' }}>
+        <div className={"activityCardSkeletonMargin"}>
           <Skeleton width="50%" height="0.85rem" />
         </div>
       </div>
@@ -56,19 +42,11 @@ export const ActivityCardSkeleton: React.FC = () => (
 
 // News Card Skeleton
 export const NewsCardSkeleton: React.FC = () => (
-  <div style={{
-    background: 'var(--card-background)',
-    borderRadius: '16px',
-    padding: '1.25rem',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '1rem',
-    border: '1px solid var(--border-color)'
-  }}>
+  <div className={"newsCardSkeleton"}>
     <Skeleton width="40px" height="40px" borderRadius="12px" />
-    <div style={{ flex: 1 }}>
+    <div className={"newsCardSkeletonText"}>
       <Skeleton width="80%" height="1rem" />
-      <div style={{ margin: '0.5rem 0' }}>
+      <div className={"newsCardSkeletonMargin"}>
         <Skeleton width="90%" height="0.85rem" />
       </div>
       <Skeleton width="30%" height="0.75rem" />
@@ -78,20 +56,12 @@ export const NewsCardSkeleton: React.FC = () => (
 
 // Goal Progress Skeleton
 export const GoalProgressSkeleton: React.FC = () => (
-  <div style={{
-    background: 'var(--card-background)',
-    borderRadius: '16px',
-    padding: '1.25rem',
-    border: '1px solid var(--border-color)',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '1rem'
-  }}>
-    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+  <div className={"goalProgressSkeleton"}>
+    <div className={"goalProgressSkeletonRow"}>
       <Skeleton width="40px" height="40px" borderRadius="50%" />
-      <div style={{ flex: 1 }}>
+      <div className={"goalProgressSkeletonText"}>
         <Skeleton width="60%" height="1rem" />
-        <div style={{ marginTop: '0.5rem' }}>
+        <div className={"goalProgressSkeletonMargin"}>
           <Skeleton width="40%" height="0.8rem" />
         </div>
       </div>
@@ -102,31 +72,16 @@ export const GoalProgressSkeleton: React.FC = () => (
 
 // Quick Stats Skeleton
 export const QuickStatsSkeleton: React.FC = () => (
-  <div style={{
-    background: 'var(--card-background)',
-    borderRadius: '16px',
-    padding: '1.5rem',
-    border: '1px solid var(--border-color)'
-  }}>
+  <div className={"quickStatsSkeleton"}>
     <Skeleton width="40%" height="1.1rem" />
-    <div style={{ 
-      display: 'grid', 
-      gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))',
-      gap: '1rem',
-      marginTop: '1rem'
-    }}>
+    <div className={"quickStatsSkeletonGrid"}>
       {[1, 2, 3, 4].map(i => (
-        <div key={i} style={{
-          textAlign: 'center',
-          padding: '1rem 0.5rem',
-          borderRadius: '12px',
-          background: 'rgba(0,0,0,0.02)'
-        }}>
+        <div key={i} className={"quickStatsSkeletonItem"}>
           <Skeleton width="24px" height="24px" borderRadius="50%" className="mx-auto" />
-          <div style={{ marginTop: '0.5rem' }}>
+          <div className="quickStatsSkeletonMarginTop">
             <Skeleton width="30px" height="1.5rem" className="mx-auto" />
           </div>
-          <div style={{ marginTop: '0.25rem' }}>
+          <div className="quickStatsSkeletonMarginTopSmall">
             <Skeleton width="60px" height="0.8rem" className="mx-auto" />
           </div>
         </div>
@@ -137,53 +92,15 @@ export const QuickStatsSkeleton: React.FC = () => (
 
 // Profile skeleton loaders
 export const ProfileHeaderSkeleton: React.FC = () => (
-  <div style={{
-    background: "var(--card-background)",
-    borderRadius: "20px",
-    padding: "2rem",
-    marginBottom: "2rem",
-    border: "1px solid var(--border-color)",
-    boxShadow: "0 2px 12px rgba(0,0,0,0.08)",
-    animation: "fadeIn 0.6s ease-out"
-  }}>
-    <div style={{ display: "flex", gap: "2rem", alignItems: "flex-start" }}>
-      <div style={{
-        width: "120px",
-        height: "120px",
-        borderRadius: "50%",
-        background: "linear-gradient(90deg, var(--bg-tertiary) 0%, var(--bg-accent) 50%, var(--bg-tertiary) 100%)",
-        backgroundSize: "200% 100%",
-        animation: "shimmer 1.5s infinite"
-      }} />
-      <div style={{ flex: 1 }}>
-        <div style={{
-          width: "200px",
-          height: "32px",
-          borderRadius: "8px",
-          background: "linear-gradient(90deg, var(--bg-tertiary) 0%, var(--bg-accent) 50%, var(--bg-tertiary) 100%)",
-          backgroundSize: "200% 100%",
-          animation: "shimmer 1.5s infinite",
-          marginBottom: "1rem"
-        }} />
-        <div style={{
-          width: "150px",
-          height: "20px",
-          borderRadius: "6px",
-          background: "linear-gradient(90deg, var(--bg-tertiary) 0%, var(--bg-accent) 50%, var(--bg-tertiary) 100%)",
-          backgroundSize: "200% 100%",
-          animation: "shimmer 1.5s infinite",
-          marginBottom: "1.5rem"
-        }} />
-        <div style={{ display: "flex", gap: "2rem" }}>
+  <div className={"profileHeaderSkeleton"}>
+    <div className={"profileHeaderSkeletonRow"}>
+      <div className={"profileHeaderSkeletonAvatar"} />
+      <div className={"profileHeaderSkeletonText"}>
+        <div className={"profileHeaderSkeletonTitle"} />
+        <div className={"profileHeaderSkeletonSubtitle"} />
+        <div className={"profileHeaderSkeletonStats"}>
           {Array.from({ length: 4 }).map((_, index) => (
-            <div key={index} style={{
-              width: "60px",
-              height: "60px",
-              borderRadius: "12px",
-              background: "linear-gradient(90deg, var(--bg-tertiary) 0%, var(--bg-accent) 50%, var(--bg-tertiary) 100%)",
-              backgroundSize: "200% 100%",
-              animation: `shimmer 1.5s infinite ${index * 0.2}s`
-            }} />
+            <div key={index} className={"profileHeaderSkeletonStat"} />
           ))}
         </div>
       </div>
@@ -192,58 +109,14 @@ export const ProfileHeaderSkeleton: React.FC = () => (
 );
 
 export const ProfileStatsSkeleton: React.FC = () => (
-  <div style={{
-    background: "var(--card-background)",
-    borderRadius: "16px",
-    padding: "1.5rem",
-    border: "1px solid var(--border-color)",
-    boxShadow: "0 2px 12px rgba(0,0,0,0.08)",
-    animation: "fadeIn 0.6s ease-out 0.2s both"
-  }}>
-    <div style={{
-      width: "120px",
-      height: "24px",
-      borderRadius: "6px",
-      background: "linear-gradient(90deg, var(--bg-tertiary) 0%, var(--bg-accent) 50%, var(--bg-tertiary) 100%)",
-      backgroundSize: "200% 100%",
-      animation: "shimmer 1.5s infinite",
-      marginBottom: "1rem"
-    }} />
-    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))", gap: "1rem" }}>
+  <div className={"profileStatsSkeleton"}>
+    <div className={"profileStatsSkeletonTitle"} />
+    <div className={"profileStatsSkeletonGrid"}>
       {Array.from({ length: 6 }).map((_, index) => (
-        <div key={index} style={{
-          textAlign: "center",
-          padding: "1rem",
-          borderRadius: "12px",
-          background: "var(--bg-tertiary)"
-        }}>
-          <div style={{
-            width: "40px",
-            height: "40px",
-            borderRadius: "50%",
-            background: "linear-gradient(90deg, var(--bg-accent) 0%, var(--border-primary) 50%, var(--bg-accent) 100%)",
-            backgroundSize: "200% 100%",
-            animation: `shimmer 1.5s infinite ${index * 0.1}s`,
-            margin: "0 auto 0.5rem auto"
-          }} />
-          <div style={{
-            width: "30px",
-            height: "20px",
-            borderRadius: "4px",
-            background: "linear-gradient(90deg, var(--bg-accent) 0%, var(--border-primary) 50%, var(--bg-accent) 100%)",
-            backgroundSize: "200% 100%",
-            animation: `shimmer 1.5s infinite ${index * 0.1}s`,
-            margin: "0 auto 0.25rem auto"
-          }} />
-          <div style={{
-            width: "50px",
-            height: "16px",
-            borderRadius: "4px",
-            background: "linear-gradient(90deg, var(--bg-accent) 0%, var(--border-primary) 50%, var(--bg-accent) 100%)",
-            backgroundSize: "200% 100%",
-            animation: `shimmer 1.5s infinite ${index * 0.1}s`,
-            margin: "0 auto"
-          }} />
+        <div key={index} className={"profileStatsSkeletonItem"}>
+          <div className={"profileStatsSkeletonAvatar"} />
+          <div className={"profileStatsSkeletonStat"} />
+          <div className={"profileStatsSkeletonLabel"} />
         </div>
       ))}
     </div>
@@ -251,59 +124,15 @@ export const ProfileStatsSkeleton: React.FC = () => (
 );
 
 export const ProfileBadgesSkeleton: React.FC = () => (
-  <div style={{
-    background: "var(--card-background)",
-    borderRadius: "16px",
-    padding: "1.5rem",
-    border: "1px solid var(--border-color)",
-    boxShadow: "0 2px 12px rgba(0,0,0,0.08)",
-    animation: "fadeIn 0.6s ease-out 0.4s both"
-  }}>
-    <div style={{
-      width: "150px",
-      height: "24px",
-      borderRadius: "6px",
-      background: "linear-gradient(90deg, var(--bg-tertiary) 0%, var(--bg-accent) 50%, var(--bg-tertiary) 100%)",
-      backgroundSize: "200% 100%",
-      animation: "shimmer 1.5s infinite",
-      marginBottom: "1rem"
-    }} />
-    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "1rem" }}>
+  <div className={"profileBadgesSkeleton"}>
+    <div className={"profileBadgesSkeletonTitle"} />
+    <div className={"profileBadgesSkeletonGrid"}>
       {Array.from({ length: 4 }).map((_, index) => (
-        <div key={index} style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "1rem",
-          padding: "1rem",
-          borderRadius: "12px",
-          background: "var(--bg-tertiary)"
-        }}>
-          <div style={{
-            width: "50px",
-            height: "50px",
-            borderRadius: "50%",
-            background: "linear-gradient(90deg, var(--bg-accent) 0%, var(--border-primary) 50%, var(--bg-accent) 100%)",
-            backgroundSize: "200% 100%",
-            animation: `shimmer 1.5s infinite ${index * 0.1}s`
-          }} />
-          <div style={{ flex: 1 }}>
-            <div style={{
-              width: "100px",
-              height: "18px",
-              borderRadius: "4px",
-              background: "linear-gradient(90deg, var(--bg-accent) 0%, var(--border-primary) 50%, var(--bg-accent) 100%)",
-              backgroundSize: "200% 100%",
-              animation: `shimmer 1.5s infinite ${index * 0.1}s`,
-              marginBottom: "0.5rem"
-            }} />
-            <div style={{
-              width: "80px",
-              height: "14px",
-              borderRadius: "4px",
-              background: "linear-gradient(90deg, var(--bg-accent) 0%, var(--border-primary) 50%, var,--bg-accent) 100%)",
-              backgroundSize: "200% 100%",
-              animation: `shimmer 1.5s infinite ${index * 0.1}s`
-            }} />
+        <div key={index} className={"profileBadgesSkeletonItem"}>
+          <div className={"profileBadgesSkeletonAvatar"} />
+          <div className={"profileBadgesSkeletonText"}>
+            <div className={"profileBadgesSkeletonLabel"} />
+            <div className={"profileBadgesSkeletonDesc"} />
           </div>
         </div>
       ))}

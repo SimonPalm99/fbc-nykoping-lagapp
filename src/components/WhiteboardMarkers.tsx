@@ -1,5 +1,6 @@
 import React from "react";
 import { Marker } from "../types/whiteboardTypes";
+import styles from "./WhiteboardMarkers.module.css";
 
 interface WhiteboardMarkersProps {
   markers: Marker[];
@@ -12,40 +13,28 @@ const WhiteboardMarkers: React.FC<WhiteboardMarkersProps> = ({ markers, tool, se
   return (
     <>
       {markers.map((m, i) => {
-        let bg = "#222";
         let label = "";
-        let color = "#fff";
         let size = 36;
+        let markerClass = styles.marker;
         if (m.type === "player") {
-          bg = "#2E7D32"; label = "S"; color = "#fff";
+          label = "S";
+          markerClass += ` ${styles["marker-player"]}`;
         } else if (m.type === "opponent") {
-          bg = "#e53935"; label = "M"; color = "#fff";
+          label = "M";
+          markerClass += ` ${styles["marker-opponent"]}`;
         } else if (m.type === "ball") {
-          bg = "#111"; label = "B"; color = "#fff"; size = 24;
+          label = "B";
+          size = 24;
+          markerClass += ` ${styles["marker-ball"]}`;
         }
+        markerClass += ` ${tool === "hand" ? styles["marker-grab"] : styles["marker-default"]}`;
         return (
           <div
             key={i}
-            style={{
-              position: "absolute",
-              left: m.x-size/2,
-              top: m.y-size/2,
-              width: size,
-              height: size,
-              borderRadius: "50%",
-              background: bg,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              color,
-              fontWeight: 900,
-              fontSize: m.type === "ball" ? "0.95rem" : "1.15rem",
-              zIndex: 10,
-              boxShadow: "0 2px 8px rgba(0,0,0,0.18)",
-              cursor: tool === "hand" ? "grab" : "default",
-              border: m.type === "ball" ? "2px solid #fff" : "none",
-              userSelect: "none"
-            }}
+            className={markerClass}
+            data-left={m.x - size / 2}
+            data-top={m.y - size / 2}
+            data-size={size}
             onPointerDown={e => {
               if (tool === "hand") {
                 setMovingMarker(i);

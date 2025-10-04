@@ -1,0 +1,149 @@
+.goalProgressFadeInDelay0 { animation-delay: 0s; }
+.goalProgressFadeInDelay1 { animation-delay: 0.1s; }
+.goalProgressFadeInDelay2 { animation-delay: 0.2s; }
+.goalProgressFadeInDelay3 { animation-delay: 0.3s; }
+.goalProgressSkeletonIcon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+.goalProgressSkeletonTextWrapper {
+  flex: 1;
+}
+.goalProgressSkeletonTextMain {
+  width: 60%;
+  height: 1rem;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
+.goalProgressSkeletonTextSub {
+  width: 40%;
+  height: 0.8rem;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+}
+.goalProgressSkeletonBar {
+  width: 100%;
+  height: 8px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+}
+.goalProgressCard {
+  background: var(--card-background);
+  border-radius: 16px;
+  padding: 1.25rem;
+  border: 1px solid var(--border-color);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+}
+.goalProgressCardCompleted {
+  border: 1px solid var(--goal-color, #4caf50);
+  box-shadow: 0 4px 16px var(--goal-color, #4caf50)20;
+}
+.goalProgressCardPattern {
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(45deg, var(--goal-color, #4caf50)20, transparent);
+  z-index: 0;
+}
+.goalProgressHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  position: relative;
+  z-index: 1;
+}
+.goalProgressIcon {
+  background: linear-gradient(135deg, var(--goal-color, #4caf50), var(--goal-color, #4caf50)cc);
+  border-radius: 50%;
+  height: 48px;
+  box-shadow: 0 4px 12px var(--goal-color, #4caf50)30;
+  transition: transform 0.3s ease;
+}
+.goalProgressIcon:hover {
+  transform: scale(1.1) rotate(10deg);
+/* Removed .goalProgressCard[data-color] and .goalProgressCardCompleted[data-color] */
+}
+.goalProgressLabel {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+.goalProgressStats {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+.goalProgressAchieved {
+  color: var(--goal-color, #4caf50);
+  margin-left: 0.5rem;
+  font-size: 0.8rem;
+}
+.goalProgressBarWrapper {
+  background: rgba(0,0,0,0.1);
+  border-radius: 8px;
+  height: 8px;
+  overflow: hidden;
+  position: relative;
+}
+.goalProgressBar {
+  background: linear-gradient(90deg, var(--goal-color, #4caf50), var(--goal-color, #4caf50)dd);
+  height: 100%;
+  border-radius: 8px;
+  transition: width 0.8s ease-out;
+  box-shadow: 0 0 8px var(--goal-color, #4caf50)40;
+  width: 0%;
+}
+.goalProgressBarShimmer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, var(--goal-color, #4caf50)30, transparent);
+  animation: shimmer 2s infinite;
+  border-radius: 8px;
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.goalProgressPercent {
+  text-align: right;
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+.goalProgressPercentHigh {
+  color: var(--goal-color, #4caf50);
+}
+.goalProgressGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+}
+.goalProgressFadeIn {
+  animation: fadeIn 0.6s ease-out both;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: none; }
+}

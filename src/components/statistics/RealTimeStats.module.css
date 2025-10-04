@@ -1,0 +1,188 @@
+.eventTypeColor_mål {
+  background: #10b981 !important;
+}
+.eventTypeColor_assist {
+  background: #3b82f6 !important;
+}
+.eventTypeColor_skott {
+  background: #f59e0b !important;
+}
+.eventTypeColor_räddning {
+  background: #8b5cf6 !important;
+}
+.eventTypeColor_utvisning {
+  background: #ef4444 !important;
+}
+.eventTypeColor_block {
+  background: #6b7280 !important;
+}
+.eventTypeColor_tekniskt\ fel {
+  background: #f97316 !important;
+}
+/* RealTimeStats.module.css */
+
+.container {
+  background: #1a202c;
+  padding: 20px;
+  border-radius: 12px;
+  color: #fff;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.timer {
+  font-size: 24px;
+  font-weight: bold;
+  background: #2d3748;
+  padding: 8px 16px;
+  border-radius: 8px;
+}
+
+.button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.buttonStart {
+  background: #10b981;
+}
+
+.buttonPause {
+  background: #ef4444;
+}
+
+.modeButton {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.modeActive {
+  background: #3b82f6;
+}
+
+.modeInactive {
+  background: #4a5568;
+}
+
+.onIceButton {
+  padding: 8px;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.onIceActive {
+  background: #10b981;
+}
+
+.onIceInactive {
+  background: #4a5568;
+}
+
+.eventTypeButton {
+  padding: 12px 8px;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+
+.eventTypeInactive {
+  background: #4a5568;
+}
+
+.select {
+  width: 100%;
+  padding: 8px 12px;
+  background: #2d3748;
+  border: 1px solid #4a5568;
+  border-radius: 6px;
+  color: #fff;
+}
+
+.input {
+  width: 100%;
+  padding: 8px 12px;
+  background: #2d3748;
+  border: 1px solid #4a5568;
+  border-radius: 6px;
+  color: #fff;
+}
+
+.registerButton {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.registerButtonActive {
+  background: #3b82f6;
+}
+
+.registerButtonInactive {
+  background: #4a5568;
+  cursor: not-allowed;
+}
+
+.shotMapCanvas {
+  border: 2px solid #4a5568;
+  border-radius: 8px;
+  cursor: crosshair;
+  max-width: 100%;
+}
+
+.eventLog {
+  max-height: 300px;
+  overflow-y: auto;
+  background: #2d3748;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.eventLogItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  margin: 4px 0;
+  background: #1a202c;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.eventLogComment {
+  font-size: 12px;
+  color: #a0aec0;
+}
+
+.eventLogRemove {
+  background: #ef4444;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  padding: 4px 8px;
+  font-size: 12px;
+}

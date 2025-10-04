@@ -1,0 +1,29 @@
+.mvpBox {
+  background: #353;
+  color: #fff;
+  padding: 16px;
+  border-radius: 10px;
+  margin: 18px 0;
+}
+
+.mvpRubrik {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.mvpNamn {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.mvpInfo {
+  font-size: 1rem;
+}
+
+.tom {
+  color: #888;
+  font-style: italic;
+  margin: 12px 0;
+}

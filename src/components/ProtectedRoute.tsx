@@ -1,4 +1,5 @@
 import React, { ReactNode } from "react";
+import styles from "./ProtectedRoute.module.css";
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
@@ -11,10 +12,10 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
 
   if (isLoading) {
     return (
-      <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg, #FAFAFA 0%, #F1F8E9 30%, #E8F5E9 100%)" }}>
-        <div style={{ textAlign: "center" }}>
-          <div style={{ width: "60px", height: "60px", margin: "0 auto 1rem", background: "linear-gradient(135deg, #2E7D32 0%, #388E3C 50%, #4CAF50 100%)", borderRadius: "15px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.5rem", color: "white", animation: "pulse 2s infinite" }}>🏒</div>
-          <p style={{ fontSize: "1rem", color: "#1B5E20", fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" }}>Laddar FBC Nyköping...</p>
+      <div className={styles.protectedRoot}>
+        <div className={styles.protectedCenter}>
+          <div className={styles.protectedLogo}>🏒</div>
+          <p className={styles.protectedText}>Laddar FBC Nyköping...</p>
         </div>
       </div>
     );

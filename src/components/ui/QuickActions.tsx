@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import styles from './QuickActions.module.css';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 
@@ -143,16 +144,19 @@ export const QuickActions: React.FC<QuickActionsProps> = ({
   const [actions, setActions] = useState<QuickAction[]>([]);
   const [isCustomizing, setIsCustomizing] = useState(false);
 
-  useEffect(() => {
-    loadUserPreferences();
-  }, [user, isLeader]);
 
-  const loadUserPreferences = () => {
+  const getDefaultActions = React.useCallback((): QuickAction[] => {
+    return defaultActions.map((action, index) => ({
+      ...action,
+      isEnabled: index < maxActions, // Aktivera de första actions som standard
+      order: index
+    }));
+  }, [maxActions]);
+
+  const loadUserPreferences = React.useCallback(() => {
     // Ladda användarens anpassade snabbval från localStorage
     const savedPreferences = localStorage.getItem(`quickActions_${user?.id}`);
-    
     let userActions: QuickAction[];
-    
     if (savedPreferences) {
       try {
         userActions = JSON.parse(savedPreferences);
@@ -162,22 +166,16 @@ export const QuickActions: React.FC<QuickActionsProps> = ({
     } else {
       userActions = getDefaultActions();
     }
-
     // Filtrera bort ledare-specifika funktioner för vanliga spelare
     const filteredActions = userActions.filter(action => 
       !action.requiresLeader || isLeader
     );
-
     setActions(filteredActions);
-  };
+  }, [user, isLeader, getDefaultActions]);
 
-  const getDefaultActions = (): QuickAction[] => {
-    return defaultActions.map((action, index) => ({
-      ...action,
-      isEnabled: index < maxActions, // Aktivera de första actions som standard
-      order: index
-    }));
-  };
+  useEffect(() => {
+    loadUserPreferences();
+  }, [loadUserPreferences]);
 
   const saveUserPreferences = (newActions: QuickAction[]) => {
     localStorage.setItem(`quickActions_${user?.id}`, JSON.stringify(newActions));
@@ -222,99 +220,46 @@ export const QuickActions: React.FC<QuickActionsProps> = ({
 
   if (isCustomizing) {
     return (
-      <div className="quick-actions-customizer">
-        <div style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "1.5rem"
-        }}>
-          <h3 style={{
-            margin: 0,
-            fontSize: "1.25rem",
-            fontWeight: "700",
-            color: "var(--text-primary)"
-          }}>
-            Anpassa snabbval
-          </h3>
-          <div style={{ display: "flex", gap: "0.5rem" }}>
+      <div className={styles['quick-actions-customizer']}>
+        <div className={styles['quick-actions-customizer-header']}>
+          <h3 className={styles['quick-actions-customizer-title']}>Anpassa snabbval</h3>
+          <div className={styles['quick-actions-customizer-btns']}>
             <button
               onClick={resetToDefaults}
-              style={{
-                padding: "0.5rem 1rem",
-                background: "var(--error-color)",
-                color: "#ffffff",
-                border: "none",
-                borderRadius: "8px",
-                fontSize: "0.875rem",
-                cursor: "pointer"
-              }}
+              className={`${styles['quick-actions-btn']} ${styles['quick-actions-btn-reset']}`}
             >
               Återställ
             </button>
             <button
               onClick={() => setIsCustomizing(false)}
-              style={{
-                padding: "0.5rem 1rem",
-                background: "var(--primary-green)",
-                color: "#ffffff",
-                border: "none",
-                borderRadius: "8px",
-                fontSize: "0.875rem",
-                cursor: "pointer"
-              }}
+              className={`${styles['quick-actions-btn']} ${styles['quick-actions-btn-done']}`}
             >
               Klar
             </button>
           </div>
         </div>
-
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-          gap: "1rem"
-        }}>
+        <div className={styles['quick-actions-customizer-grid']}>
           {actions.map((action) => (
             <div
               key={action.id}
-              style={{
-                padding: "1rem",
-                background: action.isEnabled ? "var(--card-background)" : "var(--muted-background)",
-                border: `2px solid ${action.isEnabled ? action.color : 'var(--border-color)'}`,
-                borderRadius: "12px",
-                cursor: "pointer",
-                opacity: action.isEnabled ? 1 : 0.6,
-                transition: "all 0.2s ease"
-              }}
+              className={
+                `${styles['quick-actions-customizer-item']} ` +
+                (action.isEnabled ? styles['quick-actions-customizer-item-enabled'] : styles['quick-actions-customizer-item-disabled']) +
+                (action.isEnabled ? ` ${styles[`borderColor-${action.id}`]}` : '')
+              }
               onClick={() => toggleAction(action.id)}
             >
-              <div style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "0.75rem",
-                marginBottom: "0.5rem"
-              }}>
-                <span style={{ fontSize: "1.5rem" }}>{action.icon}</span>
-                <span style={{
-                  fontWeight: "600",
-                  color: "var(--text-primary)"
-                }}>
-                  {action.title}
-                </span>
-                <span style={{
-                  marginLeft: "auto",
-                  fontSize: "1.25rem",
-                  color: action.isEnabled ? "var(--success-color)" : "var(--text-muted)"
-                }}>
+              <div className={styles['quick-actions-customizer-item-row']}>
+                <span className={styles['quick-actions-customizer-item-icon']}>{action.icon}</span>
+                <span className={styles['quick-actions-customizer-item-title']}>{action.title}</span>
+                <span className={
+                  `${styles['quick-actions-customizer-item-status']} ` +
+                  (action.isEnabled ? styles['quick-actions-customizer-item-status-enabled'] : styles['quick-actions-customizer-item-status-disabled'])
+                }>
                   {action.isEnabled ? "✓" : "○"}
                 </span>
               </div>
-              <div style={{
-                fontSize: "0.75rem",
-                color: "var(--text-secondary)"
-              }}>
-                {action.description}
-              </div>
+              <div className={styles['quick-actions-customizer-item-desc']}>{action.description}</div>
             </div>
           ))}
         </div>
@@ -323,111 +268,30 @@ export const QuickActions: React.FC<QuickActionsProps> = ({
   }
 
   return (
-    <div className="quick-actions">
-      <div style={{
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        marginBottom: "1.5rem"
-      }}>
-        <h2 style={{ 
-          fontSize: "clamp(1.5rem, 4vw, 2rem)", 
-          margin: 0,
-          display: "flex",
-          alignItems: "center",
-          gap: "0.75rem",
-          color: "var(--text-primary)",
-          fontWeight: "700"
-        }}>
-          ⚡ Snabbval
-        </h2>
-        
+    <div className={styles['quick-actions']}>
+      <div className={styles['quick-actions-header']}>
+        <h2 className={styles['quick-actions-title']}>⚡ Snabbval</h2>
         {showCustomizeButton && (
           <button
             onClick={() => setIsCustomizing(true)}
-            style={{
-              padding: "0.5rem 1rem",
-              background: "var(--secondary-green)",
-              color: "#ffffff",
-              border: "none",
-              borderRadius: "8px",
-              fontSize: "0.875rem",
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              gap: "0.5rem",
-              transition: "all 0.2s ease"
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = "var(--primary-green)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = "var(--secondary-green)";
-            }}
+            className={`${styles['quick-actions-btn']} ${styles['quick-actions-btn-customize']}`}
           >
             ⚙️ Anpassa
           </button>
         )}
       </div>
-      
-      <div style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
-        gap: "1.5rem"
-      }}>
+      <div className={styles['quick-actions-grid']}>
         {enabledActions.map(action => (
           <Link
             key={action.id}
             to={action.path}
-            style={{
-              background: "var(--card-background)",
-              border: `2px solid ${action.color}`,
-              textDecoration: "none",
-              padding: "2rem 1.5rem",
-              borderRadius: "20px",
-              textAlign: "center",
-              transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-              boxShadow: "var(--shadow-small)",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              gap: "1rem",
-              minHeight: "140px",
-              position: "relative",
-              overflow: "hidden"
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = "translateY(-4px)";
-              e.currentTarget.style.boxShadow = `0 8px 32px ${action.color}40`;
-              e.currentTarget.style.borderColor = action.color;
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = "translateY(0)";
-              e.currentTarget.style.boxShadow = "var(--shadow-small)";
-            }}
+            className={styles['quick-actions-link']}
+            style={{ borderColor: action.color, ['--hover-shadow-color' as any]: `${action.color}40` }}
           >
-            <div style={{ 
-              fontSize: "2.5rem",
-              lineHeight: 1
-            }}>
-              {action.icon}
-            </div>
+            <div className={styles['quick-actions-link-icon']}>{action.icon}</div>
             <div>
-              <div style={{ 
-                fontSize: "1rem", 
-                fontWeight: "700",
-                color: "var(--text-primary)",
-                marginBottom: "0.25rem"
-              }}>
-                {action.title}
-              </div>
-              <div style={{ 
-                fontSize: "0.75rem", 
-                color: "var(--text-secondary)",
-                lineHeight: 1.3
-              }}>
-                {action.description}
-              </div>
+              <div className={styles['quick-actions-link-title']}>{action.title}</div>
+              <div className={styles['quick-actions-link-desc']}>{action.description}</div>
             </div>
           </Link>
         ))}

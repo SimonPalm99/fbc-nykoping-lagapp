@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import styles from "./ActivityForm.module.css";
 import { Activity } from "../../types/activity";
 import { useAuth } from "../../context/AuthContext";
 import { useTheme } from "../../context/ThemeContext";
@@ -195,69 +196,67 @@ const ActivityForm: React.FC<Props> = ({
   }
 
   return (
-    <div className={`activity-form ${isDark ? 'dark' : ''}`}>
+    <div className={styles['formular-wrapper']}> 
       {errors.general && (
-        <div className="error-banner">
+        <div className={styles['error-banner']}>
           {errors.general}
         </div>
       )}
 
       <form onSubmit={handleSubmit}>
         {/* Grundläggande information */}
-        <div className="form-section">
+        <div className={styles['form-section']}>
           <h3>{mode === 'create' ? 'Skapa ny aktivitet' : mode === 'edit' ? 'Redigera aktivitet' : 'Kopiera aktivitet'}</h3>
           
-          <div className="form-group">
+          <div className={styles['form-group']}>
             <label htmlFor="title">Titel *</label>
             <input
               type="text"
               id="title"
               value={formData.title || ''}
               onChange={(e) => handleInputChange('title', e.target.value)}
-              className={errors.title ? 'error' : ''}
+              className={errors.title ? styles.error : ''}
               placeholder="ex. Träning - Teknik & Kondition"
             />
-            {errors.title && <span className="error-message">{errors.title}</span>}
+            {errors.title && <span className={styles['error-message']}>{errors.title}</span>}
           </div>
 
-          <div className="form-group">
+          <div className={styles['form-group']}>
             <label htmlFor="type">Typ av aktivitet *</label>
-            <div className="activity-type-grid">
+            <div className={styles['activity-type-grid']}>
               {activityTypes.map(type => (
                 <button
                   key={type.value}
                   type="button"
-                  className={`type-button ${formData.type === type.value ? 'active' : ''}`}
+                  className={`${styles['type-button']} ${formData.type === type.value ? styles.active : ''}`}
+                  data-color={type.color}
+                  data-active={formData.type === type.value ? 'true' : 'false'}
                   onClick={() => {
                     handleInputChange('type', type.value);
                     handleInputChange('color', type.color);
                   }}
-                  style={{
-                    borderColor: formData.type === type.value ? type.color : 'var(--border-color)',
-                    background: formData.type === type.value ? type.color : 'transparent'
-                  }}
                 >
-                  <span className="type-icon">{type.icon}</span>
-                  <span className="type-label">{type.label}</span>
+                  <span className={styles['type-icon']}>{type.icon}</span>
+                  <span className={styles['type-label']}>{type.label}</span>
                 </button>
               ))}
             </div>
           </div>
 
-          <div className="form-row">
-            <div className="form-group">
+          <div className={styles['form-row']}>
+            <div className={styles['form-group']}>
               <label htmlFor="date">Datum *</label>
               <input
                 type="date"
                 id="date"
                 value={formData.date || ''}
                 onChange={(e) => handleInputChange('date', e.target.value)}
-                className={errors.date ? 'error' : ''}
+                className={errors.date ? styles.error : ''}
               />
-              {errors.date && <span className="error-message">{errors.date}</span>}
+              {errors.date && <span className={styles['error-message']}>{errors.date}</span>}
             </div>
 
-            <div className="form-group">
+            <div className={styles['form-group']}>
               <label htmlFor="startTime">Starttid</label>
               <input
                 type="time"
@@ -267,33 +266,33 @@ const ActivityForm: React.FC<Props> = ({
               />
             </div>
 
-            <div className="form-group">
+            <div className={styles['form-group']}>
               <label htmlFor="endTime">Sluttid</label>
               <input
                 type="time"
                 id="endTime"
                 value={formData.endTime || ''}
                 onChange={(e) => handleInputChange('endTime', e.target.value)}
-                className={errors.endTime ? 'error' : ''}
+                className={errors.endTime ? styles.error : ''}
               />
-              {errors.endTime && <span className="error-message">{errors.endTime}</span>}
+              {errors.endTime && <span className={styles['error-message']}>{errors.endTime}</span>}
             </div>
           </div>
 
-          <div className="form-group">
+          <div className={styles['form-group']}>
             <label htmlFor="location">Plats *</label>
             <input
               type="text"
               id="location"
               value={formData.location || ''}
               onChange={(e) => handleInputChange('location', e.target.value)}
-              className={errors.location ? 'error' : ''}
+              className={errors.location ? styles.error : ''}
               placeholder="ex. Rosvalla Ishall"
             />
-            {errors.location && <span className="error-message">{errors.location}</span>}
+            {errors.location && <span className={styles['error-message']}>{errors.location}</span>}
           </div>
 
-          <div className="form-group">
+          <div className={styles['form-group']}>
             <label htmlFor="mapUrl">Länk till karta (valfritt)</label>
             <input
               type="url"
@@ -304,7 +303,7 @@ const ActivityForm: React.FC<Props> = ({
             />
           </div>
 
-          <div className="form-group">
+          <div className={styles['form-group']}>
             <label htmlFor="description">Beskrivning</label>
             <textarea
               id="description"
@@ -317,23 +316,23 @@ const ActivityForm: React.FC<Props> = ({
         </div>
 
         {/* Avancerade inställningar */}
-        <div className="form-section">
+        <div className={styles['form-section']}>
           <h4>Avancerade inställningar</h4>
           
-          <div className="form-row">
-            <div className="form-group">
+          <div className={styles['form-row']}>
+            <div className={styles['form-group']}>
               <label htmlFor="absenceDeadline">Deadline för frånvaroanmälan</label>
               <input
                 type="datetime-local"
                 id="absenceDeadline"
                 value={formData.absenceDeadline || ''}
                 onChange={(e) => handleInputChange('absenceDeadline', e.target.value)}
-                className={errors.absenceDeadline ? 'error' : ''}
+                className={errors.absenceDeadline ? styles.error : ''}
               />
-              {errors.absenceDeadline && <span className="error-message">{errors.absenceDeadline}</span>}
+              {errors.absenceDeadline && <span className={styles['error-message']}>{errors.absenceDeadline}</span>}
             </div>
 
-            <div className="form-group">
+            <div className={styles['form-group']}>
               <label htmlFor="maxParticipants">Max antal deltagare (valfritt)</label>
               <input
                 type="number"
@@ -346,9 +345,9 @@ const ActivityForm: React.FC<Props> = ({
             </div>
           </div>
 
-          <div className="form-group">
-            <div className="checkbox-group">
-              <label className="checkbox-label">
+          <div className={styles['form-group']}>
+            <div className={styles['checkbox-group']}>
+              <label className={styles['checkbox-label']}>
                 <input
                   type="checkbox"
                   checked={formData.important || false}
@@ -360,15 +359,15 @@ const ActivityForm: React.FC<Props> = ({
           </div>
 
           {/* Färgval */}
-          <div className="form-group">
+          <div className={styles['form-group']}>
             <label>Färg för aktivitet</label>
-            <div className="color-picker">
+            <div className={styles['color-picker']}>
               {activityColors.map(color => (
                 <button
                   key={color}
                   type="button"
-                  className={`color-option ${formData.color === color ? 'active' : ''}`}
-                  style={{ backgroundColor: color }}
+                  className={`${styles['color-option']} ${formData.color === color ? styles.active : ''}`}
+                  data-bgcolor={color}
                   onClick={() => handleInputChange('color', color)}
                   title={`Välj färg ${color}`}
                 />
@@ -377,16 +376,16 @@ const ActivityForm: React.FC<Props> = ({
           </div>
 
           {/* Taggar/Etiketter */}
-          <div className="form-group">
+          <div className={styles['form-group']}>
             <label>Taggar/Etiketter</label>
             
-            <div className="current-tags">
+            <div className={styles['current-tags']}>
               {formData.tags?.map(tag => (
-                <span key={tag} className="tag">
+                <span key={tag} className={styles.tag}>
                   {tag}
                   <button
                     type="button"
-                    className="tag-remove"
+                    className={styles['tag-remove']}
                     onClick={() => handleTagRemove(tag)}
                   >
                     ×
@@ -396,7 +395,7 @@ const ActivityForm: React.FC<Props> = ({
             </div>
 
             <div className="tag-input-section">
-              <div className="predefined-tags">
+              <div className={styles['predefined-tags']}>
                 {predefinedTags
                   .filter(tag => !formData.tags?.includes(tag))
                   .slice(0, 8)
@@ -404,7 +403,7 @@ const ActivityForm: React.FC<Props> = ({
                     <button
                       key={tag}
                       type="button"
-                      className="predefined-tag"
+                      className={styles['predefined-tag']}
                       onClick={() => handleTagAdd(tag)}
                     >
                       + {tag}
@@ -412,7 +411,7 @@ const ActivityForm: React.FC<Props> = ({
                   ))}
               </div>
 
-              <div className="custom-tag-input">
+              <div className={styles['custom-tag-input']}>
                 <input
                   type="text"
                   value={customTag}
@@ -429,7 +428,7 @@ const ActivityForm: React.FC<Props> = ({
                   type="button"
                   onClick={() => handleTagAdd(customTag)}
                   disabled={!customTag.trim()}
-                  className="btn btn-secondary btn-sm"
+                  className={`${styles.btn} ${styles['btn-secondary']} ${styles['btn-sm']}`}
                 >
                   Lägg till
                 </button>
@@ -439,11 +438,11 @@ const ActivityForm: React.FC<Props> = ({
         </div>
 
         {/* Formuläråtgärder */}
-        <div className="form-actions">
+        <div className={styles['form-actions']}>
           {onCancel && (
             <button 
               type="button" 
-              className="btn btn-secondary"
+              className={`${styles.btn} ${styles['btn-secondary']}`}
               onClick={onCancel}
             >
               Avbryt
@@ -453,7 +452,7 @@ const ActivityForm: React.FC<Props> = ({
           <LoadingButton
             type="submit"
             loading={isLoading}
-            className="btn btn-primary"
+            className={`${styles.btn} ${styles['btn-primary']}`}
           >
             {mode === 'create' ? 'Skapa aktivitet' : mode === 'edit' ? 'Spara ändringar' : 'Skapa kopia'}
           </LoadingButton>

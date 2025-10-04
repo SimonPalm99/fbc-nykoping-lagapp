@@ -1,0 +1,151 @@
+.injuryStatus_reported {
+  border-color: #3b82f6 !important;
+}
+.injuryStatus_under_treatment {
+  border-color: #f59e0b !important;
+}
+.injuryStatus_recovering {
+  border-color: #10b981 !important;
+}
+.injuryStatus_ready_to_play {
+  border-color: #22c55e !important;
+}
+.injuryStatus_long_term {
+  border-color: #ef4444 !important;
+}
+
+.injuryStatusBg_reported {
+  background: #3b82f6 !important;
+  color: #fff !important;
+}
+.injuryStatusBg_under_treatment {
+  background: #f59e0b !important;
+  color: #fff !important;
+}
+.injuryStatusBg_recovering {
+  background: #10b981 !important;
+  color: #fff !important;
+}
+.injuryStatusBg_ready_to_play {
+  background: #22c55e !important;
+  color: #fff !important;
+}
+.injuryStatusBg_long_term {
+  background: #ef4444 !important;
+  color: #fff !important;
+}
+
+.injuryStatusColor_reported {
+  color: #3b82f6 !important;
+}
+.injuryStatusColor_under_treatment {
+  color: #f59e0b !important;
+}
+.injuryStatusColor_recovering {
+  color: #10b981 !important;
+}
+.injuryStatusColor_ready_to_play {
+  color: #22c55e !important;
+}
+.injuryStatusColor_long_term {
+  color: #ef4444 !important;
+}
+
+.injurySeverity_minor {
+  color: #10b981 !important;
+}
+.injurySeverity_moderate {
+  color: #f59e0b !important;
+}
+.injurySeverity_severe {
+  color: #ef4444 !important;
+}
+.injurySeverity_critical {
+  color: #dc2626 !important;
+}
+.injurySeverity_default {
+  color: #64748b !important;
+}
+.injuryReportingRoot {
+  background: var(--fbc-body-gradient, #1a202c);
+  padding: 20px;
+  border-radius: 12px;
+  color: #fff;
+}
+.injuryReportingTabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #4a5568;
+  padding-bottom: 12px;
+  flex-wrap: wrap;
+}
+.injuryReportingTabButton {
+  padding: 8px 16px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  color: #a0aec0;
+  cursor: pointer;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  transition: background 0.2s, color 0.2s;
+}
+.injuryReportingTabButtonActive {
+  background: #3b82f6;
+  color: #fff;
+}
+.injuryReportingForm {
+  background: #2d3748;
+  padding: 20px;
+  border-radius: 8px;
+}
+.injuryReportingFormGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.injuryReportingLabel {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 14px;
+  color: #a0aec0;
+}
+.injuryReportingSelect,
+.injuryReportingInput,
+.injuryReportingTextarea {
+  width: 100%;
+  padding: 8px;
+  background: #1a202c;
+  border: 1px solid #4a5568;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+.injuryReportingTextarea {
+  resize: vertical;
+}
+.injuryReportingFormActions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+.injuryReportingButton {
+  padding: 8px 16px;
+  background: #ef4444;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
+  transition: background 0.2s;
+}
+.injuryReportingButtonCancel {
+  background: #4a5568;
+}

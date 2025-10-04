@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useOpponent } from "../../context/OpponentContext";
 import { OpponentAnalysis } from "../../types/opponent";
 import OpponentAnalysisView from "./OpponentAnalysisView";
+import styles from "./OpponentList.module.css";
 
 // Props-interface med stöd för isLeader
 export interface OpponentAnalysisListProps {
@@ -34,7 +35,7 @@ const OpponentAnalysisList: React.FC<OpponentAnalysisListProps> = ({
 
   if (!analyses.length) {
     return (
-      <div style={{ color: "#bbb", textAlign: "center", marginTop: 20 }}>
+      <div className={styles["ingen-analys"]}>
         Ingen analys sparad för detta lag ännu.
       </div>
     );

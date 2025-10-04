@@ -1,0 +1,213 @@
+/* FBC Gamification Theme */
+.root {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0A0A0A 0%, #0D1B0D 30%, #1B2E1B 100%);
+  color: #f8fafc;
+  font-family: inherit;
+  padding: 1.2rem 0;
+  position: relative;
+}
+.center {
+  max-width: 700px;
+  margin: 0 auto;
+  margin-bottom: 2.2rem;
+  text-align: center;
+}
+.heading {
+  color: #22c55e;
+  font-weight: 900;
+  font-size: 2.1rem;
+  margin-bottom: 0.5rem;
+}
+.subheading {
+  color: #cbd5e1;
+  font-size: 1.15rem;
+  font-weight: 400;
+}
+.card {
+  max-width: 700px;
+  margin: 0 auto;
+  background: rgba(34,197,94,0.10);
+  border-radius: 18px;
+  box-shadow: 0 4px 15px #22c55e22;
+  padding: 2rem 1.5rem;
+  margin-bottom: 2.5rem;
+}
+.cardDark {
+  background: rgba(16,32,16,0.97);
+  border-radius: 1.2rem;
+  box-shadow: 0 4px 15px #22c55e22;
+  padding: 1.2rem 1.5rem;
+  margin-bottom: 2.5rem;
+}
+.profileRow {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+}
+.profileName {
+  font-weight: 700;
+  color: #f8fafc;
+  font-size: 1.25rem;
+}
+.profileId {
+  color: #a3e635;
+  font-weight: 600;
+  font-size: 1rem;
+}
+.profilePoints {
+  color: #22c55e;
+  font-weight: 800;
+  font-size: 1.18rem;
+}
+.inputRow {
+  max-width: 700px;
+  margin: 0 auto;
+  margin-bottom: 2rem;
+}
+.inputField {
+  width: 100%;
+  padding: 0.7rem;
+  border-radius: 8px;
+  border: 1px solid #22c55e;
+  font-size: 1rem;
+  background: #181f2a;
+  color: #F1F8E9;
+  margin-bottom: 0.7rem;
+}
+.leaderboardList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.leaderboardItem {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  background: #181f2a;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  padding: 1rem 1.2rem;
+  font-weight: 700;
+  font-size: 1.15rem;
+  box-shadow: none;
+  transition: background 0.3s;
+}
+.leaderboardItem.first {
+  background: #22c55e22;
+  box-shadow: 0 4px 15px #22c55e44;
+}
+.leaderboardRank {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #22c55e;
+  min-width: 32px;
+}
+.leaderboardRank.other {
+  color: #cbd5e1;
+}
+.leaderboardName {
+  font-weight: 700;
+  color: #f8fafc;
+  min-width: 120px;
+}
+.leaderboardId {
+  color: #a3e635;
+  font-weight: 600;
+  font-size: 1rem;
+}
+.leaderboardPoints {
+  color: #22c55e;
+  font-weight: 800;
+  font-size: 1.18rem;
+  margin-left: auto;
+}
+.pointsList {
+  color: #cbd5e1;
+  font-size: 1.08rem;
+  padding-left: 1.2rem;
+  margin: 0;
+}
+.pointsItem {
+  margin-bottom: 6px;
+}
+.pointsLabel {
+  color: #22c55e;
+  font-weight: 700;
+}
+.pointsLabel.manual {
+  color: #a3e635;
+}
+.pointsValue {
+  margin-left: 8px;
+  color: #fff;
+}
+.pointsAuto {
+  margin-left: 8px;
+  color: #38bdf8;
+  font-size: 0.95rem;
+}
+.voteRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+}
+.voteBtn {
+  background: #181f2a;
+  font-weight: 700;
+  font-size: 1.08rem;
+  box-shadow: 0 2px 8px #22c55e22;
+  border: none;
+  cursor: pointer;
+  padding: 0.7rem 1.2rem;
+  border-radius: 8px;
+}
+.voteBtn.selected {
+  background: #22c55e;
+}
+.voteResult {
+  margin-top: 12px;
+  color: #22c55e;
+  font-weight: 700;
+}
+.voteName {
+  color: #fff;
+}
+.challengeCard {
+  background: #181f2a;
+  border-radius: 10px;
+  padding: 0.7rem 1.1rem;
+  color: #22c55e;
+  font-weight: 700;
+  font-size: 1.08rem;
+  box-shadow: 0 2px 8px #22c55e22;
+  margin-bottom: 0.7rem;
+}
+.challengeIcon {
+  font-size: 1.15rem;
+  margin-right: 8px;
+}
+.challengePeriod {
+  font-weight: 400;
+  font-size: 0.95rem;
+  color: #a3e635;
+}
+.seasonAwards {
+  color: #cbd5e1;
+  font-size: 1.08rem;
+  padding-left: 1.2rem;
+  margin: 0;
+}
+.seasonAwardName {
+  color: #22c55e;
+  font-weight: 700;
+}
+.seasonAwardDesc {
+  color: #a3e635;
+}
+.automaticInfo {
+  color: #a3e635;
+  font-size: 0.95rem;
+  margin-top: 8px;
+}

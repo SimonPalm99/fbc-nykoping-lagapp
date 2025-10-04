@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import styles from "./PostMatchReportEdit.module.css";
 import { PostMatchReport } from "../../types/postmatch";
 import { usePostMatch } from "../../context/PostMatchContext";
 
@@ -9,28 +10,7 @@ interface Props {
   onCancel?: () => void;
 }
 
-const inputStyle: React.CSSProperties = {
-  width: "100%",
-  padding: "8px",
-  margin: "6px 0 12px 0",
-  borderRadius: 6,
-  border: "1px solid #345",
-  background: "#23272e",
-  color: "#fff",
-};
-
-const buttonStyle: React.CSSProperties = {
-  width: "100%",
-  background: "#b8f27c",
-  color: "#222",
-  border: "none",
-  borderRadius: 6,
-  padding: "10px",
-  fontWeight: 700,
-  fontSize: 17,
-  marginTop: 10,
-  cursor: "pointer",
-};
+// ...existing code...
 
 const PostMatchReportEdit: React.FC<Props> = ({ initial, isEdit, onDone, onCancel }) => {
   const { addReport } = usePostMatch();
@@ -160,21 +140,12 @@ const PostMatchReportEdit: React.FC<Props> = ({ initial, isEdit, onDone, onCance
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{
-      background: "#23272e",
-      borderRadius: 9,
-      padding: 18,
-      marginTop: 20,
-      boxShadow: "0 2px 14px #0002",
-      maxWidth: 480,
-      marginLeft: "auto",
-      marginRight: "auto"
-    }}>
+    <form onSubmit={handleSubmit} className={styles["rapport-form"]}>
       <input
         name="matchId"
         value={form.matchId}
         onChange={handleChange}
-        style={inputStyle}
+        className={styles.input}
         placeholder="Match-ID"
         required
       />
@@ -182,7 +153,7 @@ const PostMatchReportEdit: React.FC<Props> = ({ initial, isEdit, onDone, onCance
         name="teamId"
         value={form.teamId}
         onChange={handleChange}
-        style={inputStyle}
+        className={styles.input}
         placeholder="Team-ID"
         required
       />
@@ -190,7 +161,7 @@ const PostMatchReportEdit: React.FC<Props> = ({ initial, isEdit, onDone, onCance
         name="createdBy"
         value={form.createdBy}
         onChange={handleChange}
-        style={inputStyle}
+        className={styles.input}
         placeholder="Skapad av"
         required
       />
@@ -198,29 +169,29 @@ const PostMatchReportEdit: React.FC<Props> = ({ initial, isEdit, onDone, onCance
         name="summary"
         value={form.summary}
         onChange={handleChange}
-        style={{ ...inputStyle, minHeight: 40, resize: "vertical" }}
+        className={styles.textarea}
         placeholder="Sammanfattning av matchen"
         required
       />
 
-      <div style={{ marginBottom: 10 }}>
+  <div className={styles.section}>
         <b>Höjdpunkter</b>
-        <div style={{ display: "flex", gap: 7, marginTop: 6 }}>
+  <div className={styles.flexHighlights}>
           <input
             value={highlightInput}
             onChange={e => setHighlightInput(e.target.value)}
             placeholder="Lägg till höjdpunkt"
-            style={{ ...inputStyle, margin: 0, flex: 1 }}
+            className={`${styles.input} ${styles.flex1} ${styles.noMargin}`}
           />
-          <button type="button" style={{ ...buttonStyle, width: "auto", padding: "7px 12px", marginTop: 0 }} onClick={handleAddHighlight}>
+          <button type="button" className={`${styles.button} ${styles["button-small"]} ${styles.noMarginTop}`} onClick={handleAddHighlight}>
             +
           </button>
         </div>
-        <ul style={{ margin: 0, paddingLeft: 20 }}>
+  <ul className={styles["highlight-list"]}>
           {form.highlights.map((h, i) => (
             <li key={i}>
               {h}{" "}
-              <button type="button" style={{ marginLeft: 7, color: "#e66", background: "none", border: "none", cursor: "pointer" }} onClick={() => handleRemoveHighlight(i)}>
+              <button type="button" className={styles["remove-btn"]} onClick={() => handleRemoveHighlight(i)}>
                 Ta bort
               </button>
             </li>
@@ -228,23 +199,23 @@ const PostMatchReportEdit: React.FC<Props> = ({ initial, isEdit, onDone, onCance
         </ul>
       </div>
 
-      <div style={{ marginBottom: 10 }}>
+  <div className={styles.section}>
         <b>Videoklipp</b>
-        <div style={{ display: "flex", gap: 5, marginTop: 6, flexWrap: "wrap" }}>
-          <input value={videoClipUrl} onChange={e => setVideoClipUrl(e.target.value)} placeholder="URL" style={{ ...inputStyle, margin: 0, flex: 2 }} />
-          <input value={videoClipDesc} onChange={e => setVideoClipDesc(e.target.value)} placeholder="Beskrivning" style={{ ...inputStyle, margin: 0, flex: 2 }} />
-          <input value={videoClipTime} onChange={e => setVideoClipTime(e.target.value)} placeholder="Tid (t.ex. 12:30)" style={{ ...inputStyle, margin: 0, flex: 1 }} />
-          <button type="button" style={{ ...buttonStyle, width: "auto", padding: "7px 12px", marginTop: 0 }} onClick={handleAddVideoClip}>
+  <div className={styles.flexVideoClips}>
+          <input value={videoClipUrl} onChange={e => setVideoClipUrl(e.target.value)} placeholder="URL" className={`${styles.input} ${styles.flex2} ${styles.noMargin}`} />
+          <input value={videoClipDesc} onChange={e => setVideoClipDesc(e.target.value)} placeholder="Beskrivning" className={`${styles.input} ${styles.flex2} ${styles.noMargin}`} />
+          <input value={videoClipTime} onChange={e => setVideoClipTime(e.target.value)} placeholder="Tid (t.ex. 12:30)" className={`${styles.input} ${styles.flex1} ${styles.noMargin}`} />
+          <button type="button" className={`${styles.button} ${styles["button-small"]} ${styles.noMarginTop}`} onClick={handleAddVideoClip}>
             +
           </button>
         </div>
-        <ul style={{ margin: 0, paddingLeft: 20 }}>
+  <ul className={styles["highlight-list"]}>
           {form.videoClips.map(vc => (
             <li key={vc.id}>
-              <a href={vc.url} target="_blank" rel="noopener noreferrer" style={{ color: "#b8f27c" }}>
+              <a href={vc.url} target="_blank" rel="noopener noreferrer" className={styles.link}>
                 {vc.description || "Se klipp"} {vc.time && `(${vc.time})`}
               </a>{" "}
-              <button type="button" style={{ marginLeft: 7, color: "#e66", background: "none", border: "none", cursor: "pointer" }} onClick={() => handleRemoveVideoClip(vc.id)}>
+              <button type="button" className={styles["remove-btn"]} onClick={() => handleRemoveVideoClip(vc.id)}>
                 Ta bort
               </button>
             </li>
@@ -252,21 +223,21 @@ const PostMatchReportEdit: React.FC<Props> = ({ initial, isEdit, onDone, onCance
         </ul>
       </div>
 
-      <div style={{ marginBottom: 10 }}>
+  <div className={styles.section}>
         <b>Spelarfeedback</b>
-        <div style={{ display: "flex", gap: 5, marginTop: 6, flexWrap: "wrap" }}>
-          <input value={feedbackPlayerId} onChange={e => setFeedbackPlayerId(e.target.value)} placeholder="Spelar-ID" style={{ ...inputStyle, margin: 0, flex: 1 }} />
-          <input type="number" min={1} max={5} value={feedbackRating} onChange={e => setFeedbackRating(Number(e.target.value))} placeholder="Betyg 1-5" style={{ ...inputStyle, margin: 0, flex: 1 }} />
-          <input value={feedbackComment} onChange={e => setFeedbackComment(e.target.value)} placeholder="Kommentar" style={{ ...inputStyle, margin: 0, flex: 2 }} />
-          <button type="button" style={{ ...buttonStyle, width: "auto", padding: "7px 12px", marginTop: 0 }} onClick={handleAddFeedback}>
+  <div className={styles.flexFeedback}>
+          <input value={feedbackPlayerId} onChange={e => setFeedbackPlayerId(e.target.value)} placeholder="Spelar-ID" className={`${styles.input} ${styles.flex1} ${styles.noMargin}`} />
+          <input type="number" min={1} max={5} value={feedbackRating} onChange={e => setFeedbackRating(Number(e.target.value))} placeholder="Betyg 1-5" className={`${styles.input} ${styles.flex1} ${styles.noMargin}`} />
+          <input value={feedbackComment} onChange={e => setFeedbackComment(e.target.value)} placeholder="Kommentar" className={`${styles.input} ${styles.flex2} ${styles.noMargin}`} />
+          <button type="button" className={`${styles.button} ${styles["button-small"]} ${styles.noMarginTop}`} onClick={handleAddFeedback}>
             +
           </button>
         </div>
-        <ul style={{ margin: 0, paddingLeft: 20 }}>
+        <ul className={styles["highlight-list"]}>
           {form.playerFeedback.map((fb, i) => (
             <li key={i}>
               #{fb.playerId}: Betyg {fb.rating} {fb.comment && <>– {fb.comment}</>}
-              <button type="button" style={{ marginLeft: 7, color: "#e66", background: "none", border: "none", cursor: "pointer" }} onClick={() => handleRemoveFeedback(i)}>
+              <button type="button" className={styles["remove-btn"]} onClick={() => handleRemoveFeedback(i)}>
                 Ta bort
               </button>
             </li>
@@ -278,33 +249,21 @@ const PostMatchReportEdit: React.FC<Props> = ({ initial, isEdit, onDone, onCance
         name="notes"
         value={form.notes}
         onChange={handleChange}
-        style={{ ...inputStyle, minHeight: 30, resize: "vertical" }}
+        className={styles.textarea}
         placeholder="Anteckningar"
       />
-      <button type="submit" style={buttonStyle}>
+      <button type="submit" className={styles.button}>
         {isEdit ? "Spara ändringar" : "Spara rapport"}
       </button>
       {onCancel && isEdit && (
         <button
           type="button"
-          style={{
-            ...buttonStyle,
-            background: "#e66",
-            color: "#fff",
-            marginTop: 10,
-          }}
+          className={`${styles.button} ${styles["button-cancel"]}`}
           onClick={onCancel}
         >
           Avbryt
         </button>
       )}
-      <style>{`
-        @media (max-width: 600px) {
-          form { padding: 8px !important; }
-          input, textarea { font-size: 15px !important; }
-          button { font-size: 15px !important; }
-        }
-      `}</style>
     </form>
   );
 };

@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "./PostMatchReportList.module.css";
 import { usePostMatch } from "../../context/PostMatchContext";
 import PostMatchReportView from "./PostMatchReportView";
 
@@ -6,7 +7,7 @@ const PostMatchReportList: React.FC = () => {
   const { reports } = usePostMatch();
 
   if (!reports.length) {
-    return <div style={{ color: "#bbb", textAlign: "center", marginTop: 20 }}>Inga rapporter än.</div>;
+    return <div className={styles["rapport-list-tom"]}>Inga rapporter än.</div>;
   }
 
   return (

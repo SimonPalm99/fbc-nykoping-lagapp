@@ -1,0 +1,337 @@
+/* Dynamically generated width classes for progress bar fill */
+.progressBarFill {
+  background: #10b981;
+  height: 100%;
+  transition: width 0.3s ease;
+}
+.progress-0 { width: 0%; }
+.progress-10 { width: 10%; }
+.progress-20 { width: 20%; }
+.progress-30 { width: 30%; }
+.progress-40 { width: 40%; }
+.progress-50 { width: 50%; }
+.progress-60 { width: 60%; }
+.progress-70 { width: 70%; }
+.progress-80 { width: 80%; }
+.progress-90 { width: 90%; }
+.progress-100 { width: 100%; }
+.progressBarFill {
+  background: #10b981;
+  height: 100%;
+  transition: width 0.3s ease;
+  width: var(--progress-width, 0%);
+}
+.sectionTitle {
+  font-size: 18px;
+  margin-bottom: 12px;
+}
+.labelMargin {
+  margin-bottom: 8px;
+}
+.statusGreen {
+  color: #10b981;
+}
+.statusYellow {
+  color: #f59e0b;
+}
+/* PDFReportGenerator.module.css */
+.root {
+  background: #1a202c;
+  padding: 20px;
+  border-radius: 12px;
+  color: #fff;
+}
+.header {
+  margin-bottom: 20px;
+}
+.headerTitle {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+}
+.headerSubtitle {
+  margin: 4px 0 0 0;
+  color: #a0aec0;
+}
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #4a5568;
+  padding-bottom: 12px;
+}
+.tabButton {
+  padding: 8px 16px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  color: #a0aec0;
+  cursor: pointer;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.tabButtonActive {
+  background: #3b82f6;
+  color: #fff;
+}
+.templateGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 12px;
+}
+.templateButton {
+  padding: 16px;
+  background: #1a202c;
+  border: 1px solid #4a5568;
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+  text-align: left;
+}
+.templateButtonActive {
+  background: #3b82f6;
+  border: 2px solid #60a5fa;
+}
+.templateName {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.templateDesc {
+  font-size: 12px;
+  color: #a0aec0;
+  line-height: 1.4;
+}
+.configCard {
+  background: #2d3748;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+.configGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 14px;
+  color: #a0aec0;
+}
+.select {
+  width: 100%;
+  padding: 8px;
+  background: #1a202c;
+  border: 1px solid #4a5568;
+  border-radius: 4px;
+  color: #fff;
+}
+.input {
+  width: 100%;
+  padding: 8px;
+  background: #1a202c;
+  border: 1px solid #4a5568;
+  border-radius: 4px;
+  color: #fff;
+}
+.sectionsCard {
+  background: #2d3748;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+.sectionsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 8px;
+}
+.sectionLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  background: #1a202c;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.sectionCheckbox {
+  margin: 0;
+}
+.sectionText {
+  font-size: 14px;
+}
+.generateBtnContainer {
+  text-align: center;
+}
+.generateBtn {
+  padding: 12px 24px;
+  background: #10b981;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
+}
+.generateBtnDisabled {
+  background: #4a5568;
+  cursor: not-allowed;
+}
+.progressBarWrapper {
+  margin-top: 16px;
+}
+.progressBar {
+  background: #4a5568;
+  border-radius: 4px;
+  height: 8px;
+  overflow: hidden;
+}
+.progressBarFill {
+  background: #10b981;
+  height: 100%;
+  transition: width 0.3s ease;
+}
+.historyTitle {
+  margin: 0 0 16px 0;
+}
+.historyGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 16px;
+}
+.reportCard {
+  background: #2d3748;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #4a5568;
+}
+.reportCardRecent {
+  border: 2px solid #10b981;
+}
+.reportCardHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.reportIcon {
+  font-size: 24px;
+}
+.reportCardInfo {
+  flex: 1;
+}
+.reportCardTitle {
+  margin: 0 0 4px 0;
+  font-weight: 600;
+}
+.reportCardDesc {
+  margin: 0 0 8px 0;
+  font-size: 12px;
+  color: #a0aec0;
+}
+.reportCardMeta {
+  display: flex;
+  gap: 12px;
+  font-size: 11px;
+  color: #718096;
+}
+.reportCardNew {
+  background: #10b981;
+  color: #fff;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 600;
+}
+.reportCardActions {
+  display: flex;
+  gap: 8px;
+}
+.downloadBtn {
+  flex: 1;
+  padding: 6px 12px;
+  background: #3b82f6;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+}
+.deleteBtn {
+  padding: 6px 12px;
+  background: #ef4444;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+}
+.templatesTitle {
+  margin: 0 0 16px 0;
+}
+.templatesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+}
+.templateCard {
+  background: #2d3748;
+  padding: 16px;
+  border-radius: 8px;
+}
+.templateCardTitle {
+  margin: 0 0 8px 0;
+  font-weight: 600;
+}
+.templateCardDesc {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  color: #a0aec0;
+}
+.templateSections {
+  margin-bottom: 12px;
+}
+.templateSectionsLabel {
+  font-size: 12px;
+  color: #a0aec0;
+  margin-bottom: 4px;
+}
+.templateSectionsList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.templateSection {
+  background: #1a202c;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 10px;
+  color: #a0aec0;
+}
+.templateSectionMore {
+  font-size: 10px;
+  color: #718096;
+}
+.templateCardFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.templateCardStatus {
+  font-size: 11px;
+}
+.useTemplateBtn {
+  padding: 4px 8px;
+  background: #3b82f6;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 600;
+}

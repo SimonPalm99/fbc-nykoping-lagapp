@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "./SkeletonLoader.module.css";
 
 interface SkeletonLoaderProps {
   type?: "card" | "list" | "profile" | "text" | "activity";
@@ -6,124 +7,72 @@ interface SkeletonLoaderProps {
   height?: string;
 }
 
+const HEIGHT_CLASS_MAP: Record<string, string> = {
+  '1rem': styles['skeleton-h-1'] ?? '',
+  '1.25rem': styles['skeleton-h-1_25'] ?? '',
+  '1.5rem': styles['skeleton-h-1_5'] ?? '',
+  '4rem': styles['skeleton-h-4'] ?? '',
+  'auto': '',
+};
+
 const SkeletonLoader: React.FC<SkeletonLoaderProps> = ({ 
   type = "card", 
   count = 1,
   height = "auto"
 }) => {
+  const getHeightClass = (h: string | undefined) => HEIGHT_CLASS_MAP[h || 'auto'] || '';
+
   const renderSkeleton = () => {
     switch (type) {
       case "card":
         return (
-          <div className="card skeleton-card" style={{ height, padding: "2rem" }}>
-            <div className="skeleton skeleton-title" style={{ 
-              height: "1.5rem", 
-              width: "60%", 
-              marginBottom: "1rem" 
-            }}></div>
-            <div className="skeleton skeleton-text" style={{ 
-              height: "1rem", 
-              width: "100%", 
-              marginBottom: "0.5rem" 
-            }}></div>
-            <div className="skeleton skeleton-text" style={{ 
-              height: "1rem", 
-              width: "80%" 
-            }}></div>
+          <div className={`card ${styles['skeleton-card']} ${getHeightClass(height)}`}>
+            <div className={`skeleton ${styles['skeleton-title']}`}></div>
+            <div className={`skeleton ${styles['skeleton-text']}`}></div>
+            <div className={`skeleton ${styles['skeleton-text']} ${styles['skeleton-text-short']}`}></div>
           </div>
         );
 
       case "list":
         return (
-          <div className="skeleton-list-item" style={{ 
-            display: "flex", 
-            alignItems: "center", 
-            gap: "1rem", 
-            padding: "1rem",
-            borderBottom: "1px solid #f1f5f9"
-          }}>
-            <div className="skeleton skeleton-avatar" style={{ 
-              width: "48px", 
-              height: "48px", 
-              borderRadius: "50%" 
-            }}></div>
-            <div style={{ flex: 1 }}>
-              <div className="skeleton skeleton-text" style={{ 
-                height: "1rem", 
-                width: "70%", 
-                marginBottom: "0.5rem" 
-              }}></div>
-              <div className="skeleton skeleton-text" style={{ 
-                height: "0.875rem", 
-                width: "50%" 
-              }}></div>
+          <div className={styles['skeleton-list-item']}>
+            <div className={`skeleton ${styles['skeleton-avatar']}`}></div>
+            <div className={styles['skeleton-list-content']}>
+              <div className={`skeleton ${styles['skeleton-text']} ${styles['skeleton-list-text70']}`}></div>
+              <div className={`skeleton ${styles['skeleton-text']} ${styles['skeleton-list-text50']}`}></div>
             </div>
           </div>
         );
 
       case "profile":
         return (
-          <div className="card skeleton-profile" style={{ padding: "2rem", textAlign: "center" }}>
-            <div className="skeleton skeleton-avatar" style={{ 
-              width: "80px", 
-              height: "80px", 
-              borderRadius: "50%", 
-              margin: "0 auto 1rem" 
-            }}></div>
-            <div className="skeleton skeleton-title" style={{ 
-              height: "1.5rem", 
-              width: "60%", 
-              margin: "0 auto 0.5rem" 
-            }}></div>
-            <div className="skeleton skeleton-text" style={{ 
-              height: "1rem", 
-              width: "40%", 
-              margin: "0 auto" 
-            }}></div>
+          <div className={`card ${styles['skeleton-profile']}`}>
+            <div className={`skeleton ${styles['skeleton-profile-avatar']}`}></div>
+            <div className={`skeleton ${styles['skeleton-profile-title']}`}></div>
+            <div className={`skeleton ${styles['skeleton-profile-text']}`}></div>
           </div>
         );
 
       case "activity":
         return (
-          <div className="card skeleton-activity" style={{ padding: "1.5rem" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "1rem" }}>
-              <div className="skeleton skeleton-text" style={{ 
-                height: "1.25rem", 
-                width: "50%" 
-              }}></div>
-              <div className="skeleton skeleton-badge" style={{ 
-                height: "1.5rem", 
-                width: "60px", 
-                borderRadius: "999px" 
-              }}></div>
+          <div className={`card ${styles['skeleton-activity']}`}>
+            <div className={styles['skeleton-activity-row']}>
+              <div className={`skeleton ${styles['skeleton-text']} ${styles['skeleton-activity-title']}`}></div>
+              <div className={`skeleton ${styles['skeleton-badge']}`}></div>
             </div>
-            <div className="skeleton skeleton-text" style={{ 
-              height: "1rem", 
-              width: "100%", 
-              marginBottom: "0.5rem" 
-            }}></div>
-            <div className="skeleton skeleton-text" style={{ 
-              height: "1rem", 
-              width: "70%" 
-            }}></div>
+            <div className={`skeleton ${styles['skeleton-text']}`}></div>
+            <div className={`skeleton ${styles['skeleton-text']} ${styles['skeleton-activity-text70']}`}></div>
           </div>
         );
 
       case "text":
         return (
-          <div className="skeleton skeleton-text" style={{ 
-            height: height || "1rem", 
-            width: "100%" 
-          }}></div>
+          <div className={`skeleton ${styles['skeleton-text']} ${getHeightClass(height || '1rem')}`}></div>
         );
 
       default:
         return (
-          <div className="skeleton" style={{ 
-            height: height || "4rem", 
-            width: "100%", 
-            borderRadius: "8px" 
-          }}></div>
+          <div className={`skeleton ${styles['skeleton-default']} ${getHeightClass(height || '4rem')}`}></div>
         );
     }
   };
@@ -131,7 +80,7 @@ const SkeletonLoader: React.FC<SkeletonLoaderProps> = ({
   return (
     <>
       {Array.from({ length: count }, (_, index) => (
-        <div key={index} style={{ marginBottom: count > 1 ? "1rem" : 0 }}>
+        <div key={index} className={count > 1 ? styles['skeleton-multi'] : undefined}>
           {renderSkeleton()}
         </div>
       ))}

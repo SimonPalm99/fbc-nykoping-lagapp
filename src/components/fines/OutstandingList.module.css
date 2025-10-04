@@ -1,0 +1,29 @@
+.outstandingList {
+  margin-bottom: 24px;
+}
+.outstandingList__ul {
+  padding-left: 0;
+  list-style: none;
+  margin: 0;
+}
+.outstandingList__item {
+  background: #fff;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  padding: 10px 14px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 15px;
+}
+.outstandingList__player {
+  font-weight: bold;
+}
+.outstandingList__reason {
+  color: #888;
+}
+.outstandingList__amount {
+  font-weight: 600;
+  color: #4a9d2c;
+}

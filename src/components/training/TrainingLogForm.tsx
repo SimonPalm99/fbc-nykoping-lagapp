@@ -96,245 +96,99 @@ export const TrainingLogForm: React.FC<TrainingLogFormProps> = ({
   const selectedFeeling = feelingLevels.find(level => level.value === formData.feeling);
 
   return (
-    <div style={{
-      background: "#0f0f0f",
-      borderRadius: "16px",
-      padding: "2rem",
-      maxWidth: "600px",
-      width: "100%",
-      maxHeight: "90vh",
-      overflowY: "auto"
-    }}>
-      <h2 style={{
-        margin: "0 0 2rem 0",
-        fontSize: "1.5rem",
-        fontWeight: "700",
-        color: "#b8f27c",
-        display: "flex",
-        alignItems: "center",
-        gap: "0.75rem"
-      }}>
+    <div className={"formRoot"}>
+      <h2 className={"formTitle"}>
         📝 {existingLog ? "Redigera träningslogg" : "Ny träningslogg"}
       </h2>
 
       <form onSubmit={handleSubmit}>
         {/* Datum och Duration */}
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: "1rem",
-          marginBottom: "2rem"
-        }}>
+        <div className={"formGrid"}>
           <div>
-            <label style={{
-              display: "block",
-              fontSize: "0.875rem",
-              fontWeight: "600",
-              color: "#e2e8f0",
-              marginBottom: "0.5rem"
-            }}>
-              📅 Datum
-            </label>
+            <label className={"formLabel"}>📅 Datum</label>
             <input
               type="date"
               value={formData.date}
               onChange={(e) => setFormData(prev => ({ ...prev, date: e.target.value }))}
-              style={{
-                width: "100%",
-                padding: "0.75rem",
-                borderRadius: "8px",
-                border: "1px solid #374151",
-                background: "#1f2937",
-                color: "#e2e8f0",
-                fontSize: "0.875rem"
-              }}
+              className={"input"}
               required
+              placeholder="Välj datum"
             />
           </div>
 
           <div>
-            <label style={{
-              display: "block",
-              fontSize: "0.875rem",
-              fontWeight: "600",
-              color: "#e2e8f0",
-              marginBottom: "0.5rem"
-            }}>
-              ⏱️ Längd (minuter)
-            </label>
+            <label className={"formLabel"}>⏱️ Längd (minuter)</label>
             <input
               type="number"
               min="1"
               max="300"
               value={formData.duration}
               onChange={(e) => setFormData(prev => ({ ...prev, duration: parseInt(e.target.value) || 0 }))}
-              style={{
-                width: "100%",
-                padding: "0.75rem",
-                borderRadius: "8px",
-                border: "1px solid #374151",
-                background: "#1f2937",
-                color: "#e2e8f0",
-                fontSize: "0.875rem"
-              }}
+              className={"input"}
               required
+              placeholder="Längd i minuter"
             />
           </div>
         </div>
 
         {/* Intensitet */}
-        <div style={{ marginBottom: "2rem" }}>
-          <label style={{
-            display: "block",
-            fontSize: "0.875rem",
-            fontWeight: "600",
-            color: "#e2e8f0",
-            marginBottom: "1rem"
-          }}>
-            ⚡ Intensitet
-          </label>
-          <div style={{
-            display: "flex",
-            gap: "0.5rem",
-            flexWrap: "wrap"
-          }}>
+        <div className="section">
+          <label className="formLabel">⚡ Intensitet</label>
+          <div className="intensityRow">
             {intensityLevels.map(level => (
               <button
                 key={level.value}
                 type="button"
                 onClick={() => setFormData(prev => ({ ...prev, intensity: level.value }))}
-                style={{
-                  padding: "0.75rem 1rem",
-                  borderRadius: "8px",
-                  border: formData.intensity === level.value ? `2px solid ${level.color}` : "1px solid #374151",
-                  background: formData.intensity === level.value ? `${level.color}20` : "#1f2937",
-                  color: formData.intensity === level.value ? level.color : "#e2e8f0",
-                  fontSize: "0.875rem",
-                  fontWeight: "600",
-                  cursor: "pointer",
-                  transition: "all 0.2s ease",
-                  flex: 1,
-                  minWidth: "80px",
-                  textAlign: "center"
-                }}
+                className={
+                  formData.intensity === level.value
+                    ? `intensityButton intensityButtonActive intensity-color-${level.value}`
+                    : "intensityButton"
+                }
               >
                 {level.label}
               </button>
             ))}
           </div>
           {selectedIntensity && (
-            <p style={{
-              fontSize: "0.75rem",
-              color: "#9ca3af",
-              marginTop: "0.5rem",
-              textAlign: "center"
-            }}>
-              {selectedIntensity.description}
-            </p>
+            <p className="intensityDescription">{selectedIntensity.description}</p>
           )}
         </div>
 
         {/* Feeling */}
-        <div style={{ marginBottom: "2rem" }}>
-          <label style={{
-            display: "block",
-            fontSize: "0.875rem",
-            fontWeight: "600",
-            color: "#e2e8f0",
-            marginBottom: "1rem"
-          }}>
-            😊 Känsla
-          </label>
-          <div style={{
-            display: "flex",
-            gap: "0.5rem",
-            justifyContent: "space-between"
-          }}>
+        <div className="section">
+          <label className="formLabel">😊 Känsla</label>
+          <div className="feelingRow">
             {feelingLevels.map(level => (
               <button
                 key={level.value}
                 type="button"
                 onClick={() => setFormData(prev => ({ ...prev, feeling: level.value }))}
-                style={{
-                  padding: "1rem 0.5rem",
-                  borderRadius: "8px",
-                  border: formData.feeling === level.value ? "2px solid #b8f27c" : "1px solid #374151",
-                  background: formData.feeling === level.value ? "#b8f27c20" : "#1f2937",
-                  color: "#e2e8f0",
-                  fontSize: "0.75rem",
-                  fontWeight: "600",
-                  cursor: "pointer",
-                  transition: "all 0.2s ease",
-                  flex: 1,
-                  textAlign: "center",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  gap: "0.25rem"
-                }}
+                className={formData.feeling === level.value ? "feelingButton feelingButtonActive" : "feelingButton"}
               >
-                <span style={{ fontSize: "1.5rem" }}>{level.emoji}</span>
+                <span className="feelingEmoji">{level.emoji}</span>
                 <span>{level.label}</span>
               </button>
             ))}
           </div>
           {selectedFeeling && (
-            <p style={{
-              fontSize: "0.75rem",
-              color: "#9ca3af",
-              marginTop: "0.5rem",
-              textAlign: "center"
-            }}>
-              {selectedFeeling.description}
-            </p>
+            <p className="feelingDescription">{selectedFeeling.description}</p>
           )}
         </div>
 
         {/* Tränade färdigheter */}
-        <div style={{ marginBottom: "2rem" }}>
-          <label style={{
-            display: "block",
-            fontSize: "0.875rem",
-            fontWeight: "600",
-            color: "#e2e8f0",
-            marginBottom: "1rem"
-          }}>
-            🎯 Tränade färdigheter
-          </label>
+        <div className="section">
+          <label className="formLabel">🎯 Tränade färdigheter</label>
           {skillCategories.map(category => (
-            <div key={category.id} style={{ marginBottom: "1rem" }}>
-              <h4 style={{
-                margin: "0 0 0.5rem 0",
-                fontSize: "0.875rem",
-                fontWeight: "600",
-                color: "#b8f27c",
-                display: "flex",
-                alignItems: "center",
-                gap: "0.5rem"
-              }}>
-                {category.icon} {category.label}
-              </h4>
-              <div style={{
-                display: "flex",
-                gap: "0.5rem",
-                flexWrap: "wrap"
-              }}>
+            <div key={category.id} className="skillCategory">
+              <h4 className="skillCategoryTitle">{category.icon} {category.label}</h4>
+              <div className="skillRow">
                 {category.skills.map(skill => (
                   <button
                     key={skill}
                     type="button"
                     onClick={() => handleSkillToggle(skill)}
-                    style={{
-                      padding: "0.5rem 0.75rem",
-                      borderRadius: "6px",
-                      border: formData.skills.includes(skill) ? "1px solid #b8f27c" : "1px solid #374151",
-                      background: formData.skills.includes(skill) ? "#b8f27c20" : "#1f2937",
-                      color: formData.skills.includes(skill) ? "#b8f27c" : "#e2e8f0",
-                      fontSize: "0.75rem",
-                      fontWeight: "500",
-                      cursor: "pointer",
-                      transition: "all 0.2s ease"
-                    }}
+                    className={formData.skills.includes(skill) ? "skillButton skillButtonActive" : "skillButton"}
                   >
                     {skill}
                   </button>
@@ -345,35 +199,16 @@ export const TrainingLogForm: React.FC<TrainingLogFormProps> = ({
         </div>
 
         {/* Statistik */}
-        <div style={{ marginBottom: "2rem" }}>
-          <label style={{
-            display: "block",
-            fontSize: "0.875rem",
-            fontWeight: "600",
-            color: "#e2e8f0",
-            marginBottom: "1rem"
-          }}>
-            📊 Statistik (valfritt)
-          </label>
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))",
-            gap: "1rem"
-          }}>
-            {[
-              { key: "goals", label: "Mål", icon: "⚽" },
-              { key: "assists", label: "Assist", icon: "🎯" },
-              { key: "shots", label: "Skott", icon: "🏒" }
+        <div className="section">
+          <label className="formLabel">📊 Statistik (valfritt)</label>
+          <div className="statsGrid">
+            {[ 
+              { key: "goals", label: "Mål", icon: "⚽", placeholder: "Antal mål" },
+              { key: "assists", label: "Assist", icon: "🎯", placeholder: "Antal assist" },
+              { key: "shots", label: "Skott", icon: "🏒", placeholder: "Antal skott" }
             ].map(stat => (
               <div key={stat.key}>
-                <label style={{
-                  display: "block",
-                  fontSize: "0.75rem",
-                  color: "#9ca3af",
-                  marginBottom: "0.25rem"
-                }}>
-                  {stat.icon} {stat.label}
-                </label>
+                <label className="statsLabel">{stat.icon} {stat.label}</label>
                 <input
                   type="number"
                   min="0"
@@ -385,15 +220,8 @@ export const TrainingLogForm: React.FC<TrainingLogFormProps> = ({
                       [stat.key]: parseInt(e.target.value) || 0
                     }
                   }))}
-                  style={{
-                    width: "100%",
-                    padding: "0.5rem",
-                    borderRadius: "6px",
-                    border: "1px solid #374151",
-                    background: "#1f2937",
-                    color: "#e2e8f0",
-                    fontSize: "0.875rem"
-                  }}
+                  className={"statsInput"}
+                  placeholder={stat.placeholder}
                 />
               </div>
             ))}
@@ -401,55 +229,23 @@ export const TrainingLogForm: React.FC<TrainingLogFormProps> = ({
         </div>
 
         {/* Anteckningar */}
-        <div style={{ marginBottom: "2rem" }}>
-          <label style={{
-            display: "block",
-            fontSize: "0.875rem",
-            fontWeight: "600",
-            color: "#e2e8f0",
-            marginBottom: "0.5rem"
-          }}>
-            📝 Anteckningar
-          </label>
+        <div className="section">
+          <label className="formLabel">📝 Anteckningar</label>
           <textarea
             value={formData.note}
             onChange={(e) => setFormData(prev => ({ ...prev, note: e.target.value }))}
             placeholder="Hur gick träningen? Vad kan förbättras nästa gång?"
             rows={4}
-            style={{
-              width: "100%",
-              padding: "0.75rem",
-              borderRadius: "8px",
-              border: "1px solid #374151",
-              background: "#1f2937",
-              color: "#e2e8f0",
-              fontSize: "0.875rem",
-              resize: "vertical",
-              minHeight: "100px"
-            }}
+            className={"textarea"}
           />
         </div>
 
         {/* Knappar */}
-        <div style={{
-          display: "flex",
-          gap: "1rem",
-          justifyContent: "flex-end"
-        }}>
+        <div className="buttonRow">
           <button
             type="button"
             onClick={onCancel}
-            style={{
-              padding: "0.75rem 1.5rem",
-              borderRadius: "8px",
-              border: "1px solid #374151",
-              background: "transparent",
-              color: "#e2e8f0",
-              fontSize: "0.875rem",
-              fontWeight: "600",
-              cursor: "pointer",
-              transition: "all 0.2s ease"
-            }}
+            className="cancelButton"
           >
             Avbryt
           </button>
@@ -457,11 +253,7 @@ export const TrainingLogForm: React.FC<TrainingLogFormProps> = ({
             type="submit"
             loading={isSubmitting}
             variant="primary"
-            style={{
-              padding: "0.75rem 1.5rem",
-              fontSize: "0.875rem",
-              fontWeight: "600"
-            }}
+            className="submitButton"
           >
             {existingLog ? "Uppdatera" : "Spara logg"}
           </LoadingButton>

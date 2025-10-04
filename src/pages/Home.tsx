@@ -268,7 +268,7 @@ return (
       {/* FBC-logga över hela headern i bakgrunden */}
       <img src="/fbc-logo.jpg" alt="FBC logga" className={stylesCss.homeHeaderLogo} />
       {/* Profilkort med badges */}
-      <ProfileCard user={authUser} styles={styles} />
+  <ProfileCard user={authUser} />
       {/* Knapprad längst ner i headern */}
       <div className={stylesCss.homeHeaderBtnRow}>
         <button className={`fbc-btn fbc-btn-logout ${stylesCss.homeLogoutBtn}`} onClick={() => setShowLogoutConfirm(true)} aria-label="Logga ut">Logga ut</button>
@@ -374,7 +374,7 @@ return (
         ) : forumPosts.length === 0 ? (
           <div className={stylesCss.homeEmpty}>Inga inlägg ännu.</div>
         ) : (
-          forumPosts[0] !== undefined ? <ForumPostCard post={forumPosts[0]!} styles={styles} /> : null
+          forumPosts[0] !== undefined ? <ForumPostCard post={forumPosts[0]!} /> : null
         )}
         {/* Modal för redigering */}
         {editPostId && (
@@ -408,7 +408,7 @@ return (
     {/* Statistik borttagen */}
 
     {/* Meny-popup med modern stil */}
-<MenuPopup open={menuOpen} onClose={() => setMenuOpen(false)} menuItems={menuItems} styles={styles} navigate={navigate} />
+<MenuPopup open={menuOpen} onClose={() => setMenuOpen(false)} menuItems={menuItems} navigate={navigate} />
 				{/* Footer med copyright och länk till policyer */}
         <footer className={stylesCss.homeFooter}>
           <div className={stylesCss.homeFooterCopyright}>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useOpponent } from "../../context/OpponentContext";
 import { OpponentAnalysis } from "../../types/opponent";
+import styles from "./OpponentAnalysisEdit.module.css";
 
 interface OpponentAnalysisEditProps {
   initial?: OpponentAnalysis;
@@ -9,36 +10,6 @@ interface OpponentAnalysisEditProps {
   onCancel?: () => void;
 }
 
-const inputStyle: React.CSSProperties = {
-  width: "100%",
-  padding: "8px",
-  margin: "6px 0 12px 0",
-  borderRadius: 6,
-  border: "1px solid #345",
-  background: "#23272e",
-  color: "#fff",
-};
-
-const labelStyle: React.CSSProperties = {
-  fontWeight: 600,
-  color: "#b8f27c",
-  marginBottom: 2,
-  display: "block",
-  fontSize: 15,
-};
-
-const buttonStyle: React.CSSProperties = {
-  width: "100%",
-  background: "#b8f27c",
-  color: "#222",
-  border: "none",
-  borderRadius: 6,
-  padding: "10px",
-  fontWeight: 700,
-  fontSize: 17,
-  marginTop: 10,
-  cursor: "pointer",
-};
 
 const OpponentAnalysisEdit: React.FC<OpponentAnalysisEditProps> = ({
   initial,
@@ -113,104 +84,83 @@ const OpponentAnalysisEdit: React.FC<OpponentAnalysisEditProps> = ({
   return (
     <form
       onSubmit={handleSubmit}
-      style={{
-        background: "#23272e",
-        borderRadius: 9,
-        padding: 18,
-        marginTop: 20,
-        boxShadow: "0 2px 14px #0002",
-        maxWidth: 480,
-        marginLeft: "auto",
-        marginRight: "auto",
-      }}
+      className={styles.opponentAnalysisForm}
     >
-      <label style={labelStyle}>Motståndarlag</label>
-      <select
-        name="teamId"
-        value={form.teamId}
-        onChange={handleChange}
-        style={inputStyle}
-        required
-        disabled={isEdit} // Kan ej byta lag vid edit
-      >
-        {teams.map((team) => (
-          <option key={team.id} value={team.id}>
-            {team.name}
-          </option>
-        ))}
-      </select>
+  <select
+    name="teamId"
+    value={form.teamId}
+    onChange={handleChange}
+    className={styles.input}
+    required
+    disabled={isEdit}
+    title="Välj motståndarlag"
+  >
+    {teams.map((team) => (
+      <option key={team.id} value={team.id}>
+        {team.name}
+      </option>
+    ))}
+  </select>
 
-      <label style={labelStyle}>
-        Styrkor{" "}
-        <span style={{ fontWeight: 400, color: "#bbb", fontSize: 13 }}>
-          (komma-separerade)
-        </span>
-      </label>
-      <input
-        name="strengths"
-        value={form.strengths}
-        onChange={handleChange}
-        style={inputStyle}
-        placeholder="Snabba omställningar, Bra på tekningar"
-      />
+  <label className={styles.label}>
+    Styrkor{" "}
+  <span className={styles.spanHint}>
+      (komma-separerade)
+    </span>
+  </label>
+  <input
+    name="strengths"
+    value={form.strengths}
+    onChange={handleChange}
+    className={styles.input}
+    placeholder="Snabba omställningar, Bra på tekningar"
+  />
 
-      <label style={labelStyle}>
-        Svagheter{" "}
-        <span style={{ fontWeight: 400, color: "#bbb", fontSize: 13 }}>
-          (komma-separerade)
-        </span>
-      </label>
-      <input
-        name="weaknesses"
-        value={form.weaknesses}
-        onChange={handleChange}
-        style={inputStyle}
-        placeholder="Långsamma byten, Dålig disciplin"
-      />
+  <label className={styles.label}>
+    Svagheter{" "}
+  <span className={styles.spanHint}>
+      (komma-separerade)
+    </span>
+  </label>
+  <input
+    name="weaknesses"
+    value={form.weaknesses}
+    onChange={handleChange}
+    className={styles.input}
+    placeholder="Långsamma byten, Dålig disciplin"
+  />
 
-      <label style={labelStyle}>Taktik / Rekommendationer</label>
-      <textarea
-        name="tactics"
-        value={form.tactics}
-        onChange={handleChange}
-        style={{ ...inputStyle, minHeight: 50, resize: "vertical" }}
-        placeholder="Ex: Pressa deras backar, spela på djupet"
-        required
-      />
+  <label className={styles.label}>Taktik / Rekommendationer</label>
+  <textarea
+    name="tactics"
+    value={form.tactics}
+    onChange={handleChange}
+    className={`${styles.input} ${styles.textareaTactics}`}
+    placeholder="Ex: Pressa deras backar, spela på djupet"
+    required
+  />
 
-      <label style={labelStyle}>Anteckningar</label>
-      <textarea
-        name="notes"
-        value={form.notes}
-        onChange={handleChange}
-        style={{ ...inputStyle, minHeight: 40, resize: "vertical" }}
-        placeholder="Deras #9 är poängfarlig, deras boxplay svagt"
-      />
+  <label className={styles.label}>Anteckningar</label>
+  <textarea
+    name="notes"
+    value={form.notes}
+    onChange={handleChange}
+    className={`${styles.input} ${styles.textareaNotes}`}
+    placeholder="Deras #9 är poängfarlig, deras boxplay svagt"
+  />
 
-      <button type="submit" style={buttonStyle}>
-        {isEdit ? "Spara ändringar" : "Spara analys"}
-      </button>
-      {onCancel && isEdit && (
-        <button
-          type="button"
-          style={{
-            ...buttonStyle,
-            background: "#e66",
-            color: "#fff",
-            marginTop: 10,
-          }}
-          onClick={onCancel}
-        >
-          Avbryt
-        </button>
-      )}
-      <style>{`
-        @media (max-width: 600px) {
-          form { padding: 8px !important; }
-          input, textarea, select { font-size: 15px !important; }
-          button { font-size: 15px !important; }
-        }
-      `}</style>
+  <button type="submit" className={styles.button}>
+    {isEdit ? "Spara ändringar" : "Spara analys"}
+  </button>
+  {onCancel && isEdit && (
+    <button
+      type="button"
+      className={`${styles.button} ${styles.cancel}`}
+      onClick={onCancel}
+    >
+      Avbryt
+    </button>
+  )}
     </form>
   );
 };

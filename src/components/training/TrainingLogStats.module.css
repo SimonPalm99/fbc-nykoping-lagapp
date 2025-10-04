@@ -1,0 +1,190 @@
+.statistik-kort {
+  background: linear-gradient(135deg, #1a1a1a, #262626);
+  border-radius: 16px;
+  padding: 2rem;
+  border: 1px solid #333;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+}
+.statistik-titel {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #b8f27c;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.statistik-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.statistik-sektion {
+  background: #0f0f0f;
+  padding: 1.5rem;
+  border-radius: 12px;
+  text-align: center;
+  border: 1px solid #333;
+}
+.statistik-varde {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.statistik-varde-traningar { color: #b8f27c; }
+.statistik-varde-tid { color: #22c55e; }
+.statistik-varde-snitt { color: #f59e0b; }
+.statistik-varde-streak { color: #8b5cf6; }
+.statistik-label {
+  font-size: 0.875rem;
+  color: #9ca3af;
+  font-weight: 600;
+}
+.intensitet-kansla-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+.intensitet-titel, .kansla-titel {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #e2e8f0;
+  margin-bottom: 1rem;
+}
+.intensitet-kort {
+  background: #0f0f0f;
+  padding: 1.5rem;
+  border-radius: 12px;
+  text-align: center;
+  border: 1px solid #333;
+}
+.intensitet-varde {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.intensity-level-1 { color: #10b981; }
+.intensity-level-2 { color: #84cc16; }
+.intensity-level-3 { color: #f59e0b; }
+.intensity-level-4 { color: #f97316; }
+.intensity-level-5 { color: #ef4444; }
+.intensitet-label {
+  font-size: 0.875rem;
+  color: #9ca3af;
+}
+.kansla-kort {
+  background: #0f0f0f;
+  padding: 1.5rem;
+  border-radius: 12px;
+  text-align: center;
+  border: 1px solid #333;
+}
+.kansla-ikon {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+}
+.kansla-varde {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #b8f27c;
+}
+.fardigheter-sektion {
+  margin-bottom: 2rem;
+}
+.fardigheter-titel {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #e2e8f0;
+  margin-bottom: 1rem;
+}
+.fardigheter-lista {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.fardighet-kort {
+  background: #0f0f0f;
+  border: 1px solid #333;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.fardighet-topp {
+  background: #b8f27c20;
+  border: 1px solid #b8f27c;
+}
+.fardighet-namn {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #e2e8f0;
+}
+.fardighet-namn-topp {
+  color: #b8f27c;
+}
+.fardighet-count {
+  background: #374151;
+  color: #e2e8f0;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.fardighet-count-topp {
+  background: #b8f27c;
+  color: #000;
+}
+.prestation-titel {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #e2e8f0;
+  margin-bottom: 1rem;
+}
+.prestation-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+}
+.prestation-kort {
+  background: #0f0f0f;
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+  border: 1px solid #333;
+}
+.prestation-varde {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+.prestation-varde-mal { color: #22c55e; }
+.prestation-varde-assist { color: #f59e0b; }
+.prestation-varde-skott { color: #8b5cf6; }
+.prestation-label {
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
+.ingen-data-kort {
+  background: #0f0f0f;
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+  border: 1px solid #333;
+}
+.ingen-data-ikon {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+.ingen-data-titel {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #e2e8f0;
+  margin-bottom: 0.5rem;
+}
+.ingen-data-text {
+  color: #9ca3af;
+  font-size: 0.875rem;
+}

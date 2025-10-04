@@ -368,8 +368,7 @@ export const PersonalRehabLog: React.FC<PersonalRehabLogProps> = ({ userId, onUp
                 {recoveryLogs.slice(0, 10).reverse().map((log) => (
                   <div key={log.id} className="chart-bar">
                     <div
-                      className="bar pain-bar"
-                      style={{ height: `${(log.painLevel / 5) * 100}%` }}
+                      className={`bar pain-bar pain-bar-level-${log.painLevel}`}
                     />
                     <span className="bar-label">{format(log.date, 'MM/dd')}</span>
                   </div>
@@ -383,10 +382,8 @@ export const PersonalRehabLog: React.FC<PersonalRehabLogProps> = ({ userId, onUp
                 {recoveryLogs.slice(0, 10).reverse().map((log) => (
                   <div key={log.id} className="chart-bar">
                     <div
-                      className="bar mobility-bar"
-                      style={{ height: `${(log.mobilityLevel / 5) * 100}%` }}
+                      className={`bar mobility-bar mobility-bar-level-${log.mobilityLevel}`}
                     />
-                    <span className="bar-label">{format(log.date, 'MM/dd')}</span>
                   </div>
                 ))}
               </div>
@@ -525,6 +522,8 @@ export const PersonalRehabLog: React.FC<PersonalRehabLogProps> = ({ userId, onUp
                     ...prev,
                     date: new Date(e.target.value)
                   }))}
+                  title="Välj datum för träningspasset"
+                  placeholder="ÅÅÅÅ-MM-DD"
                 />
               </div>
 
@@ -537,6 +536,8 @@ export const PersonalRehabLog: React.FC<PersonalRehabLogProps> = ({ userId, onUp
                     ...prev,
                     duration: parseInt(e.target.value)
                   }))}
+                  title="Ange varaktighet i minuter"
+                  placeholder="Minuter"
                 />
               </div>
 
@@ -544,6 +545,8 @@ export const PersonalRehabLog: React.FC<PersonalRehabLogProps> = ({ userId, onUp
                 <div className="form-group">
                   <label>Smärtnivå (1-5)</label>
                   <select
+                    id="sessionPainLevel"
+                    aria-label="Välj smärtnivå"
                     value={newSession.painLevel || 1}
                     onChange={(e) => setNewSession(prev => ({
                       ...prev,
@@ -559,6 +562,7 @@ export const PersonalRehabLog: React.FC<PersonalRehabLogProps> = ({ userId, onUp
                 <div className="form-group">
                   <label>Energinivå (1-5)</label>
                   <select
+                    title="Välj energinivå"
                     value={newSession.energyLevel || 3}
                     onChange={(e) => setNewSession(prev => ({
                       ...prev,
@@ -629,19 +633,25 @@ export const PersonalRehabLog: React.FC<PersonalRehabLogProps> = ({ userId, onUp
                     ...prev,
                     date: new Date(e.target.value)
                   }))}
+                  title="Välj datum för logg"
+                  placeholder="ÅÅÅÅ-MM-DD"
                 />
               </div>
 
               <div className="metrics-grid">
                 <div className="form-group">
-                  <label>Smärtnivå (1-5)</label>
+                  <label htmlFor="painLevel">Smärtnivå (1-5)</label>
                   <select
+                    id="painLevel"
+                    name="painLevel"
+                    aria-label="Välj smärtnivå"
                     value={newLog.painLevel || 1}
                     onChange={(e) => setNewLog(prev => ({
                       ...prev,
                       painLevel: parseInt(e.target.value)
                     }))}
                   >
+                    <option value="" disabled>Välj nivå</option>
                     {[1,2,3,4,5].map(level => (
                       <option key={level} value={level}>{level}</option>
                     ))}
@@ -649,14 +659,18 @@ export const PersonalRehabLog: React.FC<PersonalRehabLogProps> = ({ userId, onUp
                 </div>
 
                 <div className="form-group">
-                  <label>Rörlighet (1-5)</label>
+                  <label htmlFor="mobilityLevel">Rörlighet (1-5)</label>
                   <select
+                    id="mobilityLevel"
+                    name="mobilityLevel"
+                    aria-label="Välj rörlighetsnivå"
                     value={newLog.mobilityLevel || 3}
                     onChange={(e) => setNewLog(prev => ({
                       ...prev,
                       mobilityLevel: parseInt(e.target.value)
                     }))}
                   >
+                    <option value="" disabled>Välj nivå</option>
                     {[1,2,3,4,5].map(level => (
                       <option key={level} value={level}>{level}</option>
                     ))}
@@ -664,14 +678,18 @@ export const PersonalRehabLog: React.FC<PersonalRehabLogProps> = ({ userId, onUp
                 </div>
 
                 <div className="form-group">
-                  <label>Svullnad (1-5)</label>
+                  <label htmlFor="swellingLevel">Svullnad (1-5)</label>
                   <select
+                    id="swellingLevel"
+                    name="swellingLevel"
+                    aria-label="Välj svullnadsnivå"
                     value={newLog.swellingLevel || 1}
                     onChange={(e) => setNewLog(prev => ({
                       ...prev,
                       swellingLevel: parseInt(e.target.value)
                     }))}
                   >
+                    <option value="" disabled>Välj nivå</option>
                     {[1,2,3,4,5].map(level => (
                       <option key={level} value={level}>{level}</option>
                     ))}
@@ -679,14 +697,18 @@ export const PersonalRehabLog: React.FC<PersonalRehabLogProps> = ({ userId, onUp
                 </div>
 
                 <div className="form-group">
-                  <label>Stelhet (1-5)</label>
+                  <label htmlFor="stiffnessLevel">Stelhet (1-5)</label>
                   <select
+                    id="stiffnessLevel"
+                    name="stiffnessLevel"
+                    aria-label="Välj stelhetsnivå"
                     value={newLog.stiffnessLevel || 2}
                     onChange={(e) => setNewLog(prev => ({
                       ...prev,
                       stiffnessLevel: parseInt(e.target.value)
                     }))}
                   >
+                    <option value="" disabled>Välj nivå</option>
                     {[1,2,3,4,5].map(level => (
                       <option key={level} value={level}>{level}</option>
                     ))}
@@ -694,14 +716,18 @@ export const PersonalRehabLog: React.FC<PersonalRehabLogProps> = ({ userId, onUp
                 </div>
 
                 <div className="form-group">
-                  <label>Sömnkvalitet (1-5)</label>
+                  <label htmlFor="sleepQuality">Sömnkvalitet (1-5)</label>
                   <select
+                    id="sleepQuality"
+                    name="sleepQuality"
+                    aria-label="Välj sömnkvalitet"
                     value={newLog.sleepQuality || 3}
                     onChange={(e) => setNewLog(prev => ({
                       ...prev,
                       sleepQuality: parseInt(e.target.value)
                     }))}
                   >
+                    <option value="" disabled>Välj nivå</option>
                     {[1,2,3,4,5].map(level => (
                       <option key={level} value={level}>{level}</option>
                     ))}
@@ -709,14 +735,18 @@ export const PersonalRehabLog: React.FC<PersonalRehabLogProps> = ({ userId, onUp
                 </div>
 
                 <div className="form-group">
-                  <label>Humör</label>
+                  <label htmlFor="mood">Humör</label>
                   <select
+                    id="mood"
+                    name="mood"
+                    aria-label="Välj humör"
                     value={newLog.mood || 'neutral'}
                     onChange={(e) => setNewLog(prev => ({
                       ...prev,
                       mood: e.target.value as any
                     }))}
                   >
+                    <option value="" disabled>Välj humör</option>
                     <option value="bad">Dåligt 😟</option>
                     <option value="neutral">Okej 😐</option>
                     <option value="good">Bra 😊</option>
@@ -725,28 +755,44 @@ export const PersonalRehabLog: React.FC<PersonalRehabLogProps> = ({ userId, onUp
               </div>
 
               <div className="form-group">
-                <label>Medicin tagen</label>
+                {/* Ange medicin du har tagit idag, separera med kommatecken */}
+                <label htmlFor="medicationTaken">Medicin tagen</label>
                 <input
                   type="text"
+                  id="medicationTaken"
+                  name="medicationTaken"
+                  autoComplete="off"
+                  aria-label="Medicin tagen"
                   value={newLog.medicationTaken?.join(', ') || ''}
                   onChange={(e) => setNewLog(prev => ({
                     ...prev,
-                    medicationTaken: e.target.value.split(',').map(m => m.trim()).filter(m => m)
+                    medicationTaken: e.target.value.trim() === ''
+                      ? []
+                      : e.target.value.split(',').map(m => m.trim()).filter(m => m)
                   }))}
-                  placeholder="Medicin 1, Medicin 2, ..."
+                  placeholder="Ex: Ibuprofen, Paracetamol"
+                  title="Ange medicin du har tagit idag, separera med kommatecken"
                 />
               </div>
 
               <div className="form-group">
-                <label>Aktiviteter</label>
+                {/* Ange aktiviteter du har gjort idag, separera med kommatecken */}
+                <label htmlFor="activities">Aktiviteter</label>
                 <input
                   type="text"
+                  id="activities"
+                  name="activities"
+                  autoComplete="off"
+                  aria-label="Aktiviteter"
                   value={newLog.activities?.join(', ') || ''}
                   onChange={(e) => setNewLog(prev => ({
                     ...prev,
-                    activities: e.target.value.split(',').map(a => a.trim()).filter(a => a)
+                    activities: e.target.value.trim() === ''
+                      ? []
+                      : e.target.value.split(',').map(a => a.trim()).filter(a => a)
                   }))}
-                  placeholder="Promenad, Övningar, ..."
+                  placeholder="Ex: Promenad, Rehabiliteringsövningar"
+                  title="Ange aktiviteter du har gjort idag, separera med kommatecken"
                 />
               </div>
 

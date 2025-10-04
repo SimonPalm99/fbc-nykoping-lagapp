@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import styles from './XPDisplay.module.css';
 
 interface XPDisplayProps {
   currentXP: number;
@@ -57,125 +58,79 @@ const XPDisplay: React.FC<XPDisplayProps> = ({
 
   const percentage = (currentXP / totalXP) * 100;
   
-  const getSizeClasses = () => {
-    switch (size) {
-      case 'sm':
-        return {
-          container: 'p-3',
-          level: 'text-lg',
-          xp: 'text-sm',
-          progress: 'h-2'
-        };
-      case 'lg':
-        return {
-          container: 'p-6',
-          level: 'text-3xl',
-          xp: 'text-lg',
-          progress: 'h-4'
-        };
-      default:
-        return {
-          container: 'p-4',
-          level: 'text-2xl',
-          xp: 'text-base',
-          progress: 'h-3'
-        };
-    }
-  };
-
-  const getThemeClasses = () => {
-    switch (theme) {
-      case 'gaming':
-        return {
-          container: 'bg-gradient-to-br from-gray-900 to-black text-green-400 border-green-500',
-          level: 'text-yellow-400',
-          progress: 'bg-green-500',
-          progressBg: 'bg-gray-800'
-        };
-      case 'minimal':
-        return {
-          container: 'bg-white border-gray-200 text-gray-800',
-          level: 'text-blue-600',
-          progress: 'bg-blue-500',
-          progressBg: 'bg-gray-200'
-        };
-      default:
-        return {
-          container: 'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white',
-          level: 'text-blue-600 dark:text-blue-400',
-          progress: 'bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500',
-          progressBg: 'bg-gray-200 dark:bg-gray-700'
-        };
-    }
-  };
-
-  const sizeClasses = getSizeClasses();
-  const themeClasses = getThemeClasses();
+  // Map size and theme to CSS module class names
+  const containerClass = `${styles.xpDisplayContainer}
+    ${theme === 'gaming' ? styles['xpDisplayContainer--gaming'] : ''}
+    ${theme === 'minimal' ? styles['xpDisplayContainer--minimal'] : ''}`.replace(/\s+/g, ' ').trim();
+  const levelClass = `${styles.xpDisplayLevel}
+    ${theme === 'gaming' ? styles['xpDisplayLevel--gaming'] : ''}
+    ${theme === 'minimal' ? styles['xpDisplayLevel--minimal'] : ''}
+    ${theme === 'default' ? styles['xpDisplayLevel--default'] : ''}`.replace(/\s+/g, ' ').trim();
+  const xpClass = styles.xpDisplayXP;
+  const progressBarClass = `${styles.xpDisplayProgressBar}
+    ${size === 'sm' ? styles.xpDisplayProgressBarSm : ''}
+    ${size === 'lg' ? styles.xpDisplayProgressBarLg : ''}`.replace(/\s+/g, ' ').trim();
+  const progressClass = `${styles.xpDisplayProgress}
+    ${theme === 'gaming' ? styles['xpDisplayProgress--gaming'] : ''}
+    ${theme === 'minimal' ? styles['xpDisplayProgress--minimal'] : ''}
+    ${theme === 'default' ? styles['xpDisplayProgress--default'] : ''}
+    ${size === 'sm' ? styles.xpDisplayProgressSm : ''}
+    ${size === 'lg' ? styles.xpDisplayProgressLg : ''}`.replace(/\s+/g, ' ').trim();
+  const progressBgClass = `${styles.xpDisplayProgressBg}
+    ${theme === 'gaming' ? styles['xpDisplayProgressBg--gaming'] : ''}
+    ${theme === 'minimal' ? styles['xpDisplayProgressBg--minimal'] : ''}
+    ${theme === 'default' ? styles['xpDisplayProgressBg--default'] : ''}`.replace(/\s+/g, ' ').trim();
+  const recentGainClass = styles.xpDisplayRecentGain;
+  const shimmerClass = styles.xpDisplayShimmer;
+  const extrasClass = styles.xpDisplayExtras;
+  const extrasPingClass = styles.xpDisplayExtrasPing;
+  const extrasPulseClass = styles.xpDisplayExtrasPulse;
+  const footerClass = styles.xpDisplayFooter;
 
   return (
-    <div className={`${sizeClasses.container} ${themeClasses.container} rounded-lg border shadow-sm relative overflow-hidden`}>
+  <div className={containerClass}>
       {/* Recent XP gain animation */}
       {animateGain && recentGain > 0 && (
-        <div className="absolute top-2 right-2 pointer-events-none">
-          <div className="animate-bounce text-green-500 font-bold text-lg">
-            +{recentGain} XP
-          </div>
-        </div>
+        <div className={recentGainClass}>+{recentGain} XP</div>
       )}
 
       {/* Level display */}
-      <div className="flex justify-between items-center mb-3">
-        <div className="flex items-center gap-2">
-          <span className={`${sizeClasses.level} font-bold ${themeClasses.level}`}>
-            Level {level}
-          </span>
+      <div className={styles.xpDisplayHeader}>
+        <div className={styles.xpDisplayHeaderLeft}>
+          <span className={levelClass}>Nivå {level}</span>
           {theme === 'gaming' && (
-            <span className="text-green-400 text-sm animate-pulse">⚡</span>
+            <span className={styles.xpDisplayGamingIcon}>⚡</span>
           )}
         </div>
-        
-        <div className="text-right">
-          <div className={`${sizeClasses.xp} font-semibold`}>
-            {displayXP.toLocaleString()} XP
-          </div>
-          <div className="text-xs text-gray-500">
-            {xpToNext.toLocaleString()} till nästa
-          </div>
+        <div className={styles.xpDisplayHeaderRight}>
+          <div className={xpClass}>{displayXP.toLocaleString()} XP</div>
+          <div className={styles.xpDisplayNext}>{xpToNext.toLocaleString()} till nästa nivå</div>
         </div>
       </div>
 
       {/* Progress bar */}
-      <div className={`w-full ${themeClasses.progressBg} rounded-full ${sizeClasses.progress} overflow-hidden relative`}>
+      <div className={progressBarClass + ' ' + progressBgClass}>
         <div 
-          className={`${themeClasses.progress} ${sizeClasses.progress} rounded-full transition-all duration-700 ease-out relative overflow-hidden`}
-          style={{ width: `${percentage}%` }}
+          className={progressClass}
+          data-xp-progress-width={percentage}
         >
           {/* Shimmer effect */}
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-30 animate-pulse"></div>
-          
-          {/* Progress shine effect */}
-          <div 
-            className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-50 w-full"
-            style={{
-              transform: 'translateX(-100%)',
-              animation: 'shimmer 2s infinite'
-            }}
-          ></div>
+          <div className={shimmerClass}></div>
         </div>
       </div>
 
       {/* Level progress indicator */}
-      <div className="flex justify-between items-center mt-2 text-xs text-gray-500">
-        <span>Level {level}</span>
+      <div className={footerClass}>
+        <span>Nivå {level}</span>
         <span>{Math.round(percentage)}%</span>
-        <span>Level {level + 1}</span>
+        <span>Nivå {level + 1}</span>
       </div>
 
       {/* Gaming theme extras */}
       {theme === 'gaming' && (
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-1 left-1 w-2 h-2 bg-green-400 rounded-full animate-ping opacity-75"></div>
-          <div className="absolute bottom-1 right-1 w-1 h-1 bg-yellow-400 rounded-full animate-pulse"></div>
+        <div className={extrasClass}>
+          <div className={extrasPingClass}></div>
+          <div className={extrasPulseClass}></div>
         </div>
       )}
     </div>

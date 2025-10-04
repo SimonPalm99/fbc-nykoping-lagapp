@@ -1,0 +1,87 @@
+.teamFundManager {}
+.fund-header {}
+.fund-balance {}
+.balance-label {}
+.balance-amount {}
+.fund-tabs {}
+.tab {}
+.tab.active {}
+.fund-content {}
+.overview-section {}
+.overview-cards {}
+.overview-card {}
+.card-icon {}
+.card-content {}
+.card-value {}
+.category-breakdown {}
+.category-list {}
+.category-item {}
+.category-info {}
+.category-name {}
+.category-count {}
+.category-amounts {}
+.income {}
+.expense {}
+.transactions-section {}
+.section-header {}
+.btn {}
+.btn-primary {}
+.btn-secondary {}
+.transactions-list {}
+.transaction-item {}
+.transaction-info {}
+.transaction-header {}
+.transaction-description {}
+.transaction-amount {}
+.transaction-meta {}
+.transaction-date {}
+.transaction-category {}
+.transaction-reference {}
+.allocations-section {}
+.allocations-list {}
+.allocation-item {}
+.allocation-info {}
+.allocation-progress {}
+.progress-bar {}
+.progressFill {
+	height: 100%;
+	background: #b8f27c;
+	border-radius: 4px;
+	transition: width 0.3s;
+}
+/* Dynamiska breddklasser för 0-100% */
+/* Generera .progressFill0 till .progressFill100 */
+/* Exempel: */
+.progressFill0 { width: 0%; }
+.progressFill5 { width: 5%; }
+.progressFill10 { width: 10%; }
+.progressFill15 { width: 15%; }
+.progressFill20 { width: 20%; }
+.progressFill25 { width: 25%; }
+.progressFill30 { width: 30%; }
+.progressFill35 { width: 35%; }
+.progressFill40 { width: 40%; }
+.progressFill45 { width: 45%; }
+.progressFill50 { width: 50%; }
+.progressFill55 { width: 55%; }
+.progressFill60 { width: 60%; }
+.progressFill65 { width: 65%; }
+.progressFill70 { width: 70%; }
+.progressFill75 { width: 75%; }
+.progressFill80 { width: 80%; }
+.progressFill85 { width: 85%; }
+.progressFill90 { width: 90%; }
+.progressFill95 { width: 95%; }
+.progressFill100 { width: 100%; }
+.progress-text {}
+.allocation-status {}
+.status {}
+.status.active {}
+.status.inactive {}
+.modal-overlay {}
+.modal {}
+.modal-header {}
+.modal-close {}
+.modal-content {}
+.form-group {}
+.modal-footer {}

@@ -1,0 +1,51 @@
+.excelTable {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.excelTable__editBtn {
+  margin-bottom: 12px;
+}
+.excelTable__table {
+  border-collapse: collapse;
+  width: 100%;
+}
+.excelTable__th,
+.excelTable__td {
+  padding: 4px 6px;
+  min-width: 80px;
+}
+.excelTable__input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  color: #222;
+  font-weight: 700;
+}
+.excelTable__formulaInput {
+  width: 100%;
+  border: none;
+  background: #f5f5f5;
+  color: #1976d2;
+  font-size: 0.9em;
+}
+.excelTable__formulaResult {
+  font-size: 0.9em;
+  color: #888;
+}
+.excelTable__borderEditor {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: #fff;
+  border: 1px solid #222;
+  padding: 8px;
+  z-index: 10;
+}
+.excelTable__borderEditor label {
+  display: block;
+  margin-bottom: 4px;
+}
+.excelTable__closeBtn {
+  margin-left: 8px;
+}

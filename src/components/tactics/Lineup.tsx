@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import styles from "./Lineup.module.css";
 
 // Demo-spelare
 interface Player {
@@ -55,37 +56,88 @@ const Lineup: React.FC = () => {
   };
 
   return (
-    <div style={{ width: '100%', minHeight: 320 }}>
-      <nav style={{ display:'flex', gap:'1rem', marginBottom:'1rem', justifyContent:'center' }}>
-        <button onClick={() => setActiveTab('femma')} style={{ background:activeTab==='femma'?'#22c55e':'#222', color:'#fff', border:'none', borderRadius:'0.7rem', padding:'0.5rem 1.2rem', fontWeight:700, cursor:'pointer' }}>Femma</button>
-        <button onClick={() => setActiveTab('pp')} style={{ background:activeTab==='pp'?'#FFD600':'#222', color:activeTab==='pp'?'#222':'#fff', border:'none', borderRadius:'0.7rem', padding:'0.5rem 1.2rem', fontWeight:700, cursor:'pointer' }}>PP</button>
-        <button onClick={() => setActiveTab('bp')} style={{ background:activeTab==='bp'?'#2196F3':'#222', color:activeTab==='bp'?'#fff':'#fff', border:'none', borderRadius:'0.7rem', padding:'0.5rem 1.2rem', fontWeight:700, cursor:'pointer' }}>BP</button>
-        <button onClick={exportLineup} style={{ background:'#22c55e', color:'#fff', border:'none', borderRadius:'0.7rem', padding:'0.5rem 1.2rem', fontWeight:700, cursor:'pointer', marginLeft:'2rem' }}>Exportera</button>
+    <div className={styles.lineupRoot}>
+      <nav className={styles.lineupNav}>
+        <button
+          onClick={() => setActiveTab('femma')}
+          className={
+            styles.lineupNavBtn + ' ' + (activeTab === 'femma' ? styles.lineupNavBtnFemma : '')
+          }
+        >Femma</button>
+        <button
+          onClick={() => setActiveTab('pp')}
+          className={
+            styles.lineupNavBtn + ' ' + (activeTab === 'pp' ? styles.lineupNavBtnPp : '')
+          }
+        >PP</button>
+        <button
+          onClick={() => setActiveTab('bp')}
+          className={
+            styles.lineupNavBtn + ' ' + (activeTab === 'bp' ? styles.lineupNavBtnBp : '')
+          }
+        >BP</button>
+        <button
+          onClick={exportLineup}
+          className={styles.lineupNavBtn + ' ' + styles.lineupNavBtnExport}
+        >Exportera</button>
       </nav>
-      <div style={{ display:'flex', gap:'2rem', flexWrap:'wrap', justifyContent:'center', marginBottom:'2rem' }}>
+      <div className={styles.lineupPositions}>
         {/* Positioner */}
         {positions.map(pos => (
-          <div key={pos} onDrop={() => handleDrop(pos)} onDragOver={e => e.preventDefault()} style={{ background:'#fff', borderRadius:'1rem', boxShadow:'0 2px 8px #22c55e22', width:110, height:110, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', fontWeight:700, fontSize:'1.1rem', color:'#22c55e', margin:'0.5rem', position:'relative' }}>
+          <div
+            key={pos}
+            onDrop={() => handleDrop(pos)}
+            onDragOver={e => e.preventDefault()}
+            className={styles.lineupPosBox}
+          >
             <div>{pos}</div>
-            {activeTab==='femma' && femma[pos] && (
-              <div draggable onDragStart={() => femma[pos] && handleDragStart(femma[pos])} style={{ background:'#22c55e', color:'#fff', borderRadius:'0.7rem', padding:'0.5rem 1rem', marginTop:'0.5rem', cursor:'grab', fontWeight:700 }}>{femma[pos]?.name} #{femma[pos]?.number}</div>
+            {activeTab === 'femma' && femma[pos] && (
+              <div
+                draggable
+                onDragStart={() => femma[pos] && handleDragStart(femma[pos])}
+                className={styles.lineupPosPlayerFemma}
+              >
+                {femma[pos]?.name} #{femma[pos]?.number}
+              </div>
             )}
-            {activeTab==='pp' && pp[pos] && (
-              <div draggable onDragStart={() => pp[pos] && handleDragStart(pp[pos])} style={{ background:'#FFD600', color:'#222', borderRadius:'0.7rem', padding:'0.5rem 1rem', marginTop:'0.5rem', cursor:'grab', fontWeight:700 }}>{pp[pos]?.name} #{pp[pos]?.number}</div>
+            {activeTab === 'pp' && pp[pos] && (
+              <div
+                draggable
+                onDragStart={() => pp[pos] && handleDragStart(pp[pos])}
+                className={styles.lineupPosPlayerPp}
+              >
+                {pp[pos]?.name} #{pp[pos]?.number}
+              </div>
             )}
-            {activeTab==='bp' && bp[pos] && (
-              <div draggable onDragStart={() => bp[pos] && handleDragStart(bp[pos])} style={{ background:'#2196F3', color:'#fff', borderRadius:'0.7rem', padding:'0.5rem 1rem', marginTop:'0.5rem', cursor:'grab', fontWeight:700 }}>{bp[pos]?.name} #{bp[pos]?.number}</div>
+            {activeTab === 'bp' && bp[pos] && (
+              <div
+                draggable
+                onDragStart={() => bp[pos] && handleDragStart(bp[pos])}
+                className={styles.lineupPosPlayerBp}
+              >
+                {bp[pos]?.name} #{bp[pos]?.number}
+              </div>
             )}
-            {(activeTab==='femma' && femma[pos]) || (activeTab==='pp' && pp[pos]) || (activeTab==='bp' && bp[pos]) ? (
-              <button onClick={() => handleRemove(pos)} style={{ position:'absolute', top:8, right:8, background:'#FF5252', color:'#fff', border:'none', borderRadius:'50%', width:28, height:28, fontWeight:700, cursor:'pointer' }}>✕</button>
+            {(activeTab === 'femma' && femma[pos]) || (activeTab === 'pp' && pp[pos]) || (activeTab === 'bp' && bp[pos]) ? (
+              <button
+                onClick={() => handleRemove(pos)}
+                className={styles.lineupPosRemoveBtn}
+              >✕</button>
             ) : null}
           </div>
         ))}
       </div>
       {/* Bänk */}
-      <div style={{ background:'#fff', borderRadius:'1rem', boxShadow:'0 2px 8px #22c55e22', padding:'1rem', display:'flex', gap:'1rem', flexWrap:'wrap', justifyContent:'center' }}>
+      <div className={styles.lineupBench}>
         {bench.map(player => (
-          <div key={player.id} draggable onDragStart={() => handleDragStart(player)} style={{ background:'#222', color:'#fff', borderRadius:'0.7rem', padding:'0.5rem 1rem', fontWeight:700, cursor:'grab', minWidth:90 }}>{player.name} #{player.number}</div>
+          <div
+            key={player.id}
+            draggable
+            onDragStart={() => handleDragStart(player)}
+            className={styles.lineupBenchPlayer}
+          >
+            {player.name} #{player.number}
+          </div>
         ))}
       </div>
     </div>

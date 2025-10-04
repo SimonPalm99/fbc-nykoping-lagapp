@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import styles from "./OnboardingForm.module.css";
 
 import type { UserRole, IceContact } from "../../types/user";
 
@@ -52,33 +53,22 @@ const OnboardingForm: React.FC<Props> = ({ onSubmit }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      style={{
-        background: "#22272e",
-        borderRadius: 12,
-        maxWidth: 500,
-        margin: "16px auto",
-        padding: 18,
-        color: "#fff",
-        fontFamily: "inherit",
-        display: "flex",
-        flexDirection: "column",
-        gap: 14,
-      }}
+      className={styles["onboarding-form"]}
     >
-      <h2 style={{ color: "#b8f27c", fontSize: 20, margin: 0, textAlign: "center" }}>
+      <h2 className={styles["onboarding-title"]}>
         Skapa profil
       </h2>
-      <label>
+      <label className={styles["onboarding-label"]}>
         Namn
         <input
           name="name"
           value={form.name}
           onChange={handleChange}
           required
-          style={inputStyle}
+          className={styles["onboarding-input"]}
         />
       </label>
-      <label>
+      <label className={styles["onboarding-label"]}>
         E-post
         <input
           name="email"
@@ -86,10 +76,10 @@ const OnboardingForm: React.FC<Props> = ({ onSubmit }) => {
           onChange={handleChange}
           type="email"
           required
-          style={inputStyle}
+          className={styles["onboarding-input"]}
         />
       </label>
-      <label>
+      <label className={styles["onboarding-label"]}>
         Tröjnummer
         <input
           name="jerseyNumber"
@@ -97,42 +87,42 @@ const OnboardingForm: React.FC<Props> = ({ onSubmit }) => {
           onChange={handleChange}
           type="number"
           required
-          style={inputStyle}
+          className={styles["onboarding-input"]}
         />
       </label>
-      <label>
+      <label className={styles["onboarding-label"]}>
         Roll
         <select
           name="role"
           value={form.role}
           onChange={handleChange}
-          style={inputStyle}
+          className={styles["onboarding-select"]}
         >
           <option value="player">Spelare</option>
           <option value="leader">Ledare</option>
         </select>
       </label>
-      <label>
+      <label className={styles["onboarding-label"]}>
         ICE-kontakt Namn
         <input
           name="iceContact.name"
           value={form.iceContacts[0]?.name || ""}
           onChange={handleChange}
           required
-          style={inputStyle}
+          className={styles["onboarding-input"]}
         />
       </label>
-      <label>
+      <label className={styles["onboarding-label"]}>
         ICE-kontakt Relation
         <input
           name="iceContact.relation"
           value={form.iceContacts[0]?.relation || ""}
           onChange={handleChange}
           required
-          style={inputStyle}
+          className={styles["onboarding-input"]}
         />
       </label>
-      <label>
+      <label className={styles["onboarding-label"]}>
         ICE-kontakt Telefon
         <input
           name="iceContact.phone"
@@ -140,69 +130,31 @@ const OnboardingForm: React.FC<Props> = ({ onSubmit }) => {
           onChange={handleChange}
           type="tel"
           required
-          style={inputStyle}
+          className={styles["onboarding-input"]}
         />
       </label>
-      <label>
+      <label className={styles["onboarding-label"]}>
         Om mig
         <textarea
           name="about"
           value={form.about}
           onChange={handleChange}
           rows={2}
-          style={textareaStyle}
+          className={styles["onboarding-textarea"]}
           placeholder="Kort beskrivning om dig själv"
         />
       </label>
       <button
         type="submit"
-        style={{
-          background: "#4a9d2c",
-          color: "#fff",
-          border: "none",
-          borderRadius: 8,
-          padding: "10px 0",
-          fontSize: 18,
-          cursor: "pointer",
-          marginTop: 8,
-          fontWeight: 700,
-        }}
+        className={styles["onboarding-button"]}
       >
         Spara profil
       </button>
-      <style>{`
-        @media (max-width: 600px) {
-          form {
-            padding: 8px;
-            border-radius: 0;
-            max-width: 99vw;
-          }
-          h2 {
-            font-size: 16px;
-          }
-          button {
-            font-size: 15px;
-          }
-        }
-      `}</style>
+      {/* Responsivitet hanteras i CSS-modulen */}
     </form>
   );
 };
 
-const inputStyle: React.CSSProperties = {
-  width: "100%",
-  padding: 8,
-  borderRadius: 6,
-  border: "1px solid #b8f27c",
-  marginTop: 4,
-  fontSize: 16,
-  background: "#181c1e",
-  color: "#fff",
-};
 
-const textareaStyle: React.CSSProperties = {
-  ...inputStyle,
-  resize: "vertical",
-};
 
 export default OnboardingForm;

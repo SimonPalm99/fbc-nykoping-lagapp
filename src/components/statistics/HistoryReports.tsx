@@ -1,3 +1,5 @@
+
+import styles from './HistoryReports.module.css';
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useStatistics } from '../../context/StatisticsContext';
@@ -34,7 +36,6 @@ interface Award {
 const HistoryReports: React.FC = () => {
   const { user, isLeader } = useAuth();
   const { getPerformanceTrends } = useStatistics();
-  
   const [selectedTab, setSelectedTab] = useState<'reports' | 'trends' | 'milestones' | 'awards'>('reports');
   const [filters, setFilters] = useState<HistoryFilters>({
     timeframe: 'season',
@@ -43,13 +44,11 @@ const HistoryReports: React.FC = () => {
     formation: 'all',
     opponentFilter: 'all'
   });
-  
   const [milestones, setMilestones] = useState<Milestone[]>([]);
   const [awards, setAwards] = useState<Award[]>([]);
   const [reportData, setReportData] = useState<any>(null);
   const [isGeneratingReport, setIsGeneratingReport] = useState(false);
 
-  // Mock data för milstolpar
   useEffect(() => {
     setMilestones([
       {
@@ -82,21 +81,11 @@ const HistoryReports: React.FC = () => {
         id: "m4",
         playerId: "1",
         type: "games",
-        achievement: "100 matcher",
-        value: 100,
-        date: "2025-05-28"
-      },
-      {
-        id: "m5",
-        playerId: "4",
-        type: "special",
-        achievement: "Hat-trick",
-        value: 3,
-        date: "2025-06-18",
-        isRecent: true
+        achievement: "200 matcher",
+        value: 200,
+        date: "2025-06-05"
       }
     ]);
-
     setAwards([
       {
         id: "a1",
@@ -115,47 +104,9 @@ const HistoryReports: React.FC = () => {
         description: "4 poäng i 2 matcher",
         period: "Vecka 25",
         date: "2025-06-22"
-      },
-      {
-        id: "a3",
-        playerId: "3",
-        type: "best_goalkeeper",
-        title: "Bästa målvakt - Maj",
-        description: "94% räddningsprocent",
-        period: "Maj 2025", 
-        date: "2025-05-31"
       }
     ]);
   }, []);
-
-  const generateReport = async () => {
-    setIsGeneratingReport(true);
-    
-    // Simulera report generation
-    setTimeout(() => {
-      setReportData({
-        period: filters.timeframe,
-        totalMatches: 18,
-        totalGoals: 67,
-        totalAssists: 45,
-        topScorer: { name: "Anna Svensson", goals: 15 },
-        topAssister: { name: "Erik Nilsson", assists: 15 },
-        mvp: { name: "Anna Svensson", points: 27 },
-        bestRecord: "12 raka vinster (Feb-Apr)",
-        teamRecord: "3-0 vinst mot Hammarby",
-        playerRecords: [
-          { player: "Simon Andersson", record: "5 assists på en match" },
-          { player: "Lisa Johansson", record: "Hat-trick på 4:32" }
-        ]
-      });
-      setIsGeneratingReport(false);
-    }, 1500);
-  };
-
-  const exportToPDF = () => {
-    // Här skulle vi implementera PDF-export
-    alert('PDF-export kommer snart! 📄');
-  };
 
   const tabs = [
     { id: 'reports', name: 'Rapporter', icon: '📊' },
@@ -198,108 +149,70 @@ const HistoryReports: React.FC = () => {
     }
   };
 
+  const exportToPDF = () => {
+    alert('PDF-export kommer snart! 📄');
+  };
+
+  const generateReport = async () => {
+    setIsGeneratingReport(true);
+    setTimeout(() => {
+      setReportData({
+        totalMatches: 18,
+        totalGoals: 67,
+        totalAssists: 45,
+        topScorer: { name: "Anna Svensson", goals: 15 },
+        topAssister: { name: "Erik Nilsson", assists: 15 },
+        mvp: { name: "Anna Svensson", points: 27 },
+        bestRecord: "12 raka vinster (Feb-Apr)",
+        teamRecord: "3-0 vinst mot Hammarby",
+        playerRecords: [
+          { player: "Simon Andersson", record: "5 assists på en match" },
+          { player: "Lisa Johansson", record: "Hat-trick på 4:32" }
+        ]
+      });
+      setIsGeneratingReport(false);
+    }, 1500);
+  };
+
   return (
-    <div style={{
-      background: "#1a202c",
-      padding: "20px",
-      borderRadius: "12px",
-      color: "#fff"
-    }}>
+    <div className={styles.wrapper}>
       {/* Header */}
-      <div style={{
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        marginBottom: "20px"
-      }}>
+      <div className={styles.header}>
         <div>
-          <h2 style={{ margin: 0, fontSize: "24px", fontWeight: "700" }}>
-            📈 Historik & Avancerad Statistik
-          </h2>
-          <p style={{ margin: "4px 0 0 0", color: "#a0aec0" }}>
-            Omfattande rapporter, trender och prestationsanalys
-          </p>
+          <h2 className={styles.title}>📈 Historik & Avancerad Statistik</h2>
+          <p className={styles.subtitle}>Omfattande rapporter, trender och prestationsanalys</p>
         </div>
-        {isLeader() && (
-          <button
-            onClick={exportToPDF}
-            style={{
-              padding: "8px 16px",
-              background: "#10b981",
-              border: "none",
-              borderRadius: "6px",
-              color: "#fff",
-              cursor: "pointer",
-              fontWeight: "600"
-            }}
-          >
-            📄 Exportera PDF
-          </button>
+  {isLeader() && (
+          <button onClick={exportToPDF} className={styles.pdfBtn}>📄 Exportera PDF</button>
         )}
       </div>
-
       {/* Tabs */}
-      <div style={{
-        display: "flex",
-        gap: "8px",
-        marginBottom: "20px",
-        borderBottom: "1px solid #4a5568",
-        paddingBottom: "12px"
-      }}>
+      <div className={styles.tabs}>
         {tabs.map(tab => (
           <button
             key={tab.id}
             onClick={() => setSelectedTab(tab.id as any)}
-            style={{
-              padding: "8px 16px",
-              background: selectedTab === tab.id ? "#3b82f6" : "transparent",
-              border: "none",
-              borderRadius: "6px",
-              color: selectedTab === tab.id ? "#fff" : "#a0aec0",
-              cursor: "pointer",
-              fontWeight: "600",
-              display: "flex",
-              alignItems: "center",
-              gap: "6px"
-            }}
+            className={selectedTab === tab.id ? `${styles.tabBtn} ${styles.tabBtnActive}` : styles.tabBtn}
           >
             <span>{tab.icon}</span>
             {tab.name}
           </button>
         ))}
       </div>
-
       {/* Reports Tab */}
       {selectedTab === 'reports' && (
         <div>
           {/* Filters */}
-          <div style={{
-            background: "#2d3748",
-            padding: "16px",
-            borderRadius: "8px",
-            marginBottom: "20px"
-          }}>
-            <h3 style={{ margin: "0 0 12px 0" }}>🔍 Filtrera rapporter</h3>
-            <div style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-              gap: "12px"
-            }}>
+          <div className={styles.filters}>
+            <h3 className={styles.filtersTitle}>🔍 Filtrera rapporter</h3>
+            <div className={styles.filtersGrid}>
               <div>
-                <label style={{ display: "block", marginBottom: "4px", fontSize: "14px", color: "#a0aec0" }}>
-                  Tidsperiod
-                </label>
+                <label className={styles.label}>Tidsperiod</label>
                 <select
                   value={filters.timeframe}
                   onChange={(e) => setFilters({...filters, timeframe: e.target.value as any})}
-                  style={{
-                    width: "100%",
-                    padding: "8px",
-                    background: "#1a202c",
-                    border: "1px solid #4a5568",
-                    borderRadius: "4px",
-                    color: "#fff"
-                  }}
+                  className={styles.select}
+                  title="Välj tidsperiod"
                 >
                   <option value="season">Hela säsongen</option>
                   <option value="month">Senaste månaden</option>
@@ -307,22 +220,13 @@ const HistoryReports: React.FC = () => {
                   <option value="custom">Anpassad period</option>
                 </select>
               </div>
-
               <div>
-                <label style={{ display: "block", marginBottom: "4px", fontSize: "14px", color: "#a0aec0" }}>
-                  Kategori
-                </label>
+                <label className={styles.label}>Kategori</label>
                 <select
                   value={filters.category}
                   onChange={(e) => setFilters({...filters, category: e.target.value as any})}
-                  style={{
-                    width: "100%",
-                    padding: "8px",
-                    background: "#1a202c",
-                    border: "1px solid #4a5568",
-                    borderRadius: "4px",
-                    color: "#fff"
-                  }}
+                  className={styles.select}
+                  title="Välj kategori"
                 >
                   <option value="all">Alla kategorier</option>
                   <option value="goals">Mål</option>
@@ -331,22 +235,13 @@ const HistoryReports: React.FC = () => {
                   <option value="saves">Räddningar</option>
                 </select>
               </div>
-
               <div>
-                <label style={{ display: "block", marginBottom: "4px", fontSize: "14px", color: "#a0aec0" }}>
-                  Formation
-                </label>
+                <label className={styles.label}>Formation</label>
                 <select
                   value={filters.formation}
                   onChange={(e) => setFilters({...filters, formation: e.target.value as any})}
-                  style={{
-                    width: "100%",
-                    padding: "8px",
-                    background: "#1a202c",
-                    border: "1px solid #4a5568",
-                    borderRadius: "4px",
-                    color: "#fff"
-                  }}
+                  className={styles.select}
+                  title="Välj formation"
                 >
                   <option value="all">Alla formationer</option>
                   <option value="5v5">5v5</option>
@@ -355,95 +250,48 @@ const HistoryReports: React.FC = () => {
                 </select>
               </div>
             </div>
-
             <button
               onClick={generateReport}
               disabled={isGeneratingReport}
-              style={{
-                marginTop: "12px",
-                padding: "8px 16px",
-                background: isGeneratingReport ? "#4a5568" : "#3b82f6",
-                border: "none",
-                borderRadius: "6px",
-                color: "#fff",
-                cursor: isGeneratingReport ? "not-allowed" : "pointer",
-                fontWeight: "600"
-              }}
+              className={isGeneratingReport ? `${styles.generateBtn} ${styles.generateBtnDisabled}` : styles.generateBtn}
             >
               {isGeneratingReport ? "⏳ Genererar..." : "📊 Generera rapport"}
             </button>
           </div>
-
           {/* Report Results */}
           {reportData && (
-            <div style={{
-              background: "#2d3748",
-              padding: "20px",
-              borderRadius: "8px"
-            }}>
-              <h3 style={{ margin: "0 0 16px 0" }}>📋 Säsongsrapport 2024/25</h3>
-              
-              <div style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-                gap: "16px",
-                marginBottom: "20px"
-              }}>
-                <div style={{ background: "#1a202c", padding: "16px", borderRadius: "6px" }}>
-                  <div style={{ fontSize: "24px", fontWeight: "bold", color: "#10b981" }}>
-                    {reportData.totalMatches}
-                  </div>
-                  <div style={{ color: "#a0aec0" }}>Spelade matcher</div>
+            <div className={styles.report}>
+              <h3 className={styles.reportTitle}>📋 Säsongsrapport 2024/25</h3>
+              <div className={styles.reportGrid}>
+                <div className={styles.reportCard}>
+                  <div className={`${styles.reportCardNumber} ${styles.green}`}>{reportData.totalMatches}</div>
+                  <div className={styles.reportCardLabel}>Spelade matcher</div>
                 </div>
-                
-                <div style={{ background: "#1a202c", padding: "16px", borderRadius: "6px" }}>
-                  <div style={{ fontSize: "24px", fontWeight: "bold", color: "#3b82f6" }}>
-                    {reportData.totalGoals}
-                  </div>
-                  <div style={{ color: "#a0aec0" }}>Totalt mål</div>
+                <div className={styles.reportCard}>
+                  <div className={`${styles.reportCardNumber} ${styles.blue}`}>{reportData.totalGoals}</div>
+                  <div className={styles.reportCardLabel}>Totalt mål</div>
                 </div>
-                
-                <div style={{ background: "#1a202c", padding: "16px", borderRadius: "6px" }}>
-                  <div style={{ fontSize: "24px", fontWeight: "bold", color: "#f59e0b" }}>
-                    {reportData.totalAssists}
-                  </div>
-                  <div style={{ color: "#a0aec0" }}>Totalt assists</div>
+                <div className={styles.reportCard}>
+                  <div className={`${styles.reportCardNumber} ${styles.orange}`}>{reportData.totalAssists}</div>
+                  <div className={styles.reportCardLabel}>Totalt assists</div>
                 </div>
               </div>
-
-              <div style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-                gap: "16px"
-              }}>
-                <div style={{ background: "#1a202c", padding: "16px", borderRadius: "6px" }}>
-                  <h4 style={{ margin: "0 0 12px 0", color: "#10b981" }}>🥇 Topprestationer</h4>
-                  <div style={{ fontSize: "14px" }}>
-                    <div style={{ marginBottom: "8px" }}>
-                      <strong>Skyttekung:</strong> {reportData.topScorer.name} ({reportData.topScorer.goals} mål)
-                    </div>
-                    <div style={{ marginBottom: "8px" }}>
-                      <strong>Flest assists:</strong> {reportData.topAssister.name} ({reportData.topAssister.assists} assist)
-                    </div>
-                    <div>
-                      <strong>MVP:</strong> {reportData.mvp.name} ({reportData.mvp.points} poäng)
-                    </div>
+              <div className={styles.topGrid}>
+                <div className={styles.topCard}>
+                  <h4 className={styles.topTitle}>🥇 Topprestationer</h4>
+                  <div className={styles.topText}>
+                    <div className={styles.topTextItem}><strong>Skyttekung:</strong> {reportData.topScorer.name} ({reportData.topScorer.goals} mål)</div>
+                    <div className={styles.topTextItem}><strong>Flest assists:</strong> {reportData.topAssister.name} ({reportData.topAssister.assists} assist)</div>
+                    <div><strong>MVP:</strong> {reportData.mvp.name} ({reportData.mvp.points} poäng)</div>
                   </div>
                 </div>
-
-                <div style={{ background: "#1a202c", padding: "16px", borderRadius: "6px" }}>
-                  <h4 style={{ margin: "0 0 12px 0", color: "#f59e0b" }}>📊 Rekord & Milstolpar</h4>
-                  <div style={{ fontSize: "14px" }}>
-                    <div style={{ marginBottom: "8px" }}>
-                      <strong>Bästa serie:</strong> {reportData.bestRecord}
-                    </div>
-                    <div style={{ marginBottom: "8px" }}>
-                      <strong>Största vinst:</strong> {reportData.teamRecord}
-                    </div>
+                <div className={styles.topCard}>
+                  <h4 className={styles.topTitle}>📊 Rekord & Milstolpar</h4>
+                  <div className={styles.topText}>
+                    <div className={styles.topTextItem}><strong>Bästa serie:</strong> {reportData.bestRecord}</div>
+                    <div className={styles.topTextItem}><strong>Största vinst:</strong> {reportData.teamRecord}</div>
                     {reportData.playerRecords.map((record: any, index: number) => (
-                      <div key={index} style={{ marginBottom: "8px" }}>
-                        <strong>{record.player}:</strong> {record.record}
-                      </div>
+                      <div key={index} className={styles.topTextItem}><strong>{record.player}:</strong> {record.record}</div>
                     ))}
                   </div>
                 </div>
@@ -452,272 +300,111 @@ const HistoryReports: React.FC = () => {
           )}
         </div>
       )}
-
       {/* Trends Tab */}
       {selectedTab === 'trends' && (
         <div>
-          <h3 style={{ margin: "0 0 16px 0" }}>📈 Prestationstrender</h3>
-          
+          <h3 className={styles.trendTitle}>📈 Prestationstrender</h3>
           {user && (
-            <div style={{
-              background: "#2d3748",
-              padding: "16px",
-              borderRadius: "8px",
-              marginBottom: "16px"
-            }}>
-              <h4 style={{ margin: "0 0 12px 0" }}>Din personliga trend</h4>
+            <div className={styles.trendSection}>
+              <h4 className={styles.trendSectionTitle}>Din personliga trend</h4>
               {(() => {
                 const trends = getPerformanceTrends(user.id);
                 return (
-                  <div style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
-                    gap: "12px"
-                  }}>
-                    <div style={{ textAlign: "center" }}>
-                      <div style={{ fontSize: "20px", fontWeight: "bold", color: "#3b82f6" }}>
-                        {trends.seasonAverage.toFixed(1)}
-                      </div>
-                      <div style={{ fontSize: "12px", color: "#a0aec0" }}>Snitt/match</div>
+                  <div className={styles.trendGrid}>
+                    <div className={styles.trendItem}>
+                      <div className={`${styles.trendValue} ${styles.trendBlue}`}>{trends.seasonAverage.toFixed(1)}</div>
+                      <div className={styles.trendLabel}>Snitt/match</div>
                     </div>
-                    <div style={{ textAlign: "center" }}>
-                      <div style={{ fontSize: "20px", fontWeight: "bold", color: "#10b981" }}>
-                        {trends.bestGame}
-                      </div>
-                      <div style={{ fontSize: "12px", color: "#a0aec0" }}>Bästa match</div>
+                    <div className={styles.trendItem}>
+                      <div className={`${styles.trendValue} ${styles.trendGreen}`}>{trends.bestGame}</div>
+                      <div className={styles.trendLabel}>Bästa match</div>
                     </div>
-                    <div style={{ textAlign: "center" }}>
-                      <div style={{ fontSize: "20px", fontWeight: "bold", color: "#f59e0b" }}>
-                        {trends.consistency.toFixed(0)}%
-                      </div>
-                      <div style={{ fontSize: "12px", color: "#a0aec0" }}>Konsistens</div>
+                    <div className={styles.trendItem}>
+                      <div className={`${styles.trendValue} ${styles.trendOrange}`}>{trends.consistency.toFixed(0)}%</div>
+                      <div className={styles.trendLabel}>Konsistens</div>
                     </div>
-                    <div style={{ textAlign: "center" }}>
-                      <div style={{ 
-                        fontSize: "20px", 
-                        fontWeight: "bold", 
-                        color: trends.improvement > 0 ? "#10b981" : "#ef4444" 
-                      }}>
-                        {trends.improvement > 0 ? "+" : ""}{trends.improvement.toFixed(1)}%
-                      </div>
-                      <div style={{ fontSize: "12px", color: "#a0aec0" }}>Förbättring</div>
+                    <div className={styles.trendItem}>
+                      <div className={`${styles.trendValue} ${trends.improvement > 0 ? styles.trendGreen : styles.trendRed}`}>{trends.improvement > 0 ? "+" : ""}{trends.improvement.toFixed(1)}%</div>
+                      <div className={styles.trendLabel}>Förbättring</div>
                     </div>
                   </div>
                 );
               })()}
             </div>
           )}
-
-          <div style={{
-            background: "#2d3748",
-            padding: "16px",
-            borderRadius: "8px"
-          }}>
-            <h4 style={{ margin: "0 0 12px 0" }}>🏆 Lagstatistik-trender</h4>
-            <div style={{ color: "#a0aec0" }}>
-              Här kommer detaljerade trendanalyser för laget över tid...
-            </div>
+          <div className={styles.trendTeamSection}>
+            <h4 className={styles.trendTeamTitle}>🏆 Lagstatistik-trender</h4>
+            <div className={styles.trendTeamText}>Här kommer detaljerade trendanalyser för laget över tid...</div>
           </div>
         </div>
       )}
-
       {/* Milestones Tab */}
       {selectedTab === 'milestones' && (
         <div>
-          <h3 style={{ margin: "0 0 16px 0" }}>🏆 Milstolpar & Rekord</h3>
-          
+          <h3 className={styles.milestoneTitle}>🏆 Milstolpar & Rekord</h3>
           {/* Recent Milestones */}
-          <div style={{
-            background: "#2d3748", 
-            padding: "16px", 
-            borderRadius: "8px",
-            marginBottom: "16px"
-          }}>
-            <h4 style={{ margin: "0 0 12px 0", color: "#10b981" }}>🎉 Senaste milstolpar</h4>
-            {milestones
-              .filter(m => m.isRecent)
-              .map(milestone => (
-                <div 
-                  key={milestone.id}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "12px",
-                    padding: "12px",
-                    background: "#1a202c",
-                    borderRadius: "6px",
-                    marginBottom: "8px",
-                    border: "2px solid #10b981"
-                  }}
-                >
-                  <span style={{ fontSize: "24px" }}>
-                    {getMilestoneIcon(milestone.type)}
-                  </span>
-                  <div style={{ flex: 1 }}>
-                    <div style={{ fontWeight: "600" }}>
-                      {getPlayerName(milestone.playerId)} - {milestone.achievement}
-                    </div>
-                    <div style={{ fontSize: "12px", color: "#a0aec0" }}>
-                      {new Date(milestone.date).toLocaleDateString('sv-SE')}
-                    </div>
-                  </div>
-                  <div style={{
-                    background: "#10b981",
-                    color: "#fff",
-                    padding: "4px 8px",
-                    borderRadius: "4px",
-                    fontSize: "12px",
-                    fontWeight: "600"
-                  }}>
-                    NYT!
-                  </div>
+          <div className={styles.milestoneRecent}>
+            <h4 className={styles.milestoneRecentTitle}>🎉 Senaste milstolpar</h4>
+            {milestones.filter(m => m.isRecent).map(milestone => (
+              <div key={milestone.id} className={styles.milestoneItem}>
+                <span className={styles.milestoneIcon}>{getMilestoneIcon(milestone.type)}</span>
+                <div className={styles.milestoneFlex}>
+                  <div className={styles.milestonePlayer}>{getPlayerName(milestone.playerId)} - {milestone.achievement}</div>
+                  <div className={styles.milestoneDate}>{new Date(milestone.date).toLocaleDateString('sv-SE')}</div>
                 </div>
-              ))}
+                <div className={styles.milestoneNew}>NYT!</div>
+              </div>
+            ))}
           </div>
-
           {/* All Milestones */}
-          <div style={{
-            background: "#2d3748",
-            padding: "16px", 
-            borderRadius: "8px"
-          }}>
-            <h4 style={{ margin: "0 0 12px 0" }}>📊 Alla milstolpar</h4>
+          <div className={styles.milestoneAll}>
+            <h4 className={styles.milestoneAllTitle}>📊 Alla milstolpar</h4>
             {milestones.map(milestone => (
-              <div 
-                key={milestone.id}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "12px",
-                  padding: "12px",
-                  background: "#1a202c",
-                  borderRadius: "6px",
-                  marginBottom: "8px"
-                }}
-              >
-                <span style={{ fontSize: "20px" }}>
-                  {getMilestoneIcon(milestone.type)}
-                </span>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontWeight: "600" }}>
-                    {getPlayerName(milestone.playerId)} - {milestone.achievement}
-                  </div>
-                  <div style={{ fontSize: "12px", color: "#a0aec0" }}>
-                    {new Date(milestone.date).toLocaleDateString('sv-SE')}
-                  </div>
+              <div key={milestone.id} className={styles.milestoneItem}>
+                <span className={styles.milestoneIcon}>{getMilestoneIcon(milestone.type)}</span>
+                <div className={styles.milestoneFlex}>
+                  <div className={styles.milestonePlayer}>{getPlayerName(milestone.playerId)} - {milestone.achievement}</div>
+                  <div className={styles.milestoneDate}>{new Date(milestone.date).toLocaleDateString('sv-SE')}</div>
                 </div>
-                <div style={{ fontSize: "14px", fontWeight: "600", color: "#3b82f6" }}>
-                  {milestone.value}
-                </div>
+                <div className={styles.milestoneValue}>{milestone.value}</div>
               </div>
             ))}
           </div>
         </div>
       )}
-
       {/* Awards Tab */}
       {selectedTab === 'awards' && (
         <div>
-          <h3 style={{ margin: "0 0 16px 0" }}>🥇 Utmärkelser & MVP</h3>
-          
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-            gap: "16px"
-          }}>
+          <h3 className={styles.awardMainTitle}>🥇 Utmärkelser & MVP</h3>
+          <div className={styles.awardsGrid}>
             {awards.map(award => (
-              <div 
-                key={award.id}
-                style={{
-                  background: "#2d3748",
-                  padding: "16px",
-                  borderRadius: "8px",
-                  border: award.type.includes('mvp') ? "2px solid #f59e0b" : "1px solid #4a5568"
-                }}
-              >
-                <div style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "8px",
-                  marginBottom: "8px"
-                }}>
-                  <span style={{ fontSize: "24px" }}>
-                    {getAwardIcon(award.type)}
-                  </span>
-                  <div style={{ fontWeight: "600", color: "#f59e0b" }}>
-                    {award.title}
-                  </div>
+              <div key={award.id} className={award.type.includes('mvp') ? `${styles.awardCard} ${styles.awardCardMvp}` : styles.awardCard}>
+                <div className={styles.awardHeader}>
+                  <span className={styles.awardIcon}>{getAwardIcon(award.type)}</span>
+                  <div className={styles.awardTitle}>{award.title}</div>
                 </div>
-                
-                <div style={{ marginBottom: "8px" }}>
-                  <strong>{getPlayerName(award.playerId)}</strong>
-                </div>
-                
-                <div style={{ 
-                  fontSize: "14px", 
-                  color: "#a0aec0",
-                  marginBottom: "8px"
-                }}>
-                  {award.description}
-                </div>
-                
-                <div style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  fontSize: "12px",
-                  color: "#718096"
-                }}>
+                <div className={styles.awardPlayer}><strong>{getPlayerName(award.playerId)}</strong></div>
+                <div className={styles.awardDesc}>{award.description}</div>
+                <div className={styles.awardFooter}>
                   <span>{award.period}</span>
                   <span>{new Date(award.date).toLocaleDateString('sv-SE')}</span>
                 </div>
               </div>
             ))}
           </div>
-
           {/* MVP Voting Section */}
           {isLeader() && (
-            <div style={{
-              background: "#2d3748",
-              padding: "16px",
-              borderRadius: "8px",
-              marginTop: "20px"
-            }}>
-              <h4 style={{ margin: "0 0 12px 0" }}>👑 Nominera veckans spelare</h4>
-              <div style={{
-                display: "flex",
-                gap: "12px",
-                alignItems: "center"
-              }}>
-                <select
-                  style={{
-                    flex: 1,
-                    padding: "8px",
-                    background: "#1a202c",
-                    border: "1px solid #4a5568",
-                    borderRadius: "4px",
-                    color: "#fff"
-                  }}
-                >
+            <div className={styles.mvpSection}>
+              <h4 className={styles.mvpTitle}>👑 Nominera veckans spelare</h4>
+              <div className={styles.mvpRow}>
+                <select className={styles.mvpSelect} title="Välj spelare att nominera">
                   <option value="">Välj spelare...</option>
                   <option value="1">Simon Andersson</option>
                   <option value="2">Anna Svensson</option>
                   <option value="3">Mikael Berg</option>
                   <option value="4">Lisa Johansson</option>
                 </select>
-                <button
-                  style={{
-                    padding: "8px 16px",
-                    background: "#f59e0b",
-                    border: "none",
-                    borderRadius: "6px",
-                    color: "#fff",
-                    cursor: "pointer",
-                    fontWeight: "600"
-                  }}
-                >
-                  Nominera
-                </button>
+                <button className={styles.mvpBtn}>Nominera</button>
               </div>
             </div>
           )}
@@ -725,6 +412,5 @@ const HistoryReports: React.FC = () => {
       )}
     </div>
   );
-};
-
+}
 export default HistoryReports;

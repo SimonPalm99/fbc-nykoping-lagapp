@@ -1,0 +1,73 @@
+/* FBC Settings Theme & Responsivitet */
+.root {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #101a10 60%, #22c55e 100%);
+  padding: 2rem 0;
+  font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+}
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+.heading {
+  color: #22c55e;
+  font-weight: 900;
+  font-size: 2.2rem;
+  letter-spacing: 2px;
+  text-shadow: 0 2px 12px #000;
+}
+.section {
+  background: rgba(255,255,255,0.08);
+  border-radius: 24px;
+  box-shadow: 0 2px 16px #22c55e33;
+  padding: 2rem;
+  margin-bottom: 32px;
+}
+.label {
+  font-weight: 700;
+  color: #22c55e;
+  margin-bottom: 6px;
+  font-size: 1.08rem;
+}
+.input {
+  width: 100%;
+  min-height: 32px;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: #101a10;
+  color: #22c55e;
+  border: 2px solid #22c55e;
+  box-shadow: 0 2px 8px #22c55e22;
+  outline: none;
+  font-family: inherit;
+  margin-bottom: 12px;
+}
+.select {
+  width: 100%;
+  min-height: 32px;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: #101a10;
+  color: #22c55e;
+  border: 2px solid #22c55e;
+  box-shadow: 0 2px 8px #22c55e22;
+  outline: none;
+  font-family: inherit;
+  margin-bottom: 12px;
+}
+.button {
+  background: #22c55e;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 12px;
+  padding: 0.7rem 2rem;
+  cursor: pointer;
+  box-shadow: 0 2px 8px #22c55e55;
+  margin-bottom: 12px;
+}

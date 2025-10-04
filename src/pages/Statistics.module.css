@@ -1,0 +1,203 @@
+.statCard[data-border="#2E7D32"] { border: 1.5px solid #2E7D32; }
+.statCard[data-border="#4CAF50"] { border: 1.5px solid #4CAF50; }
+.statCard[data-border="#FFB300"] { border: 1.5px solid #FFB300; }
+.statCard[data-border="#e53935"] { border: 1.5px solid #e53935; }
+.statCard[data-border="#222"] { border: 1.5px solid #222; }
+.footerCopyright {
+  text-align: center;
+}
+
+/* StatCard dynamic color support */
+.statIcon[data-color="#2E7D32"] { color: #2E7D32; }
+.statIcon[data-color="#4CAF50"] { color: #4CAF50; }
+.statIcon[data-color="#FFB300"] { color: #FFB300; }
+.statIcon[data-color="#e53935"] { color: #e53935; }
+.statIcon[data-color="#222"] { color: #222; }
+.statLabel[data-color="#2E7D32"] { color: #2E7D32; }
+.statLabel[data-color="#4CAF50"] { color: #4CAF50; }
+.statLabel[data-color="#FFB300"] { color: #FFB300; }
+.statLabel[data-color="#e53935"] { color: #e53935; }
+.statLabel[data-color="#222"] { color: #222; }
+/* FBC Statistics Theme (Dark Only) */
+.root {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0A0A0A 0%, #0D1B0D 30%, #1B2E1B 100%);
+  color: #F1F8E9;
+  font-family: inherit;
+  padding: 1.2rem 0;
+  position: relative;
+  overflow: hidden;
+}
+.gradientTop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 180px;
+  background: linear-gradient(135deg, #22c55e 0%, #0a0a0a 100%);
+  opacity: 0.18;
+  z-index: 0;
+  pointer-events: none;
+}
+.header {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0.3rem 0.5rem 0.2rem 0.5rem;
+  border-bottom: 2px solid #2E7D32;
+  background: linear-gradient(120deg, #2E7D32 0%, #388E3C 100%);
+  border-radius: 0 0 1rem 1rem;
+  box-shadow: 0 2px 8px rgba(46, 125, 50, 0.10);
+  position: relative;
+  overflow: hidden;
+  min-height: 56px;
+}
+.headerTitle {
+  width: 100%;
+  text-align: center;
+  font-weight: 900;
+  font-size: 1.35rem;
+  color: #fff;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 8px #2E7D32, 0 0px 2px #000;
+  margin-bottom: 0.3rem;
+  z-index: 2;
+}
+.headerSubtitle {
+  width: 100%;
+  text-align: center;
+  color: #C8E6C9;
+  font-size: 1.05rem;
+  margin-bottom: 0.2rem;
+}
+.tabs {
+  max-width: 900px;
+  margin: 2rem auto 1.5rem auto;
+  display: flex;
+  justify-content: center;
+  gap: 1.2rem;
+}
+.tabBtn {
+  font-weight: 700;
+  font-size: 1.08rem;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 12px rgba(46,125,50,0.10);
+  padding: 0.7rem 1.2rem;
+  border: 2px solid #C8E6C9;
+  color: #C8E6C9;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.tabBtnActive {
+  border: 2px solid #2E7D32;
+  color: #2E7D32;
+}
+.section {
+  max-width: 900px;
+  margin: 0 auto 2rem auto;
+  padding: 0 1rem;
+}
+.statCards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+}
+.statCard {
+  background: #181f18;
+  border-radius: 1rem;
+  box-shadow: 0 2px 8px rgba(46,125,50,0.07);
+  padding: 1.2rem 1.5rem;
+  min-width: 160px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+.statIcon {
+  font-size: 2.1rem;
+  margin-bottom: 0.2rem;
+  color: #2E7D32;
+}
+.statLabel {
+  font-weight: 700;
+  color: #2E7D32;
+  font-size: 1.13rem;
+  margin-bottom: 0.2rem;
+  letter-spacing: 0.5px;
+}
+.statValue {
+  font-size: 1.45rem;
+  font-weight: 900;
+  color: #222;
+}
+.topScorers {
+  width: 100%;
+  margin-top: 2rem;
+}
+.topScorersTitle {
+  font-weight: 700;
+  font-size: 1.13rem;
+  color: #2E7D32;
+  margin-bottom: 0.7rem;
+}
+.topScorersList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+.topScorerCard {
+  background: #232d23;
+  border-radius: 0.8rem;
+  box-shadow: 0 2px 8px rgba(46,125,50,0.07);
+  padding: 0.7rem 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.topScorerRank {
+  font-weight: 700;
+  color: #2E7D32;
+  font-size: 1.05rem;
+  min-width: 32px;
+}
+.topScorerName {
+  font-weight: 700;
+  color: #F1F8E9;
+  font-size: 1.05rem;
+}
+.topScorerGoals {
+  font-weight: 700;
+  color: #FFB300;
+  font-size: 1.05rem;
+}
+.footer {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem;
+  border-top: 2px solid #2E7D32;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+}
+.footerLinks {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+.footerLink {
+  color: #C8E6C9;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.footerLink:hover {
+  color: #FFB300;
+}

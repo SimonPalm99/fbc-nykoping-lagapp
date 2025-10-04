@@ -238,69 +238,35 @@ const PDFReportGenerator: React.FC = () => {
   const selectedTemplate = templates.find(t => t.id === currentRequest.templateId);
 
   return (
-    <div style={{
-      background: "#1a202c",
-      padding: "20px",
-      borderRadius: "12px",
-      color: "#fff"
-    }}>
+    <div className="root">
       {/* Header */}
-      <div style={{ marginBottom: "20px" }}>
-        <h2 style={{ margin: 0, fontSize: "24px", fontWeight: "700" }}>
+      <div className="header">
+        <h2 className="headerTitle">
           📄 PDF Rapportgenerator
         </h2>
-        <p style={{ margin: "4px 0 0 0", color: "#a0aec0" }}>
+        <p className="headerSubtitle">
           Skapa professionella rapporter för spelare, lag och matcher
         </p>
       </div>
-
       {/* Tabs */}
-      <div style={{
-        display: "flex",
-        gap: "8px",
-        marginBottom: "20px",
-        borderBottom: "1px solid #4a5568",
-        paddingBottom: "12px"
-      }}>
+      <div className="tabs">
         {tabs.map(tab => (
           <button
             key={tab.id}
             onClick={() => setSelectedTab(tab.id as any)}
-            style={{
-              padding: "8px 16px",
-              background: selectedTab === tab.id ? "#3b82f6" : "transparent",
-              border: "none",
-              borderRadius: "6px",
-              color: selectedTab === tab.id ? "#fff" : "#a0aec0",
-              cursor: "pointer",
-              fontWeight: "600",
-              display: "flex",
-              alignItems: "center",
-              gap: "6px"
-            }}
+            className={`tabButton${selectedTab === tab.id ? ' tabButtonActive' : ''}`}
           >
             <span>{tab.icon}</span>
             {tab.name}
           </button>
         ))}
       </div>
-
-      {/* Generate Report Tab */}
+      {/* Tab Content */}
       {selectedTab === 'generate' && (
         <div>
-          {/* Template Selection */}
-          <div style={{
-            background: "#2d3748",
-            padding: "16px",
-            borderRadius: "8px",
-            marginBottom: "20px"
-          }}>
-            <h3 style={{ margin: "0 0 12px 0" }}>1. Välj Rapportmall</h3>
-            <div style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-              gap: "12px"
-            }}>
+          <div className="configCard">
+            <h3 className="headerTitle sectionTitle">1. Välj Rapportmall</h3>
+            <div className="templateGrid">
               {templates.map(template => (
                 <button
                   key={template.id}
@@ -309,58 +275,29 @@ const PDFReportGenerator: React.FC = () => {
                     templateId: template.id,
                     includeSections: template.sections 
                   }))}
-                  style={{
-                    padding: "16px",
-                    background: currentRequest.templateId === template.id ? "#3b82f6" : "#1a202c",
-                    border: currentRequest.templateId === template.id ? "2px solid #60a5fa" : "1px solid #4a5568",
-                    borderRadius: "8px",
-                    color: "#fff",
-                    cursor: "pointer",
-                    textAlign: "left"
-                  }}
+                  className={`templateButton${currentRequest.templateId === template.id ? ' templateButtonActive' : ''}`}
                 >
-                  <div style={{ fontWeight: "600", marginBottom: "4px" }}>
+                  <div className="templateName">
                     {template.name}
                   </div>
-                  <div style={{ fontSize: "12px", color: "#a0aec0", lineHeight: "1.4" }}>
+                  <div className="templateDesc">
                     {template.description}
                   </div>
                 </button>
               ))}
             </div>
           </div>
-
-          {/* Configuration */}
           {selectedTemplate && (
-            <div style={{
-              background: "#2d3748",
-              padding: "16px",
-              borderRadius: "8px",
-              marginBottom: "20px"
-            }}>
-              <h3 style={{ margin: "0 0 12px 0" }}>2. Konfigurera Rapport</h3>
-              
-              <div style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-                gap: "16px",
-                marginBottom: "16px"
-              }}>
+            <div className="configCard">
+              <h3 className="headerTitle sectionTitle">2. Konfigurera Rapport</h3>
+              <div className="configGrid">
                 <div>
-                  <label style={{ display: "block", marginBottom: "4px", fontSize: "14px", color: "#a0aec0" }}>
-                    Tidsperiod
-                  </label>
+                  <label className="label">Tidsperiod</label>
                   <select
                     value={currentRequest.period}
                     onChange={(e) => setCurrentRequest(prev => ({ ...prev, period: e.target.value }))}
-                    style={{
-                      width: "100%",
-                      padding: "8px",
-                      background: "#1a202c",
-                      border: "1px solid #4a5568",
-                      borderRadius: "4px",
-                      color: "#fff"
-                    }}
+                    className="select"
+                    aria-label="Välj tidsperiod"
                   >
                     <option value="season">Hela säsongen</option>
                     <option value="month">Senaste månaden</option>
@@ -369,23 +306,14 @@ const PDFReportGenerator: React.FC = () => {
                     <option value="custom">Anpassad period</option>
                   </select>
                 </div>
-
                 {selectedTemplate.id === 'player_personal' && (
                   <div>
-                    <label style={{ display: "block", marginBottom: "4px", fontSize: "14px", color: "#a0aec0" }}>
-                      Spelare
-                    </label>
+                    <label className="label">Spelare</label>
                     <select
                       value={currentRequest.playerId || ''}
                       onChange={(e) => setCurrentRequest(prev => ({ ...prev, playerId: e.target.value }))}
-                      style={{
-                        width: "100%",
-                        padding: "8px",
-                        background: "#1a202c",
-                        border: "1px solid #4a5568",
-                        borderRadius: "4px",
-                        color: "#fff"
-                      }}
+                      className="select"
+                      aria-label="Välj spelare"
                     >
                       <option value="">Välj spelare...</option>
                       <option value="1">Simon Andersson</option>
@@ -395,22 +323,13 @@ const PDFReportGenerator: React.FC = () => {
                     </select>
                   </div>
                 )}
-
                 <div>
-                  <label style={{ display: "block", marginBottom: "4px", fontSize: "14px", color: "#a0aec0" }}>
-                    Format
-                  </label>
+                  <label className="label">Format</label>
                   <select
                     value={currentRequest.format}
                     onChange={(e) => setCurrentRequest(prev => ({ ...prev, format: e.target.value as any }))}
-                    style={{
-                      width: "100%",
-                      padding: "8px",
-                      background: "#1a202c",
-                      border: "1px solid #4a5568",
-                      borderRadius: "4px",
-                      color: "#fff"
-                    }}
+                    className="select"
+                    aria-label="Välj format"
                   >
                     <option value="pdf">PDF</option>
                     <option value="excel">Excel</option>
@@ -418,203 +337,99 @@ const PDFReportGenerator: React.FC = () => {
                   </select>
                 </div>
               </div>
-
               <div>
-                <label style={{ display: "block", marginBottom: "8px", fontSize: "14px", color: "#a0aec0" }}>
-                  Anpassad titel (valfritt)
-                </label>
+                <label className="label labelMargin">Anpassad titel (valfritt)</label>
                 <input
                   type="text"
                   value={currentRequest.customTitle || ''}
                   onChange={(e) => setCurrentRequest(prev => ({ ...prev, customTitle: e.target.value }))}
                   placeholder={`${selectedTemplate.name} - ${new Date().toLocaleDateString('sv-SE')}`}
-                  style={{
-                    width: "100%",
-                    padding: "8px",
-                    background: "#1a202c",
-                    border: "1px solid #4a5568",
-                    borderRadius: "4px",
-                    color: "#fff"
-                  }}
+                  className="input"
                 />
               </div>
             </div>
           )}
-
-          {/* Sections Selection */}
           {selectedTemplate?.canCustomize && (
-            <div style={{
-              background: "#2d3748",
-              padding: "16px",
-              borderRadius: "8px",
-              marginBottom: "20px"
-            }}>
-              <h3 style={{ margin: "0 0 12px 0" }}>3. Välj Sektioner</h3>
-              <div style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-                gap: "8px"
-              }}>
+            <div className="sectionsCard">
+              <h3 className="headerTitle sectionTitle">3. Välj Sektioner</h3>
+              <div className="sectionsGrid">
                 {selectedTemplate.sections.map(section => (
                   <label
                     key={section}
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "8px",
-                      padding: "8px",
-                      background: "#1a202c",
-                      borderRadius: "4px",
-                      cursor: "pointer"
-                    }}
+                    className="sectionLabel"
                   >
                     <input
                       type="checkbox"
                       checked={currentRequest.includeSections.includes(section)}
                       onChange={() => toggleSection(section)}
-                      style={{ margin: 0 }}
+                      className="sectionCheckbox"
                     />
-                    <span style={{ fontSize: "14px" }}>{section}</span>
+                    <span className="sectionText">{section}</span>
                   </label>
                 ))}
               </div>
             </div>
           )}
-
-          {/* Generate Button */}
-          <div style={{ textAlign: "center" }}>
+          <div className="generateBtnContainer">
             <button
               onClick={generateReport}
               disabled={isGenerating || !selectedTemplate}
-              style={{
-                padding: "12px 24px",
-                background: isGenerating ? "#4a5568" : "#10b981",
-                border: "none",
-                borderRadius: "8px",
-                color: "#fff",
-                cursor: isGenerating ? "not-allowed" : "pointer",
-                fontWeight: "600",
-                fontSize: "16px"
-              }}
+              className={`generateBtn${isGenerating ? ' generateBtnDisabled' : ''}`}
             >
               {isGenerating ? `⏳ Genererar... ${generationProgress}%` : "🚀 Generera Rapport"}
             </button>
           </div>
-
-          {/* Progress Bar */}
           {isGenerating && (
-            <div style={{ marginTop: "16px" }}>
-              <div style={{
-                background: "#4a5568",
-                borderRadius: "4px",
-                height: "8px",
-                overflow: "hidden"
-              }}>
-                <div style={{
-                  background: "#10b981",
-                  height: "100%",
-                  width: `${generationProgress}%`,
-                  transition: "width 0.3s ease"
-                }} />
+            <div className="progressBarWrapper">
+              <div className="progressBar">
+                <div className={`progressBarFill progress-${generationProgress}`} />
               </div>
             </div>
           )}
         </div>
       )}
-
-      {/* Report History Tab */}
       {selectedTab === 'history' && (
         <div>
-          <h3 style={{ margin: "0 0 16px 0" }}>📁 Tidigare Rapporter</h3>
-          
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))",
-            gap: "16px"
-          }}>
+          <h3 className="historyTitle">📁 Tidigare Rapporter</h3>
+          <div className="historyGrid">
             {reportHistory.map(report => (
               <div 
                 key={report.id}
-                style={{
-                  background: "#2d3748",
-                  padding: "16px",
-                  borderRadius: "8px",
-                  border: report.isRecent ? "2px solid #10b981" : "1px solid #4a5568"
-                }}
+                className={`reportCard${report.isRecent ? ' reportCardRecent' : ''}`}
               >
-                <div style={{
-                  display: "flex",
-                  alignItems: "flex-start",
-                  gap: "12px",
-                  marginBottom: "12px"
-                }}>
-                  <span style={{ fontSize: "24px" }}>
+                <div className="reportCardHeader">
+                  <span className="reportIcon">
                     {getReportIcon(report.type)}
                   </span>
-                  <div style={{ flex: 1 }}>
-                    <h4 style={{ margin: "0 0 4px 0", fontWeight: "600" }}>
+                  <div className="reportCardInfo">
+                    <h4 className="reportCardTitle">
                       {report.title}
                     </h4>
-                    <p style={{ margin: "0 0 8px 0", fontSize: "12px", color: "#a0aec0" }}>
+                    <p className="reportCardDesc">
                       {report.description}
                     </p>
-                    <div style={{
-                      display: "flex",
-                      gap: "12px",
-                      fontSize: "11px",
-                      color: "#718096"
-                    }}>
+                    <div className="reportCardMeta">
                       <span>📅 {new Date(report.generatedDate).toLocaleDateString('sv-SE')}</span>
                       <span>📄 {report.pages} sidor</span>
                       <span>💾 {report.fileSize}</span>
                     </div>
                   </div>
                   {report.isRecent && (
-                    <div style={{
-                      background: "#10b981",
-                      color: "#fff",
-                      padding: "2px 6px",
-                      borderRadius: "4px",
-                      fontSize: "10px",
-                      fontWeight: "600"
-                    }}>
+                    <div className="reportCardNew">
                       NY
                     </div>
                   )}
                 </div>
-
-                <div style={{
-                  display: "flex",
-                  gap: "8px"
-                }}>
+                <div className="reportCardActions">
                   <button
                     onClick={() => downloadReport(report.id)}
-                    style={{
-                      flex: 1,
-                      padding: "6px 12px",
-                      background: "#3b82f6",
-                      border: "none",
-                      borderRadius: "4px",
-                      color: "#fff",
-                      cursor: "pointer",
-                      fontSize: "12px",
-                      fontWeight: "600"
-                    }}
+                    className="downloadBtn"
                   >
                     📥 Ladda ner
                   </button>
                   <button
                     onClick={() => deleteReport(report.id)}
-                    style={{
-                      padding: "6px 12px",
-                      background: "#ef4444",
-                      border: "none",
-                      borderRadius: "4px",
-                      color: "#fff",
-                      cursor: "pointer",
-                      fontSize: "12px",
-                      fontWeight: "600"
-                    }}
+                    className="deleteBtn"
                   >
                     🗑️
                   </button>
@@ -624,73 +439,43 @@ const PDFReportGenerator: React.FC = () => {
           </div>
         </div>
       )}
-
-      {/* Templates Tab */}
       {selectedTab === 'templates' && (
         <div>
-          <h3 style={{ margin: "0 0 16px 0" }}>📋 Rapportmallar</h3>
-          
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-            gap: "16px"
-          }}>
+          <h3 className="templatesTitle">📋 Rapportmallar</h3>
+          <div className="templatesGrid">
             {templates.map(template => (
               <div 
                 key={template.id}
-                style={{
-                  background: "#2d3748",
-                  padding: "16px",
-                  borderRadius: "8px"
-                }}
+                className="templateCard"
               >
-                <h4 style={{ margin: "0 0 8px 0", fontWeight: "600" }}>
+                <h4 className="templateCardTitle">
                   {template.name}
                 </h4>
-                <p style={{ margin: "0 0 12px 0", fontSize: "14px", color: "#a0aec0" }}>
+                <p className="templateCardDesc">
                   {template.description}
                 </p>
-                
-                <div style={{ marginBottom: "12px" }}>
-                  <div style={{ fontSize: "12px", color: "#a0aec0", marginBottom: "4px" }}>
+                <div className="templateSections">
+                  <div className="templateSectionsLabel">
                     Inkluderade sektioner:
                   </div>
-                  <div style={{
-                    display: "flex",
-                    flexWrap: "wrap",
-                    gap: "4px"
-                  }}>
+                  <div className="templateSectionsList">
                     {template.sections.slice(0, 4).map(section => (
                       <span
                         key={section}
-                        style={{
-                          background: "#1a202c",
-                          padding: "2px 6px",
-                          borderRadius: "4px",
-                          fontSize: "10px",
-                          color: "#a0aec0"
-                        }}
+                        className="templateSection"
                       >
                         {section}
                       </span>
                     ))}
                     {template.sections.length > 4 && (
-                      <span style={{ fontSize: "10px", color: "#718096" }}>
+                      <span className="templateSectionMore">
                         +{template.sections.length - 4} till
                       </span>
                     )}
                   </div>
                 </div>
-
-                <div style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center"
-                }}>
-                  <span style={{
-                    fontSize: "11px",
-                    color: template.canCustomize ? "#10b981" : "#f59e0b"
-                  }}>
+                <div className="templateCardFooter">
+                  <span className={`templateCardStatus ${template.canCustomize ? 'statusGreen' : 'statusYellow'}`}> 
                     {template.canCustomize ? "✅ Anpassningsbar" : "⚠️ Fast mall"}
                   </span>
                   <button
@@ -702,16 +487,7 @@ const PDFReportGenerator: React.FC = () => {
                         includeSections: template.sections 
                       }));
                     }}
-                    style={{
-                      padding: "4px 8px",
-                      background: "#3b82f6",
-                      border: "none",
-                      borderRadius: "4px",
-                      color: "#fff",
-                      cursor: "pointer",
-                      fontSize: "11px",
-                      fontWeight: "600"
-                    }}
+                    className="useTemplateBtn"
                   >
                     Använd mall
                   </button>

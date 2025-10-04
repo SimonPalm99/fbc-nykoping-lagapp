@@ -1,0 +1,32 @@
+/* ProtectedRoute.module.css - flyttade styles från ProtectedRoute.tsx */
+
+.protectedRoot {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #FAFAFA 0%, #F1F8E9 30%, #E8F5E9 100%);
+}
+
+.protectedCenter {
+  text-align: center;
+}
+
+.protectedLogo {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 1rem;
+  background: linear-gradient(135deg, #2E7D32 0%, #388E3C 50%, #4CAF50 100%);
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: white;
+}
+
+.protectedText {
+  font-size: 1rem;
+  color: #1B5E20;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}

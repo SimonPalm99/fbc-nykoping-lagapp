@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { UserRegistration } from '../../types/auth';
-import './OnboardingWizard.css';
+import styles from './OnboardingWizard.module.css';
 
 type UserRole = 'player' | 'leader';
 
@@ -215,6 +215,7 @@ const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
                   value={formData.name || ''}
                   onChange={(e) => handleInputChange('name', e.target.value)}
                   placeholder="Förnamn Efternamn"
+                  title="Fullständigt namn"
                 />
               </div>
               <div className="form-group">
@@ -224,6 +225,7 @@ const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
                   value={formData.email || ''}
                   onChange={(e) => handleInputChange('email', e.target.value)}
                   placeholder="din@email.se"
+                  title="E-postadress"
                 />
               </div>
               <div className="form-group">
@@ -233,6 +235,7 @@ const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
                   value={formData.password || ''}
                   onChange={(e) => handleInputChange('password', e.target.value)}
                   placeholder="Välj ett säkert lösenord"
+                  title="Lösenord"
                 />
               </div>
               <div className="form-group">
@@ -241,6 +244,7 @@ const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
                   type="date"
                   value={formData.birthday || ''}
                   onChange={(e) => handleInputChange('birthday', e.target.value)}
+                  title="Födelsedag"
                 />
               </div>
               <div className="form-group full-width">
@@ -250,6 +254,7 @@ const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
                   onChange={(e) => handleInputChange('aboutMe', e.target.value)}
                   placeholder="Berätta lite om dig själv, dina mål eller vad som motiverar dig..."
                   rows={3}
+                  title="Om mig"
                 />
               </div>
             </div>
@@ -270,6 +275,7 @@ const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
                   value={formData.jerseyNumber || ''}
                   onChange={(e) => handleInputChange('jerseyNumber', parseInt(e.target.value))}
                   placeholder="Välj ett nummer"
+                  title="Tröjnummer"
                 />
               </div>
               <div className="form-group">
@@ -277,6 +283,7 @@ const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
                 <select
                   value={formData.position || ''}
                   onChange={(e) => handleInputChange('position', e.target.value)}
+                  title="Position"
                 >
                   <option value="">Välj position</option>
                   {positions.map(pos => (
@@ -289,6 +296,7 @@ const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
                 <select
                   value={formData.role || 'player'}
                   onChange={(e) => handleInputChange('role', e.target.value as UserRole)}
+                  title="Roll i laget"
                 >
                   <option value="player">Spelare</option>
                   <option value="leader">Ledare/Tränare</option>
@@ -310,6 +318,7 @@ const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
                   value={formData.phone || ''}
                   onChange={(e) => handleInputChange('phone', e.target.value)}
                   placeholder="070-123 45 67"
+                  title="Telefonnummer"
                 />
               </div>
             </div>
@@ -335,6 +344,7 @@ const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
                   value={formData.emergencyContact?.name || ''}
                   onChange={(e) => handleInputChange('emergencyContact.name', e.target.value)}
                   placeholder="Förnamn Efternamn"
+                  title="Kontaktens namn"
                 />
               </div>
               <div className="form-group">
@@ -344,6 +354,7 @@ const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
                   value={formData.emergencyContact?.phone || ''}
                   onChange={(e) => handleInputChange('emergencyContact.phone', e.target.value)}
                   placeholder="070-123 45 67"
+                  title="Kontaktens telefonnummer"
                 />
               </div>
               <div className="form-group">
@@ -351,6 +362,7 @@ const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
                 <select
                   value={formData.emergencyContact?.relation || ''}
                   onChange={(e) => handleInputChange('emergencyContact.relation', e.target.value)}
+                  title="Relation"
                 >
                   <option value="">Välj relation</option>
                   {relations.map(rel => (
@@ -404,8 +416,8 @@ const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
         <div className="progress-header">
           <div className="progress-bar">
             <div 
-              className="progress-fill"
-              style={{ width: `${(currentStep / (steps.length - 1)) * 100}%` }}
+              className={styles.progressFill}
+              data-progress-width={(currentStep / (steps.length - 1)) * 100}
             />
           </div>
           <div className="step-indicators">

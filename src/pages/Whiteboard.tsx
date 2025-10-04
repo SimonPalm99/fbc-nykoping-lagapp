@@ -6,6 +6,7 @@ import WhiteboardCanvas from "../components/WhiteboardCanvas";
 import WhiteboardToolbar from "../components/WhiteboardToolbar";
 import WhiteboardMarkers from "../components/WhiteboardMarkers";
 import innebandyplan from "../assets/innebandyplan-liggande.svg";
+import styles from "./Whiteboard.module.css";
 
 // Verktygstyper
 const TOOLS = [
@@ -243,7 +244,12 @@ const Whiteboard: React.FC = () => {
   // Rendera textrutor
   const renderTextBoxes = () => textBoxes.map((t, i) => (
     t && typeof t.x === "number" && typeof t.y === "number" ? (
-      <div key={i} style={{ position: "absolute", left: t.x, top: t.y, minWidth: 120, background: "#fff", color: "#222", border: "2px solid #2E7D32", borderRadius: 8, padding: "0.5rem 0.8rem", fontWeight: 700, fontSize: "1.05rem", zIndex: 3, boxShadow: "0 2px 8px rgba(46,125,50,0.10)" }}>{t.text}</div>
+      <div
+        key={i}
+        className={`${styles.textBox} textBoxPosition`}
+        data-x={t.x}
+        data-y={t.y}
+      >{t.text}</div>
     ) : null
   ));
 
@@ -306,51 +312,62 @@ const Whiteboard: React.FC = () => {
   // UI för namn och lista
   // ...existing code...
   return (
-    <div>
+    <div className={styles.whiteboardRoot}>
       {/* Whiteboard-namn och spara */}
-      <div style={{ marginBottom: 12 }}>
+      <div>
         <input
           type="text"
           value={whiteboardName}
           onChange={e => setWhiteboardName(e.target.value)}
           placeholder="Namnge din whiteboard..."
-          style={{ padding: "0.5rem", fontSize: "1rem", borderRadius: 6, border: "1.5px solid #2E7D32", marginRight: 8 }}
+          className={styles.whiteboardNameInput}
         />
-        <button onClick={handleSave} style={{ padding: "0.5rem 1.2rem", fontWeight: 700, background: "#2E7D32", color: "#fff", borderRadius: 6, border: "none" }}>Spara</button>
+        <button onClick={handleSave} className={styles.whiteboardSaveBtn}>Spara</button>
       </div>
       {/* Lista med sparade whiteboards + ta bort/döp om */}
-      <div style={{ marginBottom: 16 }}>
-        <div style={{ fontWeight: 700, marginBottom: 4 }}>Sparade whiteboards:</div>
+      <div>
+        <div className={styles.whiteboardListHeader}>Sparade whiteboards:</div>
         {isLoadingBoards ? (
           <div>Laddar...</div>
         ) : (
           <>
-            <select value={whiteboardId} onChange={e => { setWhiteboardId(e.target.value); setRenameValue(""); }} style={{ padding: "0.5rem", fontSize: "1rem", borderRadius: 6, border: "1.5px solid #1976d2" }}>
+            <label htmlFor="whiteboard-select" className={styles.whiteboardLabelHidden}>Välj whiteboard</label>
+            <select
+              id="whiteboard-select"
+              title="Välj whiteboard"
+              value={whiteboardId}
+              onChange={e => { setWhiteboardId(e.target.value); setRenameValue(""); }}
+              className={styles.whiteboardSelect}
+            >
               <option value="">Välj whiteboard...</option>
               {whiteboards.map(board => (
                 <option key={board._id} value={board._id}>{board.name || board._id}</option>
               ))}
             </select>
-            <button onClick={handleUpload} style={{ marginLeft: 8, padding: "0.5rem 1.2rem", fontWeight: 700, background: "#1976d2", color: "#fff", borderRadius: 6, border: "none" }}>Ladda</button>
-            <button onClick={handleDelete} style={{ marginLeft: 8, padding: "0.5rem 1.2rem", fontWeight: 700, background: "#e53935", color: "#fff", borderRadius: 6, border: "none" }}>Ta bort</button>
+            <button onClick={handleUpload} className={styles.whiteboardLoadBtn}>Ladda</button>
+            <button onClick={handleDelete} className={styles.whiteboardDeleteBtn}>Ta bort</button>
             {/* Döp om fält */}
             {whiteboardId && (
-              <span style={{ marginLeft: 12 }}>
+              <span className={styles.whiteboardRenameSpan}>
                 <input
                   type="text"
                   value={renameValue}
                   onChange={e => setRenameValue(e.target.value)}
                   placeholder="Nytt namn..."
-                  style={{ padding: "0.4rem", fontSize: "1rem", borderRadius: 6, border: "1.5px solid #1976d2", marginRight: 4 }}
+                  className={styles.whiteboardRenameInput}
                 />
-                <button onClick={handleRename} style={{ padding: "0.4rem 1rem", fontWeight: 700, background: "#FFB300", color: "#222", borderRadius: 6, border: "none" }}>Döp om</button>
+                <button onClick={handleRename} className={styles.whiteboardRenameBtn}>Döp om</button>
               </span>
             )}
           </>
         )}
       </div>
       {/* Whiteboard UI och canvas */}
-      {/* ...existing code... */}
+      <div className={styles.whiteboardContainer}>
+        <div className={styles.whiteboardHeader}>Whiteboard</div>
+        <img src={innebandyplan} alt="Innebandyplan" className={styles.whiteboardImage} />
+        {/* ...resten av whiteboard/canvas UI... */}
+      </div>
     </div>
   );
   };
@@ -636,14 +653,12 @@ const Whiteboard: React.FC = () => {
   };
 
   return (
-    <div style={{ width: "100vw", minHeight: "100vh", background: "#222", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-      <div style={{ position: "relative", width: isMobile ? "100vw" : "100%", maxWidth: isMobile ? "100vw" : 1100, height: isMobile ? "60vw" : 650, background: "#222", borderRadius: isMobile ? 0 : 18, boxShadow: isMobile ? "none" : "0 8px 32px rgba(46,125,50,0.18)", overflow: "hidden", touchAction: "none" }}>
+    <div className={styles.whiteboardRoot}>
+      <div className={styles.whiteboardContainer + (isMobile ? ' ' + styles.mobile : '')}>
         {stepSavedMessage && (
-          <div style={{ position: "absolute", left: "50%", top: 24, transform: "translateX(-50%)", background: "#388E3C", color: "#fff", borderRadius: 8, padding: "0.5rem 1.2rem", fontWeight: 700, fontSize: "1.15rem", boxShadow: "0 2px 8px rgba(0,0,0,0.15)", zIndex: 99, transition: "opacity 0.3s" }}>
-            {stepSavedMessage}
-          </div>
+          <div className={styles.stepSavedMessage}>{stepSavedMessage}</div>
         )}
-        <img src={innebandyplan} alt="Innebandyplan" style={{ position: "absolute", left: 0, top: 0, width: "100%", height: "100%", objectFit: "cover", zIndex: 0, opacity: 0.98 }} />
+        <img src={innebandyplan} alt="Innebandyplan" className={styles.whiteboardImage} />
         <WhiteboardCanvas
           canvasRef={canvasRef}
           isMobile={isMobile}
@@ -659,51 +674,68 @@ const Whiteboard: React.FC = () => {
         />
         {renderTextBoxes()}
         {showTextInput && (
-          <div style={{ position: "absolute", left: showTextInput.x, top: showTextInput.y, zIndex: 10, background: "#fff", border: "2px solid #2E7D32", borderRadius: 8, padding: isMobile ? "1rem" : "0.5rem 0.8rem", minWidth: isMobile ? 180 : 120 }}>
-            <textarea value={textInputValue} onChange={e => setTextInputValue(e.target.value)} style={{ width: "100%", minHeight: isMobile ? 60 : 40, fontSize: isMobile ? "1.25rem" : "1.05rem", color: "#222", border: "none", outline: "none", resize: "none", background: "#fff" }} placeholder="Kommentar..." />
-            <div style={{ display: "flex", gap: 8, marginTop: 8 }}>
-              <button onClick={handleTextInputSave} style={{ background: "#2E7D32", color: "#fff", borderRadius: 6, border: "none", fontWeight: 700, fontSize: isMobile ? "1.15rem" : "1.05rem", padding: isMobile ? "0.7rem 1.3rem" : "0.4rem 1rem", cursor: "pointer" }}>Spara</button>
-              <button onClick={() => setShowTextInput(null)} style={{ background: "#e53935", color: "#fff", borderRadius: 6, border: "none", fontWeight: 700, fontSize: isMobile ? "1.15rem" : "1.05rem", padding: isMobile ? "0.7rem 1.3rem" : "0.4rem 1rem", cursor: "pointer" }}>Avbryt</button>
+          <div
+            className={`${styles.textInputOverlayWrapper} text-input-overlay-position`}
+            data-left={showTextInput.x}
+            data-top={showTextInput.y}
+          >
+            <div className={styles.textInputOverlay}>
+              <textarea value={textInputValue} onChange={e => setTextInputValue(e.target.value)} className={styles.textInputArea} placeholder="Kommentar..." />
+              <div className={styles.textInputBtnRow}>
+                <button onClick={handleTextInputSave} className={styles.textInputSaveBtn}>Spara</button>
+                <button onClick={() => setShowTextInput(null)} className={styles.textInputCancelBtn}>Avbryt</button>
+              </div>
             </div>
           </div>
         )}
         {pendingMarker && mousePos && (
-          <div style={{ position: "fixed", left: mousePos.x-18, top: mousePos.y-18, width: 36, height: 36, borderRadius: "50%", background: pendingMarker === "player" ? "#2E7D32" : pendingMarker === "opponent" ? "#e53935" : "#111", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 900, fontSize: "1.15rem", zIndex: 9999, pointerEvents: "none", opacity: 0.85, boxShadow: "0 2px 8px rgba(0,0,0,0.18)", border: pendingMarker === "ball" ? "2px solid #fff" : "none" }}>
-            {pendingMarker === "player" ? "S" : pendingMarker === "opponent" ? "M" : "B"}
+          <div
+            className={styles.pendingMarkerWrapper}
+            data-left={mousePos.x - 18}
+            data-top={mousePos.y - 18}
+          >
+            <div
+              className={
+                styles.pendingMarker +
+                (pendingMarker === "player" ? " " + styles.player : "") +
+                (pendingMarker === "opponent" ? " " + styles.opponent : "") +
+                (pendingMarker === "ball" ? " " + styles.ball : "")
+              }
+            >
+              {pendingMarker === "player" ? "S" : pendingMarker === "opponent" ? "M" : "B"}
+            </div>
           </div>
         )}
         {/* Kommentar och paus/play under uppspelning */}
         {isExerciseMode && currentComment && (
-          <div style={{ position: "absolute", left: "50%", top: "10px", transform: "translateX(-50%)", zIndex: 20, background: "rgba(255,255,255,0.9)", color: "#222", border: "2px solid #2E7D32", borderRadius: 8, padding: "0.5rem 1rem", fontWeight: 700, fontSize: "1.1rem", boxShadow: "0 2px 8px rgba(0,0,0,0.15)", whiteSpace: "nowrap" }}>
-            {currentComment}
-          </div>
+          <div className={styles.exerciseComment}>{currentComment}</div>
         )}
       </div>
       {/* Övningsläge-knapp och stegkontroller */}
-      <div style={{ width: isMobile ? "100vw" : "100%", maxWidth: isMobile ? "100vw" : 1100, marginTop: 12, display: "flex", justifyContent: "center", alignItems: "center", gap: 16 }}>
+  <div className={styles.exerciseControls + (isMobile ? ' ' + styles.mobile : '')}>
         {!isExerciseMode && (
-          <button onClick={startExercise} style={{ background: "#1976d2", color: "#fff", borderRadius: 8, border: "none", fontWeight: 700, fontSize: isMobile ? "1.25rem" : "1.08rem", padding: isMobile ? "1rem 2rem" : "0.7rem 1.5rem", cursor: "pointer", minWidth: 120 }}>Skapa övning</button>
+          <button onClick={startExercise} className={styles.exerciseStartBtn}>Skapa övning</button>
         )}
         {isExerciseMode && (
           <>
-            <span style={{ fontWeight: 900, fontSize: "1.18rem", color: "#388E3C", background: "#fff", borderRadius: 8, padding: "0.3rem 1rem", marginRight: 8, boxShadow: "0 2px 8px rgba(46,125,50,0.10)" }}>Steg {currentExerciseStep + 1}</span>
-            <button onClick={saveExerciseStep} style={{ background: "#ffa726", color: "#fff", borderRadius: 8, border: "none", fontWeight: 700, fontSize: isMobile ? "1.15rem" : "1.08rem", padding: isMobile ? "0.8rem 1.5rem" : "0.5rem 1.2rem", cursor: "pointer", minWidth: 120 }}>Spara steg</button>
-            <button onClick={() => goToStep(currentExerciseStep - 1)} disabled={currentExerciseStep <= 0} style={{ background: currentExerciseStep <= 0 ? "#ddd" : "#1976d2", color: "#fff", borderRadius: 8, border: "none", fontWeight: 700, fontSize: isMobile ? "1.15rem" : "1.08rem", padding: isMobile ? "0.8rem 1.5rem" : "0.5rem 1.2rem", cursor: currentExerciseStep <= 0 ? "not-allowed" : "pointer", minWidth: 120, opacity: currentExerciseStep <= 0 ? 0.6 : 1 }}>⬅ Backa steg</button>
-            <button onClick={() => goToStep(currentExerciseStep + 1)} disabled={currentExerciseStep >= exerciseSteps.length - 1} style={{ background: currentExerciseStep >= exerciseSteps.length - 1 ? "#ddd" : "#1976d2", color: "#fff", borderRadius: 8, border: "none", fontWeight: 700, fontSize: isMobile ? "1.15rem" : "1.08rem", padding: isMobile ? "0.8rem 1.5rem" : "0.5rem 1.2rem", cursor: currentExerciseStep >= exerciseSteps.length - 1 ? "not-allowed" : "pointer", minWidth: 120, opacity: currentExerciseStep >= exerciseSteps.length - 1 ? 0.6 : 1 }}>Framåt steg ➡</button>
-            <button onClick={cancelExercise} style={{ background: "#e53935", color: "#fff", borderRadius: 8, border: "none", fontWeight: 700, fontSize: isMobile ? "1.15rem" : "1.08rem", padding: isMobile ? "0.8rem 1.5rem" : "0.5rem 1.2rem", cursor: "pointer", minWidth: 120, marginLeft: 8 }}>Avbryt övning</button>
+            <span className={styles.exerciseStepLabel}>Steg {currentExerciseStep + 1}</span>
+            <button onClick={saveExerciseStep} className={styles.exerciseSaveStepBtn}>Spara steg</button>
+            <button onClick={() => goToStep(currentExerciseStep - 1)} disabled={currentExerciseStep <= 0} className={styles.exerciseBackStepBtn}>⬅ Backa steg</button>
+            <button onClick={() => goToStep(currentExerciseStep + 1)} disabled={currentExerciseStep >= exerciseSteps.length - 1} className={styles.exerciseForwardStepBtn}>Framåt steg ➡</button>
+            <button onClick={cancelExercise} className={styles.exerciseCancelBtn}>Avbryt övning</button>
           </>
         )}
         {/* Paus/play och spela upp övning alltid synliga bredvid skapa övning */}
-        <button onClick={() => setIsPaused(p => !p)} style={{ background: isPaused ? "#1976d2" : "#ffa726", color: "#fff", borderRadius: 8, border: "none", fontWeight: 700, fontSize: isMobile ? "1.15rem" : "1.08rem", padding: isMobile ? "0.8rem 1.5rem" : "0.5rem 1.2rem", cursor: "pointer", minWidth: 120 }}>
+        <button onClick={() => setIsPaused(p => !p)} className={styles.exercisePauseBtn}>
           {isPaused ? "▶ Fortsätt" : "⏸ Pausa"}
         </button>
-        <button onClick={playSmoothExerciseWithPause} style={{ background: "#388E3C", color: "#fff", borderRadius: 8, border: "none", fontWeight: 700, fontSize: isMobile ? "1.15rem" : "1.08rem", padding: isMobile ? "0.8rem 1.5rem" : "0.5rem 1.2rem", cursor: "pointer", minWidth: 120 }}>
+        <button onClick={playSmoothExerciseWithPause} className={styles.exercisePlayBtn}>
           Spela upp övning
         </button>
       </div>
-  <div style={{ width: isMobile ? "100vw" : "100%", maxWidth: isMobile ? "100vw" : 1100, marginTop: 24, display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: isMobile ? 18 : 24, justifyContent: "center", alignItems: "start", background: "#fff", borderRadius: isMobile ? 0 : 12, boxShadow: isMobile ? "none" : "0 2px 12px rgba(46,125,50,0.10)", padding: isMobile ? "2rem 0.5rem" : "1.2rem 0.5rem" }}>
+  <div className={styles.whiteboardGrid + (isMobile ? ' ' + styles.mobile : '')}>
         {/* Verktyg */}
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
+  <div className={styles.toolbarCol}>
           <WhiteboardToolbar
             tools={TOOLS}
             tool={tool}
@@ -715,51 +747,37 @@ const Whiteboard: React.FC = () => {
           />
         </div>
         {/* Markörer */}
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
-          <div style={{ fontWeight: 900, fontSize: "1.08rem", color: "#222", marginBottom: 6 }}>Markörer</div>
-          <div style={{ display: "flex", gap: 6 }}>
+  <div className={styles.markersCol}>
+          <div className={styles.markersHeader}>Markörer</div>
+          <div className={styles.markersBtnRow}>
             {MARKERS.map((m: any) => (
-              <button key={m.key} onClick={() => { setPendingMarker(m.key); setMarker(""); setTool('hand'); }} style={{ background: pendingMarker===m.key ? m.color : "#f5f5f5", color: pendingMarker===m.key ? "#fff" : "#222", borderRadius: 6, border: pendingMarker===m.key ? `2px solid ${m.color}` : "1.5px solid #ddd", fontWeight: 700, fontSize: isMobile ? "1.25rem" : "1.02rem", padding: isMobile ? "1rem 2rem" : "0.45rem 0.9rem", cursor: "pointer", boxShadow: pendingMarker===m.key ? `0 2px 8px ${m.color}33` : "none", minWidth: isMobile ? 64 : 44, minHeight: isMobile ? 54 : 38, display: "flex", alignItems: "center", justifyContent: "center" }}>{m.label}</button>
+              <button key={m.key} onClick={() => { setPendingMarker(m.key); setMarker(""); setTool('hand'); }} className={styles.markerBtn + (pendingMarker===m.key ? ' ' + styles.markerBtnActive : '')}>{m.label}</button>
             ))}
           </div>
         </div>
         {/* Åtgärder */}
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
-          <div style={{ fontWeight: 900, fontSize: "1.08rem", color: "#222", marginBottom: 6 }}>Åtgärder</div>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 6, justifyContent: "center" }}>
-             <button onClick={handleSave} style={{ background: "#f5f5f5", color: "#222", borderRadius: 6, border: "1.5px solid #ddd", fontWeight: 700, fontSize: isMobile ? "1.25rem" : "1.02rem", padding: isMobile ? "1rem 2rem" : "0.45rem 0.9rem", cursor: "pointer", minWidth: isMobile ? 64 : 44 }}>💾 Spara</button>
-             <button onClick={handleUndo} style={{ background: "#f5f5f5", color: "#222", borderRadius: 6, border: "1.5px solid #ddd", fontWeight: 700, fontSize: isMobile ? "1.25rem" : "1.02rem", padding: isMobile ? "1rem 2rem" : "0.45rem 0.9rem", cursor: "pointer", minWidth: isMobile ? 64 : 44 }}>↩ Ångra</button>
-             <button onClick={handleUpload} style={{ background: "#f5f5f5", color: "#222", borderRadius: 6, border: "1.5px solid #ddd", fontWeight: 700, fontSize: isMobile ? "1.25rem" : "1.02rem", padding: isMobile ? "1rem 2rem" : "0.45rem 0.9rem", cursor: "pointer", minWidth: isMobile ? 64 : 44 }}>⬆ Ladda upp</button>
+  <div className={styles.actionsCol}>
+          <div className={styles.actionsHeader}>Åtgärder</div>
+          <div className={styles.actionsBtnRow}>
+             <button onClick={handleSave} className={styles.actionBtn}>💾 Spara</button>
+             <button onClick={handleUndo} className={styles.actionBtn}>↩ Ångra</button>
+             <button onClick={handleUpload} className={styles.actionBtn}>⬆ Ladda upp</button>
           </div>
         </div>
       </div>
       {/* ...existing code... */}
       {isExerciseMode && (
-  <div style={{ width: isMobile ? "100vw" : 600, margin: "18px auto", display: "flex", flexDirection: "column", alignItems: "center", gap: 12 }}>
-    <div style={{ display: "flex", gap: 12, flexWrap: "wrap", justifyContent: "center" }}>
-      <button onClick={saveExerciseStep} style={{ background: "#ffa726", color: "#fff", borderRadius: 8, border: "none", fontWeight: 700, fontSize: "1.15rem", padding: "0.7rem 1.5rem", cursor: "pointer", minWidth: 120 }}>
-        Spara steg {currentExerciseStep + 1}
-      </button>
-      <button onClick={() => setCurrentExerciseStep(s => Math.max(0, s-1))} style={{ background: "#1976d2", color: "#fff", borderRadius: 8, border: "none", fontWeight: 700, fontSize: "1.15rem", padding: "0.7rem 1.5rem", cursor: "pointer", minWidth: 120 }}>
-        ← Tillbaka
-      </button>
-      <button onClick={() => setCurrentExerciseStep(s => Math.min(exerciseSteps.length-1, s+1))} style={{ background: "#1976d2", color: "#fff", borderRadius: 8, border: "none", fontWeight: 700, fontSize: "1.15rem", padding: "0.7rem 1.5rem", cursor: "pointer", minWidth: 120 }}>
-        Framåt →
-      </button>
-  <button onClick={() => { setExerciseSteps([]); setMarkerPaths([]); setCurrentExerciseStep(0); setPlacedMarkers(placedMarkers.map((m: any) => ({ ...m }))); }} style={{ background: "#e53935", color: "#fff", borderRadius: 8, border: "none", fontWeight: 700, fontSize: "1.15rem", padding: "0.7rem 1.5rem", cursor: "pointer", minWidth: 120 }}>
-        Börja om
-      </button>
-      <button onClick={() => alert('Övning sparad!')} style={{ background: "#388E3C", color: "#fff", borderRadius: 8, border: "none", fontWeight: 700, fontSize: "1.15rem", padding: "0.7rem 1.5rem", cursor: "pointer", minWidth: 120 }}>
-        Spara övning
-      </button>
-      <button onClick={() => setIsExerciseMode(false)} style={{ background: "#222", color: "#fff", borderRadius: 8, border: "none", fontWeight: 700, fontSize: "1.15rem", padding: "0.7rem 1.5rem", cursor: "pointer", minWidth: 120 }}>
-        Avsluta
-      </button>
-      <button onClick={playExerciseFollowPaths} style={{ background: "#1976d2", color: "#fff", borderRadius: 8, border: "none", fontWeight: 700, fontSize: "1.15rem", padding: "0.7rem 1.5rem", cursor: "pointer", minWidth: 120 }}>
-        ▶ Spela upp övning
-      </button>
+  <div className={styles.exerciseSteps + (isMobile ? ' ' + styles.mobile : '')}>
+  <div className={styles.exerciseStepsBtnRow}>
+      <button onClick={saveExerciseStep} className={styles.exerciseStepBtn}>Spara steg {currentExerciseStep + 1}</button>
+      <button onClick={() => setCurrentExerciseStep(s => Math.max(0, s-1))} className={styles.exerciseStepBtn}>← Tillbaka</button>
+      <button onClick={() => setCurrentExerciseStep(s => Math.min(exerciseSteps.length-1, s+1))} className={styles.exerciseStepBtn}>Framåt →</button>
+      <button onClick={() => { setExerciseSteps([]); setMarkerPaths([]); setCurrentExerciseStep(0); setPlacedMarkers(placedMarkers.map((m: any) => ({ ...m }))); }} className={styles.exerciseStepBtn}>Börja om</button>
+      <button onClick={() => alert('Övning sparad!')} className={styles.exerciseStepBtn}>Spara övning</button>
+      <button onClick={() => setIsExerciseMode(false)} className={styles.exerciseStepBtn}>Avsluta</button>
+      <button onClick={playExerciseFollowPaths} className={styles.exerciseStepBtn}>▶ Spela upp övning</button>
     </div>
-    <div style={{ marginTop: 10, fontWeight: 700, fontSize: "1.08rem", color: "#222" }}>
+    <div className={styles.exerciseStepInfo}>
       {exerciseSteps.length > 0 ? `Du har sparat ${exerciseSteps.length} steg.` : "Inga steg sparade ännu."}
     </div>
   </div>

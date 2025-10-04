@@ -30,11 +30,17 @@ import Ledarportal from "./pages/Ledarportal";
 const ExercisesTacticsTabs: React.FC = () => {
   const [tab, setTab] = React.useState<'exercises' | 'tactics'>('exercises');
   return (
-    <div style={{ minHeight: "100vh", background: "linear-gradient(135deg, #101a10 60%, #22c55e 100%)", padding: "2rem 0" }}>
-      <div style={{ maxWidth: 900, margin: "0 auto", padding: "2rem", borderRadius: 32, boxShadow: "0 8px 32px #000a", background: "rgba(20,32,20,0.85)", border: "2px solid #22c55e" }}>
-        <div style={{ display: "flex", gap: 24, justifyContent: "center", marginBottom: 32 }}>
-          <button onClick={() => setTab('exercises')} style={{ background: tab === 'exercises' ? '#22c55e' : '#101a10', color: tab === 'exercises' ? '#fff' : '#22c55e', border: '2px solid #22c55e', borderRadius: 12, padding: '10px 32px', fontWeight: 700, fontSize: '1.1rem', cursor: 'pointer', boxShadow: tab === 'exercises' ? '0 2px 8px #22c55e88' : 'none', transition: 'all 0.2s' }}>Övningar</button>
-          <button onClick={() => setTab('tactics')} style={{ background: tab === 'tactics' ? '#22c55e' : '#101a10', color: tab === 'tactics' ? '#fff' : '#22c55e', border: '2px solid #22c55e', borderRadius: 12, padding: '10px 32px', fontWeight: 700, fontSize: '1.1rem', cursor: 'pointer', boxShadow: tab === 'tactics' ? '0 2px 8px #22c55e88' : 'none', transition: 'all 0.2s' }}>Taktiker</button>
+    <div className="tabsRoot">
+      <div className="tabsContainer">
+        <div className="tabsRow">
+          <button
+            onClick={() => setTab('exercises')}
+            className={`tabsButton${tab === 'exercises' ? ' tabsButtonActive' : ''}`}
+          >Övningar</button>
+          <button
+            onClick={() => setTab('tactics')}
+            className={`tabsButton${tab === 'tactics' ? ' tabsButtonActive' : ''}`}
+          >Taktiker</button>
         </div>
         {tab === 'exercises' ? <ExercisesOverview /> : <TacticsOverview />}
       </div>

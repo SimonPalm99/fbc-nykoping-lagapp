@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 
+import styles from './RecordsAndMilestones.module.css';
+
 interface Achievement {
   id: string;
   playerId: string;
@@ -151,7 +153,7 @@ const RecordsAndMilestones: React.FC = () => {
         }
       }, 1000);
     }
-  }, []);
+  }, [achievements]);
 
   const getPlayerName = (playerId: string) => {
     const players = [
@@ -163,21 +165,7 @@ const RecordsAndMilestones: React.FC = () => {
     return players.find(p => p.id === playerId)?.name || 'Okänd spelare';
   };
 
-  const getRarityColor = (rarity: string) => {
-    switch (rarity) {
-      case 'common': return '#64748b';
-      case 'uncommon': return '#10b981';
-      case 'rare': return '#3b82f6';
-      case 'epic': return '#8b5cf6';
-      case 'legendary': return '#f59e0b';
-      default: return '#64748b';
-    }
-  };
 
-  const getRarityGlow = (rarity: string) => {
-    const color = getRarityColor(rarity);
-    return `0 0 20px ${color}40, 0 0 40px ${color}20`;
-  };
 
   const filteredAchievements = achievements.filter(achievement => {
     const categoryMatch = filterCategory === 'all' || achievement.category === filterCategory;
@@ -207,78 +195,28 @@ const RecordsAndMilestones: React.FC = () => {
   ];
 
   return (
-    <div style={{
-      background: "#1a202c",
-      padding: "20px",
-      borderRadius: "12px",
-      color: "#fff",
-      position: "relative"
-    }}>
+    <div className={styles.container}>
       {/* Celebration Overlay */}
       {celebratingAchievement && (
-        <div style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          background: "rgba(0, 0, 0, 0.8)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          zIndex: 1000,
-          animation: "fadeIn 0.5s ease-in"
-        }}>
-          <div style={{
-            background: "linear-gradient(135deg, #1a202c, #2d3748)",
-            padding: "40px",
-            borderRadius: "20px",
-            textAlign: "center",
-            border: `3px solid ${getRarityColor(celebratingAchievement.rarity)}`,
-            boxShadow: getRarityGlow(celebratingAchievement.rarity),
-            animation: "pulse 2s infinite"
-          }}>
-            <div style={{ fontSize: "64px", marginBottom: "16px" }}>
-              {celebratingAchievement.celebrationIcon}
-            </div>
-            <h2 style={{ 
-              margin: "0 0 8px 0", 
-              color: getRarityColor(celebratingAchievement.rarity),
-              fontSize: "28px",
-              fontWeight: "bold"
-            }}>
+        <div className={styles.celebrationOverlay}>
+          <div
+            className={`${styles.celebrationModal} ${styles[`rarity-${celebratingAchievement.rarity}`]}`}
+          >
+            <div className={styles.celebrationIcon}>{celebratingAchievement.celebrationIcon}</div>
+            <h2
+              className={`${styles.celebrationTitle} ${styles[`rarity-${celebratingAchievement.rarity}`]}`}
+            >
               {celebratingAchievement.title}
             </h2>
-            <p style={{ 
-              margin: "0 0 16px 0", 
-              color: "#a0aec0",
-              fontSize: "16px"
-            }}>
-              {celebratingAchievement.description}
-            </p>
-            <div style={{
-              background: getRarityColor(celebratingAchievement.rarity),
-              color: "#fff",
-              padding: "8px 16px",
-              borderRadius: "20px",
-              fontSize: "14px",
-              fontWeight: "600",
-              marginBottom: "20px",
-              textTransform: "uppercase"
-            }}>
+            <p className={styles.celebrationDesc}>{celebratingAchievement.description}</p>
+            <div
+              className={`${styles.celebrationRarity} ${styles[`rarity-bg-${celebratingAchievement.rarity}`]}`}
+            >
               {celebratingAchievement.rarity} Achievement
             </div>
             <button
               onClick={() => setCelebratingAchievement(null)}
-              style={{
-                padding: "12px 24px",
-                background: "#3b82f6",
-                border: "none",
-                borderRadius: "8px",
-                color: "#fff",
-                cursor: "pointer",
-                fontWeight: "600"
-              }}
+              className={styles.celebrationButton}
             >
               Fantastiskt! 🎉
             </button>
@@ -287,39 +225,20 @@ const RecordsAndMilestones: React.FC = () => {
       )}
 
       {/* Header */}
-      <div style={{ marginBottom: "20px" }}>
-        <h2 style={{ margin: 0, fontSize: "24px", fontWeight: "700" }}>
-          🏆 Rekord & Milstolpar
-        </h2>
-        <p style={{ margin: "4px 0 0 0", color: "#a0aec0" }}>
-          Fira framgångar och följ prestationshistorik
-        </p>
+      <div className={styles.headerWrapper}>
+        <div className={styles.header}>
+          <h2 className={styles.headerTitle}>🏆 Rekord & Milstolpar</h2>
+          <p className={styles.headerDesc}>Fira framgångar och följ prestationshistorik</p>
+        </div>
       </div>
 
       {/* Tabs */}
-      <div style={{
-        display: "flex",
-        gap: "8px",
-        marginBottom: "20px",
-        borderBottom: "1px solid #4a5568",
-        paddingBottom: "12px"
-      }}>
+      <div className={styles.tabs}>
         {tabs.map(tab => (
           <button
             key={tab.id}
             onClick={() => setSelectedTab(tab.id as any)}
-            style={{
-              padding: "8px 16px",
-              background: selectedTab === tab.id ? "#3b82f6" : "transparent",
-              border: "none",
-              borderRadius: "6px",
-              color: selectedTab === tab.id ? "#fff" : "#a0aec0",
-              cursor: "pointer",
-              fontWeight: "600",
-              display: "flex",
-              alignItems: "center",
-              gap: "6px"
-            }}
+            className={selectedTab === tab.id ? `${styles.tabButton} ${styles.tabButtonActive}` : styles.tabButton}
           >
             <span>{tab.icon}</span>
             {tab.name}
@@ -328,31 +247,15 @@ const RecordsAndMilestones: React.FC = () => {
       </div>
 
       {/* Filters */}
-      <div style={{
-        background: "#2d3748",
-        padding: "16px",
-        borderRadius: "8px",
-        marginBottom: "20px",
-        display: "flex",
-        gap: "16px",
-        flexWrap: "wrap",
-        alignItems: "center"
-      }}>
+      <div className={styles.filters}>
         <div>
-          <label style={{ display: "block", marginBottom: "4px", fontSize: "12px", color: "#a0aec0" }}>
-            Kategori
-          </label>
+          <label className={styles.filterLabel}>Kategori</label>
           <select
             value={filterCategory}
             onChange={(e) => setFilterCategory(e.target.value)}
-            style={{
-              padding: "6px",
-              background: "#1a202c",
-              border: "1px solid #4a5568",
-              borderRadius: "4px",
-              color: "#fff",
-              fontSize: "14px"
-            }}
+            className={styles.filterSelect}
+            aria-label="Filtrera på kategori"
+            title="Filtrera på kategori"
           >
             <option value="all">Alla kategorier</option>
             <option value="goals">Mål</option>
@@ -363,22 +266,14 @@ const RecordsAndMilestones: React.FC = () => {
             <option value="special">Speciella</option>
           </select>
         </div>
-
         <div>
-          <label style={{ display: "block", marginBottom: "4px", fontSize: "12px", color: "#a0aec0" }}>
-            Sällsynthet
-          </label>
+          <label className={styles.filterLabel}>Sällsynthet</label>
           <select
             value={filterRarity}
             onChange={(e) => setFilterRarity(e.target.value)}
-            style={{
-              padding: "6px",
-              background: "#1a202c",
-              border: "1px solid #4a5568",
-              borderRadius: "4px",
-              color: "#fff",
-              fontSize: "14px"
-            }}
+            className={styles.filterSelect}
+            aria-label="Filtrera på sällsynthet"
+            title="Filtrera på sällsynthet"
           >
             <option value="all">Alla nivåer</option>
             <option value="common">Vanlig</option>
@@ -388,163 +283,67 @@ const RecordsAndMilestones: React.FC = () => {
             <option value="legendary">Legendarisk</option>
           </select>
         </div>
-
-        <div style={{ marginLeft: "auto", fontSize: "14px", color: "#a0aec0" }}>
-          {filteredAchievements.length} achievements
+        <div>
+          <span className={styles.filterCount}>{filteredAchievements.length} achievements</span>
         </div>
       </div>
 
       {/* Achievements Grid */}
-      <div style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-        gap: "16px"
-      }}>
+      <div className={styles.achievementsGrid}>
         {filteredAchievements.map(achievement => (
           <div
             key={achievement.id}
-            style={{
-              background: "linear-gradient(135deg, #2d3748, #1a202c)",
-              padding: "20px",
-              borderRadius: "12px",
-              border: `2px solid ${getRarityColor(achievement.rarity)}`,
-              boxShadow: achievement.rarity === 'legendary' || achievement.rarity === 'epic' 
-                ? getRarityGlow(achievement.rarity) 
-                : "none",
-              position: "relative",
-              overflow: "hidden"
-            }}
+            className={`${styles.achievementCard} ${styles[`rarity-${achievement.rarity}`]}`}
           >
             {/* Rarity indicator */}
-            <div style={{
-              position: "absolute",
-              top: "12px",
-              right: "12px",
-              background: getRarityColor(achievement.rarity),
-              color: "#fff",
-              padding: "4px 8px",
-              borderRadius: "12px",
-              fontSize: "10px",
-              fontWeight: "600",
-              textTransform: "uppercase"
-            }}>
+            <div
+              className={`${styles.rarityIndicator} ${styles[`rarity-bg-${achievement.rarity}`]}`}
+            >
               {achievement.rarity}
             </div>
 
             {/* Achievement icon */}
-            <div style={{
-              fontSize: "48px",
-              textAlign: "center",
-              marginBottom: "12px"
-            }}>
+            <div className={styles.achievementIcon}>
               {achievement.celebrationIcon}
             </div>
 
             {/* Title and description */}
-            <h3 style={{
-              margin: "0 0 8px 0",
-              color: getRarityColor(achievement.rarity),
-              fontWeight: "700",
-              fontSize: "18px",
-              textAlign: "center"
-            }}>
+            <h3
+              className={`${styles.achievementTitle} ${styles[`rarity-color-${achievement.rarity}`]}`}
+            >
               {achievement.title}
             </h3>
 
-            <p style={{
-              margin: "0 0 12px 0",
-              color: "#a0aec0",
-              fontSize: "14px",
-              textAlign: "center",
-              lineHeight: "1.4"
-            }}>
+            <p className={styles.achievementDesc}>
               {achievement.description}
             </p>
 
             {/* Player and value */}
-            <div style={{
-              background: "#1a202c",
-              padding: "12px",
-              borderRadius: "8px",
-              marginBottom: "12px"
-            }}>
-              <div style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                marginBottom: "8px"
-              }}>
-                <span style={{ fontWeight: "600", color: "#fff" }}>
-                  {getPlayerName(achievement.playerId)}
-                </span>
-                <span style={{
-                  color: getRarityColor(achievement.rarity),
-                  fontWeight: "700",
-                  fontSize: "18px"
-                }}>
-                  {achievement.value} {achievement.unit}
-                </span>
+            <div className={styles.achievementInfo}>
+              <div className={styles.achievementInfoRow}>
+                <span className={styles.achievementPlayer}>{getPlayerName(achievement.playerId)}</span>
+                <span className={`${styles.achievementValue} ${styles[`rarity-color-${achievement.rarity}`]}`}>{achievement.value} {achievement.unit}</span>
               </div>
-              
-              <div style={{
-                fontSize: "12px",
-                color: "#718096"
-              }}>
+              <div className={styles.achievementContext}>
                 {achievement.seasonContext}
               </div>
             </div>
 
             {/* Badges */}
-            <div style={{
-              display: "flex",
-              gap: "6px",
-              flexWrap: "wrap",
-              marginBottom: "8px"
-            }}>
+            <div className={styles.badges}>
               {achievement.isPersonalBest && (
-                <span style={{
-                  background: "#10b981",
-                  color: "#fff",
-                  padding: "2px 6px",
-                  borderRadius: "4px",
-                  fontSize: "10px",
-                  fontWeight: "600"
-                }}>
-                  🏅 Personbästa
-                </span>
+                <span className={`${styles.badge} ${styles.badgePersonal}`}>🏅 Personbästa</span>
               )}
               {achievement.isTeamRecord && (
-                <span style={{
-                  background: "#f59e0b",
-                  color: "#fff",
-                  padding: "2px 6px",
-                  borderRadius: "4px",
-                  fontSize: "10px",
-                  fontWeight: "600"
-                }}>
-                  🏆 Klubbrekord
-                </span>
+                <span className={`${styles.badge} ${styles.badgeTeam}`}>🏆 Klubbrekord</span>
               )}
               {achievement.isLeagueRecord && (
-                <span style={{
-                  background: "#8b5cf6",
-                  color: "#fff",
-                  padding: "2px 6px",
-                  borderRadius: "4px",
-                  fontSize: "10px",
-                  fontWeight: "600"
-                }}>
-                  🌟 Ligrekord
-                </span>
+                <span className={`${styles.badge} ${styles.badgeLeague}`}>🌟 Ligrekord</span>
               )}
             </div>
 
             {/* Date */}
-            <div style={{
-              fontSize: "11px",
-              color: "#64748b",
-              textAlign: "right"
-            }}>
+            <div className={styles.achievementDate}>
               {new Date(achievement.dateAchieved).toLocaleDateString('sv-SE')}
             </div>
 
@@ -552,19 +351,7 @@ const RecordsAndMilestones: React.FC = () => {
             {achievement.playerId === user?.id && (
               <button
                 onClick={() => setCelebratingAchievement(achievement)}
-                style={{
-                  position: "absolute",
-                  bottom: "12px",
-                  left: "12px",
-                  padding: "4px 8px",
-                  background: "rgba(59, 130, 246, 0.8)",
-                  border: "none",
-                  borderRadius: "4px",
-                  color: "#fff",
-                  cursor: "pointer",
-                  fontSize: "10px",
-                  fontWeight: "600"
-                }}
+                className={styles.celebrateButton}
               >
                 🎉 Fira igen
               </button>
@@ -574,14 +361,10 @@ const RecordsAndMilestones: React.FC = () => {
       </div>
 
       {filteredAchievements.length === 0 && (
-        <div style={{
-          textAlign: "center",
-          padding: "40px",
-          color: "#a0aec0"
-        }}>
-          <div style={{ fontSize: "48px", marginBottom: "16px" }}>🏆</div>
-          <h3 style={{ margin: "0 0 8px 0" }}>Inga achievements hittades</h3>
-          <p style={{ margin: 0 }}>
+        <div className={styles.emptyState}>
+          <div className={styles.emptyIcon}>🏆</div>
+          <h3 className={styles.emptyTitle}>Inga achievements hittades</h3>
+          <p className={styles.emptyDesc}>
             Fortsätt spela för att låsa upp nya rekord och milstolpar!
           </p>
         </div>

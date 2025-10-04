@@ -1,0 +1,119 @@
+.achievementNotification {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 50;
+}
+.achievementNotification__container {
+  transform: translateX(0);
+  opacity: 1;
+  scale: 1;
+  transition: all 0.5s ease-out;
+}
+.achievementNotification__container--hidden {
+  transform: translateX(100%);
+  opacity: 0;
+  scale: 0.95;
+}
+.achievementNotification__card {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(90deg, #555, #222);
+  color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  border: 2px solid #ccc;
+  padding: 1rem;
+  max-width: 22rem;
+  width: 20rem;
+  animation: bounce 1s;
+}
+.achievementNotification__closeBtn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: bold;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.achievementNotification__content {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+.achievementNotification__icon {
+  font-size: 2.5rem;
+  animation: bounce 1s;
+}
+.achievementNotification__info {
+  flex: 1;
+}
+.achievementNotification__rarity {
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+  opacity: 0.9;
+}
+.achievementNotification__title {
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-bottom: 0.25rem;
+}
+.achievementNotification__desc {
+  font-size: 0.95rem;
+  opacity: 0.9;
+  margin-bottom: 0.5rem;
+}
+.achievementNotification__xp {
+  background: rgba(255,255,255,0.2);
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.achievementNotification__congrats {
+  font-size: 0.8rem;
+  opacity: 0.75;
+  margin-left: 0.5rem;
+}
+.achievementNotification__progressBar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: rgba(255,255,255,0.2);
+}
+.achievementNotification__progress {
+  height: 100%;
+  background: #fff;
+  transition: width 0.3s linear;
+}
+/* Rarity gradients */
+.achievementNotification__rare {
+  background: linear-gradient(90deg, #3b82f6, #1e40af);
+  border-color: #60a5fa;
+}
+.achievementNotification__epic {
+  background: linear-gradient(90deg, #a78bfa, #6d28d9);
+  border-color: #c4b5fd;
+}
+.achievementNotification__legendary {
+  background: linear-gradient(90deg, #fde68a, #f59e42);
+  border-color: #fbbf24;
+  box-shadow: 0 0 32px 8px #fbbf2433;
+  animation: pulse 1.5s infinite;
+}
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+@keyframes pulse {
+  0% { box-shadow: 0 0 32px 8px #fbbf2433; }
+  50% { box-shadow: 0 0 48px 16px #fbbf2466; }
+  100% { box-shadow: 0 0 32px 8px #fbbf2433; }
+}

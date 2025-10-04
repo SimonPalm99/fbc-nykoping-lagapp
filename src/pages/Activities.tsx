@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './Activities.css';
+import styles from './Activities.module.css';
 import { useLocation } from 'react-router-dom';
 import { useTitle } from '../hooks/useTitle';
 // ...existing code...
@@ -7,18 +7,6 @@ import { activitiesAPI } from '../services/apiService';
 import { Activity, ActivityComment } from '../types/activity';
 import { useUser } from '../context/UserContext';
 
-const fbcTheme = {
-  background: 'linear-gradient(135deg, #0A0A0A 0%, #0D1B0D 30%, #1B2E1B 100%)',
-  cardBg: 'rgba(16, 32, 16, 0.97)',
-  accent: '#2E7D32',
-  accentDark: '#181f2a',
-  accentLight: '#fff',
-  text: {
-    primary: '#F1F8E9',
-    secondary: '#C8E6C9',
-    dark: '#181f2a',
-  }
-};
 
 const Activities: React.FC = () => {
   const { user } = useUser();
@@ -63,36 +51,39 @@ const Activities: React.FC = () => {
       });
   }, []);
   // Sort all activities by date (ascending)
-  let allActivities = [...activities];
-  if (filter === 'past') {
-    allActivities = allActivities
-      .filter(a => {
-        const activityDate = new Date(a.date);
-        activityDate.setHours(0,0,0,0);
-        const today = new Date();
-        today.setHours(0,0,0,0);
-        return activityDate <= today;
-      })
-      .sort((a, b) => {
-        const dateA = new Date(a.date + (a.startTime ? 'T' + a.startTime : ''));
-        const dateB = new Date(b.date + (b.startTime ? 'T' + b.startTime : ''));
-        return dateB.getTime() - dateA.getTime(); // Nyaste först
-      });
-  } else {
-    allActivities = allActivities
-      .filter(a => {
-        const activityDate = new Date(a.date);
-        activityDate.setHours(0,0,0,0);
-        const today = new Date();
-        today.setHours(0,0,0,0);
-        return activityDate >= today;
-      })
-      .sort((a, b) => {
-        const dateA = new Date(a.date + (a.startTime ? 'T' + a.startTime : ''));
-        const dateB = new Date(b.date + (b.startTime ? 'T' + b.startTime : ''));
-        return dateA.getTime() - dateB.getTime(); // Äldsta först
-      });
-  }
+    const allActivities = React.useMemo(() => {
+      let arr = [...activities];
+      if (filter === 'past') {
+        arr = arr
+          .filter(a => {
+            const activityDate = new Date(a.date);
+            activityDate.setHours(0,0,0,0);
+            const today = new Date();
+            today.setHours(0,0,0,0);
+            return activityDate <= today;
+          })
+          .sort((a, b) => {
+            const dateA = new Date(a.date + (a.startTime ? 'T' + a.startTime : ''));
+            const dateB = new Date(b.date + (b.startTime ? 'T' + b.startTime : ''));
+            return dateB.getTime() - dateA.getTime(); // Nyaste först
+          });
+      } else {
+        arr = arr
+          .filter(a => {
+            const activityDate = new Date(a.date);
+            activityDate.setHours(0,0,0,0);
+            const today = new Date();
+            today.setHours(0,0,0,0);
+            return activityDate >= today;
+          })
+          .sort((a, b) => {
+            const dateA = new Date(a.date + (a.startTime ? 'T' + a.startTime : ''));
+            const dateB = new Date(b.date + (b.startTime ? 'T' + b.startTime : ''));
+            return dateA.getTime() - dateB.getTime(); // Äldsta först
+          });
+      }
+      return arr;
+    }, [activities, filter]);
   function stripTime(date: Date) {
     return new Date(date.getFullYear(), date.getMonth(), date.getDate());
   }
@@ -119,7 +110,7 @@ const Activities: React.FC = () => {
       initial[a.id] = a.comments || [];
     });
     setActivityComments(initial);
-  }, [allActivities.length, allActivities.map(a => a.comments).join()]);
+  }, [allActivities]);
 
   // Scroll to activity if id is present
   React.useEffect(() => {
@@ -129,56 +120,33 @@ const Activities: React.FC = () => {
   }, [scrollToId, filteredActivities]);
 
   return (
-    <div style={{ minHeight: '100vh', background: fbcTheme.background, color: fbcTheme.text.primary, padding: '2rem 0.5rem', transition: 'background 0.5s' }}>
-      <div style={{ maxWidth: 900, margin: '0 auto', padding: '0.5rem' }}>
+    <div className={styles.activitiesWrapper}>
+      <div className={styles.activitiesContainer}>
         {/* Välkomsttext */}
-        <div style={{ textAlign: 'center', fontWeight: 900, fontSize: '2.1rem', color: fbcTheme.accent, marginBottom: '0.7rem', letterSpacing: '1px' }}>
+        <div className={styles.activitiesHeader}>
           Välkommen till FBC Nyköpings aktivitetslista!
         </div>
         {/* Loading/Error */}
         {loading && (
-          <div style={{ background: fbcTheme.cardBg, color: fbcTheme.accent, borderRadius: '1rem', padding: '1rem', textAlign: 'center', marginBottom: '1rem', fontWeight: 600 }}>
+          <div className={styles.activitiesCardBg}>
             Laddar aktiviteter...
           </div>
         )}
         {error && (
-          <div style={{ background: '#e53935', color: '#fff', borderRadius: '1rem', padding: '1rem', textAlign: 'center', marginBottom: '1rem', fontWeight: 600 }}>
+          <div className={styles.activitiesError}>
             {error}
           </div>
         )}
-                            {/* Felaktig knapp och error-div borttagen. Kommentarsflöde hanteras i aktivitetskortet. */}
-        <div style={{ display: 'flex', gap: '0.7rem', marginBottom: '1.2rem', alignItems: 'center' }}>
+        <div className={styles.activitiesFilterRow}>
           <button
-            style={{
-              background: filter === 'past' && !showAddTab ? fbcTheme.accent : 'transparent',
-              color: filter === 'past' && !showAddTab ? fbcTheme.accentLight : fbcTheme.accent,
-              border: `2px solid ${fbcTheme.accent}`,
-              borderRadius: '1rem',
-              padding: '0.5rem 1.2rem',
-              fontWeight: 'bold',
-              fontSize: '1rem',
-              boxShadow: filter === 'past' && !showAddTab ? '0 2px 8px #2E7D3233' : 'none',
-              transition: 'all 0.2s',
-              cursor: 'pointer',
-            }}
+            className={filter === 'past' && !showAddTab ? `${styles.activitiesFilterBtn} ${styles.activitiesFilterBtnActive}` : styles.activitiesFilterBtn}
             onClick={() => setFilter(filter === 'past' ? 'upcoming' : 'past')}
             aria-label="Växla mellan kommande och föregående"
           >
             {filter === 'past' ? 'Kommande' : 'Föregående'}
           </button>
           {/* Typfilter */}
-          <select value={typeFilter} onChange={e => setTypeFilter(e.target.value as any)} style={{
-            background: fbcTheme.cardBg,
-            color: fbcTheme.text.primary,
-            border: `2px solid ${fbcTheme.accent}`,
-            borderRadius: '1rem',
-            padding: '0.5rem 1.2rem',
-            fontWeight: 'bold',
-            fontSize: '1rem',
-            boxShadow: '0 2px 8px #2E7D3233',
-            transition: 'all 0.2s',
-            outline: 'none',
-          }}>
+          <select value={typeFilter} onChange={e => setTypeFilter(e.target.value as any)} className={styles.activitiesTypeSelect} title="Typ av aktivitet">
             <option value="alla">Alla typer</option>
             <option value="match">Matcher</option>
             <option value="träning">Träningar</option>
@@ -186,29 +154,16 @@ const Activities: React.FC = () => {
           </select>
           <button
             onClick={() => setShowAddTab(true)}
-            style={{
-              background: showAddTab ? fbcTheme.accent : 'transparent',
-              color: showAddTab ? fbcTheme.accentLight : fbcTheme.accent,
-              border: `2px solid ${fbcTheme.accent}`,
-              borderRadius: '1rem',
-              padding: '0.5rem 1.2rem',
-              fontWeight: 'bold',
-              fontSize: '1rem',
-              boxShadow: showAddTab ? '0 2px 8px #2E7D3233' : 'none',
-              transition: 'all 0.2s',
-              marginLeft: '0.5rem',
-              cursor: 'pointer',
-            }}
+            className={showAddTab ? `${styles.activitiesAddBtn} ${styles.activitiesAddBtnActive}` : styles.activitiesAddBtn}
             aria-label="Lägg till aktivitet"
           >
             Lägg till aktivitet
           </button>
         </div>
         {/* Aktivitetslistan */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem', transition: 'all 0.5s' }}>
-          {/* Debug-utskrift borttagen. */}
+        <div className={styles.activitiesList}>
           {filteredActivities.length === 0 ? (
-            <div style={{ background: fbcTheme.cardBg, borderRadius: '1.2rem', padding: '2rem', textAlign: 'center', color: fbcTheme.text.secondary, boxShadow: '0 2px 12px #22c55e22' }}>
+            <div className={styles.activitiesEmpty}>
               Inga aktiviteter att visa
             </div>
           ) : (
@@ -224,20 +179,19 @@ const Activities: React.FC = () => {
                   <div
                     key={activityId}
                     ref={el => { activityRefs.current[activityId] = el; }}
-                    className={`activity-card${expanded ? ' expanded' : ''}`}
+                    className={`${styles.activityCard}${expanded ? ' ' + styles.expanded : ''}`}
                     onClick={() => setExpandedId(expanded ? null : activityId)}
                   >
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                      <div style={{ fontWeight: 'bold', fontSize: '1.02rem', color: isMatch ? fbcTheme.accent : fbcTheme.text.primary }}>{activity.title}</div>
-                      <span style={{ color: fbcTheme.text.secondary, fontSize: '0.92rem', fontWeight: 500 }}>
+                    <div className={styles.activityCardHeader}>
+                      <div className={styles.activityCardTitle}>{activity.title}</div>
+                      <span className={styles.activityCardMeta}>
                         {activity.date}{activity.startTime ? ` • ${activity.startTime}` : ''}
                       </span>
-                      <span style={{ color: fbcTheme.text.secondary, fontSize: '0.92rem' }}>{activity.location}</span>
-                      {/* Ledare kan redigera/ta bort allt, spelare bara sina egna */}
+                      <span className={styles.activityCardLocation}>{activity.location}</span>
                       {(user?.role === 'leader' || activity.createdBy === user?.id) && (
                         <>
                           <button
-                            style={{ marginLeft: 'auto', background: '#1976d2', color: '#fff', border: 'none', borderRadius: '0.7rem', padding: '0.3rem 1rem', fontWeight: 600, cursor: 'pointer' }}
+                            className={styles.activityCardEditBtn}
                             onClick={e => {
                               e.stopPropagation();
                               setEditActivityId(activity.id);
@@ -245,14 +199,12 @@ const Activities: React.FC = () => {
                             }}
                           >Redigera</button>
                           <button
-                            style={{ marginLeft: '0.5rem', background: '#e53935', color: '#fff', border: 'none', borderRadius: '0.7rem', padding: '0.3rem 1rem', fontWeight: 600, cursor: 'pointer' }}
+                            className={styles.activityCardDeleteBtn}
                             onClick={async e => {
                               e.stopPropagation();
                               const res = await activitiesAPI.delete(activity.id);
                               if (res.success) {
                                 setActivities(prev => prev.filter(a => a.id !== activity.id));
-                              } else {
-                                // setError('Kunde inte ta bort aktivitet från server.');
                               }
                             }}
                           >Ta bort</button>
@@ -262,7 +214,7 @@ const Activities: React.FC = () => {
   {/* Redigera aktivitet modal/form */}
   {editActivityId && editActivityForm && (
     <form
-      style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', background: 'rgba(0,0,0,0.45)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+      className={styles.activityCardEditModal}
       onSubmit={async e => {
         e.preventDefault();
         if (!editActivityForm.title || !editActivityForm.date) return;
@@ -271,48 +223,46 @@ const Activities: React.FC = () => {
           setActivities(prev => prev.map(a => a.id === editActivityId ? res.data : a));
           setEditActivityId(null);
           setEditActivityForm(null);
-        } else {
-          // setError('Kunde inte uppdatera aktivitet på servern.');
         }
       }}
     >
-      <div style={{ background: fbcTheme.cardBg, borderRadius: '1.2rem', padding: '2rem', minWidth: 320, boxShadow: '0 2px 12px #22c55e22', color: fbcTheme.text.primary, display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-        <h2 style={{ color: fbcTheme.accent, fontWeight: 700, fontSize: '1.2rem', marginBottom: '0.5rem' }}>Redigera aktivitet</h2>
-        <input placeholder="Titel" value={editActivityForm.title || ''} onChange={e => setEditActivityForm(f => ({ ...f!, title: e.target.value }))} style={{ padding: '0.5rem', borderRadius: 8, border: '1px solid #ccc' }} />
-        <input type="date" value={editActivityForm.date || ''} onChange={e => setEditActivityForm(f => ({ ...f!, date: e.target.value }))} style={{ padding: '0.5rem', borderRadius: 8, border: '1px solid #ccc' }} />
-        <input placeholder="Starttid" value={editActivityForm.startTime || ''} onChange={e => setEditActivityForm(f => ({ ...f!, startTime: e.target.value }))} style={{ padding: '0.5rem', borderRadius: 8, border: '1px solid #ccc' }} />
-        <input placeholder="Plats" value={editActivityForm.location || ''} onChange={e => setEditActivityForm(f => ({ ...f!, location: e.target.value }))} style={{ padding: '0.5rem', borderRadius: 8, border: '1px solid #ccc' }} />
-        <input placeholder="Beskrivning" value={editActivityForm.description || ''} onChange={e => setEditActivityForm(f => ({ ...f!, description: e.target.value }))} style={{ padding: '0.5rem', borderRadius: 8, border: '1px solid #ccc' }} />
-        <select value={editActivityForm.type || ''} onChange={e => setEditActivityForm(f => ({ ...f!, type: e.target.value as Activity["type"] }))} style={{ padding: '0.5rem', borderRadius: 8, border: '1px solid #ccc' }}>
+      <div className={styles.activityCardEditModalContent}>
+        <h2 className={styles.activityCardEditModalTitle}>Redigera aktivitet</h2>
+        <input placeholder="Titel" value={editActivityForm.title || ''} onChange={e => setEditActivityForm(f => ({ ...f!, title: e.target.value }))} className={styles.activityCardEditModalInput} />
+  <input type="date" value={editActivityForm.date || ''} onChange={e => setEditActivityForm(f => ({ ...f!, date: e.target.value }))} className={styles.activityCardEditModalInput} placeholder="Datum" title="Datum" />
+        <input placeholder="Starttid" value={editActivityForm.startTime || ''} onChange={e => setEditActivityForm(f => ({ ...f!, startTime: e.target.value }))} className={styles.activityCardEditModalInput} />
+        <input placeholder="Plats" value={editActivityForm.location || ''} onChange={e => setEditActivityForm(f => ({ ...f!, location: e.target.value }))} className={styles.activityCardEditModalInput} />
+        <input placeholder="Beskrivning" value={editActivityForm.description || ''} onChange={e => setEditActivityForm(f => ({ ...f!, description: e.target.value }))} className={styles.activityCardEditModalInput} />
+  <select value={editActivityForm.type || ''} onChange={e => setEditActivityForm(f => ({ ...f!, type: e.target.value as Activity["type"] }))} className={styles.activityCardEditModalSelect} title="Typ av aktivitet">
           <option value="">Välj typ...</option>
           <option value="träning">Träning</option>
           <option value="match">Match</option>
           <option value="annat">Annat</option>
         </select>
-        <button type="submit" style={{ background: fbcTheme.accent, color: '#fff', border: 'none', borderRadius: 8, padding: '0.7rem', fontWeight: 600, cursor: 'pointer' }}>Spara ändringar</button>
-        <button type="button" style={{ background: '#222', color: '#fff', border: 'none', borderRadius: 8, padding: '0.7rem', fontWeight: 600, cursor: 'pointer', marginTop: '0.5rem' }} onClick={() => { setEditActivityId(null); setEditActivityForm(null); }}>Avbryt</button>
+        <button type="submit" className={styles.activityCardEditModalBtn}>Spara ändringar</button>
+        <button type="button" className={styles.activityCardEditModalBtnCancel} onClick={() => { setEditActivityId(null); setEditActivityForm(null); }}>Avbryt</button>
       </div>
     </form>
   )}
                     {/* Visa senaste kommentar om någon finns, även på komprimerat kort */}
                     {((isTraining && comments.length > 0) || (isMatch && activity.leaderNotes)) && (
-                      <div style={{ color: fbcTheme.text.primary, background: 'rgba(34,51,34,0.13)', borderRadius: '0.4rem', padding: '0.2rem 0.7rem', marginTop: '0.2rem', fontSize: '0.93rem', fontStyle: 'italic', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis', maxWidth: '100%' }}>
+                      <div className={styles.activityCardLatestComment}>
                         {isTraining ? comments[comments.length - 1]?.text : activity.leaderNotes}
                       </div>
                     )}
                     {expanded && (
-                      <div style={{ marginTop: '0.5rem', padding: '0.5rem 0.2rem', background: 'rgba(255,255,255,0.04)', borderRadius: '0.5rem', boxShadow: '0 2px 8px #2E7D3222' }}>
-                        <div style={{ color: fbcTheme.text.secondary }}>{activity.description}</div>
+                      <div className={styles.activityCardExpanded}>
+                        <div className={styles.activityCardDescription}>{activity.description}</div>
                         {/* Kommentarer och input för träning */}
                         {isTraining && (
-                          <div style={{ marginTop: '0.7rem' }}>
-                            <div style={{ fontWeight: 600, color: fbcTheme.accent, marginBottom: '0.3rem' }}>Kommentarer</div>
+                          <div className={styles.activityCardCommentRow}>
+                            <div className={styles.activityCardCommentTitle}>Kommentarer</div>
                             {comments.length > 0 && comments.map((c, i) => (
-                              <div key={i} style={{ display: 'flex', alignItems: 'center', color: fbcTheme.text.primary, background: 'rgba(34,51,34,0.18)', borderRadius: '0.4rem', padding: '0.3rem 0.7rem', marginBottom: '0.2rem', fontSize: '0.95rem' }}>
-                                <span style={{ flex: 1 }}>{c.text}</span>
+                                        <div key={i} className={styles.activityCardComment}>
+                                          <span className={styles.activityCardCommentText}>{c.text}</span>
                                 {c.userId === "me" && (
                                   <button
-                                    style={{ marginLeft: '0.7rem', background: '#e53935', color: '#fff', border: 'none', borderRadius: '0.3rem', padding: '0.2rem 0.7rem', fontSize: '0.92rem', cursor: 'pointer' }}
+                                    className={styles.activityCardCommentDeleteBtn}
                                     onClick={e => {
                                       e.stopPropagation();
                                       setActivityComments(prev => ({
@@ -329,11 +279,11 @@ const Activities: React.FC = () => {
                               value={commentInput}
                               onChange={e => setCommentInputs(inputs => ({ ...inputs, [activity.id]: e.target.value }))}
                               placeholder="Lägg till kommentar..."
-                              style={{ width: '100%', padding: '0.5rem', borderRadius: '0.4rem', border: `1px solid ${fbcTheme.accent}`, marginTop: '0.3rem', fontSize: '0.95rem' }}
+                              className={styles.activityCardCommentInput}
                               onClick={e => e.stopPropagation()}
                             />
                             <button
-                              style={{ background: fbcTheme.accent, color: '#fff', border: 'none', borderRadius: '0.4rem', padding: '0.4rem 1.2rem', fontWeight: 600, marginTop: '0.3rem', cursor: 'pointer', fontSize: '0.95rem' }}
+                              className={styles.activityCardCommentSendBtn}
                               onClick={async e => {
                                 e.stopPropagation();
                                 if (commentInput.trim()) {
@@ -358,77 +308,77 @@ const Activities: React.FC = () => {
                               }}
                             >Skicka</button>
                             {commentError[activity.id] && (
-                              <div style={{ color: '#e53935', marginTop: '0.3rem', fontWeight: 600 }}>{commentError[activity.id]}</div>
+                              <div className={styles.activityCardCommentError}>{commentError[activity.id]}</div>
                             )}
                           </div>
                         )}
                         {/* FBC-stil: Matchinfo och laguttagning */}
                         {isMatch && (
-                          <div style={{ marginTop: '1.2rem', background: 'rgba(34,51,34,0.10)', borderRadius: '1rem', padding: '1.2rem', boxShadow: '0 2px 8px #2E7D3222' }}>
-                            <div style={{ fontWeight: 900, fontSize: '1.15rem', color: fbcTheme.accent, marginBottom: '0.7rem', letterSpacing: '1px' }}>Matchinfo</div>
+                          <div className={styles.activityCardMatchInfo}>
+                            <div className={styles.activityCardMatchInfoTitle}>Matchinfo</div>
                             {activity.matchInfo ? (
-                              <div style={{ color: fbcTheme.text.primary, fontSize: '1.05rem', marginBottom: '1.1rem', whiteSpace: 'pre-line' }}>{activity.matchInfo}</div>
+                              <div className={styles.activityCardMatchInfoText}>{activity.matchInfo}</div>
                             ) : (
-                              <div style={{ color: fbcTheme.text.secondary, fontSize: '1.05rem', marginBottom: '1.1rem' }}>Ingen matchinfo ännu.</div>
+                              <div className={styles.activityCardMatchInfoTextEmpty}>Ingen matchinfo ännu.</div>
                             )}
                             {/* Visa bilder/dokument om de finns */}
                             {activity.matchFiles && activity.matchFiles.length > 0 && (
-                              <div style={{ marginBottom: '1.1rem' }}>
+                              <div className={styles.activityCardMatchFiles}>
                                 {activity.matchFiles.map((file: { url: string; name: string; type: 'image' | 'document'; }, i: number) => (
                                   file.type === 'image' ? (
-                                    <img key={i} src={file.url} alt={file.name} style={{ maxWidth: '100%', borderRadius: '0.7rem', marginBottom: '0.5rem' }} />
+                                    <img key={i} src={file.url} alt={file.name} className={styles.activityCardMatchFileImg} />
                                   ) : (
-                                    <a key={i} href={file.url} target="_blank" rel="noopener noreferrer" style={{ color: fbcTheme.accent, textDecoration: 'underline', marginRight: '1rem', fontSize: '1rem' }}>{file.name}</a>
+                                    <a key={i} href={file.url} target="_blank" rel="noopener noreferrer" className={styles.activityCardMatchFileLink}>{file.name}</a>
                                   )
                                 ))}
                               </div>
                             )}
                             {/* LAGUTTAGNING */}
-                            <div style={{ fontWeight: 900, fontSize: '1.12rem', color: fbcTheme.accent, marginBottom: '0.5rem', marginTop: '0.7rem' }}>Laguttagning</div>
+                            <div className={styles.activityCardLineupTitle}>Laguttagning</div>
                             {activity.lineup ? (
-                              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1.2rem', marginBottom: '0.7rem' }}>
+                              <div className={styles.activityCardLineupRow}>
                                 {/* Femman */}
                                 {(['first', 'second', 'third'] as const).map((line, idx) => (
-                                  <div key={line} style={{ background: 'rgba(46,125,50,0.10)', borderRadius: '0.7rem', padding: '0.7rem', minWidth: 160 }}>
-                                    <div style={{ fontWeight: 700, color: fbcTheme.accent, marginBottom: '0.3rem' }}>{idx + 1}:a femman</div>
+                                  <div key={line} className={styles.activityCardLineupCol}>
+                                    <div className={styles.activityCardLineupColTitle}>{idx + 1}:a femman</div>
                                     {(activity.lineup && activity.lineup[line])?.map((player: string, i: number) => (
-                                      <div key={i} style={{ color: fbcTheme.text.primary, fontSize: '1rem', marginBottom: '0.2rem' }}>{player}</div>
+                                      <div key={i} className={styles.activityCardLineupPlayer}>{player}</div>
                                     ))}
                                   </div>
                                 ))}
                                 {/* Powerplay, Boxplay, Målvakter, Reserv */}
-                                <div style={{ background: 'rgba(255,179,0,0.10)', borderRadius: '0.7rem', padding: '0.7rem', minWidth: 160 }}>
-                                  <div style={{ fontWeight: 700, color: '#FFB300', marginBottom: '0.3rem' }}>Powerplay</div>
+                                <div className={`${styles.activityCardLineupCol} ${styles.activityCardLineupColPowerplay}`}>
+                                  <div className={`${styles.activityCardLineupColTitle} ${styles.activityCardLineupColTitlePowerplay}`}>Powerplay</div>
                                   {activity.lineup.powerplay?.map((player: string, i: number) => (
-                                    <div key={i} style={{ color: fbcTheme.text.primary, fontSize: '1rem', marginBottom: '0.2rem' }}>{player}</div>
+                                    <div key={i} className={styles.activityCardLineupPlayer}>{player}</div>
                                   ))}
                                 </div>
-                                <div style={{ background: 'rgba(34,51,34,0.10)', borderRadius: '0.7rem', padding: '0.7rem', minWidth: 160 }}>
-                                  <div style={{ fontWeight: 700, color: fbcTheme.accent, marginBottom: '0.3rem' }}>Boxplay</div>
+                                <div className={`${styles.activityCardLineupCol} ${styles.activityCardLineupColBoxplay}`}>
+                                  <div className={styles.activityCardLineupColTitle}>Boxplay</div>
                                   {activity.lineup.boxplay?.map((player: string, i: number) => (
-                                    <div key={i} style={{ color: fbcTheme.text.primary, fontSize: '1rem', marginBottom: '0.2rem' }}>{player}</div>
+                                    <div key={i} className={styles.activityCardLineupPlayer}>{player}</div>
                                   ))}
                                 </div>
-                                <div style={{ background: 'rgba(34,51,34,0.10)', borderRadius: '0.7rem', padding: '0.7rem', minWidth: 160 }}>
-                                  <div style={{ fontWeight: 700, color: fbcTheme.accent, marginBottom: '0.3rem' }}>Målvakter</div>
+                                <div className={`${styles.activityCardLineupCol} ${styles.activityCardLineupColGoalies}`}>
+                                  <div className={styles.activityCardLineupColTitle}>Målvakter</div>
                                   {activity.lineup.goalies?.map((player: string, i: number) => (
-                                    <div key={i} style={{ color: fbcTheme.text.primary, fontSize: '1rem', marginBottom: '0.2rem' }}>{player}</div>
+                                    <div key={i} className={styles.activityCardLineupPlayer}>{player}</div>
                                   ))}
                                 </div>
-                                <div style={{ background: 'rgba(34,51,34,0.10)', borderRadius: '0.7rem', padding: '0.7rem', minWidth: 160 }}>
-                                  <div style={{ fontWeight: 700, color: fbcTheme.accent, marginBottom: '0.3rem' }}>Reserv</div>
+                                <div className={`${styles.activityCardLineupCol} ${styles.activityCardLineupColReserve}`}>
+                                  <div className={styles.activityCardLineupColTitle}>Reserv</div>
                                   {activity.lineup.reserve?.map((player: string, i: number) => (
-                                    <div key={i} style={{ color: fbcTheme.text.primary, fontSize: '1rem', marginBottom: '0.2rem' }}>{player}</div>
+                                    <div key={i} className={styles.activityCardLineupPlayer}>{player}</div>
                                   ))}
                                 </div>
                               </div>
                             ) : (
-                              <div style={{ color: fbcTheme.text.secondary, fontSize: '1.05rem', marginBottom: '0.7rem' }}>Ingen laguttagning ännu.</div>
+                              <div className={styles.activityCardMatchInfoTextEmpty}>Ingen laguttagning ännu.</div>
                             )}
                             {/* Ledare kan lägga till/redigera info */}
                             {false /* Byt till isLeader */ && (
-                              <div style={{ marginTop: '1.2rem' }}>
-                                <button style={{ background: fbcTheme.accent, color: '#fff', border: 'none', borderRadius: '0.7rem', padding: '0.7rem 1.5rem', fontWeight: 700, fontSize: '1.05rem', cursor: 'pointer' }}>Redigera matchinfo/laguttagning</button>
+                              <div className={styles.activityCardLineupEditRow}>
+                                <button className={styles.activityCardLineupEditBtn}>Redigera matchinfo/laguttagning</button>
                               </div>
                             )}
                           </div>
@@ -439,45 +389,41 @@ const Activities: React.FC = () => {
                 );
               })
             ) : (
-              <form style={{ margin: '1rem 0', background: fbcTheme.cardBg, padding: '1rem', borderRadius: '1rem', boxShadow: '0 2px 8px #22c55e22', display: 'flex', flexDirection: 'column', gap: '0.7rem' }}
-                onSubmit={async e => {
-                  e.preventDefault();
-                  if (!newCustom.title || !newCustom.date) return;
-                  // Välj typ baserat på titel eller låt användaren välja typ i UI om du vill
-                  let type: Activity["type"] = 'annat';
-                  const titleLower = newCustom.title.toLowerCase();
-                  if (titleLower.includes('träning')) type = 'träning';
-                  else if (titleLower.includes('match')) type = 'match';
-                  // Skapa aktivitet mot backend
-                  const newActivity: Partial<Activity> = {
-                    title: newCustom.title,
-                    type,
-                    date: newCustom.date,
-                    startTime: newCustom.startTime,
-                    location: newCustom.location,
-                    description: newCustom.description,
-                    createdBy: 'user',
-                    participants: [],
-                    comments: [],
-                    important: false
-                  };
-                  const res = await activitiesAPI.create(newActivity);
-                  if (res.success && res.data) {
-                    setActivities(prev => [...prev, res.data]);
-                  } else {
-                    // setError('Kunde inte spara aktivitet till server.');
-                  }
-                  setNewCustom({ title: '', date: '', startTime: '', location: '', description: '' });
-                  setShowAddTab(false);
-                }}>
-                <div style={{ fontWeight: 600, color: fbcTheme.accent }}>Lägg till "Annat" aktivitet</div>
-                <input placeholder="Titel" value={newCustom.title} onChange={e => setNewCustom({ ...newCustom, title: e.target.value })} style={{ padding: '0.5rem', borderRadius: 8, border: '1px solid #ccc' }} />
-                <input type="date" value={newCustom.date} onChange={e => setNewCustom({ ...newCustom, date: e.target.value })} style={{ padding: '0.5rem', borderRadius: 8, border: '1px solid #ccc' }} />
-                <input placeholder="Starttid" value={newCustom.startTime} onChange={e => setNewCustom({ ...newCustom, startTime: e.target.value })} style={{ padding: '0.5rem', borderRadius: 8, border: '1px solid #ccc' }} />
-                <input placeholder="Plats" value={newCustom.location} onChange={e => setNewCustom({ ...newCustom, location: e.target.value })} style={{ padding: '0.5rem', borderRadius: 8, border: '1px solid #ccc' }} />
-                <input placeholder="Beskrivning" value={newCustom.description} onChange={e => setNewCustom({ ...newCustom, description: e.target.value })} style={{ padding: '0.5rem', borderRadius: 8, border: '1px solid #ccc' }} />
-                <button type="submit" style={{ background: fbcTheme.accent, color: '#fff', border: 'none', borderRadius: 8, padding: '0.7rem', fontWeight: 600, cursor: 'pointer' }}>Lägg till</button>
-              </form>
+                <form className={styles.activityCardAddForm}
+                  onSubmit={async e => {
+                    e.preventDefault();
+                    if (!newCustom.title || !newCustom.date) return;
+                    let type: Activity["type"] = 'annat';
+                    const titleLower = newCustom.title.toLowerCase();
+                    if (titleLower.includes('träning')) type = 'träning';
+                    else if (titleLower.includes('match')) type = 'match';
+                    const newActivity: Partial<Activity> = {
+                      title: newCustom.title,
+                      type,
+                      date: newCustom.date,
+                      startTime: newCustom.startTime,
+                      location: newCustom.location,
+                      description: newCustom.description,
+                      createdBy: 'user',
+                      participants: [],
+                      comments: [],
+                      important: false
+                    };
+                    const res = await activitiesAPI.create(newActivity);
+                    if (res.success && res.data) {
+                      setActivities(prev => [...prev, res.data]);
+                    }
+                    setNewCustom({ title: '', date: '', startTime: '', location: '', description: '' });
+                    setShowAddTab(false);
+                  }}>
+                  <div className={styles.activityCardAddFormTitle}>Lägg till "Annat" aktivitet</div>
+                  <input placeholder="Titel" value={newCustom.title} onChange={e => setNewCustom({ ...newCustom, title: e.target.value })} className={styles.activityCardAddFormInput} />
+                  <input type="date" value={newCustom.date} onChange={e => setNewCustom({ ...newCustom, date: e.target.value })} className={styles.activityCardAddFormInput} placeholder="Datum" title="Datum" />
+                  <input placeholder="Starttid" value={newCustom.startTime} onChange={e => setNewCustom({ ...newCustom, startTime: e.target.value })} className={styles.activityCardAddFormInput} />
+                  <input placeholder="Plats" value={newCustom.location} onChange={e => setNewCustom({ ...newCustom, location: e.target.value })} className={styles.activityCardAddFormInput} />
+                  <input placeholder="Beskrivning" value={newCustom.description} onChange={e => setNewCustom({ ...newCustom, description: e.target.value })} className={styles.activityCardAddFormInput} />
+                  <button type="submit" className={styles.activityCardAddFormBtn}>Lägg till</button>
+                </form>
             )
           )}
         </div>

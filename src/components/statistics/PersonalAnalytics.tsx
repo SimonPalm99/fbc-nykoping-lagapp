@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useStatistics } from '../../context/StatisticsContext';
 import { useAuth } from '../../context/AuthContext';
 
+import styles from './PersonalAnalytics.module.css';
+
 interface StatCard {
   title: string;
   value: string | number;
@@ -176,12 +178,18 @@ const PersonalAnalytics: React.FC = () => {
             <div className="flex items-end justify-between h-20 gap-2">
               {trends.last5Games.map((points, index) => (
                 <div key={index} className="flex-1 flex flex-col items-center">
-                  <div 
-                    className="bg-blue-500 rounded-t w-full min-h-1"
-                    style={{ 
-                      height: `${Math.max(10, (points / Math.max(...trends.last5Games, 1)) * 60)}px` 
-                    }}
-                  />
+                  {(() => {
+                    const maxBarHeight = 60;
+                    const minBarHeight = 10;
+                    const rawHeight = Math.max(minBarHeight, (points / Math.max(...trends.last5Games, 1)) * maxBarHeight);
+                    const roundedHeight = Math.round(rawHeight / 5) * 5;
+                    const barClass = styles[`chartBarHeight${roundedHeight}`] || styles.chartBarHeight10;
+                    return (
+                      <div
+                        className={`bg-blue-500 rounded-t w-full min-h-1 ${barClass}`}
+                      />
+                    );
+                  })()}
                   <span className="text-xs text-gray-500 mt-1">{points}</span>
                 </div>
               ))}
@@ -222,7 +230,12 @@ const PersonalAnalytics: React.FC = () => {
             </div>
 
             <div className="space-y-2">
+              <label htmlFor="statSelect" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                Välj statistiktyp
+              </label>
               <select
+                id="statSelect"
+                aria-label="Välj statistiktyp"
                 value={selectedStat}
                 onChange={(e) => setSelectedStat(e.target.value as any)}
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-700"

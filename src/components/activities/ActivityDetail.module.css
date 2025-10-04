@@ -1,0 +1,105 @@
+.tagLabel {
+  color: var(--text-sekundar);
+}
+/* ActivityDetail.module.css */
+.sektion {
+  background: var(--bakgrund-gradient);
+  border-radius: 1.2rem;
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem 1.2rem;
+  color: var(--text-primar);
+  font-family: inherit;
+  box-shadow: 0 2px 16px #22c55e22;
+}
+
+.rubrik {
+  color: var(--accent);
+  font-size: 2rem;
+  margin: 0 0 1.2rem 0;
+  font-weight: bold;
+  text-align: center;
+}
+
+.typ {
+  font-size: 1rem;
+  color: var(--text-sekundar);
+  margin-left: 12px;
+}
+
+.viktigt {
+  color: #ff5252;
+  margin-left: 12px;
+  font-weight: 700;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  margin-bottom: 1.2rem;
+  align-items: center;
+}
+
+.infoRad {
+  color: var(--text-sekundar);
+  font-size: 1.1rem;
+}
+
+.kartaLank {
+  color: var(--accent);
+  text-decoration: underline;
+  margin-left: 4px;
+  font-weight: 600;
+}
+
+.fravaro {
+  color: var(--text-sekundar);
+  font-size: 1.1rem;
+}
+
+.beskrivning {
+  margin-bottom: 1.2rem;
+  color: var(--text-sekundar);
+  font-size: 1.1rem;
+}
+
+.beskrivningText {
+  color: var(--accent);
+  margin-top: 2px;
+}
+
+.taggar {
+  margin-bottom: 1.2rem;
+}
+
+.tag {
+  background: var(--accent);
+  color: var(--kort-bakgrund);
+  border-radius: 8px;
+  padding: 3px 10px;
+  font-size: 1rem;
+  margin-right: 6px;
+  font-weight: 600;
+}
+
+.skapadAv {
+  margin-top: 1.2rem;
+  font-size: 1rem;
+  color: var(--text-sekundar);
+  text-align: right;
+}
+
+@media (max-width: 600px) {
+  .sektion {
+    padding: 0.7rem;
+    border-radius: 0.7rem;
+    max-width: 99vw;
+  }
+  .rubrik {
+    font-size: 1.2rem;
+  }
+  .infoRad, .beskrivning, .beskrivningText, .fravaro, .skapadAv {
+    font-size: 1rem;
+  }
+}

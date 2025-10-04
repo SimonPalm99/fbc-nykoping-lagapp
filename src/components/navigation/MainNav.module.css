@@ -1,0 +1,25 @@
+.huvudnavigering {
+  display: flex;
+  gap: 18px;
+  margin: 20px 0;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+.navlank {
+  background: transparent;
+  color: #222;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 14px;
+  cursor: pointer;
+  font-weight: 400;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+}
+
+.aktiv {
+  background: #1976d2;
+  color: #fff;
+  font-weight: 700;
+}

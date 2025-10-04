@@ -1,0 +1,36 @@
+.progressFill {
+  height: 100%;
+  background: #3b82f6;
+  border-radius: 8px;
+  transition: width 0.3s;
+  width: var(--progress-width, 0%);
+}
+.progressFill {
+  height: 100%;
+  background: #3b82f6;
+  border-radius: 8px;
+  transition: width 0.3s;
+}
+/* CSS-modul för OnboardingWizard - svenska klassnamn */
+
+.formGroup input,
+.formGroup textarea,
+.formGroup select {
+  width: 100%;
+  padding: 8px;
+  margin: 6px 0 12px 0;
+  border-radius: 6px;
+  border: 1px solid #345;
+  background: #23272e;
+  color: #fff;
+}
+
+.formGroup label {
+  font-weight: 600;
+  color: #b8f27c;
+  margin-bottom: 2px;
+  display: block;
+  font-size: 15px;
+}
+
+/* Lägg till övriga klassnamn för onboarding-wizard, overlay, navigation, progress osv vid behov */

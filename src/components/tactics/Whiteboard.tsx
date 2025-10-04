@@ -1,3 +1,4 @@
+import styles from './Whiteboard.module.css';
 import React, { useRef, useState } from "react";
 
 // Typ för markör
@@ -268,33 +269,46 @@ const Whiteboard: React.FC = () => {
   };
 
   return (
-    <div style={{ width: '100vw', height: '100vh', position: 'fixed', left: 0, top: 0, background: '#f8fafc', zIndex: 100, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+    <div className={styles.whiteboardRoot}>
       {/* Verktygsrad utanför whiteboard */}
-      <div style={{ display: 'flex', gap: '1rem', padding: '1.2rem 2rem', background: 'rgba(34,197,94,0.10)', borderBottom: '2px solid #22c55e', alignItems: 'center', flexWrap: 'wrap', zIndex: 2, position: 'relative' }}>
-        <button onClick={() => setZoom(z => Math.max(0.5, z - 0.1))} style={{ background:'#22c55e', color:'#fff', border:'none', borderRadius:'0.7rem', padding:'0.5rem 1.2rem', fontWeight:700, fontSize:'1.1rem', cursor:'pointer' }}>-</button>
-        <span style={{ fontWeight:700, color:'#222', fontSize:'1.1rem' }}>{(zoom*100).toFixed(0)}%</span>
-        <button onClick={() => setZoom(z => Math.min(2.5, z + 0.1))} style={{ background:'#22c55e', color:'#fff', border:'none', borderRadius:'0.7rem', padding:'0.5rem 1.2rem', fontWeight:700, fontSize:'1.1rem', cursor:'pointer' }}>+</button>
-        <button onClick={() => setSelectedTool('marker')} style={{ background: selectedTool==='marker'?'#22c55e':'#222', color:'#fff', border:'none', borderRadius:'0.7rem', padding:'0.7rem 1.7rem', fontWeight:700, fontSize:'1.15rem', cursor:'pointer', boxShadow: selectedTool==='marker'?'0 2px 8px #22c55e22':'none' }}>Markör</button>
-        <button onClick={() => setSelectedTool('line')} style={{ background: selectedTool==='line'?'#22c55e':'#222', color:'#fff', border:'none', borderRadius:'0.7rem', padding:'0.7rem 1.7rem', fontWeight:700, fontSize:'1.15rem', cursor:'pointer', boxShadow: selectedTool==='line'?'0 2px 8px #22c55e22':'none' }}>Linje</button>
-        <button onClick={() => setSelectedTool('move')} style={{ background: selectedTool==='move'?'#22c55e':'#222', color:'#fff', border:'none', borderRadius:'0.7rem', padding:'0.7rem 1.7rem', fontWeight:700, fontSize:'1.15rem', cursor:'pointer', boxShadow: selectedTool==='move'?'0 2px 8px #22c55e22':'none' }}>Flytta</button>
-        <button onClick={saveExercise} style={{ background:'#FFD600', color:'#222', border:'none', borderRadius:'0.7rem', padding:'0.7rem 1.7rem', fontWeight:700, fontSize:'1.15rem', cursor:'pointer' }}>Spara</button>
-        <button onClick={loadExercise} style={{ background:'#2196F3', color:'#fff', border:'none', borderRadius:'0.7rem', padding:'0.7rem 1.7rem', fontWeight:700, fontSize:'1.15rem', cursor:'pointer' }}>Ladda</button>
-        <span style={{ marginLeft: '1rem', fontWeight:700, color:'#22c55e', fontSize:'1.1rem' }}>Färg:</span>
-        {COLORS.map(c => (
-          <button key={c} onClick={() => setSelectedColor(c)} style={{ background:c, border:'2px solid #fff', borderRadius:'50%', width:32, height:32, marginRight:6, cursor:'pointer' }} />
-        ))}
-        <span style={{ marginLeft: '1rem', fontWeight:700, color:'#22c55e', fontSize:'1.1rem' }}>Typ:</span>
-        <select value={selectedMarkerType} onChange={e => setSelectedMarkerType(e.target.value as any)} style={{ fontWeight:700, borderRadius:'0.7rem', padding:'0.5rem 1.2rem', border:'2px solid #22c55e', background:'#fff', color:'#222', cursor:'pointer', fontSize:'1.1rem' }}>
-          <option value="default">Standard</option>
-          <option value="circle">Cirkel</option>
-          <option value="triangle">Triangel</option>
-          <option value="arrow">Pil</option>
-          <option value="text">Text</option>
-        </select>
+      <div className={styles.toolbarWrapper}>
+        <div className={styles.toolbar}>
+          <button onClick={() => setZoom(z => Math.max(0.5, z - 0.1))} className={`${styles.toolbarButton} ${styles.toolbarButtonActive}`}>-</button>
+          <span className={styles.toolbarZoom}>{(zoom*100).toFixed(0)}%</span>
+          <button onClick={() => setZoom(z => Math.min(2.5, z + 0.1))} className={`${styles.toolbarButton} ${styles.toolbarButtonActive}`}>+</button>
+          <button onClick={() => setSelectedTool('marker')} className={`${styles.toolbarButton} ${selectedTool==='marker'?styles.toolbarButtonActive:''}`}>Markör</button>
+          <button onClick={() => setSelectedTool('line')} className={`${styles.toolbarButton} ${selectedTool==='line'?styles.toolbarButtonActive:''}`}>Linje</button>
+          <button onClick={() => setSelectedTool('move')} className={`${styles.toolbarButton} ${selectedTool==='move'?styles.toolbarButtonActive:''}`}>Flytta</button>
+          <button onClick={saveExercise} className={`${styles.toolbarButton} ${styles.toolbarButtonSave}`}>Spara</button>
+          <button onClick={loadExercise} className={`${styles.toolbarButton} ${styles.toolbarButtonLoad}`}>Ladda</button>
+          <span className={styles.toolbarLabel}>Färg:</span>
+          {COLORS.map(c => (
+            <button
+              key={c}
+              onClick={() => setSelectedColor(c)}
+              className={`${styles.toolbarColor} ${styles['markerColor-' + c.replace('#', '')]}`}
+              title={`Välj färg: ${c}`}
+              aria-label={`Välj färg: ${c}`}
+            />
+          ))}
+          <span className={styles.toolbarLabel}>Typ:</span>
+          <select
+            value={selectedMarkerType}
+            onChange={e => setSelectedMarkerType(e.target.value as any)}
+            className={styles.toolbarSelect}
+            title="Välj markörtyp"
+          >
+            <option value="default">Standard</option>
+            <option value="circle">Cirkel</option>
+            <option value="triangle">Triangel</option>
+            <option value="arrow">Pil</option>
+            <option value="text">Text</option>
+          </select>
+        </div>
       </div>
       {/* Whiteboardyta med zoom/pan */}
       <div
-        style={{ flex: 1, position: 'relative', width: '100%', height: '100%', overflow: 'auto', background: '#f8fafc' }}
+  className={styles.whiteboardArea}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
@@ -302,20 +316,20 @@ const Whiteboard: React.FC = () => {
         onWheel={handleWheel}
       >
         <div
-          style={{
-            position:'absolute',
-            top:0,
-            left:0,
-            width:'100%',
-            height:'100%',
-            zIndex:0,
-            pointerEvents:'none',
-            transform: `scale(${zoom}) translate(${offset.x/zoom}px,${offset.y/zoom}px)`,
-            transformOrigin: '0 0',
-            transition: isPanning ? 'none' : 'transform 0.2s',
-          }}
+          className={`
+            ${styles.whiteboardSvgWrapper}
+            ${isPanning ? styles.noTransition : ''}
+          `}
+          data-zoom={zoom}
+          data-offset-x={offset.x}
+          data-offset-y={offset.y}
         >
-          <svg viewBox="0 0 900 360" width="100%" height="100%" style={{display:'block', height:'100%', width:'100%'}}>
+          <svg
+            viewBox="0 0 900 360"
+            width="100%"
+            height="100%"
+            className={styles.whiteboardSvg}
+          >
             {/* ...planen... */}
             <rect x="20" y="20" width="860" height="320" rx="40" fill="#f8fafc" stroke="#222" strokeWidth="5" />
             <line x1="450" y1="20" x2="450" y2="340" stroke="#222" strokeWidth="3" />
@@ -336,25 +350,33 @@ const Whiteboard: React.FC = () => {
           ref={canvasRef}
           width={900}
           height={360}
-          style={{ width: '100%', height: '100%', background: 'transparent', borderRadius: '1rem', boxShadow: '0 2px 8px #22c55e22', cursor: selectedTool==='move'?'grab':'crosshair', position:'absolute', left:0, top:0, zIndex:1,
-            transform: `scale(${zoom}) translate(${offset.x/zoom}px,${offset.y/zoom}px)`,
-            transformOrigin: '0 0',
-            transition: isPanning ? 'none' : 'transform 0.2s',
-          }}
+          className={`
+            ${styles.whiteboardCanvas}
+            ${selectedTool==='move'?styles.whiteboardCanvasMove:''}
+            ${styles.dynamicZoom}
+          `}
+          data-zoom={zoom}
+          data-offset-x={offset.x}
+          data-offset-y={offset.y}
+          data-panning={isPanning ? 'true' : 'false'}
           onClick={handleCanvasClick}
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}
         />
         {/* Lista markörer för inspelning/spelning */}
-        <div style={{ position:'absolute', bottom:24, left:24, display:'flex', gap:'1rem', flexWrap:'wrap', zIndex:2 }}>
-          {markers.map(marker => (
-            <div key={marker.id} style={{ background:'#fff', borderRadius:'0.7rem', boxShadow:'0 2px 8px #22c55e22', padding:'0.5rem 1rem', display:'flex', alignItems:'center', gap:'0.7rem' }}>
-              <span style={{ color:marker.color, fontWeight:700 }}>{marker.label}</span>
-              <button onClick={() => startRecording(marker.id)} style={{ background:'#FFD600', color:'#222', border:'none', borderRadius:'0.7rem', padding:'0.2rem 0.7rem', fontWeight:700, cursor:'pointer' }}>Spela in</button>
-              <button onClick={() => playPath(marker)} style={{ background:'#22c55e', color:'#fff', border:'none', borderRadius:'0.7rem', padding:'0.2rem 0.7rem', fontWeight:700, cursor:'pointer' }}>Spela upp</button>
+        <div className={styles.markerListAbsolute}>
+          <div className={styles.markerListWrapper}>
+            <div className={styles.markerList}>
+              {markers.map(marker => (
+                <div key={marker.id} className={styles.markerItem}>
+                  <span className={`${styles.markerLabel} ${styles['markerColor-' + marker.color.replace('#', '')]}`}>{marker.label}</span>
+                  <button onClick={() => startRecording(marker.id)} className={`${styles.markerButton} ${styles.markerButtonRecord}`}>Spela in</button>
+                  <button onClick={() => playPath(marker)} className={`${styles.markerButton} ${styles.markerButtonPlay}`}>Spela upp</button>
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
       </div>
     </div>

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { PostMatchFeedback } from "../../types/postmatch";
+import styles from "./PostMatchFeedback.module.css";
 
 interface Props {
   matchId: string;
@@ -35,20 +36,9 @@ const PostMatchFeedbackForm: React.FC<Props> = ({ matchId, userId, onSave }) => 
   return (
     <form
       onSubmit={handleSubmit}
-      style={{
-        background: "#22272e",
-        padding: 16,
-        borderRadius: 12,
-        maxWidth: 450,
-        margin: "16px auto",
-        color: "#fff",
-        fontFamily: "inherit",
-        display: "flex",
-        flexDirection: "column",
-        gap: 16,
-      }}
+      className={styles.formContainer}
     >
-      <h2 style={{ margin: 0, fontSize: 20, color: "#b8f27c", textAlign: "center" }}>
+      <h2 className={styles.formTitle}>
         Ge feedback på matchen
       </h2>
 
@@ -62,7 +52,7 @@ const PostMatchFeedbackForm: React.FC<Props> = ({ matchId, userId, onSave }) => 
           value={form.rating}
           onChange={handleChange}
           required
-          style={inputStyle}
+          className={styles.input}
         />
       </label>
 
@@ -73,58 +63,19 @@ const PostMatchFeedbackForm: React.FC<Props> = ({ matchId, userId, onSave }) => 
           value={form.comment}
           onChange={handleChange}
           rows={3}
-          style={textareaStyle}
+          className={styles.textarea}
         />
       </label>
 
       <button
         type="submit"
-        style={{
-          background: "#4a9d2c",
-          color: "#fff",
-          border: "none",
-          borderRadius: 8,
-          padding: "10px 0",
-          fontSize: 18,
-          cursor: "pointer",
-          fontWeight: 700,
-        }}
+        className={styles.formButton}
       >
         Skicka feedback
       </button>
-      <style>{`
-        @media (max-width: 600px) {
-          form {
-            padding: 8px;
-            border-radius: 0;
-            max-width: 98vw;
-          }
-          h2 {
-            font-size: 17px;
-          }
-          button {
-            font-size: 16px;
-          }
-        }
-      `}</style>
     </form>
   );
 };
 
-const inputStyle: React.CSSProperties = {
-  width: "100%",
-  padding: 8,
-  borderRadius: 6,
-  border: "1px solid #b8f27c",
-  marginTop: 4,
-  fontSize: 16,
-  background: "#181c1e",
-  color: "#fff",
-};
-
-const textareaStyle: React.CSSProperties = {
-  ...inputStyle,
-  resize: "vertical",
-};
 
 export default PostMatchFeedbackForm;

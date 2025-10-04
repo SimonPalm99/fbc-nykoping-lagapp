@@ -229,8 +229,7 @@ const RealTimeStats: React.FC<Props> = ({ activityId, onEventAdded, readonly = f
                   <button
                     key={eventType.type}
                     onClick={() => setSelectedEventType(eventType.type)}
-                    className={`event-type-btn ${selectedEventType === eventType.type ? "event-type-btn--active" : ""}`}
-                    style={{ backgroundColor: selectedEventType === eventType.type ? eventType.color : undefined }}
+                    className={`event-type-btn ${selectedEventType === eventType.type ? `event-type-btn--active event-type-btn--${eventType.type}` : ""}`}
                     title={eventType.description}
                   >
                     <span className="event-icon">{eventType.icon}</span>
@@ -241,8 +240,9 @@ const RealTimeStats: React.FC<Props> = ({ activityId, onEventAdded, readonly = f
             </div>
 
             <div className="form-group">
-              <label>Spelare:</label>
+              <label htmlFor="player-select">Spelare:</label>
               <select
+                id="player-select"
                 value={selectedPlayer}
                 onChange={(e) => setSelectedPlayer(e.target.value)}
                 className="player-select"
@@ -295,8 +295,7 @@ const RealTimeStats: React.FC<Props> = ({ activityId, onEventAdded, readonly = f
                         <div className="event-header">
                           <span className="event-time">{event.time}</span>
                           <span 
-                            className="event-type"
-                            style={{ color: eventTypeData?.color }}
+                            className={`event-type event-type--${eventTypeData?.type}`}
                           >
                             {eventTypeData?.icon} {event.type}
                           </span>

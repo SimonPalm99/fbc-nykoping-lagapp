@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import styles from "./ExcelTable.module.css";
 
 interface Cell {
   value: string;
@@ -125,70 +126,70 @@ const ExcelTable: React.FC<{ rows?: number; cols?: number }> = ({ rows = 5, cols
   };
 
   return (
-    <div>
-      <button onClick={() => setIsEditable(e => !e)} style={{ marginBottom: 12 }}>
+    <div className={styles.excelTable}>
+      <button onClick={() => setIsEditable(e => !e)} className={styles.excelTable__editBtn}>
         {isEditable ? "Lås tabell" : "Redigera tabell"}
       </button>
-      <table style={{ borderCollapse: "collapse", width: "100%", maxWidth: 600 }}>
-      <thead>
-        <tr>
-          <th></th>
-          {Array.from({ length: cols }, (_, c) => (
-            <th key={c} style={{ padding: 4 }}>{String.fromCharCode(65 + c)}</th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {cells.map((rowArr, r) => (
-          <tr key={r}>
-            <th style={{ padding: 4 }}>{r + 1}</th>
-            {rowArr.map((cell, c) => (
-              <td
-                key={c}
-                style={{
-                  border: `${cell.border?.width || 1}px ${cell.border?.style || "solid"} ${cell.border?.color || "#222"}`,
-                  minWidth: 80,
-                  padding: 6,
-                  position: "relative"
-                }}
-                onDoubleClick={() => isEditable && setEditingBorder({ row: r, col: c })}
-              >
-                <input
-                  type="text"
-                  value={cell.value}
-                  onChange={e => handleChange(r, c, e.target.value)}
-                  style={{ width: "100%", border: "none", background: "transparent", color: "#222", fontWeight: 700 }}
-                  placeholder="Värde eller formel"
-                  disabled={!isEditable}
-                />
-                <div style={{ fontSize: "0.9em", color: "#888" }}>
-                  {cell.formula ? parseFormula(cell.formula, cells) : ""}
-                </div>
-                <input
-                  type="text"
-                  value={cell.formula || ""}
-                  onChange={e => handleFormula(r, c, e.target.value)}
-                  style={{ width: "100%", border: "none", background: "#f5f5f5", color: "#1976d2", fontSize: "0.9em" }}
-                  placeholder="=SUM(A1:A3) eller =A1*B2"
-                  disabled={!isEditable}
-                />
-                {editingBorder && editingBorder.row === r && editingBorder.col === c && isEditable && (
-                  <div style={{ position: "absolute", top: 0, right: 0, background: "#fff", border: "1px solid #222", padding: 8, zIndex: 10 }}>
-                    <label>Färg: <input type="color" value={cell.border?.color || "#222"} onChange={e => handleBorderChange(r, c, { color: e.target.value })} disabled={!isEditable} /></label>
-                    <label>Tjocklek: <input type="number" min={1} max={8} value={cell.border?.width || 1} onChange={e => handleBorderChange(r, c, { width: Number(e.target.value) })} disabled={!isEditable} /></label>
-                    <label>Stil: <select value={cell.border?.style || "solid"} onChange={e => handleBorderChange(r, c, { style: e.target.value as any })} disabled={!isEditable}>
-                      <option value="solid">Solid</option>
-                      <option value="dashed">Streckad</option>
-                      <option value="dotted">Prickad</option>
-                    </select></label>
-                    <button onClick={() => setEditingBorder(null)} style={{ marginLeft: 8 }}>Stäng</button>
-                  </div>
-                )}
-              </td>
+      <table className={styles.excelTable__table}>
+        <thead>
+          <tr>
+            <th className={styles.excelTable__th}></th>
+            {Array.from({ length: cols }, (_, c) => (
+              <th key={c} className={styles.excelTable__th}>{String.fromCharCode(65 + c)}</th>
             ))}
           </tr>
-        ))}
-      </tbody>
+        </thead>
+        <tbody>
+          {cells.map((rowArr, r) => (
+            <tr key={r}>
+              <th className={styles.excelTable__th}>{r + 1}</th>
+              {rowArr.map((cell, c) => (
+                <td
+                  key={c}
+                  className={[
+                    styles.excelTable__td,
+                    styles[`excelTable__border_${cell.border?.style || "solid"}`]
+                  ].join(" ")}
+                  onDoubleClick={() => isEditable && setEditingBorder({ row: r, col: c })}
+                  data-border-width={cell.border?.width || 1}
+                  data-border-color={cell.border?.color || "#222"}
+                >
+                  <input
+                    type="text"
+                    value={cell.value}
+                    onChange={e => handleChange(r, c, e.target.value)}
+                    className={styles.excelTable__input}
+                    placeholder="Värde eller formel"
+                    disabled={!isEditable}
+                  />
+                  <div className={styles.excelTable__formulaResult}>
+                    {cell.formula ? parseFormula(cell.formula, cells) : ""}
+                  </div>
+                  <input
+                    type="text"
+                    value={cell.formula || ""}
+                    onChange={e => handleFormula(r, c, e.target.value)}
+                    className={styles.excelTable__formulaInput}
+                    placeholder="=SUM(A1:A3) eller =A1*B2"
+                    disabled={!isEditable}
+                  />
+                  {editingBorder && editingBorder.row === r && editingBorder.col === c && isEditable && (
+                    <div className={styles.excelTable__borderEditor}>
+                      <label>Färg: <input type="color" value={cell.border?.color || "#222"} onChange={e => handleBorderChange(r, c, { color: e.target.value })} disabled={!isEditable} /></label>
+                      <label>Tjocklek: <input type="number" min={1} max={8} value={cell.border?.width || 1} onChange={e => handleBorderChange(r, c, { width: Number(e.target.value) })} disabled={!isEditable} /></label>
+                      <label>Stil: <select value={cell.border?.style || "solid"} onChange={e => handleBorderChange(r, c, { style: e.target.value as any })} disabled={!isEditable}>
+                        <option value="solid">Solid</option>
+                        <option value="dashed">Streckad</option>
+                        <option value="dotted">Prickad</option>
+                      </select></label>
+                      <button onClick={() => setEditingBorder(null)} className={styles.excelTable__closeBtn}>Stäng</button>
+                    </div>
+                  )}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
       </table>
     </div>
   );

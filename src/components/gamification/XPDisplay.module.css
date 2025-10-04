@@ -1,0 +1,159 @@
+.xpDisplayHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+.xpDisplayHeaderLeft {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.xpDisplayGamingIcon {
+  color: #39ff14;
+  font-size: 0.875rem;
+  animation: pulse 1.2s infinite;
+}
+.xpDisplayHeaderRight {
+  text-align: right;
+}
+.xpDisplayNext {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+.xpDisplayContainer {
+  border-radius: 0.75rem;
+  border: 1px solid var(--border-color, #e5e7eb);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  position: relative;
+  overflow: hidden;
+  background: var(--bg, #fff);
+  color: var(--text, #222);
+}
+.xpDisplayContainer--gaming {
+  background: linear-gradient(135deg, #111 0%, #222 100%);
+  color: #39ff14;
+  border-color: #39ff14;
+}
+.xpDisplayContainer--minimal {
+  background: #fff;
+  color: #222;
+  border-color: #e5e7eb;
+}
+.xpDisplayLevel {
+  font-weight: bold;
+}
+.xpDisplayLevel--gaming {
+  color: #ffd600;
+}
+.xpDisplayLevel--minimal {
+  color: #2563eb;
+}
+.xpDisplayLevel--default {
+  color: #2563eb;
+}
+.xpDisplayXP {
+  font-weight: 600;
+}
+.xpDisplayProgressBar {
+  width: 100%;
+  border-radius: 999px;
+  overflow: hidden;
+  position: relative;
+}
+.xpDisplayProgress {
+  border-radius: 999px;
+  transition: width 0.7s cubic-bezier(0.4,0,0.2,1);
+  position: relative;
+  overflow: hidden;
+  width: var(--xp-progress-width, 0%);
+}
+.xpDisplayProgress--gaming {
+  background: #39ff14;
+}
+.xpDisplayProgress--minimal {
+  background: #2563eb;
+}
+.xpDisplayProgress--default {
+  background: linear-gradient(90deg, #2563eb 0%, #a855f7 50%, #ec4899 100%);
+}
+.xpDisplayProgressBg {
+  background: #e5e7eb;
+}
+.xpDisplayProgressBg--gaming {
+  background: #222;
+}
+.xpDisplayProgressBg--minimal {
+  background: #e5e7eb;
+}
+.xpDisplayProgressBg--default {
+  background: #e5e7eb;
+}
+.xpDisplayRecentGain {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  pointer-events: none;
+  color: #39ff14;
+  font-weight: bold;
+  font-size: 1.125rem;
+  animation: bounce 0.8s;
+}
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.xpDisplayShimmer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 0%, #fff 50%, transparent 100%);
+  opacity: 0.3;
+  animation: shimmer 2s infinite linear;
+}
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+.xpDisplayExtras {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.xpDisplayExtrasPing {
+  position: absolute;
+  top: 0.25rem;
+  left: 0.25rem;
+  width: 0.5rem;
+  height: 0.5rem;
+  background: #39ff14;
+  border-radius: 999px;
+  opacity: 0.75;
+  animation: ping 1.2s infinite;
+}
+@keyframes ping {
+  0% { transform: scale(1); opacity: 0.75; }
+  80% { transform: scale(2); opacity: 0; }
+  100% { transform: scale(2); opacity: 0; }
+}
+.xpDisplayExtrasPulse {
+  position: absolute;
+  bottom: 0.25rem;
+  right: 0.25rem;
+  width: 0.25rem;
+  height: 0.25rem;
+  background: #ffd600;
+  border-radius: 999px;
+  animation: pulse 1.2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+.xpDisplayFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  color: #6b7280;
+}

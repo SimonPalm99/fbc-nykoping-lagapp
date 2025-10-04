@@ -4,7 +4,7 @@
 
 import React, { createContext, useContext, useState, useCallback, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import './Notification.css';
+import styles from './Notification.module.css';
 
 export type NotificationType = 'success' | 'error' | 'warning' | 'info';
 export type NotificationPosition = 
@@ -59,6 +59,10 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
     return `notification-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
   }, []);
 
+  const hide = useCallback((id: string) => {
+    setNotifications(prev => prev.filter(notification => notification.id !== id));
+  }, []);
+
   const show = useCallback((options: NotificationOptions): string => {
     const id = generateId();
     const notification: Notification = {
@@ -82,11 +86,7 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
     }
 
     return id;
-  }, [generateId]);
-
-  const hide = useCallback((id: string) => {
-    setNotifications(prev => prev.filter(notification => notification.id !== id));
-  }, []);
+  }, [generateId, hide]);
 
   const hideAll = useCallback(() => {
     setNotifications([]);
@@ -271,41 +271,38 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ notification }) => 
 
   return (
     <div
-      className={`
-        notification
-        notification-${notification.type}
-        ${isExiting ? 'notification-exit' : 'notification-enter'}
-      `}
+      className={
+        `${styles.notification} ` +
+        styles[`notification-${notification.type}`] + ' ' +
+        (isExiting ? styles['notification-exit'] : styles['notification-enter'])
+      }
       role="alert"
       aria-live="polite"
     >
-      <div className="notification-icon">
+      <div className={styles['notification-icon']}>
         {getIcon()}
       </div>
-      
-      <div className="notification-content">
+      <div className={styles['notification-content']}>
         {notification.title && (
-          <div className="notification-title">
+          <div className={styles['notification-title']}>
             {notification.title}
           </div>
         )}
-        <div className="notification-message">
+        <div className={styles['notification-message']}>
           {notification.message}
         </div>
-        
         {notification.action && (
           <button
-            className="notification-action"
+            className={styles['notification-action']}
             onClick={handleAction}
           >
             {notification.action.text}
           </button>
         )}
       </div>
-      
       {notification.showClose && notification.closable && (
         <button
-          className="notification-close"
+          className={styles['notification-close']}
           onClick={handleClose}
           aria-label="Stäng notifiering"
         >
@@ -320,13 +317,10 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ notification }) => 
           </svg>
         </button>
       )}
-      
       {notification.duration && notification.duration > 0 && (
         <div
-          className="notification-progress"
-          style={{
-            animationDuration: `${notification.duration}ms`
-          }}
+          className={styles['notification-progress']}
+          data-duration={notification.duration}
         />
       )}
     </div>

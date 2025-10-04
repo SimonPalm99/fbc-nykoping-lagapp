@@ -283,7 +283,16 @@
   box-shadow: var(--shadow-sm);
   border: 1px solid var(--border-color);
   overflow-x: auto;
-  scrollbar-width: none;
+  /* Chrome, Safari, Edge */
+  &::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+  }
+  /* Chrome, Safari, Edge */
+  &::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+  }
   -ms-overflow-style: none;
 }
 

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { StatisticEvent } from "../../types/statistics";
-import MatchStats from "./MatchStats";
+import { MatchStats } from "./MatchStats";
+import styles from "./PostMatchAnalysis.module.css";
 
 interface Props {
   matchId: string;
@@ -72,61 +73,32 @@ const PostMatchAnalysis: React.FC<Props> = ({
   ];
 
   return (
-    <div style={{ 
-      background: "#1a202c", 
-      padding: "20px", 
-      borderRadius: "12px",
-      color: "#fff"
-    }}>
+    <div className={styles["postmatch-root"]}>
       {/* Header */}
-      <div style={{ 
-        display: "flex", 
-        justifyContent: "space-between", 
-        alignItems: "flex-start",
-        marginBottom: "20px",
-        flexWrap: "wrap",
-        gap: "16px"
-      }}>
+      <div className={styles["postmatch-header"]}>
         <div>
-          <h2 style={{ margin: "0 0 8px 0", fontSize: "1.5rem", fontWeight: "700" }}>
-            {matchTitle}
-          </h2>
-          <div style={{ color: "#a0aec0", fontSize: "14px" }}>
-            {new Date(matchDate).toLocaleDateString("sv-SE")} vs {opponent}
-          </div>
-          <div style={{ 
-            fontSize: "24px", 
-            fontWeight: "bold", 
-            marginTop: "8px",
-            color: finalScore.home > finalScore.away ? "#10b981" : 
-                  finalScore.home < finalScore.away ? "#ef4444" : "#f59e0b"
-          }}>
+          <h2 className={styles["postmatch-title"]}>{matchTitle}</h2>
+          <div className={styles["postmatch-date"]}>{new Date(matchDate).toLocaleDateString("sv-SE")} vs {opponent}</div>
+          <div className={
+            styles["postmatch-score"] + " " + (
+              finalScore.home > finalScore.away ? styles["postmatch-score-win"] :
+              finalScore.home < finalScore.away ? styles["postmatch-score-loss"] :
+              styles["postmatch-score-draw"]
+            )
+          }>
             {finalScore.home} - {finalScore.away}
-            <span style={{ 
-              fontSize: "14px", 
-              marginLeft: "8px",
-              color: "#a0aec0",
-              fontWeight: "normal"
-            }}>
+            <span className={styles["postmatch-score-status"]}>
               {finalScore.home > finalScore.away ? "(Vinst)" : 
                finalScore.home < finalScore.away ? "(Förlust)" : "(Oavgjort)"}
             </span>
           </div>
         </div>
 
-        <div style={{ display: "flex", gap: "8px" }}>
+        <div className={styles["postmatch-actions"]}>
           {onExportReport && (
             <button
               onClick={() => onExportReport(matchId)}
-              style={{
-                padding: "8px 16px",
-                background: "#3b82f6",
-                border: "none",
-                borderRadius: "8px",
-                color: "#fff",
-                cursor: "pointer",
-                fontWeight: "600"
-              }}
+              className={styles["postmatch-export-btn"]}
             >
               📄 Exportera rapport
             </button>
@@ -135,26 +107,14 @@ const PostMatchAnalysis: React.FC<Props> = ({
       </div>
 
       {/* Tabs */}
-      <div style={{ 
-        display: "flex", 
-        gap: "8px", 
-        marginBottom: "20px",
-        borderBottom: "1px solid #4a5568",
-        paddingBottom: "10px"
-      }}>
+      <div className={styles["postmatch-tabs"]}>
         {tabs.map(tab => (
           <button
             key={tab.id}
             onClick={() => setSelectedTab(tab.id as any)}
-            style={{
-              padding: "8px 16px",
-              background: selectedTab === tab.id ? "#3b82f6" : "#4a5568",
-              border: "none",
-              borderRadius: "6px",
-              color: "#fff",
-              cursor: "pointer",
-              fontWeight: selectedTab === tab.id ? "600" : "normal"
-            }}
+            className={
+              styles["postmatch-tab-btn"] + (selectedTab === tab.id ? " " + styles["postmatch-tab-btn-active"] : "")
+            }
           >
             {tab.icon} {tab.name}
           </button>
@@ -165,173 +125,67 @@ const PostMatchAnalysis: React.FC<Props> = ({
       {selectedTab === "summary" && (
         <div>
           {/* Snabbstatistik */}
-          <div style={{ 
-            display: "grid", 
-            gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))",
-            gap: "16px",
-            marginBottom: "24px"
-          }}>
-            <div style={{ 
-              background: "#2d3748", 
-              padding: "16px", 
-              borderRadius: "8px",
-              textAlign: "center"
-            }}>
-              <div style={{ fontSize: "20px", fontWeight: "bold", color: "#10b981" }}>
-                {matchSummary.goals}
-              </div>
-              <div style={{ fontSize: "12px", color: "#a0aec0" }}>Mål</div>
+          <div className={styles["postmatch-summary-grid"]}>
+            <div className={styles["postmatch-summary-box"]}>
+              <div className={styles["postmatch-summary-value"] + " " + styles["postmatch-summary-goals"]}>{matchSummary.goals}</div>
+              <div className={styles["postmatch-summary-label"]}>Mål</div>
             </div>
-            <div style={{ 
-              background: "#2d3748", 
-              padding: "16px", 
-              borderRadius: "8px",
-              textAlign: "center"
-            }}>
-              <div style={{ fontSize: "20px", fontWeight: "bold", color: "#3b82f6" }}>
-                {matchSummary.shots}
-              </div>
-              <div style={{ fontSize: "12px", color: "#a0aec0" }}>Skott</div>
+            <div className={styles["postmatch-summary-box"]}>
+              <div className={styles["postmatch-summary-value"] + " " + styles["postmatch-summary-shots"]}>{matchSummary.shots}</div>
+              <div className={styles["postmatch-summary-label"]}>Skott</div>
             </div>
-            <div style={{ 
-              background: "#2d3748", 
-              padding: "16px", 
-              borderRadius: "8px",
-              textAlign: "center"
-            }}>
-              <div style={{ fontSize: "20px", fontWeight: "bold", color: "#8b5cf6" }}>
-                {matchSummary.saves}
-              </div>
-              <div style={{ fontSize: "12px", color: "#a0aec0" }}>Räddningar</div>
+            <div className={styles["postmatch-summary-box"]}>
+              <div className={styles["postmatch-summary-value"] + " " + styles["postmatch-summary-saves"]}>{matchSummary.saves}</div>
+              <div className={styles["postmatch-summary-label"]}>Räddningar</div>
             </div>
-            <div style={{ 
-              background: "#2d3748", 
-              padding: "16px", 
-              borderRadius: "8px",
-              textAlign: "center"
-            }}>
-              <div style={{ fontSize: "20px", fontWeight: "bold", color: "#ef4444" }}>
-                {matchSummary.penalties}
-              </div>
-              <div style={{ fontSize: "12px", color: "#a0aec0" }}>Utvisningar</div>
+            <div className={styles["postmatch-summary-box"]}>
+              <div className={styles["postmatch-summary-value"] + " " + styles["postmatch-summary-penalties"]}>{matchSummary.penalties}</div>
+              <div className={styles["postmatch-summary-label"]}>Utvisningar</div>
             </div>
           </div>
 
           {/* MVP och Nyckelspelare */}
           {matchSummary.mvp && (
-            <div style={{ 
-              background: "#2d3748", 
-              padding: "20px", 
-              borderRadius: "8px",
-              marginBottom: "20px"
-            }}>
-              <h3 style={{ margin: "0 0 16px 0", color: "#f59e0b" }}>
-                🏆 Match MVP
-              </h3>
-              <div style={{ 
-                display: "flex", 
-                alignItems: "center", 
-                gap: "16px",
-                padding: "16px",
-                background: "linear-gradient(135deg, #f59e0b, #d97706)",
-                borderRadius: "8px"
-              }}>
-                <div style={{ 
-                  width: "60px", 
-                  height: "60px", 
-                  borderRadius: "50%",
-                  background: "#fff",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: "24px",
-                  fontWeight: "bold",
-                  color: "#d97706"
-                }}>
-                  #{matchSummary.mvp.jerseyNumber}
-                </div>
+            <div className={styles["postmatch-mvp"]}>
+              <h3 className={styles["postmatch-mvp-title"]}>🏆 Match MVP</h3>
+              <div className={styles["postmatch-mvp-box"]}>
+                <div className={styles["postmatch-mvp-avatar"]}>#{matchSummary.mvp.jerseyNumber}</div>
                 <div>
-                  <div style={{ fontSize: "18px", fontWeight: "bold", color: "#fff" }}>
-                    {matchSummary.mvp.name}
-                  </div>
-                  <div style={{ color: "#fef3c7", fontSize: "14px" }}>
-                    {matchSummary.mvp.position}
-                  </div>
-                  <div style={{ color: "#fff", fontWeight: "600", marginTop: "4px" }}>
-                    {matchSummary.mvp.goals} mål, {matchSummary.mvp.assists} assist = {matchSummary.mvp.points} poäng
-                  </div>
+                  <div className={styles["postmatch-mvp-name"]}>{matchSummary.mvp.name}</div>
+                  <div className={styles["postmatch-mvp-position"]}>{matchSummary.mvp.position}</div>
+                  <div className={styles["postmatch-mvp-points"]}>{matchSummary.mvp.goals} mål, {matchSummary.mvp.assists} assist = {matchSummary.mvp.points} poäng</div>
                 </div>
               </div>
             </div>
           )}
 
           {/* Specialteams */}
-          <div style={{ 
-            background: "#2d3748", 
-            padding: "20px", 
-            borderRadius: "8px",
-            marginBottom: "20px"
-          }}>
-            <h3 style={{ margin: "0 0 16px 0" }}>⚡ Specialteams</h3>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+          <div className={styles["postmatch-specialteams"]}>
+            <h3 className={styles["postmatch-specialteams-title"]}>⚡ Specialteams</h3>
+            <div className={styles["postmatch-specialteams-grid"]}>
               <div>
-                <div style={{ 
-                  display: "flex", 
-                  justifyContent: "space-between",
-                  padding: "8px",
-                  background: "#1a202c",
-                  borderRadius: "6px"
-                }}>
+                <div className={styles["postmatch-specialteams-box"]}>
                   <span>Powerplay-mål</span>
-                  <span style={{ color: "#10b981", fontWeight: "600" }}>
-                    {matchSummary.powerplayGoals}
-                  </span>
+                  <span className={styles["postmatch-specialteams-goals"]}>{matchSummary.powerplayGoals}</span>
                 </div>
-                <div style={{ 
-                  display: "flex", 
-                  justifyContent: "space-between",
-                  padding: "8px",
-                  background: "#1a202c",
-                  borderRadius: "6px",
-                  marginTop: "4px"
-                }}>
+                <div className={styles["postmatch-specialteams-box"] + " " + styles["postmatch-specialteams-box-margin"]}>
                   <span>Powerplay-chanser</span>
-                  <span style={{ fontWeight: "600" }}>
-                    {matchSummary.powerplayChances}
-                  </span>
+                  <span className={styles["postmatch-specialteams-chances"]}>{matchSummary.powerplayChances}</span>
                 </div>
               </div>
               <div>
-                <div style={{ 
-                  display: "flex", 
-                  justifyContent: "space-between",
-                  padding: "8px",
-                  background: "#1a202c",
-                  borderRadius: "6px"
-                }}>
+                <div className={styles["postmatch-specialteams-box"]}>
                   <span>PP-effektivitet</span>
-                  <span style={{ color: "#3b82f6", fontWeight: "600" }}>
-                    {matchSummary.powerplayChances > 0 ? 
-                      ((matchSummary.powerplayGoals / matchSummary.powerplayChances) * 100).toFixed(1) + "%" 
-                      : "0%"
-                    }
-                  </span>
+                  <span className={styles["postmatch-specialteams-eff"]}>{matchSummary.powerplayChances > 0 ? ((matchSummary.powerplayGoals / matchSummary.powerplayChances) * 100).toFixed(1) + "%" : "0%"}</span>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Tidslinje med viktiga händelser */}
-          <div style={{ 
-            background: "#2d3748", 
-            padding: "20px", 
-            borderRadius: "8px"
-          }}>
-            <h3 style={{ margin: "0 0 16px 0" }}>📅 Matchens viktiga händelser</h3>
-            <div style={{ 
-              maxHeight: "300px", 
-              overflowY: "auto"
-            }}>
+          <div className={styles["postmatch-timeline"]}>
+            <h3 className={styles["postmatch-timeline-title"]}>📅 Matchens viktiga händelser</h3>
+            <div className={styles["postmatch-timeline-list"]}>
               {events
                 .filter(e => e.type === "mål" || e.type === "utvisning")
                 .sort((a, b) => a.time.localeCompare(b.time))
@@ -340,46 +194,20 @@ const PostMatchAnalysis: React.FC<Props> = ({
                   return (
                     <div
                       key={event.id}
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "12px",
-                        padding: "12px",
-                        margin: "8px 0",
-                        background: "#1a202c",
-                        borderRadius: "6px",
-                        borderLeft: `4px solid ${event.type === "mål" ? "#10b981" : "#ef4444"}`
-                      }}
+                      className={
+                        styles["postmatch-timeline-event"] + " " + (event.type === "mål" ? styles["postmatch-timeline-event-goal"] : styles["postmatch-timeline-event-penalty"])
+                      }
                     >
-                      <span style={{ 
-                        fontWeight: "bold", 
-                        background: "#4a5568", 
-                        padding: "4px 8px", 
-                        borderRadius: "4px",
-                        fontSize: "12px",
-                        minWidth: "50px",
-                        textAlign: "center"
-                      }}>
-                        {event.time}
-                      </span>
-                      <span style={{ 
-                        fontSize: "16px",
-                        color: event.type === "mål" ? "#10b981" : "#ef4444"
-                      }}>
+                      <span className={styles["postmatch-timeline-time"]}>{event.time}</span>
+                      <span className={event.type === "mål" ? styles["postmatch-timeline-icon-goal"] : styles["postmatch-timeline-icon-penalty"]}>
                         {event.type === "mål" ? "⚽" : "🟨"}
                       </span>
                       <div>
-                        <div style={{ fontWeight: "600" }}>
+                        <div className={styles["postmatch-timeline-event-info"]}>
                           {event.type === "mål" ? "MÅL" : "UTVISNING"} - #{player?.jerseyNumber} {player?.name}
                         </div>
                         {event.comment && (
-                          <div style={{ 
-                            fontSize: "12px", 
-                            color: "#a0aec0",
-                            fontStyle: "italic"
-                          }}>
-                            {event.comment}
-                          </div>
+                          <div className={styles["postmatch-timeline-comment"]}>{event.comment}</div>
                         )}
                       </div>
                     </div>
@@ -402,68 +230,35 @@ const PostMatchAnalysis: React.FC<Props> = ({
       {selectedTab === "video" && (
         <div>
           {videoEvents.length === 0 ? (
-            <div style={{ 
-              textAlign: "center", 
-              padding: "40px",
-              color: "#a0aec0"
-            }}>
-              <div style={{ fontSize: "48px", marginBottom: "16px" }}>🎥</div>
+            <div className={styles["postmatch-video"]}>
+              <div className={styles["postmatch-video-icon"]}>🎥</div>
               <h3>Inga videoklipp länkade</h3>
               <p>Länka videoklipp till händelser för att se dem här</p>
             </div>
           ) : (
             <div>
-              <h3 style={{ marginBottom: "16px" }}>🎥 Länkade videoklipp ({videoEvents.length})</h3>
-              <div style={{ display: "grid", gap: "16px" }}>
+              <h3 className={styles["postmatch-video-list-title"]}>🎥 Länkade videoklipp ({videoEvents.length})</h3>
+              <div className={styles["postmatch-video-list"]}>
                 {videoEvents.map(event => {
                   const player = players.find(p => p.id === event.userId);
                   return (
                     <div
                       key={event.id}
-                      style={{
-                        background: "#2d3748",
-                        padding: "16px",
-                        borderRadius: "8px",
-                        border: "1px solid #10b981"
-                      }}
+                      className={styles["postmatch-video-item"]}
                     >
-                      <div style={{ 
-                        display: "flex", 
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        marginBottom: "8px"
-                      }}>
+                      <div className={styles["postmatch-video-item-header"]}>
                         <div>
-                          <span style={{ 
-                            fontWeight: "bold",
-                            background: "#4a5568",
-                            padding: "2px 6px",
-                            borderRadius: "4px",
-                            fontSize: "12px"
-                          }}>
-                            {event.time}
-                          </span>
-                          <span style={{ marginLeft: "8px", fontWeight: "600" }}>
+                          <span className={styles["postmatch-video-time"]}>{event.time}</span>
+                          <span className={styles["postmatch-video-player"]}>
                             {event.type} - #{player?.jerseyNumber} {player?.name}
                           </span>
                         </div>
-                        <span style={{ 
-                          background: "#10b981",
-                          color: "#fff",
-                          padding: "4px 8px",
-                          borderRadius: "4px",
-                          fontSize: "12px",
-                          fontWeight: "600"
-                        }}>
+                        <span className={styles["postmatch-video-timestamp"]}>
                           📹 {event.videoTimestamp}
                         </span>
                       </div>
                       {event.comment && (
-                        <div style={{ 
-                          fontSize: "14px", 
-                          color: "#a0aec0",
-                          fontStyle: "italic"
-                        }}>
+                        <div className={styles["postmatch-video-comment"]}>
                           "{event.comment}"
                         </div>
                       )}

@@ -327,10 +327,8 @@ export const SearchInput: React.FC<SearchInputProps> = ({
             className="search-input-field"
             aria-label={ariaLabel}
             aria-describedby={ariaDescribedby}
-            aria-expanded={isOpen}
-            aria-haspopup="listbox"
             aria-autocomplete="list"
-            aria-activedescendant={activeIndex >= 0 ? `suggestion-${activeIndex}` : undefined}
+            title={ariaLabel || placeholder}
           />
           
           <div className="search-input-actions">
@@ -406,6 +404,7 @@ export const SearchInput: React.FC<SearchInputProps> = ({
           ref={suggestionsRef}
           className="search-suggestions"
           role="listbox"
+          title="Sökförslag"
         >
           {Object.entries(groupedSuggestions).map(([category, categorySuggestions]) => (
             <div key={category} className="search-suggestions-group">

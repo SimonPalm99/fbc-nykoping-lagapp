@@ -1,0 +1,282 @@
+.quickStatsSkeletonMarginTop {
+  margin-top: 0.5rem;
+}
+.quickStatsSkeletonMarginTopSmall {
+  margin-top: 0.25rem;
+}
+ .skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  opacity: 0.7;
+}
+.skeleton[data-width] {
+  width: attr(data-width);
+}
+.skeleton[data-height] {
+  height: attr(data-height);
+}
+.skeleton[data-radius] {
+  border-radius: attr(data-radius);
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.activityCardSkeleton {
+  background: var(--card-background);
+  border-radius: 16px;
+  padding: 1.25rem;
+  border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.activityCardSkeletonRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.activityCardSkeletonText {
+  flex: 1;
+}
+.activityCardSkeletonMargin {
+  margin-top: 0.5rem;
+}
+
+.newsCardSkeleton {
+  background: var(--card-background);
+  border-radius: 16px;
+  padding: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border: 1px solid var(--border-color);
+}
+.newsCardSkeletonText {
+  flex: 1;
+}
+.newsCardSkeletonMargin {
+  margin: 0.5rem 0;
+}
+
+.goalProgressSkeleton {
+  background: var(--card-background);
+  border-radius: 16px;
+  padding: 1.25rem;
+  border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.goalProgressSkeletonRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.goalProgressSkeletonText {
+  flex: 1;
+}
+.goalProgressSkeletonMargin {
+  margin-top: 0.5rem;
+}
+
+.quickStatsSkeleton {
+  background: var(--card-background);
+  border-radius: 16px;
+  padding: 1.5rem;
+  border: 1px solid var(--border-color);
+}
+.quickStatsSkeletonGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.quickStatsSkeletonItem {
+  text-align: center;
+  padding: 1rem 0.5rem;
+  border-radius: 12px;
+  background: rgba(0,0,0,0.02);
+}
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.profileHeaderSkeleton {
+  background: var(--card-background);
+  border-radius: 20px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  animation: fadeIn 0.6s ease-out;
+}
+.profileHeaderSkeletonRow {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+}
+.profileHeaderSkeletonAvatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: linear-gradient(90deg, var(--bg-tertiary) 0%, var(--bg-accent) 50%, var(--bg-tertiary) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+.profileHeaderSkeletonText {
+  flex: 1;
+}
+.profileHeaderSkeletonTitle {
+  width: 200px;
+  height: 32px;
+  border-radius: 8px;
+  background: linear-gradient(90deg, var(--bg-tertiary) 0%, var(--bg-accent) 50%, var(--bg-tertiary) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  margin-bottom: 1rem;
+}
+.profileHeaderSkeletonSubtitle {
+  width: 150px;
+  height: 20px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, var(--bg-tertiary) 0%, var(--bg-accent) 50%, var(--bg-tertiary) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  margin-bottom: 1.5rem;
+}
+.profileHeaderSkeletonStats {
+  display: flex;
+  gap: 2rem;
+}
+.profileHeaderSkeletonStat {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  background: linear-gradient(90deg, var(--bg-tertiary) 0%, var(--bg-accent) 50%, var(--bg-tertiary) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.profileStatsSkeleton {
+  background: var(--card-background);
+  border-radius: 16px;
+  padding: 1.5rem;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  animation: fadeIn 0.6s ease-out 0.2s both;
+}
+.profileStatsSkeletonTitle {
+  width: 120px;
+  height: 24px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, var(--bg-tertiary) 0%, var(--bg-accent) 50%, var(--bg-tertiary) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  margin-bottom: 1rem;
+}
+.profileStatsSkeletonGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+}
+.profileStatsSkeletonItem {
+  text-align: center;
+  padding: 1rem;
+  border-radius: 12px;
+  background: var(--bg-tertiary);
+}
+.profileStatsSkeletonAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(90deg, var(--bg-accent) 0%, var(--border-primary) 50%, var(--bg-accent) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  margin: 0 auto 0.5rem auto;
+}
+.profileStatsSkeletonStat {
+  width: 30px;
+  height: 20px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--bg-accent) 0%, var(--border-primary) 50%, var(--bg-accent) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  margin: 0 auto 0.25rem auto;
+}
+.profileStatsSkeletonLabel {
+  width: 50px;
+  height: 16px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--bg-accent) 0%, var(--border-primary) 50%, var(--bg-accent) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  margin: 0 auto;
+}
+
+.profileBadgesSkeleton {
+  background: var(--card-background);
+  border-radius: 16px;
+  padding: 1.5rem;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  animation: fadeIn 0.6s ease-out 0.4s both;
+}
+.profileBadgesSkeletonTitle {
+  width: 150px;
+  height: 24px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, var(--bg-tertiary) 0%, var(--bg-accent) 50%, var(--bg-tertiary) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  margin-bottom: 1rem;
+}
+.profileBadgesSkeletonGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+.profileBadgesSkeletonItem {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 12px;
+  background: var(--bg-tertiary);
+}
+.profileBadgesSkeletonAvatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(90deg, var(--bg-accent) 0%, var(--border-primary) 50%, var(--bg-accent) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+.profileBadgesSkeletonText {
+  flex: 1;
+}
+.profileBadgesSkeletonLabel {
+  width: 100px;
+  height: 18px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--bg-accent) 0%, var(--border-primary) 50%, var(--bg-accent) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  margin-bottom: 0.5rem;
+}
+.profileBadgesSkeletonDesc {
+  width: 80px;
+  height: 14px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--bg-accent) 0%, var(--border-primary) 50%, var(--bg-accent) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

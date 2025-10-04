@@ -1,0 +1,140 @@
+/* AbsenceForm.module.css - flyttad styling från AbsenceForm.tsx */
+.absenceForm {
+  background: #2d3748;
+  padding: 20px;
+  border-radius: 12px;
+  margin: 16px 0;
+  color: #fff;
+}
+.absenceFormTitle {
+  margin: 0 0 16px 0;
+  font-size: 18px;
+}
+.absenceFormTitleAbsent {
+  color: #f56565;
+}
+.absenceFormTitlePresent {
+  color: #b8f27c;
+}
+.absenceDeadline {
+  background: #ed8936;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+.absenceInfo {
+  background: #f56565;
+  color: #fff;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+}
+.absenceInfoIcon {
+  font-size: 20px;
+  margin-right: 8px;
+}
+.absenceInfoText {
+  font-weight: 600;
+}
+.absenceInfoReason {
+  font-size: 14px;
+  opacity: 0.9;
+}
+.absenceInfoDate {
+  font-size: 12px;
+  opacity: 0.8;
+}
+.absenceCancelBtn {
+  background: #48bb78;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.absenceCancelBtn[disabled] {
+  background: #4a5568;
+  cursor: not-allowed;
+}
+.absenceCommonReasons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.absenceCommonReasonBtn {
+  background: transparent;
+  color: #fff;
+  border: 1px solid #4a5568;
+  padding: 6px 12px;
+  border-radius: 16px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.absenceCommonReasonBtn.selected {
+  background: #3182ce;
+}
+.absenceTextarea {
+  width: 100%;
+  padding: 12px;
+  background: #1a202c;
+  border: 1px solid #4a5568;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 14px;
+  resize: vertical;
+  font-family: inherit;
+}
+.absenceWarning {
+  background: #fed7d7;
+  color: #c53030;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+.absenceWarningTitle {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.absenceWarningList {
+  margin: 0;
+  padding-left: 16px;
+}
+.absenceSubmitBtn {
+  background: #f56565;
+  color: #fff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  flex: 1;
+}
+.absenceSubmitBtn[disabled] {
+  background: #4a5568;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+.absenceDeadlinePassed {
+  background: #fed7d7;
+  color: #c53030;
+  padding: 12px;
+  border-radius: 8px;
+  margin: 16px 0;
+  text-align: center;
+}
+.absenceDeadlinePassedTitle {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.absenceDeadlinePassedText {
+  font-size: 14px;
+}

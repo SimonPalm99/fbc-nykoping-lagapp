@@ -1,0 +1,279 @@
+.grid-margin-bottom {
+  margin-bottom: 2rem;
+}
+
+.container {
+  background: #1a1a1a;
+  min-height: 100vh;
+  color: #ffffff;
+  padding: 20px;
+}
+.header {
+  background: linear-gradient(135deg, #262626, #1a1a1a);
+  border-radius: 16px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  border: 1px solid #333;
+}
+.header-title {
+  font-size: 2.5rem;
+  margin: 0 0 1rem 0;
+  font-weight: 700;
+  background: linear-gradient(135deg, #10b981, #3b82f6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.header-subtitle {
+  font-size: 1.25rem;
+  color: #ccc;
+  margin-bottom: 1rem;
+}
+.confirm-status {
+  background: #333;
+  border-radius: 12px;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+.confirm-status-label {
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+  color: #ccc;
+}
+.confirm-bar {
+  background: #1a1a1a;
+  border-radius: 8px;
+  height: 8px;
+  overflow: hidden;
+}
+.confirm-bar-fill {
+  background: linear-gradient(90deg, #10b981, #3b82f6);
+  height: 100%;
+  transition: width 0.3s ease;
+}
+.confirm-btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+  background: var(--primary-color);
+  color: #fff;
+  margin-top: 1rem;
+}
+.confirm-btn-confirmed {
+  background: #10b981;
+  opacity: 0.7;
+}
+.tabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #333;
+  padding-bottom: 1rem;
+  overflow-x: auto;
+}
+.tab {
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  border: 1px solid #333;
+  background: #262626;
+  color: #ccc;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+  white-space: nowrap;
+  min-width: 120px;
+}
+.tab-active {
+  background: var(--primary-color);
+  color: #fff;
+  border-color: var(--primary-color);
+}
+.card {
+  background: #262626;
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid #333;
+  margin-bottom: 1rem;
+}
+.card-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+.card-title-blue {
+  color: #3b82f6;
+}
+.card-title-orange {
+  color: #f59e0b;
+}
+.card-title-green {
+  color: #10b981;
+}
+.card-title-purple {
+  color: #8b5cf6;
+}
+.card-label {
+  color: #ccc;
+}
+.keys-list {
+  margin: 0;
+  padding-left: 1.5rem;
+  color: #ccc;
+}
+.keys-list-item {
+  margin-bottom: 0.5rem;
+}
+.coach-notes-title {
+  color: #10b981;
+  margin-bottom: 1rem;
+}
+.coach-notes {
+  margin: 0;
+  color: #ccc;
+  line-height: 1.6;
+}
+.grid {
+  display: grid;
+  gap: 1rem;
+}
+.grid-auto {
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+.formation-card {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.formation-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.formation-card-title {
+  margin: 0 0 0.5rem 0;
+  color: #3b82f6;
+}
+.formation-card-meta {
+  font-size: 0.875rem;
+  color: #ccc;
+  margin-bottom: 0.5rem;
+}
+.formation-card-desc {
+  margin: 0;
+  color: #ccc;
+  font-size: 0.875rem;
+}
+.formation-card-arrow {
+  font-size: 1.5rem;
+  color: #666;
+}
+.formation-card-details {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: #1a1a1a;
+  border-radius: 8px;
+  border: 1px solid #333;
+}
+.formation-card-details-title {
+  color: #10b981;
+  margin-bottom: 0.5rem;
+}
+.formation-card-details-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.5rem;
+}
+.formation-card-details-item {
+  font-size: 0.875rem;
+  color: #ccc;
+  padding: 0.25rem 0;
+}
+.tactic-card {
+  border-left: 4px solid #6b7280;
+}
+.tactic-card-high {
+  border-left-color: #ef4444;
+}
+.tactic-card-medium {
+  border-left-color: #f59e0b;
+}
+.tactic-card-low {
+  border-left-color: #6b7280;
+}
+.tactic-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.5rem;
+}
+.tactic-card-title {
+  margin: 0;
+  color: #f59e0b;
+}
+.tactic-card-priority {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: #6b7280;
+  color: #fff;
+}
+.tactic-card-priority-high {
+  background: #ef4444;
+}
+.tactic-card-priority-medium {
+  background: #f59e0b;
+}
+.tactic-card-priority-low {
+  background: #6b7280;
+}
+.tactic-card-category {
+  font-size: 0.875rem;
+  color: #999;
+  margin-bottom: 0.5rem;
+}
+.tactic-card-desc {
+  margin: 0;
+  color: #ccc;
+  line-height: 1.6;
+}
+.instructions-list {
+  display: grid;
+  gap: 1rem;
+}
+.instructions-card-title {
+  margin: 0 0 0.5rem 0;
+  color: #3b82f6;
+}
+.instructions-card-desc {
+  margin: 0;
+  color: #ccc;
+  line-height: 1.6;
+}
+.instructions-empty {
+  text-align: center;
+  color: #666;
+}
+.instructions-empty-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+.special-plays-card {
+  margin-top: 2rem;
+}
+.special-plays-title {
+  color: #8b5cf6;
+  margin-bottom: 1rem;
+}
+.special-plays-list {
+  margin: 0;
+  padding-left: 1.5rem;
+  color: #ccc;
+}
+.special-plays-list-item {
+  margin-bottom: 0.5rem;
+}

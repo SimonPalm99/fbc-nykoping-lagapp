@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import styles from "./ExercisesOverview.module.css";
 
 type Category = "Anfall" | "Försvar" | "Uppvärmning" | "Teknik" | "Övrigt";
 
@@ -56,42 +57,83 @@ const ExercisesOverview: React.FC = () => {
     alert("Övningen är kopierad till urklipp!");
   };
   return (
-    <div style={{ minHeight: "100vh", background: "linear-gradient(135deg, #101a10 60%, #22c55e 100%)", padding: "2rem 0" }}>
-      <div style={{ maxWidth: 900, margin: "0 auto", padding: "2rem", borderRadius: 32, boxShadow: "0 8px 32px #000a", background: "rgba(20,32,20,0.85)", border: "2px solid #22c55e" }}>
-        <h1 style={{ color: "#22c55e", fontWeight: 900, fontSize: "2.4rem", letterSpacing: "2px", textShadow: "0 2px 12px #000", marginBottom: 32 }}>Övningar</h1>
-        <form onSubmit={handleSave} style={{ marginBottom: 32, background: "rgba(255,255,255,0.08)", padding: 24, borderRadius: 16 }}>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 24 }}>
-            <div style={{ flex: 1 }}>
-              <label style={{ color: "#fff", fontWeight: 700 }}>Namn:</label>
-              <input type="text" value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} required style={{ width: "100%", padding: 10, borderRadius: 8, border: "2px solid #22c55e", marginBottom: 12, fontSize: "1.1rem" }} />
-              <label style={{ color: "#fff", fontWeight: 700 }}>Beskrivning:</label>
-              <textarea value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} rows={3} style={{ width: "100%", padding: 10, borderRadius: 8, border: "2px solid #22c55e", marginBottom: 12, fontSize: "1.1rem" }} />
-              <label style={{ color: "#fff", fontWeight: 700 }}>Taggar (kommaseparerade):</label>
-              <input type="text" value={form.tags} onChange={e => setForm(f => ({ ...f, tags: e.target.value }))} style={{ width: "100%", padding: 10, borderRadius: 8, border: "2px solid #22c55e", marginBottom: 12, fontSize: "1.1rem" }} />
-              <label style={{ color: "#fff", fontWeight: 700 }}>Kategori:</label>
-              <select value={form.category} onChange={e => setForm(f => ({ ...f, category: e.target.value as Category }))} style={{ width: "100%", padding: 10, borderRadius: 8, border: "2px solid #22c55e", marginBottom: 12, fontSize: "1.1rem" }}>
+    <div className={styles.exercisesOverviewContainer}>
+      <div className={styles.exercisesOverviewCard}>
+        <h1 className={styles.exercisesOverviewTitle}>Övningar</h1>
+        <form onSubmit={handleSave} className={styles.exercisesOverviewForm}>
+          <div className={styles.exercisesOverviewFlexRow}>
+            <div className={styles.flexOne}>
+              <input
+                type="text"
+                value={form.name}
+                onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
+                required
+                className="exercise-input"
+                placeholder="Ange övningsnamn"
+                title="Namn på övningen"
+              />
+              <input
+                type="text"
+                value={form.name}
+                onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
+                required
+                className={styles.exerciseInput}
+                title="Namn på övningen"
+                placeholder="Ange övningsnamn"
+              />
+                            <textarea
+                value={form.description}
+                onChange={e => setForm(f => ({ ...f, description: e.target.value }))}
+                rows={3}
+                className={styles.exerciseTextarea}
+                title="Beskrivning av övningen"
+                placeholder="Beskriv övningen här"
+              />
+              <label className={styles.exerciseLabel}>Taggar (kommaseparerade):</label>
+              <input
+                type="text"
+                value={form.tags}
+                onChange={e => setForm(f => ({ ...f, tags: e.target.value }))}
+                className={styles.exerciseTagsInput}
+                title="Taggar för övningen, kommaseparerade"
+                placeholder="Exempel: passning, skott, rörelse"
+              />
+              <label className={styles.exerciseCategoryLabel}>Kategori:</label>
+              <select
+                value={form.category}
+                onChange={e => setForm(f => ({ ...f, category: e.target.value as Category }))}
+                className={styles.exerciseSelect}
+                title="Välj kategori för övningen"
+              >
                 {categories.map(cat => <option key={cat} value={cat}>{cat}</option>)}
               </select>
             </div>
-            <div style={{ flex: 1 }}>
-              <label style={{ color: "#fff", fontWeight: 700 }}>Whiteboard-bild:</label>
-              <input type="file" accept="image/*" onChange={handleImageChange} style={{ marginBottom: 12 }} />
-              {form.image && <img src={form.image} alt="Whiteboard" style={{ maxWidth: "100%", borderRadius: 12, marginTop: 8 }} />}
+            <div className={styles.exerciseImageContainer}>
+              <label className={styles.exerciseImageLabel}>Whiteboard-bild:</label>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                className={styles.exerciseImageInput}
+                title="Ladda upp en whiteboard-bild"
+                placeholder="Välj bild"
+              />
+              {form.image && <img src={form.image} alt="Whiteboard" className={styles.exerciseImagePreview} />}
             </div>
           </div>
-          <button type="submit" style={{ background: "#22c55e", color: "#fff", border: "none", borderRadius: 12, padding: "12px 32px", fontWeight: 700, fontSize: "1.1rem", marginTop: 16, boxShadow: "0 2px 8px #22c55e88", cursor: "pointer" }}>Spara övning</button>
+          <button type="submit" className={styles.saveExerciseButton}>Spara övning</button>
         </form>
-        <h2 style={{ color: "#22c55e", fontWeight: 700, fontSize: "1.3rem", marginBottom: 16 }}>Sparade övningar</h2>
-        {exercises.length === 0 && <p style={{ color: "#aaa" }}>Du har ännu inte sparat några övningar.</p>}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 24 }}>
+        <h2 className={styles.savedExercisesTitle}>Sparade övningar</h2>
+        {exercises.length === 0 && <p className={styles.noExercisesText}>Du har ännu inte sparat några övningar.</p>}
+        <div className={styles.exercisesGrid}>
           {exercises.map(ex => (
-            <div key={ex.id} style={{ background: "rgba(255,255,255,0.08)", borderRadius: 16, padding: 20, boxShadow: "0 2px 8px #22c55e33", color: "#fff" }}>
-              <h3 style={{ color: "#22c55e", fontWeight: 700, fontSize: "1.2rem" }}>{ex.name}</h3>
-              <div style={{ marginBottom: 8 }}><b>Kategori:</b> {ex.category}</div>
-              <div style={{ marginBottom: 8 }}><b>Taggar:</b> {ex.tags.join(", ")}</div>
-              <div style={{ marginBottom: 8 }}><b>Beskrivning:</b> {ex.description}</div>
-              {ex.image && <img src={ex.image} alt="Whiteboard" style={{ maxWidth: "100%", borderRadius: 12, margin: "12px 0" }} />}
-              <button onClick={() => handleShare(ex)} style={{ background: "#22c55e", color: "#fff", border: "none", borderRadius: 8, padding: "8px 24px", fontWeight: 700, fontSize: "1rem", marginTop: 8, boxShadow: "0 1px 4px #22c55e88", cursor: "pointer" }}>Dela till laget</button>
+            <div key={ex.id} className={styles.exerciseCard}>
+              <h3 className={styles.exerciseCardTitle}>{ex.name}</h3>
+              <div className={styles.exerciseCardCategory}><b>Kategori:</b> {ex.category}</div>
+              <div className={styles.exerciseCardTags}><b>Taggar:</b> {ex.tags.join(", ")}</div>
+              <div className={styles.exerciseCardDescription}><b>Beskrivning:</b> {ex.description}</div>
+              {ex.image && <img src={ex.image} alt="Whiteboard" className={styles.exerciseCardImage} />}
+              <button onClick={() => handleShare(ex)} className={styles.exerciseShareButton}>Dela till laget</button>
             </div>
           ))}
         </div>

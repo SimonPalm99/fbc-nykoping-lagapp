@@ -2,21 +2,8 @@ import { useState, useEffect } from 'react';
 import React from 'react';
 import { useUser } from '../context/UserContext';
 import { healthAPI, statisticsAPI, gamificationAPI } from '../services/apiService';
+import styles from './Profile.module.css';
 
-const fbcTheme = {
-  background: 'linear-gradient(135deg, #0a0a0a 0%, #1a2e1a 100%)',
-  headerBg: 'rgba(16,32,16,0.97)',
-  text: {
-    primary: '#F1F8E9',
-    secondary: '#C8E6C9',
-  },
-  accent: '#22c55e',
-  accentDark: '#14532d',
-  accentLight: '#bbf7d0',
-  cardBg: 'rgba(16,32,16,0.97)',
-  gold: '#FFB300',
-  white: '#fff'
-};
 
 const Profile = () => {
   const { user, updateUser } = useUser();
@@ -71,69 +58,50 @@ const Profile = () => {
   // Snyggt profilkort
   const ProfileCard = (props: { user: any }) => {
     const { user } = props;
-    // Statistik hämtas direkt från user.statistics i JSX nedan
     return (
-      <div style={{
-        background: fbcTheme.cardBg,
-        backdropFilter: 'blur(10px)',
-        borderRadius: '1.5rem',
-        boxShadow: '0 8px 32px rgba(34,197,94,0.18), 0 2px 24px #0008',
-        padding: '2rem 1.2rem 1.5rem 1.2rem',
-        marginBottom: '2rem',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        gap: '1.1rem',
-        textAlign: 'center',
-      }}>
-        {/* Profilbild med fallback till initial */}
-        <div style={{
-          width: 90,
-          height: 90,
-          borderRadius: '50%',
-          background: fbcTheme.accentDark,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          marginBottom: '1rem',
-          position: 'relative',
-          overflow: 'hidden',
-        }}>
+      <div className={styles.profileCard}>
+        <div className={styles.profileImageWrapper}>
           {user.profileImageUrl ? (
-            <img src={user.profileImageUrl} alt="Profilbild" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%' }} />
+            <img
+              src={user.profileImageUrl}
+              alt="Profilbild"
+              className={styles.profileImage}
+              onError={e => {
+                (e.currentTarget as HTMLImageElement).src = '/default-avatar.png';
+              }}
+            />
           ) : (
-            <span style={{ fontSize: '2.5rem', color: fbcTheme.white, fontWeight: 'bold' }}>{user.name ? user.name[0].toUpperCase() : ''}</span>
+            <span className={styles.profileInitial}>{user.name ? user.name[0].toUpperCase() : ''}</span>
           )}
         </div>
-        <div style={{ fontSize: '2rem', fontWeight: 'bold', color: fbcTheme.white, marginBottom: '0.5rem' }}>{user.name || '-'}</div>
-        <div style={{ fontSize: '1.15rem', color: fbcTheme.text.primary, marginBottom: '0.5rem' }}>{user.email || '-'}</div>
-        <div style={{ fontSize: '1.15rem', color: fbcTheme.text.primary, marginBottom: '0.5rem' }}>{user.phone || '-'}</div>
-        <div style={{ fontSize: '1.15rem', color: fbcTheme.text.primary, marginBottom: '0.5rem' }}>{user.position || '-'}</div>
-        <div style={{ fontSize: '1.05rem', color: fbcTheme.text.secondary, marginBottom: '0.5rem' }}>{user.jerseyNumber ? `${user.position || ''} #${user.jerseyNumber}` : ''}</div>
-        <div style={{ fontSize: '1.05rem', color: fbcTheme.text.secondary, marginBottom: '0.5rem' }}>{user.birthday ? `Födelsedag: ${user.birthday}` : ''}</div>
-        <div style={{ fontSize: '1.05rem', color: fbcTheme.text.secondary, marginBottom: '0.5rem' }}>{user.aboutMe || '-'}</div>
-        {/* Statistik hämtas direkt från user.statistics i JSX nedan */}
+        <div className={styles.profileName}>{user.name || '-'}</div>
+        <div className={styles.profileInfo}>{user.email || '-'}</div>
+        <div className={styles.profileInfo}>{user.phone || '-'}</div>
+        <div className={styles.profileInfo}>{user.position || '-'}</div>
+        <div className={styles.profileInfoSecondary}>{user.jerseyNumber ? `${user.position || ''} #${user.jerseyNumber}` : ''}</div>
+        <div className={styles.profileInfoSecondary}>{user.birthday ? `Födelsedag: ${user.birthday}` : ''}</div>
+        <div className={styles.profileInfoSecondary}>{user.aboutMe || '-'}</div>
         {user?.statistics && (
-          <div style={{ display: 'flex', gap: '2.2rem', justifyContent: 'center', marginTop: '1.2rem' }}>
-            <div style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: '1.7rem', fontWeight: 'bold', color: fbcTheme.accent }}>-</div>
-              <div style={{ color: fbcTheme.text.secondary, fontSize: '1.08rem' }}>Mål</div>
+          <div className={styles.profileStatsRow}>
+            <div className={styles.profileStatsCol}>
+              <div className={styles.profileStatsValue}>-</div>
+              <div className={styles.profileStatsLabel}>Mål</div>
             </div>
-            <div style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: '1.7rem', fontWeight: 'bold', color: fbcTheme.accent }}>-</div>
-              <div style={{ color: fbcTheme.text.secondary, fontSize: '1.08rem' }}>Assist</div>
+            <div className={styles.profileStatsCol}>
+              <div className={styles.profileStatsValue}>-</div>
+              <div className={styles.profileStatsLabel}>Assist</div>
             </div>
-            <div style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: '1.7rem', fontWeight: 'bold', color: fbcTheme.accent }}>-</div>
-              <div style={{ color: fbcTheme.text.secondary, fontSize: '1.08rem' }}>+ / -</div>
+            <div className={styles.profileStatsCol}>
+              <div className={styles.profileStatsValue}>-</div>
+              <div className={styles.profileStatsLabel}>+ / -</div>
             </div>
-            <div style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: '1.7rem', fontWeight: 'bold', color: fbcTheme.accent }}>-</div>
-              <div style={{ color: fbcTheme.text.secondary, fontSize: '1.08rem' }}>Träningar</div>
+            <div className={styles.profileStatsCol}>
+              <div className={styles.profileStatsValue}>-</div>
+              <div className={styles.profileStatsLabel}>Träningar</div>
             </div>
-            <div style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: '1.7rem', fontWeight: 'bold', color: fbcTheme.accent }}>-</div>
-              <div style={{ color: fbcTheme.text.secondary, fontSize: '1.08rem' }}>Matcher</div>
+            <div className={styles.profileStatsCol}>
+              <div className={styles.profileStatsValue}>-</div>
+              <div className={styles.profileStatsLabel}>Matcher</div>
             </div>
           </div>
         )}
@@ -154,40 +122,40 @@ const Profile = () => {
           if (log.type) typeCount[log.type] = (typeCount[log.type] || 0) + 1;
         });
         return (
-          <div style={{ maxWidth: 420, margin: '0 auto', padding: '1.2rem 0' }}>
-            <h2 style={{ fontSize: '1.2rem', fontWeight: 'bold', color: fbcTheme.accent, marginBottom: '1rem' }}>Mina loggade träningar</h2>
+          <div className={styles.profileLogWrapper}>
+            <h2 className={styles.profileLogHeader}>Mina loggade träningar</h2>
             {/* Statistik */}
-            <div style={{ display: 'flex', gap: '2rem', justifyContent: 'center', marginBottom: '1.2rem', background: 'rgba(34,197,94,0.07)', borderRadius: '1rem', padding: '1rem 0.7rem' }}>
-              <div style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: '1.3rem', fontWeight: 'bold', color: fbcTheme.accent }}>{totalPass}</div>
-                <div style={{ color: fbcTheme.text.secondary, fontSize: '1.05rem' }}>Antal pass</div>
+            <div className={styles.profileLogStatsRow}>
+              <div className={styles.profileLogStatsCol}>
+                <div className={styles.profileLogStatsValue}>{totalPass}</div>
+                <div className={styles.profileLogStatsLabel}>Antal pass</div>
               </div>
-              <div style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: '1.3rem', fontWeight: 'bold', color: fbcTheme.accent }}>{totalMinutes}</div>
-                <div style={{ color: fbcTheme.text.secondary, fontSize: '1.05rem' }}>Total tid (min)</div>
+              <div className={styles.profileLogStatsCol}>
+                <div className={styles.profileLogStatsValue}>{totalMinutes}</div>
+                <div className={styles.profileLogStatsLabel}>Total tid (min)</div>
               </div>
-              <div style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: '1.3rem', fontWeight: 'bold', color: fbcTheme.accent }}>{Object.keys(typeCount).length}</div>
-                <div style={{ color: fbcTheme.text.secondary, fontSize: '1.05rem' }}>Typer</div>
+              <div className={styles.profileLogStatsCol}>
+                <div className={styles.profileLogStatsValue}>{Object.keys(typeCount).length}</div>
+                <div className={styles.profileLogStatsLabel}>Typer</div>
               </div>
             </div>
             {/* Logglista med redigera/ta bort */}
             {logs.length === 0 ? (
-              <div style={{ color: fbcTheme.text.secondary, marginBottom: '1.2rem' }}>Du har inte loggat någon träning än.</div>
+              <div className={styles.profileLogEmpty}>Du har inte loggat någon träning än.</div>
             ) : (
-              <ul style={{ listStyle: 'none', padding: 0, marginBottom: '1.2rem' }}>
+              <ul className={styles.profileLogList}>
                 {logs.map((log: any) => (
-                  <li key={log.id} style={{ background: fbcTheme.cardBg, borderRadius: '1rem', marginBottom: '0.7rem', padding: '0.9rem 1.2rem', color: fbcTheme.text.primary, boxShadow: '0 1px 8px #22c55e22', display: 'flex', flexDirection: 'column', gap: '0.3rem', position: 'relative' }}>
-                    <div style={{ fontWeight: 'bold', color: fbcTheme.accent, fontSize: '1.08rem' }}>{log.type}</div>
-                    <div style={{ fontSize: '0.98rem', color: fbcTheme.text.secondary }}>{log.date} • {log.duration || 0} min</div>
-                    <div style={{ fontSize: '0.98rem', color: fbcTheme.text.secondary }}>Känsla: {log.feeling || '-'} / Intensitet: {log.intensity || '-'}</div>
-                    {log.note && <div style={{ fontSize: '0.98rem', marginTop: 2 }}>{log.note}</div>}
-                    <div style={{ display: 'flex', gap: '0.7rem', marginTop: '0.5rem' }}>
-                      <button style={{ background: fbcTheme.accentDark, color: '#fff', border: 'none', borderRadius: '0.5rem', padding: '0.3rem 0.8rem', cursor: 'pointer' }} onClick={() => {
+                  <li key={log.id} className={styles.profileLogItem}>
+                    <div className={styles.profileLogType}>{log.type}</div>
+                    <div className={styles.profileLogMeta}>{log.date} • {log.duration || 0} min</div>
+                    <div className={styles.profileLogMeta}>Känsla: {log.feeling || '-'} / Intensitet: {log.intensity || '-'}</div>
+                    {log.note && <div className={styles.profileLogNote}>{log.note}</div>}
+                    <div className={styles.profileLogActions}>
+                      <button className={styles.profileLogBtn} onClick={() => {
                         setEditLogId(log.id);
                         setEditLogForm({ ...log });
                       }}>Redigera</button>
-                      <button style={{ background: '#b91c1c', color: '#fff', border: 'none', borderRadius: '0.5rem', padding: '0.3rem 0.8rem', cursor: 'pointer' }} onClick={async () => {
+                      <button className={styles.profileLogBtn + ' ' + styles.profileLogBtnDelete} onClick={async () => {
                         if (user?.id) {
                           // Ta bort logg via backend
                           await healthAPI.updateProfile(user.id, { trainingLogs: logs.filter((l: any) => l.id !== log.id) });
@@ -204,7 +172,7 @@ const Profile = () => {
             {/* Redigera logg modal */}
             {editLogId && editLogForm && (
               <form
-                style={{ background: fbcTheme.cardBg, borderRadius: '1.2rem', padding: '1.2rem', marginBottom: '1rem', boxShadow: '0 1px 8px #22c55e22', color: fbcTheme.text.primary, display: 'flex', flexDirection: 'column', gap: '0.7rem' }}
+                className={styles.profileForm}
                 onSubmit={async e => {
                   e.preventDefault();
                   if (!editLogForm.type || !editLogForm.date || !editLogForm.duration) return;
@@ -222,7 +190,7 @@ const Profile = () => {
               >
                 <div>
                   <label>Typ av träning</label>
-                  <select value={editLogForm.type} onChange={e => setEditLogForm((f: any) => ({ ...f, type: e.target.value }))} required>
+                  <select value={editLogForm.type} onChange={e => setEditLogForm((f: any) => ({ ...f, type: e.target.value }))} required title="Typ av träning">
                     <option value="">Välj...</option>
                     <option value="Gym">Gym</option>
                     <option value="Löpning">Löpning</option>
@@ -230,41 +198,49 @@ const Profile = () => {
                     <option value="Simning">Simning</option>
                     <option value="Annat">Annat</option>
                   </select>
+                  {/* Lägg till title för tillgänglighet */}
+                  <select value={editLogForm.type} onChange={e => setEditLogForm((f: any) => ({ ...f, type: e.target.value }))} required title="Typ av träning">
+                  </select>
                 </div>
                 <div>
                   <label>Datum</label>
-                  <input type="date" value={editLogForm.date} onChange={e => setEditLogForm((f: any) => ({ ...f, date: e.target.value }))} required />
+                  <input type="date" value={editLogForm.date} onChange={e => setEditLogForm((f: any) => ({ ...f, date: e.target.value }))} required placeholder="Datum" title="Datum" />
+                  <input type="date" value={editLogForm.date} onChange={e => setEditLogForm((f: any) => ({ ...f, date: e.target.value }))} required placeholder="Datum" title="Datum" />
                 </div>
                 <div>
                   <label>Tid (minuter)</label>
-                  <input type="number" min="1" value={editLogForm.duration} onChange={e => setEditLogForm((f: any) => ({ ...f, duration: e.target.value }))} required />
+                  <input type="number" min="1" value={editLogForm.duration} onChange={e => setEditLogForm((f: any) => ({ ...f, duration: e.target.value }))} required placeholder="Tid (minuter)" title="Tid (minuter)" />
+                  <input type="number" min="1" value={editLogForm.duration} onChange={e => setEditLogForm((f: any) => ({ ...f, duration: e.target.value }))} required placeholder="Tid (minuter)" title="Tid (minuter)" />
                 </div>
                 <div>
                   <label>Känsla (1-5)</label>
-                  <input type="number" min="1" max="5" value={editLogForm.feeling} onChange={e => setEditLogForm((f: any) => ({ ...f, feeling: parseInt(e.target.value) }))} required />
+                  <input type="number" min="1" max="5" value={editLogForm.feeling} onChange={e => setEditLogForm((f: any) => ({ ...f, feeling: parseInt(e.target.value) }))} required placeholder="Känsla (1-5)" title="Känsla (1-5)" />
+                  <input type="number" min="1" max="5" value={editLogForm.feeling} onChange={e => setEditLogForm((f: any) => ({ ...f, feeling: parseInt(e.target.value) }))} required placeholder="Känsla (1-5)" title="Känsla (1-5)" />
                 </div>
                 <div>
                   <label>Intensitet (1-5)</label>
-                  <input type="number" min="1" max="5" value={editLogForm.intensity || ''} onChange={e => setEditLogForm((f: any) => ({ ...f, intensity: parseInt(e.target.value) }))} required />
+                  <input type="number" min="1" max="5" value={editLogForm.intensity || ''} onChange={e => setEditLogForm((f: any) => ({ ...f, intensity: parseInt(e.target.value) }))} required placeholder="Intensitet (1-5)" title="Intensitet (1-5)" />
+                  <input type="number" min="1" max="5" value={editLogForm.intensity || ''} onChange={e => setEditLogForm((f: any) => ({ ...f, intensity: parseInt(e.target.value) }))} required placeholder="Intensitet (1-5)" title="Intensitet (1-5)" />
                 </div>
                 <div>
                   <label>Kommentar (valfritt)</label>
-                  <input type="text" value={editLogForm.note || ''} onChange={e => setEditLogForm((f: any) => ({ ...f, note: e.target.value }))} />
+                  <input type="text" value={editLogForm.note || ''} onChange={e => setEditLogForm((f: any) => ({ ...f, note: e.target.value }))} placeholder="Anteckning" title="Anteckning" />
+                  <input type="text" value={editLogForm.note || ''} onChange={e => setEditLogForm((f: any) => ({ ...f, note: e.target.value }))} placeholder="Anteckning" title="Anteckning" />
                 </div>
-                <button type="submit" style={{ background: fbcTheme.accent, color: '#fff', border: 'none', borderRadius: '0.9rem', padding: '0.8rem 1.3rem', fontWeight: 'bold', fontSize: '1.08rem', cursor: 'pointer', marginTop: '0.5rem' }}>Spara ändringar</button>
-                <button type="button" style={{ background: '#222', color: '#fff', border: 'none', borderRadius: '0.9rem', padding: '0.8rem 1.3rem', fontWeight: 'bold', fontSize: '1.08rem', cursor: 'pointer', marginTop: '0.5rem' }} onClick={() => { setEditLogId(null); setEditLogForm(null); }}>Avbryt</button>
+                <button type="submit" className={styles.profileFormBtn}>Spara ändringar</button>
+                <button type="button" className={styles.profileFormBtn + ' ' + styles.profileFormBtnCancel} onClick={() => { setEditLogId(null); setEditLogForm(null); }}>Avbryt</button>
               </form>
             )}
             {/* Formulär */}
             <button
-              style={{ background: fbcTheme.accent, color: '#fff', border: 'none', borderRadius: '0.9rem', padding: '0.8rem 1.3rem', fontWeight: 'bold', fontSize: '1.08rem', cursor: 'pointer', boxShadow: '0 1px 8px #22c55e33', marginBottom: '1rem', marginTop: '0.5rem' }}
+              className={styles.profileLogToggleBtn}
               onClick={() => setShowTrainingForm(v => !v)}
             >
               {showTrainingForm ? 'Stäng formulär' : 'Logga ny träning'}
             </button>
             {showTrainingForm && (
               <form
-                style={{ background: fbcTheme.cardBg, borderRadius: '1.2rem', padding: '1.2rem', marginTop: '0.5rem', boxShadow: '0 1px 8px #22c55e22', color: fbcTheme.text.primary, display: 'flex', flexDirection: 'column', gap: '0.7rem' }}
+                className={styles.profileForm}
                 onSubmit={async e => {
                   e.preventDefault();
                   if (!form.type || !form.date || !form.duration || !form.feeling || !form.intensity) return;
@@ -290,12 +266,13 @@ const Profile = () => {
                 }}
               >
                 <div>
-                  <label style={{ display: 'block', marginBottom: 2, fontWeight: 500 }}>Typ av träning</label>
+                  <label className={styles.profileFormLabel}>Typ av träning</label>
                   <select
                     value={form.type}
                     onChange={e => setForm(f => ({ ...f, type: e.target.value }))}
-                    style={{ width: '100%', padding: '0.6rem', borderRadius: '0.7rem', border: `1.5px solid ${fbcTheme.accent}`, background: fbcTheme.cardBg, color: fbcTheme.text.primary, fontSize: '1.05rem' }}
+                    className={styles.profileFormInput}
                     required
+                    title="Typ av träning"
                   >
                     <option value="">Välj...</option>
                     <option value="Gym">Gym</option>
@@ -306,62 +283,72 @@ const Profile = () => {
                   </select>
                 </div>
                 <div>
-                  <label style={{ display: 'block', marginBottom: 2, fontWeight: 500 }}>Datum</label>
+                  <label className={styles.profileFormLabel}>Datum</label>
                   <input
                     type="date"
                     value={form.date}
                     onChange={e => setForm(f => ({ ...f, date: e.target.value }))}
-                    style={{ width: '100%', padding: '0.6rem', borderRadius: '0.7rem', border: `1.5px solid ${fbcTheme.accent}`, background: fbcTheme.cardBg, color: fbcTheme.text.primary, fontSize: '1.05rem' }}
+                    className={styles.profileFormInput}
                     required
+                    placeholder="Datum"
+                    title="Datum"
                   />
                 </div>
                 <div>
-                  <label style={{ display: 'block', marginBottom: 2, fontWeight: 500 }}>Tid (minuter)</label>
+                  <label className={styles.profileFormLabel}>Tid (minuter)</label>
                   <input
                     type="number"
                     min="1"
                     value={form.duration}
                     onChange={e => setForm(f => ({ ...f, duration: e.target.value }))}
-                    style={{ width: '100%', padding: '0.6rem', borderRadius: '0.7rem', border: `1.5px solid ${fbcTheme.accent}`, background: fbcTheme.cardBg, color: fbcTheme.text.primary, fontSize: '1.05rem' }}
+                    className={styles.profileFormInput}
                     required
+                    placeholder="Tid (minuter)"
+                    title="Tid (minuter)"
                   />
                 </div>
                 <div>
-                  <label style={{ display: 'block', marginBottom: 2, fontWeight: 500 }}>Känsla (1-5)</label>
+                  <label className={styles.profileFormLabel}>Känsla (1-5)</label>
                   <input
                     type="number"
                     min="1"
                     max="5"
                     value={form.feeling || ''}
                     onChange={e => setForm(f => ({ ...f, feeling: e.target.value }))}
-                    style={{ width: '100%', padding: '0.6rem', borderRadius: '0.7rem', border: `1.5px solid ${fbcTheme.accent}`, background: fbcTheme.cardBg, color: fbcTheme.text.primary, fontSize: '1.05rem' }}
+                    className={styles.profileFormInput}
                     required
+                    placeholder="Känsla (1-5)"
+                    title="Känsla (1-5)"
                   />
                 </div>
                 <div>
-                  <label style={{ display: 'block', marginBottom: 2, fontWeight: 500 }}>Intensitet (1-5)</label>
+                  <label className={styles.profileFormLabel}>Intensitet (1-5)</label>
                   <input
                     type="number"
                     min="1"
                     max="5"
                     value={form.intensity || ''}
                     onChange={e => setForm(f => ({ ...f, intensity: e.target.value }))}
-                    style={{ width: '100%', padding: '0.6rem', borderRadius: '0.7rem', border: `1.5px solid ${fbcTheme.accent}`, background: fbcTheme.cardBg, color: fbcTheme.text.primary, fontSize: '1.05rem' }}
+                    className={styles.profileFormInput}
                     required
+                    placeholder="Intensitet (1-5)"
+                    title="Intensitet (1-5)"
                   />
                 </div>
                 <div>
-                  <label style={{ display: 'block', marginBottom: 2, fontWeight: 500 }}>Kommentar (valfritt)</label>
+                  <label className={styles.profileFormLabel}>Kommentar (valfritt)</label>
                   <input
                     type="text"
                     value={form.comment}
                     onChange={e => setForm(f => ({ ...f, comment: e.target.value }))}
-                    style={{ width: '100%', padding: '0.6rem', borderRadius: '0.7rem', border: `1.5px solid ${fbcTheme.accent}`, background: fbcTheme.cardBg, color: fbcTheme.text.primary, fontSize: '1.05rem' }}
+                    className={styles.profileFormInput}
+                    placeholder="Anteckning"
+                    title="Anteckning"
                   />
                 </div>
                 <button
                   type="submit"
-                  style={{ background: fbcTheme.accent, color: '#fff', border: 'none', borderRadius: '0.9rem', padding: '0.8rem 1.3rem', fontWeight: 'bold', fontSize: '1.08rem', cursor: 'pointer', boxShadow: '0 1px 8px #22c55e33', marginTop: '0.5rem' }}
+                  className={styles.profileFormBtn}
                 >
                   Spara träning
                 </button>
@@ -372,17 +359,17 @@ const Profile = () => {
       case 'health':
         // Hälsologgar från backend
         return (
-          <div style={{ maxWidth: 420, margin: '0 auto', padding: '1.2rem 0' }}>
-            <h2 style={{ fontSize: '1.2rem', fontWeight: 'bold', color: fbcTheme.accent, marginBottom: '1rem' }}>Hälsokort</h2>
+          <div className={styles.profileLogWrapper}>
+            <h2 className={styles.profileLogHeader}>Hälsokort</h2>
             <button
-              style={{ background: fbcTheme.accent, color: '#fff', border: 'none', borderRadius: '0.9rem', padding: '0.8rem 1.3rem', fontWeight: 'bold', fontSize: '1.08rem', cursor: 'pointer', boxShadow: '0 1px 8px #22c55e33', marginBottom: '1rem', marginTop: '0.5rem' }}
+              className={styles.profileFormBtn}
               onClick={() => setShowHealthForm(v => !v)}
             >
               {showHealthForm ? 'Stäng formulär' : 'Lägg till skada/sjukdom'}
             </button>
             {showHealthForm && (
               <form
-                style={{ background: fbcTheme.cardBg, borderRadius: '1.2rem', padding: '1.2rem', marginTop: '0.5rem', boxShadow: '0 1px 8px #22c55e22', color: fbcTheme.text.primary, display: 'flex', flexDirection: 'column', gap: '0.7rem' }}
+                className={styles.profileForm}
                 onSubmit={async e => {
                   e.preventDefault();
                   if (!healthForm.type || (!healthForm.date && !healthForm.dateStart)) return;
@@ -398,7 +385,7 @@ const Profile = () => {
               >
                 <div>
                   <label>Typ av händelse</label>
-                  <select value={healthForm.type} onChange={e => setHealthForm(f => ({ ...f, type: e.target.value }))} required>
+                  <select value={healthForm.type} onChange={e => setHealthForm(f => ({ ...f, type: e.target.value }))} required title="Typ av händelse">
                     <option value="">Välj...</option>
                     <option value="Sjukdom">Sjukdom</option>
                     <option value="Skada">Skada</option>
@@ -407,45 +394,45 @@ const Profile = () => {
                 </div>
                 <div>
                   <label>Datum (för kortare händelse)</label>
-                  <input type="date" value={healthForm.date || ''} onChange={e => setHealthForm(f => ({ ...f, date: e.target.value }))} />
+                  <input type="date" value={healthForm.date || ''} onChange={e => setHealthForm(f => ({ ...f, date: e.target.value }))} placeholder="Datum" title="Datum" />
                 </div>
                 <div>
                   <label>Startdatum (för längre skada/sjukdom)</label>
-                  <input type="date" value={healthForm.dateStart || ''} onChange={e => setHealthForm(f => ({ ...f, dateStart: e.target.value }))} />
+                  <input type="date" value={healthForm.dateStart || ''} onChange={e => setHealthForm(f => ({ ...f, dateStart: e.target.value }))} placeholder="Startdatum" title="Startdatum" />
                 </div>
                 <div>
                   <label>Slutdatum (om avslutad)</label>
-                  <input type="date" value={healthForm.dateEnd || ''} onChange={e => setHealthForm(f => ({ ...f, dateEnd: e.target.value }))} />
+                  <input type="date" value={healthForm.dateEnd || ''} onChange={e => setHealthForm(f => ({ ...f, dateEnd: e.target.value }))} placeholder="Slutdatum" title="Slutdatum" />
                 </div>
                 <div>
                   <label>Rehabplan (valfritt)</label>
-                  <input type="text" value={healthForm.rehabPlan || ''} onChange={e => setHealthForm(f => ({ ...f, rehabPlan: e.target.value }))} />
+                  <input type="text" value={healthForm.rehabPlan || ''} onChange={e => setHealthForm(f => ({ ...f, rehabPlan: e.target.value }))} placeholder="Rehabplan" title="Rehabplan" />
                 </div>
                 <div>
                   <label>Kommentar (valfritt)</label>
-                  <input type="text" value={healthForm.comment || ''} onChange={e => setHealthForm(f => ({ ...f, comment: e.target.value }))} />
+                  <input type="text" value={healthForm.comment || ''} onChange={e => setHealthForm(f => ({ ...f, comment: e.target.value }))} placeholder="Kommentar" title="Kommentar" />
                 </div>
-                <button type="submit" style={{ background: fbcTheme.accent, color: '#fff', border: 'none', borderRadius: '0.9rem', padding: '0.8rem 1.3rem', fontWeight: 'bold', fontSize: '1.08rem', cursor: 'pointer', marginTop: '0.5rem' }}>Spara händelse</button>
+                <button type="submit" className={styles.profileFormBtn}>Spara händelse</button>
               </form>
             )}
             {/* Historiklista med redigera/ta bort */}
-            <h3 style={{ fontSize: '1.08rem', color: fbcTheme.accent, margin: '1.2rem 0 0.7rem 0' }}>Historik</h3>
+            <h3 className={styles.profileLogHeader}>Historik</h3>
             {healthLogs.length === 0 ? (
-              <div style={{ color: fbcTheme.text.secondary, marginBottom: '1.2rem' }}>Inga händelser loggade än.</div>
+              <div className={styles.profileLogEmpty}>Inga händelser loggade än.</div>
             ) : (
-              <ul style={{ listStyle: 'none', padding: 0, marginBottom: '1.2rem' }}>
+              <ul className={styles.profileLogList}>
                 {healthLogs.map(log => (
-                  <li key={log.id} style={{ background: fbcTheme.cardBg, borderRadius: '1rem', marginBottom: '0.7rem', padding: '0.9rem 1.2rem', color: fbcTheme.text.primary, boxShadow: '0 1px 8px #22c55e22', display: 'flex', flexDirection: 'column', gap: '0.3rem', position: 'relative' }}>
-                    <div style={{ fontWeight: 'bold', color: fbcTheme.accent, fontSize: '1.08rem' }}>{log.type}</div>
-                    <div style={{ fontSize: '0.98rem', color: fbcTheme.text.secondary }}>{log.dateStart ? `${log.dateStart} - ${log.dateEnd || 'pågående'}` : log.date}</div>
-                    {log.rehabPlan && <div style={{ fontSize: '0.98rem', marginTop: 2 }}><b>Rehabplan:</b> {log.rehabPlan}</div>}
-                    {log.comment && <div style={{ fontSize: '0.98rem', marginTop: 2 }}>{log.comment}</div>}
-                    <div style={{ display: 'flex', gap: '0.7rem', marginTop: '0.5rem' }}>
-                      <button style={{ background: fbcTheme.accentDark, color: '#fff', border: 'none', borderRadius: '0.5rem', padding: '0.3rem 0.8rem', cursor: 'pointer' }} onClick={() => {
+                  <li key={log.id} className={styles.profileLogItem}>
+                    <div className={styles.profileLogType}>{log.type}</div>
+                    <div className={styles.profileLogMeta}>{log.dateStart ? `${log.dateStart} - ${log.dateEnd || 'pågående'}` : log.date}</div>
+                    {log.rehabPlan && <div className={styles.profileLogNote}><b>Rehabplan:</b> {log.rehabPlan}</div>}
+                    {log.comment && <div className={styles.profileLogNote}>{log.comment}</div>}
+                    <div className={styles.profileLogActions}>
+                      <button className={styles.profileLogBtn} onClick={() => {
                         setEditHealthId(log.id);
                         setEditHealthForm({ ...log });
                       }}>Redigera</button>
-                      <button style={{ background: '#b91c1c', color: '#fff', border: 'none', borderRadius: '0.5rem', padding: '0.3rem 0.8rem', cursor: 'pointer' }} onClick={async () => {
+                      <button className={styles.profileLogBtn + ' ' + styles.profileLogBtnDelete} onClick={async () => {
                         if (user?.id) {
                           // Ta bort logg via backend (kan behöva API för delete)
                           // healthAPI.deleteWorkout(user.id, log.id); // Om API finns
@@ -460,7 +447,7 @@ const Profile = () => {
             {/* Redigera modal */}
             {editHealthId && editHealthForm && (
               <form
-                style={{ background: fbcTheme.cardBg, borderRadius: '1.2rem', padding: '1.2rem', marginBottom: '1rem', boxShadow: '0 1px 8px #22c55e22', color: fbcTheme.text.primary, display: 'flex', flexDirection: 'column', gap: '0.7rem' }}
+                className={styles.profileForm}
                 onSubmit={async e => {
                   e.preventDefault();
                   if (!editHealthForm.type || (!editHealthForm.date && !editHealthForm.dateStart)) return;
@@ -476,7 +463,7 @@ const Profile = () => {
               >
                 <div>
                   <label>Typ av händelse</label>
-                  <select value={editHealthForm.type} onChange={e => setEditHealthForm((f: any) => ({ ...f, type: e.target.value }))} required>
+                  <select value={editHealthForm.type} onChange={e => setEditHealthForm((f: any) => ({ ...f, type: e.target.value }))} required title="Typ av händelse">
                     <option value="">Välj...</option>
                     <option value="Sjukdom">Sjukdom</option>
                     <option value="Skada">Skada</option>
@@ -485,26 +472,26 @@ const Profile = () => {
                 </div>
                 <div>
                   <label>Datum (för kortare händelse)</label>
-                  <input type="date" value={editHealthForm.date || ''} onChange={e => setEditHealthForm((f: any) => ({ ...f, date: e.target.value }))} />
+                  <input type="date" value={editHealthForm.date || ''} onChange={e => setEditHealthForm((f: any) => ({ ...f, date: e.target.value }))} placeholder="Datum" title="Datum" />
                 </div>
                 <div>
                   <label>Startdatum (för längre skada/sjukdom)</label>
-                  <input type="date" value={editHealthForm.dateStart || ''} onChange={e => setEditHealthForm((f: any) => ({ ...f, dateStart: e.target.value }))} />
+                  <input type="date" value={editHealthForm.dateStart || ''} onChange={e => setEditHealthForm((f: any) => ({ ...f, dateStart: e.target.value }))} placeholder="Startdatum" title="Startdatum" />
                 </div>
                 <div>
                   <label>Slutdatum (om avslutad)</label>
-                  <input type="date" value={editHealthForm.dateEnd || ''} onChange={e => setEditHealthForm((f: any) => ({ ...f, dateEnd: e.target.value }))} />
+                  <input type="date" value={editHealthForm.dateEnd || ''} onChange={e => setEditHealthForm((f: any) => ({ ...f, dateEnd: e.target.value }))} placeholder="Slutdatum" title="Slutdatum" />
                 </div>
                 <div>
                   <label>Rehabplan (valfritt)</label>
-                  <input type="text" value={editHealthForm.rehabPlan || ''} onChange={e => setEditHealthForm((f: any) => ({ ...f, rehabPlan: e.target.value }))} />
+                  <input type="text" value={editHealthForm.rehabPlan || ''} onChange={e => setEditHealthForm((f: any) => ({ ...f, rehabPlan: e.target.value }))} placeholder="Rehabplan" title="Rehabplan" />
                 </div>
                 <div>
                   <label>Kommentar (valfritt)</label>
-                  <input type="text" value={editHealthForm.comment || ''} onChange={e => setEditHealthForm((f: any) => ({ ...f, comment: e.target.value }))} />
+                  <input type="text" value={editHealthForm.comment || ''} onChange={e => setEditHealthForm((f: any) => ({ ...f, comment: e.target.value }))} placeholder="Kommentar" title="Kommentar" />
                 </div>
-                <button type="submit" style={{ background: fbcTheme.accent, color: '#fff', border: 'none', borderRadius: '0.9rem', padding: '0.8rem 1.3rem', fontWeight: 'bold', fontSize: '1.08rem', cursor: 'pointer', marginTop: '0.5rem' }}>Spara ändringar</button>
-                <button type="button" style={{ background: '#222', color: '#fff', border: 'none', borderRadius: '0.9rem', padding: '0.8rem 1.3rem', fontWeight: 'bold', fontSize: '1.08rem', cursor: 'pointer', marginTop: '0.5rem' }} onClick={() => { setEditHealthId(null); setEditHealthForm(null); }}>Avbryt</button>
+                <button type="submit" className={styles.profileFormBtn}>Spara ändringar</button>
+                <button type="button" className={styles.profileFormBtn + ' ' + styles.profileFormBtnCancel} onClick={() => { setEditHealthId(null); setEditHealthForm(null); }}>Avbryt</button>
               </form>
             )}
           </div>
@@ -512,49 +499,46 @@ const Profile = () => {
       case 'stats':
         // Statistik från backend
         return (
-          <div style={{ maxWidth: 420, margin: '0 auto', padding: '1.2rem 0' }}>
-            <h2 style={{ fontSize: '1.2rem', fontWeight: 'bold', color: fbcTheme.accent, marginBottom: '1rem' }}>Min statistik</h2>
-            <div style={{ display: 'flex', gap: '2.2rem', flexWrap: 'wrap', justifyContent: 'center', marginTop: '1.2rem' }}>
-              <div style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: '1.7rem', fontWeight: 'bold', color: fbcTheme.accent }}>{stats?.goals ?? '-'}</div>
-                <div style={{ color: fbcTheme.text.secondary, fontSize: '1.08rem' }}>Mål</div>
+          <div className={styles.profileLogWrapper}>
+            <h2 className={styles.profileLogHeader}>Min statistik</h2>
+            <div className={styles.profileStatsRow}>
+              <div className={styles.profileStatsItem}>
+                <div className={styles.profileStatsValue}>{stats?.goals ?? '-'}</div>
+                <div className={styles.profileStatsLabel}>Mål</div>
               </div>
-              <div style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: '1.7rem', fontWeight: 'bold', color: fbcTheme.accent }}>{stats?.assists ?? '-'}</div>
-                <div style={{ color: fbcTheme.text.secondary, fontSize: '1.08rem' }}>Assist</div>
+              <div className={styles.profileStatsItem}>
+                <div className={styles.profileStatsValue}>{stats?.assists ?? '-'}</div>
+                <div className={styles.profileStatsLabel}>Assist</div>
               </div>
-              <div style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: '1.7rem', fontWeight: 'bold', color: fbcTheme.accent }}>{stats?.plusMinus ?? '-'}</div>
-                <div style={{ color: fbcTheme.text.secondary, fontSize: '1.08rem' }}>+ / -</div>
+              <div className={styles.profileStatsItem}>
+                <div className={styles.profileStatsValue}>{stats?.plusMinus ?? '-'}</div>
+                <div className={styles.profileStatsLabel}>+ / -</div>
               </div>
-              <div style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: '1.7rem', fontWeight: 'bold', color: fbcTheme.accent }}>{stats?.trainings ?? '-'}</div>
-                <div style={{ color: fbcTheme.text.secondary, fontSize: '1.08rem' }}>Träningar</div>
+              <div className={styles.profileStatsItem}>
+                <div className={styles.profileStatsValue}>{stats?.trainings ?? '-'}</div>
+                <div className={styles.profileStatsLabel}>Träningar</div>
               </div>
-              <div style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: '1.7rem', fontWeight: 'bold', color: fbcTheme.accent }}>{stats?.gamesPlayed ?? '-'}</div>
-                <div style={{ color: fbcTheme.text.secondary, fontSize: '1.08rem' }}>Matcher</div>
+              <div className={styles.profileStatsItem}>
+                <div className={styles.profileStatsValue}>{stats?.gamesPlayed ?? '-'}</div>
+                <div className={styles.profileStatsLabel}>Matcher</div>
               </div>
             </div>
-            {/* Här kan fler statistikfält läggas till när riktig data finns */}
           </div>
         );
       case 'badges':
         // Badges från backend
         return (
-          <div style={{ maxWidth: 420, margin: '0 auto', padding: '1.2rem 0' }}>
-            <h2 style={{ fontSize: '1.2rem', fontWeight: 'bold', color: fbcTheme.accent, marginBottom: '1rem' }}>Mina badges</h2>
+          <div className={styles.profileLogWrapper}>
+            <h2 className={styles.profileLogHeader}>Mina badges</h2>
             {badges.length === 0 ? (
-              <div style={{ color: fbcTheme.text.secondary, fontSize: '1.08rem', marginTop: '1.2rem' }}>
-                Du har inga badges ännu.
-              </div>
+              <div className={styles.profileLogEmpty}>Du har inga badges ännu.</div>
             ) : (
-              <ul style={{ listStyle: 'none', padding: 0, marginTop: '1.2rem' }}>
+              <ul className={styles.profileLogList}>
                 {badges.map(badge => (
-                  <li key={badge.id} style={{ background: fbcTheme.cardBg, borderRadius: '1rem', marginBottom: '0.7rem', padding: '0.9rem 1.2rem', color: fbcTheme.text.primary, boxShadow: '0 1px 8px #22c55e22', display: 'flex', flexDirection: 'column', gap: '0.3rem', position: 'relative' }}>
-                    <div style={{ fontWeight: 'bold', color: fbcTheme.gold, fontSize: '1.08rem' }}>{badge.name}</div>
-                    <div style={{ fontSize: '0.98rem', color: fbcTheme.text.secondary }}>{badge.description}</div>
-                    <div style={{ fontSize: '0.98rem', color: fbcTheme.text.secondary }}>Datum: {badge.dateEarned}</div>
+                  <li key={badge.id} className={styles.profileBadgeItem}>
+                    <div className={styles.profileBadgeName}>{badge.name}</div>
+                    <div className={styles.profileBadgeDesc}>{badge.description}</div>
+                    <div className={styles.profileBadgeDate}>Datum: {badge.dateEarned}</div>
                   </li>
                 ))}
               </ul>
@@ -563,10 +547,10 @@ const Profile = () => {
         );
       case 'settings':
         return (
-          <div style={{ maxWidth: 420, margin: '0 auto', padding: '1.2rem 0' }}>
-            <h2 style={{ fontSize: '1.2rem', fontWeight: 'bold', color: fbcTheme.accent, marginBottom: '1rem' }}>Inställningar</h2>
+          <div className={styles.profileLogWrapper}>
+            <h2 className={styles.profileLogHeader}>Inställningar</h2>
             <form
-              style={{ background: fbcTheme.cardBg, borderRadius: '1.2rem', padding: '1.2rem', marginTop: '0.5rem', boxShadow: '0 1px 8px #22c55e22', color: fbcTheme.text.primary, display: 'flex', flexDirection: 'column', gap: '0.7rem' }}
+              className={styles.profileForm}
               onSubmit={e => {
                 e.preventDefault();
                 if (user) {
@@ -592,41 +576,41 @@ const Profile = () => {
             >
               <div>
                 <label>Namn</label>
-                <input type="text" value={editProfile.name || ''} onChange={e => setEditProfile((p: any) => ({ ...p, name: e.target.value }))} />
+                <input type="text" value={editProfile.name || ''} onChange={e => setEditProfile((p: any) => ({ ...p, name: e.target.value }))} placeholder="Namn" title="Namn" />
               </div>
               <div>
                 <label>E-post</label>
-                <input type="email" value={editProfile.email || ''} onChange={e => setEditProfile((p: any) => ({ ...p, email: e.target.value }))} />
+                <input type="email" value={editProfile.email || ''} onChange={e => setEditProfile((p: any) => ({ ...p, email: e.target.value }))} placeholder="E-post" title="E-post" />
               </div>
               <div>
                 <label>Telefonnummer</label>
-                <input type="text" value={editProfile.phone || ''} onChange={e => setEditProfile((p: any) => ({ ...p, phone: e.target.value }))} />
+                <input type="text" value={editProfile.phone || ''} onChange={e => setEditProfile((p: any) => ({ ...p, phone: e.target.value }))} placeholder="Telefonnummer" title="Telefonnummer" />
               </div>
               <div>
                 <label>Position</label>
-                <input type="text" value={editProfile.position || ''} onChange={e => setEditProfile((p: any) => ({ ...p, position: e.target.value }))} />
+                <input type="text" value={editProfile.position || ''} onChange={e => setEditProfile((p: any) => ({ ...p, position: e.target.value }))} placeholder="Position" title="Position" />
               </div>
               <div>
                 <label>Tröjnummer</label>
-                <input type="number" min="0" value={editProfile.jerseyNumber || ''} onChange={e => setEditProfile((p: any) => ({ ...p, jerseyNumber: e.target.value }))} />
+                <input type="number" min="0" value={editProfile.jerseyNumber || ''} onChange={e => setEditProfile((p: any) => ({ ...p, jerseyNumber: e.target.value }))} placeholder="Tröjnummer" title="Tröjnummer" />
               </div>
               <div>
                 <label>Födelsedag</label>
-                <input type="date" value={editProfile.birthday || ''} onChange={e => setEditProfile((p: any) => ({ ...p, birthday: e.target.value }))} />
+                <input type="date" value={editProfile.birthday || ''} onChange={e => setEditProfile((p: any) => ({ ...p, birthday: e.target.value }))} placeholder="Födelsedag" title="Födelsedag" />
               </div>
               <div>
                 <label>Om mig</label>
-                <textarea value={editProfile.aboutMe || ''} onChange={e => setEditProfile((p: any) => ({ ...p, aboutMe: e.target.value }))} rows={3} />
+                <textarea value={editProfile.aboutMe || ''} onChange={e => setEditProfile((p: any) => ({ ...p, aboutMe: e.target.value }))} rows={3} placeholder="Om mig" title="Om mig" />
               </div>
-              <button type="submit" style={{ background: fbcTheme.accent, color: '#fff', border: 'none', borderRadius: '0.9rem', padding: '0.8rem 1.3rem', fontWeight: 'bold', fontSize: '1.08rem', cursor: 'pointer', marginTop: '0.5rem' }}>Spara inställningar</button>
-              {saveFeedback && <div style={{ color: fbcTheme.accent, marginTop: '0.7rem', fontWeight: 'bold' }}>{saveFeedback}</div>}
+              <button type="submit" className={styles.profileFormBtn}>Spara inställningar</button>
+              {saveFeedback && <div className={styles.profileFormFeedback}>{saveFeedback}</div>}
             </form>
           </div>
         );
       case 'team':
         const TeamInfo = React.lazy(() => import('./TeamInfo'));
         return (
-          <React.Suspense fallback={<div style={{ padding: '2rem', textAlign: 'center' }}>Laddar laginfo...</div>}>
+          <React.Suspense fallback={<div className={styles.profileTeamLoading}>Laddar laginfo...</div>}>
             <TeamInfo />
           </React.Suspense>
         );
@@ -636,57 +620,34 @@ const Profile = () => {
   };
 
   return (
-  <div style={{ minHeight: '100vh', background: fbcTheme.background, color: fbcTheme.text.primary, padding: '2rem 0.5rem', fontFamily: 'inherit' }}>
-      <div style={{ maxWidth: 800, margin: '0 auto' }}>
+  <div className={styles.profilePageWrapper}>
+      <div className={styles.profilePageContent}>
         {/* Profilkortet högst upp */}
         <ProfileCard user={{ ...user, profileImageUrl: user?.profileImageUrl }} />
         {/* Feedback vid sparad profil */}
         {saveFeedback && (
-          <div style={{ position: 'fixed', top: 32, right: 32, background: '#22c55e', color: '#fff', padding: '1rem 2rem', borderRadius: '1rem', fontWeight: 700, fontSize: '1.08rem', boxShadow: '0 2px 8px #22c55e55', zIndex: 9999, animation: 'fadeInProfile 0.5s' }}>
+          <div className={styles.profileSuccessMsg}>
             {saveFeedback}
           </div>
         )}
         {/* Flikmeny */}
-        <nav style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', justifyContent: 'center', marginBottom: '2rem' }}>
+        <nav className={styles.profileTabsNav}>
           {tabs.map(tab => (
             <button
               key={tab.key}
+              className={activeTab === tab.key ? styles.profileTabBtnActive : styles.profileTabBtn}
               onClick={() => setActiveTab(tab.key)}
-              style={{
-                background: activeTab === tab.key ? 'rgba(34,197,94,0.95)' : 'rgba(34,34,34,0.85)',
-                color: activeTab === tab.key ? '#fff' : fbcTheme.text.secondary,
-                border: 'none',
-                borderRadius: '0.7rem',
-                padding: '0.6rem 1.2rem',
-                fontWeight: 'bold',
-                fontSize: '1rem',
-                cursor: 'pointer',
-                boxShadow: activeTab === tab.key ? '0 1px 6px #22c55e33' : 'none',
-                transition: 'background 0.2s',
-                backdropFilter: 'blur(6px)',
-              }}
             >
               {tab.label}
             </button>
           ))}
         </nav>
         {/* Flikinnehåll */}
-        <div style={{ animation: 'fadeInProfile 0.7s' }}>
+        <div className={styles.profileTabContent}>
           {renderTabContent({ ...user, profileImageUrl: user?.profileImageUrl })}
         </div>
       </div>
-      {/* Responsiv design */}
-      <style>{`
-        @media (max-width: 600px) {
-          .profile-card, .profile-content { max-width: 98vw !important; padding: 0.5rem !important; }
-          nav { flex-direction: column !important; gap: 0.2rem !important; }
-        }
-        @keyframes fadeInProfile {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: none; }
-        }
-      `}</style>
-    </div>
+  </div>
   );
 };
 

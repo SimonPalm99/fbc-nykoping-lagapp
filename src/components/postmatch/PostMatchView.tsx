@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "./PostMatchView.module.css";
 
 interface Props {
   activityId: string;
@@ -8,7 +9,7 @@ interface Props {
 
 const PostMatchView: React.FC<Props> = ({ activityId, isLeader, userId }) => {
   return (
-    <div style={{ maxWidth: 500, margin: "0 auto", padding: 16 }}>
+    <div className={styles["postmatch-container"]}>
       <h2>Eftermatch & Reflektion</h2>
       <p>
         Aktivitetens ID: <b>{activityId}</b>
@@ -18,27 +19,27 @@ const PostMatchView: React.FC<Props> = ({ activityId, isLeader, userId }) => {
       </p>
       <p>
         {isLeader ? (
-          <span style={{ color: "green" }}>
+          <span className={styles["status-ledare"]}>
             Du har ledarbehörighet för denna aktivitet.
           </span>
         ) : (
-          <span style={{ color: "blue" }}>
+          <span className={styles["status-deltagare"]}>
             Du är deltagare på denna aktivitet.
           </span>
         )}
       </p>
       {/* Lägg till formulär, reflektioner eller feedback här */}
-      <div style={{ marginTop: 30 }}>
+      <div className={styles["reflektions-sektion"]}>
         <textarea
           rows={5}
-          style={{ width: "100%" }}
+          className={styles["reflektions-textarea"]}
           placeholder="Skriv dina reflektioner om matchen här..."
         />
-        <button style={{ marginTop: 10 }}>Spara reflektion</button>
+        <button className={styles["reflektions-knapp"]}>Spara reflektion</button>
       </div>
       {isLeader && (
-        <div style={{ marginTop: 24 }}>
-          <button style={{ background: "#faad14", color: "#222", padding: "8px 18px", borderRadius: 6 }}>
+        <div className={styles["leader-section"]}>
+          <button className={styles["leader-button"]}>
             Se allas reflektioner (ledare)
           </button>
         </div>

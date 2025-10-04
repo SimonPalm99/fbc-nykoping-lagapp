@@ -1,5 +1,7 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
+import styles from './Matchverktyg.module.css';
 
 const verktyg = [
   {
@@ -41,36 +43,23 @@ const verktyg = [
 
 const Matchverktyg: React.FC = () => {
   return (
-  <div style={{ minHeight: '100vh', background: '#101a10', padding: '2rem' }}>
-  <h1 style={{ color: '#22c55e', fontWeight: 900, fontSize: '2.5rem', textAlign: 'center', marginBottom: '2rem', letterSpacing: '2px', textShadow: '0 2px 8px #000' }}>Matchverktyg</h1>
-  <p style={{ color: '#fff', textAlign: 'center', fontSize: '1.1rem', marginBottom: '2.5rem', textShadow: '0 1px 4px #000' }}>
-        Välj ett verktyg nedan för att hantera matchen, planera taktiker, skapa laguppställningar eller analysera matcher.
-      </p>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '2rem', justifyContent: 'center' }}>
-        {verktyg.map(v => (
-          <Link to={v.länk} key={v.titel} style={{ textDecoration: 'none' }}>
-            <div style={{
-              background: '#fff',
-              borderRadius: '1.5rem',
-              boxShadow: '0 4px 24px #22c55e44',
-              padding: '2rem',
-              minWidth: '260px',
-              maxWidth: '300px',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              transition: 'transform 0.2s',
-              border: `4px solid ${v.färg}`,
-              color: '#101a10',
-            }}>
-              <span style={{ fontSize: '3rem', marginBottom: '1rem', color: '#22c55e', textShadow: '0 2px 8px #000' }}>{v.ikon}</span>
-              <h2 style={{ color: v.färg, fontWeight: 700, fontSize: '1.3rem', marginBottom: '0.5rem', textAlign: 'center', letterSpacing: '1px' }}>{v.titel}</h2>
-              <p style={{ color: '#222', fontSize: '1rem', textAlign: 'center', marginBottom: '0.5rem' }}>{v.beskrivning}</p>
-            </div>
-          </Link>
-        ))}
-      </div>
+  <div className={styles.root}>
+    <h1 className={styles.title}>Matchverktyg</h1>
+    <p className={styles.subtitle}>
+      Välj ett verktyg nedan för att hantera matchen, planera taktiker, skapa laguppställningar eller analysera matcher.
+    </p>
+    <div className={styles.tools}>
+      {verktyg.map(v => (
+        <Link to={v.länk} key={v.titel} className={styles.toolLink}>
+          <div className={styles.toolCard}>
+            <span className={styles.icon}>{v.ikon}</span>
+            <h2 className={styles.toolTitle}>{v.titel}</h2>
+            <p className={styles.toolDesc}>{v.beskrivning}</p>
+          </div>
+        </Link>
+      ))}
     </div>
+  </div>
   );
 };
 

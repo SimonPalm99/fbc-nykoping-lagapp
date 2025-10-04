@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useToast } from "../ui/Toast";
 import { OpponentMatch } from "../../types/opponent";
+import './MatchReportGenerator.css';
 
 interface Props {
   match: OpponentMatch;
@@ -173,412 +174,279 @@ const MatchReportGenerator: React.FC<Props> = ({ match, onSave, onCancel }) => {
     }
   };
 
-  const styles = {
-    container: {
-      background: 'var(--card-background)',
-      borderRadius: '12px',
-      padding: '2rem',
-      border: '1px solid var(--border-color)',
-      maxWidth: '800px',
-      margin: '0 auto'
-    },
-    header: {
-      textAlign: 'center' as const,
-      marginBottom: '2rem',
-      color: 'var(--text-primary)'
-    },
-    section: {
-      marginBottom: '2rem'
-    },
-    sectionTitle: {
-      color: 'var(--text-primary)',
-      fontSize: '1.25rem',
-      fontWeight: '600',
-      marginBottom: '1rem'
-    },
-    input: {
-      width: '100%',
-      padding: '0.75rem',
-      borderRadius: '8px',
-      border: '1px solid var(--border-color)',
-      background: 'var(--background-color)',
-      color: 'var(--text-primary)',
-      fontSize: '1rem',
-      marginBottom: '0.5rem'
-    },
-    textarea: {
-      width: '100%',
-      padding: '0.75rem',
-      borderRadius: '8px',
-      border: '1px solid var(--border-color)',
-      background: 'var(--background-color)',
-      color: 'var(--text-primary)',
-      fontSize: '1rem',
-      resize: 'vertical' as const,
-      minHeight: '100px',
-      marginBottom: '0.5rem'
-    },
-    chipContainer: {
-      display: 'flex',
-      flexWrap: 'wrap' as const,
-      gap: '0.5rem',
-      marginBottom: '0.5rem'
-    },
-    chip: {
-      background: 'var(--primary-color)',
-      color: '#ffffff',
-      padding: '0.25rem 0.75rem',
-      borderRadius: '16px',
-      fontSize: '0.875rem',
-      display: 'flex',
-      alignItems: 'center',
-      gap: '0.5rem'
-    },
-    removeButton: {
-      background: 'none',
-      border: 'none',
-      color: '#ffffff',
-      cursor: 'pointer',
-      fontSize: '0.75rem'
-    },
-    addButton: {
-      background: 'var(--primary-color)',
-      color: '#ffffff',
-      border: 'none',
-      borderRadius: '8px',
-      padding: '0.5rem 1rem',
-      cursor: 'pointer',
-      fontSize: '0.875rem',
-      fontWeight: '600'
-    },
-    grid: {
-      display: 'grid',
-      gridTemplateColumns: '1fr 1fr',
-      gap: '1rem'
-    },
-    rating: {
-      display: 'flex',
-      alignItems: 'center',
-      gap: '0.5rem',
-      marginBottom: '1rem'
-    },
-    buttonGroup: {
-      display: 'flex',
-      gap: '1rem',
-      justifyContent: 'center',
-      marginTop: '2rem'
-    },
-    button: {
-      padding: '0.75rem 1.5rem',
-      borderRadius: '8px',
-      border: 'none',
-      cursor: 'pointer',
-      fontWeight: '600',
-      fontSize: '1rem'
-    },
-    primaryButton: {
-      background: 'var(--primary-color)',
-      color: '#ffffff'
-    },
-    secondaryButton: {
-      background: 'var(--border-color)',
-      color: 'var(--text-primary)'
-    }
-  };
+  // Styles moved to external CSS file: MatchReportGenerator.css
 
   return (
-    <div style={styles.container}>
-      <div style={styles.header}>
-        <h2 style={{ margin: '0 0 0.5rem 0' }}>📝 Matchrapport</h2>
-        <div style={{ color: 'var(--text-secondary)' }}>
-          {report.homeTeam} vs {report.awayTeam} • {new Date(report.date).toLocaleDateString('sv-SE')}
-        </div>
-        <div style={{ 
-          fontSize: '1.5rem', 
-          fontWeight: 'bold',
-          color: 'var(--text-primary)',
-          marginTop: '0.5rem'
-        }}>
-          {report.score.home}-{report.score.away}
-        </div>
-      </div>
-
-      {/* Huvudrapport */}
-      <div style={styles.section}>
-        <h3 style={styles.sectionTitle}>📄 Matchrapport</h3>
-        <textarea
-          style={styles.textarea}
-          placeholder="Skriv en sammanfattning av matchen..."
-          value={report.report}
-          onChange={(e) => setReport(prev => ({ ...prev, report: e.target.value }))}
-          rows={5}
+<div className="match-report-container">
+  <div className="match-report-header">
+    <h2 className="match-report-title">📝 Matchrapport</h2>
+    <div className="match-report-subtitle">
+      {report.homeTeam} vs {report.awayTeam} • {new Date(report.date).toLocaleDateString('sv-SE')}
+    </div>
+    <div className="match-report-score">
+      {report.score.home}-{report.score.away}
+    </div>
+  </div>
+  {/* Huvudrapport */}
+  <div className="match-report-section">
+    <h3 className="match-report-section-title">📄 Matchrapport</h3>
+    <textarea
+      className="match-report-textarea"
+      placeholder="Skriv en sammanfattning av matchen..."
+      value={report.report}
+      onChange={(e) => setReport(prev => ({ ...prev, report: e.target.value }))}
+      rows={5}
+    />
+  </div>
+  {/* Nyckelhändelser */}
+  <div className="match-report-section">
+    <h3 className="match-report-section-title">⚡ Nyckelhändelser</h3>
+    <div className="match-report-chip-container">
+      {report.keyEvents.map((event, index) => (
+        <span key={index} className="match-report-chip">
+          {event}
+          <button
+            className="match-report-remove-button"
+            onClick={() => removeItem('keyEvents', index)}
+          >
+            ✕
+          </button>
+        </span>
+      ))}
+    </div>
+    <div className="match-report-flex-row">
+      <input
+        className="match-report-input"
+        placeholder="Lägg till nyckelhändelse..."
+        value={newKeyEvent}
+        onChange={(e) => setNewKeyEvent(e.target.value)}
+        onKeyPress={(e) => e.key === 'Enter' && addKeyEvent()}
+      />
+      <button className="match-report-add-button" onClick={addKeyEvent}>
+        ➕
+      </button>
+    </div>
+  </div>
+  <div className="match-report-grid">
+    {/* Vår prestation */}
+    <div className="match-report-section">
+      <h3 className="match-report-section-title">🟢 Vår prestation</h3>
+      <div className="match-report-rating">
+        <label className="match-report-label">Betyg:</label>
+        <input
+          type="range"
+          min="1"
+          max="10"
+          value={report.ourPerformance.rating}
+          onChange={(e) => setReport(prev => ({
+            ...prev,
+            ourPerformance: {
+              ...prev.ourPerformance,
+              rating: parseInt(e.target.value)
+            }
+          }))}
+          title="Välj betyg för vår prestation"
         />
+        <span className="match-report-rating-value">
+          {report.ourPerformance.rating}/10
+        </span>
       </div>
-
-      {/* Nyckelhändelser */}
-      <div style={styles.section}>
-        <h3 style={styles.sectionTitle}>⚡ Nyckelhändelser</h3>
-        <div style={styles.chipContainer}>
-          {report.keyEvents.map((event, index) => (
-            <span key={index} style={styles.chip}>
-              {event}
-              <button
-                style={styles.removeButton}
-                onClick={() => removeItem('keyEvents', index)}
-              >
-                ✕
-              </button>
-            </span>
-          ))}
-        </div>
-        <div style={{ display: 'flex', gap: '0.5rem' }}>
-          <input
-            style={{ ...styles.input, marginBottom: 0 }}
-            placeholder="Lägg till nyckelhändelse..."
-            value={newKeyEvent}
-            onChange={(e) => setNewKeyEvent(e.target.value)}
-            onKeyPress={(e) => e.key === 'Enter' && addKeyEvent()}
-          />
-          <button style={styles.addButton} onClick={addKeyEvent}>
-            ➕
-          </button>
-        </div>
+      <input
+        className="match-report-input"
+        placeholder="MVP..."
+        value={report.ourPerformance.mvp}
+        onChange={(e) => setReport(prev => ({
+          ...prev,
+          ourPerformance: {
+            ...prev.ourPerformance,
+            mvp: e.target.value
+          }
+        }))}
+      />
+      <h4 className="match-report-subsection-title">
+        💪 Styrkor
+      </h4>
+      <div className="match-report-chip-container">
+        {report.ourPerformance.strengths.map((strength, index) => (
+          <span key={index} className="match-report-chip match-report-chip-green">
+            {strength}
+            <button
+              className="match-report-remove-button"
+              onClick={() => removeItem('ourStrengths', index)}
+            >
+              ✕
+            </button>
+          </span>
+        ))}
       </div>
-
-      <div style={styles.grid}>
-        {/* Vår prestation */}
-        <div style={styles.section}>
-          <h3 style={styles.sectionTitle}>🟢 Vår prestation</h3>
-          
-          <div style={styles.rating}>
-            <label style={{ color: 'var(--text-primary)' }}>Betyg:</label>
-            <input
-              type="range"
-              min="1"
-              max="10"
-              value={report.ourPerformance.rating}
-              onChange={(e) => setReport(prev => ({
-                ...prev,
-                ourPerformance: {
-                  ...prev.ourPerformance,
-                  rating: parseInt(e.target.value)
-                }
-              }))}
-            />
-            <span style={{ color: 'var(--text-primary)', fontWeight: 'bold' }}>
-              {report.ourPerformance.rating}/10
-            </span>
-          </div>
-
-          <input
-            style={styles.input}
-            placeholder="MVP..."
-            value={report.ourPerformance.mvp}
-            onChange={(e) => setReport(prev => ({
-              ...prev,
-              ourPerformance: {
-                ...prev.ourPerformance,
-                mvp: e.target.value
-              }
-            }))}
-          />
-
-          <h4 style={{ color: 'var(--text-primary)', margin: '1rem 0 0.5rem 0' }}>
-            💪 Styrkor
-          </h4>
-          <div style={styles.chipContainer}>
-            {report.ourPerformance.strengths.map((strength, index) => (
-              <span key={index} style={{ ...styles.chip, background: '#10b981' }}>
-                {strength}
-                <button
-                  style={styles.removeButton}
-                  onClick={() => removeItem('ourStrengths', index)}
-                >
-                  ✕
-                </button>
-              </span>
-            ))}
-          </div>
-          <div style={{ display: 'flex', gap: '0.5rem' }}>
-            <input
-              style={{ ...styles.input, marginBottom: 0 }}
-              placeholder="Lägg till styrka..."
-              value={newOurStrength}
-              onChange={(e) => setNewOurStrength(e.target.value)}
-              onKeyPress={(e) => e.key === 'Enter' && addOurStrength()}
-            />
-            <button style={styles.addButton} onClick={addOurStrength}>
-              ➕
-            </button>
-          </div>
-
-          <h4 style={{ color: 'var(--text-primary)', margin: '1rem 0 0.5rem 0' }}>
-            ⚠️ Svagheter
-          </h4>
-          <div style={styles.chipContainer}>
-            {report.ourPerformance.weaknesses.map((weakness, index) => (
-              <span key={index} style={{ ...styles.chip, background: '#ef4444' }}>
-                {weakness}
-                <button
-                  style={styles.removeButton}
-                  onClick={() => removeItem('ourWeaknesses', index)}
-                >
-                  ✕
-                </button>
-              </span>
-            ))}
-          </div>
-          <div style={{ display: 'flex', gap: '0.5rem' }}>
-            <input
-              style={{ ...styles.input, marginBottom: 0 }}
-              placeholder="Lägg till svaghet..."
-              value={newOurWeakness}
-              onChange={(e) => setNewOurWeakness(e.target.value)}
-              onKeyPress={(e) => e.key === 'Enter' && addOurWeakness()}
-            />
-            <button style={styles.addButton} onClick={addOurWeakness}>
-              ➕
-            </button>
-          </div>
-        </div>
-
-        {/* Motståndarens prestation */}
-        <div style={styles.section}>
-          <h3 style={styles.sectionTitle}>🔴 Motståndarens prestation</h3>
-          
-          <div style={styles.rating}>
-            <label style={{ color: 'var(--text-primary)' }}>Betyg:</label>
-            <input
-              type="range"
-              min="1"
-              max="10"
-              value={report.opponentPerformance.rating}
-              onChange={(e) => setReport(prev => ({
-                ...prev,
-                opponentPerformance: {
-                  ...prev.opponentPerformance,
-                  rating: parseInt(e.target.value)
-                }
-              }))}
-            />
-            <span style={{ color: 'var(--text-primary)', fontWeight: 'bold' }}>
-              {report.opponentPerformance.rating}/10
-            </span>
-          </div>
-
-          <h4 style={{ color: 'var(--text-primary)', margin: '1rem 0 0.5rem 0' }}>
-            💪 Deras styrkor
-          </h4>
-          <div style={styles.chipContainer}>
-            {report.opponentPerformance.strengths.map((strength, index) => (
-              <span key={index} style={{ ...styles.chip, background: '#10b981' }}>
-                {strength}
-                <button
-                  style={styles.removeButton}
-                  onClick={() => removeItem('opponentStrengths', index)}
-                >
-                  ✕
-                </button>
-              </span>
-            ))}
-          </div>
-          <div style={{ display: 'flex', gap: '0.5rem' }}>
-            <input
-              style={{ ...styles.input, marginBottom: 0 }}
-              placeholder="Lägg till styrka..."
-              value={newOpponentStrength}
-              onChange={(e) => setNewOpponentStrength(e.target.value)}
-              onKeyPress={(e) => e.key === 'Enter' && addOpponentStrength()}
-            />
-            <button style={styles.addButton} onClick={addOpponentStrength}>
-              ➕
-            </button>
-          </div>
-
-          <h4 style={{ color: 'var(--text-primary)', margin: '1rem 0 0.5rem 0' }}>
-            ⚠️ Deras svagheter
-          </h4>
-          <div style={styles.chipContainer}>
-            {report.opponentPerformance.weaknesses.map((weakness, index) => (
-              <span key={index} style={{ ...styles.chip, background: '#ef4444' }}>
-                {weakness}
-                <button
-                  style={styles.removeButton}
-                  onClick={() => removeItem('opponentWeaknesses', index)}
-                >
-                  ✕
-                </button>
-              </span>
-            ))}
-          </div>
-          <div style={{ display: 'flex', gap: '0.5rem' }}>
-            <input
-              style={{ ...styles.input, marginBottom: 0 }}
-              placeholder="Lägg till svaghet..."
-              value={newOpponentWeakness}
-              onChange={(e) => setNewOpponentWeakness(e.target.value)}
-              onKeyPress={(e) => e.key === 'Enter' && addOpponentWeakness()}
-            />
-            <button style={styles.addButton} onClick={addOpponentWeakness}>
-              ➕
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Höjdpunkter */}
-      <div style={styles.section}>
-        <h3 style={styles.sectionTitle}>✨ Höjdpunkter</h3>
-        <div style={styles.chipContainer}>
-          {(report.highlights || []).map((highlight, index) => (
-            <span key={index} style={{ ...styles.chip, background: '#f59e0b' }}>
-              {highlight}
-              <button
-                style={styles.removeButton}
-                onClick={() => removeItem('highlights', index)}
-              >
-                ✕
-              </button>
-            </span>
-          ))}
-        </div>
-        <div style={{ display: 'flex', gap: '0.5rem' }}>
-          <input
-            style={{ ...styles.input, marginBottom: 0 }}
-            placeholder="Lägg till höjdpunkt..."
-            value={newHighlight}
-            onChange={(e) => setNewHighlight(e.target.value)}
-            onKeyPress={(e) => e.key === 'Enter' && addHighlight()}
-          />
-          <button style={styles.addButton} onClick={addHighlight}>
-            ➕
-          </button>
-        </div>
-      </div>
-
-      {/* Knappar */}
-      <div style={styles.buttonGroup}>
-        <button
-          style={{
-            ...styles.button,
-            ...styles.secondaryButton
-          }}
-          onClick={onCancel}
-        >
-          Avbryt
+      <div className="match-report-flex-row">
+        <input
+          className="match-report-input"
+          placeholder="Lägg till styrka..."
+          value={newOurStrength}
+          onChange={(e) => setNewOurStrength(e.target.value)}
+          onKeyPress={(e) => e.key === 'Enter' && addOurStrength()}
+        />
+        <button className="match-report-add-button" onClick={addOurStrength}>
+          ➕
         </button>
-        <button
-          style={{
-            ...styles.button,
-            ...styles.primaryButton
-          }}
-          onClick={handleSave}
-        >
-          💾 Spara rapport
+      </div>
+      <h4 className="match-report-subsection-title">
+        ⚠️ Svagheter
+      </h4>
+      <div className="match-report-chip-container">
+        {report.ourPerformance.weaknesses.map((weakness, index) => (
+          <span key={index} className="match-report-chip match-report-chip-red">
+            {weakness}
+            <button
+              className="match-report-remove-button"
+              onClick={() => removeItem('ourWeaknesses', index)}
+            >
+              ✕
+            </button>
+          </span>
+        ))}
+      </div>
+      <div className="match-report-flex-row">
+        <input
+          className="match-report-input"
+          placeholder="Lägg till svaghet..."
+          value={newOurWeakness}
+          onChange={(e) => setNewOurWeakness(e.target.value)}
+          onKeyPress={(e) => e.key === 'Enter' && addOurWeakness()}
+        />
+        <button className="match-report-add-button" onClick={addOurWeakness}>
+          ➕
         </button>
       </div>
     </div>
-  );
-};
+    {/* Motståndarens prestation */}
+    <div className="match-report-section">
+      <h3 className="match-report-section-title">🔴 Motståndarens prestation</h3>
+      <div className="match-report-rating">
+        <label className="match-report-label">Betyg:</label>
+        <input
+          type="range"
+          min="1"
+          max="10"
+          value={report.opponentPerformance.rating}
+          onChange={(e) => setReport(prev => ({
+            ...prev,
+            opponentPerformance: {
+              ...prev.opponentPerformance,
+              rating: parseInt(e.target.value)
+            }
+          }))}
+          title="Välj betyg för motståndarens prestation"
+        />
+        <span className="match-report-rating-value">
+          {report.opponentPerformance.rating}/10
+        </span>
+      </div>
+      <h4 className="match-report-subsection-title">
+        💪 Deras styrkor
+      </h4>
+      <div className="match-report-chip-container">
+        {report.opponentPerformance.strengths.map((strength, index) => (
+          <span key={index} className="match-report-chip match-report-chip-green">
+            {strength}
+            <button
+              className="match-report-remove-button"
+              onClick={() => removeItem('opponentStrengths', index)}
+            >
+              ✕
+            </button>
+          </span>
+        ))}
+      </div>
+      <div className="match-report-flex-row">
+        <input
+          className="match-report-input"
+          placeholder="Lägg till styrka..."
+          value={newOpponentStrength}
+          onChange={(e) => setNewOpponentStrength(e.target.value)}
+          onKeyPress={(e) => e.key === 'Enter' && addOpponentStrength()}
+        />
+        <button className="match-report-add-button" onClick={addOpponentStrength}>
+          ➕
+        </button>
+      </div>
+      <h4 className="match-report-subsection-title">
+        ⚠️ Deras svagheter
+      </h4>
+      <div className="match-report-chip-container">
+        {report.opponentPerformance.weaknesses.map((weakness, index) => (
+          <span key={index} className="match-report-chip match-report-chip-red">
+            {weakness}
+            <button
+              className="match-report-remove-button"
+              onClick={() => removeItem('opponentWeaknesses', index)}
+            >
+              ✕
+            </button>
+          </span>
+        ))}
+      </div>
+      <div className="match-report-flex-row">
+        <input
+          className="match-report-input"
+          placeholder="Lägg till svaghet..."
+          value={newOpponentWeakness}
+          onChange={(e) => setNewOpponentWeakness(e.target.value)}
+          onKeyPress={(e) => e.key === 'Enter' && addOpponentWeakness()}
+        />
+        <button className="match-report-add-button" onClick={addOpponentWeakness}>
+          ➕
+        </button>
+      </div>
+    </div>
+  </div>
+  {/* Höjdpunkter */}
+  <div className="match-report-section">
+    <h3 className="match-report-section-title">✨ Höjdpunkter</h3>
+    <div className="match-report-chip-container">
+      {(report.highlights || []).map((highlight, index) => (
+        <span key={index} className="match-report-chip match-report-chip-yellow">
+          {highlight}
+          <button
+            className="match-report-remove-button"
+            onClick={() => removeItem('highlights', index)}
+          >
+            ✕
+          </button>
+        </span>
+      ))}
+    </div>
+    <div className="match-report-flex-row">
+      <input
+        className="match-report-input"
+        placeholder="Lägg till höjdpunkt..."
+        value={newHighlight}
+        onChange={(e) => setNewHighlight(e.target.value)}
+        onKeyPress={(e) => e.key === 'Enter' && addHighlight()}
+      />
+      <button className="match-report-add-button" onClick={addHighlight}>
+        ➕
+      </button>
+    </div>
+  </div>
+  {/* Knappar */}
+  <div className="match-report-button-group">
+    <button
+      className="match-report-button match-report-secondary-button"
+      onClick={onCancel}
+    >
+      Avbryt
+    </button>
+    <button
+      className="match-report-button match-report-primary-button"
+      onClick={handleSave}
+    >
+      💾 Spara rapport
+    </button>
+  </div>
+</div>
+);
+}
 
 export default MatchReportGenerator;

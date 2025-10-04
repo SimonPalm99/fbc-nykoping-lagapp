@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "./TrainingLogList.module.css";
 import { TrainingLog, User } from "../../types/user";
 
 interface Props {
@@ -10,71 +11,31 @@ const TrainingLogList: React.FC<Props> = ({ user }) => {
 
   if (logs.length === 0)
     return (
-      <div
-        style={{
-          background: "#252c36",
-          color: "#b8f27c",
-          borderRadius: 8,
-          padding: 12,
-          margin: "16px auto",
-          textAlign: "center",
-        }}
-      >
+      <div className={styles["training-log-empty"]}>
         Inga träningsloggar än.
       </div>
     );
 
   return (
-    <section
-      style={{
-        background: "#22272e",
-        borderRadius: 12,
-        maxWidth: 500,
-        margin: "16px auto",
-        padding: 18,
-        color: "#fff",
-        fontFamily: "inherit",
-      }}
-    >
-      <h3 style={{ color: "#b8f27c", fontSize: 18, margin: 0 }}>Träningsloggar</h3>
-      <ul style={{ listStyle: "none", padding: 0, margin: "12px 0 0 0" }}>
+    <section className={styles["training-log-section"]}>
+      <h3 className={styles["training-log-title"]}>Träningsloggar</h3>
+      <ul className={styles["training-log-list"]}>
         {logs.map((log) => (
           <li
             key={log.id}
-            style={{
-              background: "#181c1e",
-              marginBottom: 10,
-              borderRadius: 7,
-              padding: "8px 12px",
-              fontSize: 15,
-            }}
+            className={styles["training-log-item"]}
           >
-            <div style={{ fontWeight: 600 }}>{log.date}</div>
+            <div className={styles["training-log-date"]}>{log.date}</div>
             <div>
               Känsla: <b>{log.feeling}</b>
               {log.note && (
-                <span style={{ marginLeft: 8, color: "#b8f27c" }}>– {log.note}</span>
+                <span className={styles["training-log-note"]}>– {log.note}</span>
               )}
             </div>
           </li>
         ))}
       </ul>
-      <style>{`
-        @media (max-width: 600px) {
-          section {
-            padding: 8px;
-            border-radius: 0;
-            max-width: 99vw;
-          }
-          h3 {
-            font-size: 16px;
-          }
-          li {
-            font-size: 14px;
-            padding: 6px 4px;
-          }
-        }
-      `}</style>
+      {/* Responsivitet hanteras i CSS-modulen */}
     </section>
   );
 };

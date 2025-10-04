@@ -1,0 +1,97 @@
+/* MenuPopup.module.css */
+.popupOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.18);
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.popupContainer {
+  background: linear-gradient(135deg, var(--primar-gron, #22c55e) 0%, #111 100%);
+  border-radius: 1.2rem;
+  box-shadow: 0 8px 32px rgba(46,125,50,0.18);
+  width: 100%;
+  max-width: 370px;
+  max-height: 80vh;
+  padding: 2.2rem 1.5rem 2rem 1.5rem;
+  overflow-y: auto;
+  border: 2px solid var(--primar-gron, #22c55e);
+  position: relative;
+  animation: fadeInMenu 0.4s;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  align-items: center;
+}
+
+.popupTitle {
+  font-weight: 900;
+  font-size: 1.35rem;
+  color: #fff;
+  margin-bottom: 1.2rem;
+  letter-spacing: 1px;
+  text-align: center;
+  text-shadow: 0 2px 8px rgba(46,125,50,0.10);
+}
+
+.popupNav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  width: 100%;
+}
+
+.popupBtn {
+  width: 100%;
+  font-weight: 700;
+  font-size: 1.13rem;
+  color: var(--primar-gron, #22c55e);
+  background: #111;
+  border-radius: 10px;
+  box-shadow: 0 2px 12px rgba(46,125,50,0.10);
+  padding: 0.85rem 0.5rem;
+  border: 2px solid var(--primar-gron, #22c55e);
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  text-align: center;
+  margin-bottom: 0.1rem;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+}
+
+.popupBtn:hover, .popupBtnActive {
+  background: var(--primar-gron, #22c55e);
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(46,125,50,0.18);
+}
+
+.closeBtn {
+  width: 100%;
+  margin-top: 1.5rem;
+  font-weight: 700;
+  font-size: 1.08rem;
+  color: var(--primar-gron, #22c55e);
+  background: #111;
+  border-radius: 10px;
+  box-shadow: 0 2px 12px rgba(46,125,50,0.10);
+  padding: 0.7rem 0.5rem;
+  border: 2px solid var(--primar-gron, #22c55e);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+
+.closeBtn:hover {
+  background: var(--primar-gron, #22c55e);
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(46,125,50,0.18);
+}
+
+@keyframes fadeInMenu {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}

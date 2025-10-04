@@ -12,6 +12,7 @@
   max-width: 100%;
   border: none;
   transition: box-shadow 0.2s, border 0.2s, background 0.5s, transform 0.4s;
+  -webkit-backdrop-filter: blur(8px) saturate(120%);
   backdrop-filter: blur(8px) saturate(120%);
   opacity: 0;
   animation: fadeInActivity 0.8s forwards;

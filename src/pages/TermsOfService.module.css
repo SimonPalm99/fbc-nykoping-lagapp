@@ -1,0 +1,63 @@
+.tos-root {
+  min-height: 100vh;
+  font-family: inherit;
+  padding: 2rem 0;
+  position: relative;
+  background: linear-gradient(135deg, #FAFAFA 0%, #F1F8E9 30%, #E8F5E9 100%);
+  color: #1B5E20;
+}
+.tos-root[data-theme="dark"] {
+  background: linear-gradient(135deg, #0A0A0A 0%, #0D1B0D 30%, #1B2E1B 100%);
+  color: #F1F8E9;
+}
+.tos-card {
+  max-width: 900px;
+  margin: 0 auto;
+  border-radius: 1.2rem;
+  box-shadow: 0 4px 16px rgba(46, 125, 50, 0.18);
+  padding: 2.5rem 2rem;
+  position: relative;
+  border: 2px solid #2E7D32;
+  background: #fff;
+}
+.tos-root[data-theme="dark"] .tos-card {
+  background: rgba(16, 32, 16, 0.97);
+  border: 2px solid #2E7D32;
+}
+.tos-title {
+  font-weight: 900;
+  font-size: 2rem;
+  color: #2E7D32;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+.tos-section-title {
+  color: #2E7D32;
+  font-size: 1.25rem;
+  margin-top: 1.5rem;
+}
+.tos-paragraph {
+  font-size: 1.15rem;
+  color: #4A5568;
+  margin-bottom: 1.5rem;
+}
+.tos-root[data-theme="dark"] .tos-paragraph {
+  color: #C8E6C9;
+}
+.tos-list {
+  font-size: 1.05rem;
+  color: #4A5568;
+  margin-bottom: 1.2rem;
+}
+.tos-root[data-theme="dark"] .tos-list {
+  color: #C8E6C9;
+}
+.tos-updated {
+  margin-top: 2.5rem;
+  text-align: center;
+  color: #4A5568;
+  font-size: 0.95rem;
+}
+.tos-root[data-theme="dark"] .tos-updated {
+  color: #C8E6C9;
+}

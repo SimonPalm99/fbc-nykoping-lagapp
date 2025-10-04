@@ -1,0 +1,222 @@
+/* Add margin to commentContainer */
+.commentContainer {
+  margin-bottom: 20px;
+}
+/* FBC Laguppställning Theme & Responsivitet */
+.root {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #101a10 60%, #22c55e 100%);
+  padding: 2rem 0;
+  font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+}
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+  border-radius: 32px;
+  box-shadow: 0 8px 32px #000a;
+  background: rgba(20,32,20,0.85);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border: 2px solid #22c55e;
+}
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+.heading {
+  color: #22c55e;
+  font-weight: 900;
+  font-size: 2.8rem;
+  letter-spacing: 2px;
+  text-shadow: 0 2px 12px #000;
+}
+.flexColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+.saveBtn {
+  align-self: flex-end;
+  margin-bottom: 16px;
+  background: #22c55e;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 12px;
+  padding: 0.7rem 2rem;
+  cursor: pointer;
+  box-shadow: 0 2px 8px #22c55e55;
+}
+.saveStatus {
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+.saveStatus.error {
+  color: #ef4444;
+}
+.saveStatus.success {
+  color: #22c55e;
+}
+.lineupSection {
+  width: 100%;
+  background: rgba(255,255,255,0.08);
+  border-radius: 24px;
+  box-shadow: 0 2px 16px #22c55e33;
+  padding: 2rem;
+  margin-bottom: 32px;
+}
+.lineupLabel {
+  color: #22c55e;
+  font-weight: 700;
+  font-size: 1.3rem;
+  margin: 1rem 0;
+}
+.commentArea {
+  width: 100%;
+  min-height: 64px;
+  max-height: 180px;
+  padding: 0.8rem 1rem;
+  border-radius: 12px;
+  font-size: 1.08rem;
+  background: #101a10;
+  color: #22c55e;
+  border: 2px solid #22c55e;
+  box-shadow: 0 2px 8px #22c55e22;
+  resize: vertical;
+  outline: none;
+  font-family: inherit;
+  transition: border 0.2s;
+}
+.commentLabel {
+  display: block;
+  font-weight: 700;
+  color: #22c55e;
+  margin-bottom: 6px;
+  font-size: 1.08rem;
+}
+.commentHelp {
+  color: #888;
+  font-size: 0.95rem;
+  margin-top: 4px;
+  display: block;
+}
+.availablePlayers {
+  width: 100%;
+  background: rgba(255,255,255,0.08);
+  border-radius: 24px;
+  box-shadow: 0 2px 16px #22c55e33;
+  padding: 2rem;
+  margin-bottom: 32px;
+  min-height: 80px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.availableLabel {
+  color: #22c55e;
+  font-weight: 700;
+  font-size: 1.2rem;
+  margin: 1rem 0;
+  width: 100%;
+}
+.playerDraggable {
+  background: #101a10cc;
+  color: #fff;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-weight: 700;
+  font-size: 1rem;
+  border: 2px solid #22c55e;
+  cursor: grab;
+  margin-bottom: 8px;
+}
+.plan {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  min-height: 260px;
+  background: center/contain no-repeat;
+  border: 2px solid #22c55e;
+  border-radius: 24px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  overflow: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.planHalf {
+  max-width: 400px;
+}
+.positionDroppable {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 160px;
+  height: 56px;
+  background: #fff8;
+  border: 2px dashed #22c55e;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: #222;
+  font-size: 1.2rem;
+  box-shadow: 0 1px 4px #22c55e33;
+  cursor: grab;
+  transition: all 0.2s;
+  z-index: 3;
+}
+.positionDroppable.player {
+  background: #101a10cc;
+  border: 2px solid #22c55e;
+  color: #fff;
+  box-shadow: 0 2px 12px #22c55e88;
+  cursor: pointer;
+}
+.playerContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+.removeBtn {
+  margin-left: 8px;
+  background: #ef4444;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 2px 8px;
+  cursor: pointer;
+}
+@media (max-width: 700px) {
+  .container {
+    padding: 0.5rem;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .heading {
+    font-size: 2rem;
+  }
+  .lineupSection {
+    padding: 1rem;
+    margin-bottom: 16px;
+  }
+  .commentArea {
+    font-size: 1rem;
+    min-height: 48px;
+  }
+}
+@media (max-width: 500px) {
+  .heading {
+    font-size: 1.3rem;
+  }
+  .lineupSection {
+    padding: 0.5rem;
+  }
+}

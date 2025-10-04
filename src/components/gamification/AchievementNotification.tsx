@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import styles from './AchievementNotification.module.css';
 
 interface AchievementNotificationProps {
   achievement: {
@@ -38,13 +39,13 @@ const AchievementNotification: React.FC<AchievementNotificationProps> = ({
   const getRarityClasses = (rarity: string) => {
     switch (rarity) {
       case 'rare':
-        return 'from-blue-500 to-blue-700 border-blue-300';
+        return styles.achievementNotification__rare;
       case 'epic':
-        return 'from-purple-500 to-purple-700 border-purple-300';
+        return styles.achievementNotification__epic;
       case 'legendary':
-        return 'from-yellow-500 to-yellow-700 border-yellow-300 shadow-2xl animate-pulse';
+        return styles.achievementNotification__legendary;
       default:
-        return 'from-gray-500 to-gray-700 border-gray-300';
+        return '';
     }
   };
 
@@ -64,73 +65,35 @@ const AchievementNotification: React.FC<AchievementNotificationProps> = ({
   if (!isVisible) return null;
 
   return (
-    <div className="fixed top-4 right-4 z-50">
-      <div
-        className={`
-          transform transition-all duration-500 ease-out
-          ${isAnimating ? 'translate-x-0 opacity-100 scale-100' : 'translate-x-full opacity-0 scale-95'}
-        `}
-      >
-        <div
-          className={`
-            relative overflow-hidden
-            bg-gradient-to-r ${getRarityClasses(achievement.rarity)}
-            text-white rounded-lg shadow-2xl border-2
-            p-4 max-w-sm w-80
-            ${achievement.rarity === 'legendary' ? 'animate-bounce' : ''}
-          `}
-        >
-          {/* Sparkle animation for legendary */}
-          {achievement.rarity === 'legendary' && (
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-30 animate-pulse"></div>
-          )}
-          
+    <div className={styles.achievementNotification}>
+      <div className={isAnimating ? styles.achievementNotification__container : styles.achievementNotification__container + ' ' + styles['achievementNotification__container--hidden']}>
+        <div className={styles.achievementNotification__card + ' ' + getRarityClasses(achievement.rarity)}>
           {/* Close button */}
           <button
             onClick={onClose}
-            className="absolute top-2 right-2 text-white hover:text-gray-200 text-xl font-bold"
+            className={styles.achievementNotification__closeBtn}
           >
             ×
           </button>
-          
           {/* Content */}
-          <div className="flex items-start gap-3">
-            <div className="text-4xl animate-bounce">
-              {achievement.icon}
-            </div>
-            
-            <div className="flex-1">
-              <div className="text-xs uppercase font-bold mb-1 opacity-90">
-                {getRarityText(achievement.rarity)}
-              </div>
-              
-              <h3 className="font-bold text-lg mb-1">
-                {achievement.title}
-              </h3>
-              
-              <p className="text-sm opacity-90 mb-2">
-                {achievement.description}
-              </p>
-              
-              <div className="flex items-center gap-2">
-                <span className="bg-white bg-opacity-20 px-2 py-1 rounded text-xs font-semibold">
-                  +{achievement.xp} XP
-                </span>
-                <span className="text-xs opacity-75">
-                  🎉 Grattis!
-                </span>
+          <div className={styles.achievementNotification__content}>
+            <div className={styles.achievementNotification__icon}>{achievement.icon}</div>
+            <div className={styles.achievementNotification__info}>
+              <div className={styles.achievementNotification__rarity}>{getRarityText(achievement.rarity)}</div>
+              <h3 className={styles.achievementNotification__title}>{achievement.title}</h3>
+              <p className={styles.achievementNotification__desc}>{achievement.description}</p>
+              <div className={styles.achievementNotification__row}>
+                <span className={styles.achievementNotification__xp}>+{achievement.xp} XP</span>
+                <span className={styles.achievementNotification__congrats}>🎉 Grattis!</span>
               </div>
             </div>
           </div>
-          
           {/* Progress bar */}
-          <div className="absolute bottom-0 left-0 right-0 h-1 bg-white bg-opacity-20">
+          <div className={styles.achievementNotification__progressBar}>
             <div
-              className="h-full bg-white transition-all duration-300 ease-linear"
-              style={{
-                width: isAnimating ? '0%' : '100%',
-                transitionDuration: `${duration}ms`
-              }}
+              className={styles.achievementNotification__progress}
+              data-width={isAnimating ? '0%' : '100%'}
+              data-duration={duration}
             />
           </div>
         </div>

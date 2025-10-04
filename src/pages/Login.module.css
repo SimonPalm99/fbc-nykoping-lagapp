@@ -1,0 +1,133 @@
+/* Login.module.css - flyttade styles från Login.tsx */
+
+.loginRoot {
+  min-height: 100vh;
+  background: var(--background-gradient);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.loginParallax {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(circle at 20% 20%, rgba(120,119,198,0.4) 0%, transparent 50%),
+    radial-gradient(circle at 80% 60%, rgba(255,119,198,0.3) 0%, transparent 50%),
+    radial-gradient(circle at 40% 80%, rgba(255,206,84,0.3) 0%, transparent 50%);
+  animation: parallaxFloat 20s ease-in-out infinite;
+  z-index: 0;
+}
+
+.loginParticle1 {
+  position: absolute; top: 10%; left: 10%; width: 60px; height: 60px;
+  background: rgba(245,158,11,0.2); border-radius: 50%; animation: float 6s ease-in-out infinite; z-index: 0;
+}
+.loginParticle2 {
+  position: absolute; top: 70%; right: 15%; width: 40px; height: 40px;
+  background: rgba(120,119,198,0.3); border-radius: 50%; animation: float 8s ease-in-out infinite reverse; z-index: 0;
+}
+.loginParticle3 {
+  position: absolute; bottom: 20%; left: 20%; width: 80px; height: 80px;
+  background: rgba(255,119,198,0.2); border-radius: 50%; animation: float 10s ease-in-out infinite; z-index: 0;
+}
+
+.loginCard {
+  background: rgba(255,255,255,0.05);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  padding: 3rem 2rem;
+  width: 100%;
+  max-width: 420px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.loginCardGradient {
+  position: absolute; top: -50%; left: -50%; right: -50%; bottom: -50%;
+  background: var(--fbc-gradient); opacity: 0.1; border-radius: 50%; animation: rotate 20s linear infinite;
+}
+
+.loginLogo {
+  text-align: center; margin-bottom: 2.5rem; position: relative; z-index: 1;
+}
+.loginLogoIcon {
+  width: 100px; height: 100px; margin: 0 auto 1.5rem; background: var(--fbc-gradient);
+  border-radius: 24px; display: flex; align-items: center; justify-content: center;
+  font-size: 2.5rem; color: white; box-shadow: 0 15px 35px rgba(245,158,11,0.3);
+  animation: glow 2s ease-in-out infinite alternate;
+}
+.loginLogoTitle {
+  font-size: 2.5rem; font-weight: 800; margin: 0 0 0.5rem 0;
+  background: var(--fbc-gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  text-align: center;
+}
+.loginLogoSubtitle {
+  font-size: 1.1rem; margin: 0; color: var(--text-secondary); opacity: 0.9;
+}
+
+.loginForm {
+  position: relative; z-index: 1;
+}
+.loginFormGroup {
+  margin-bottom: 1.5rem;
+}
+.loginFormLabel {
+  display: block; font-size: 0.9rem; font-weight: 600; color: var(--text-primary); margin-bottom: 0.75rem;
+}
+.loginFormInput {
+  width: 100%; padding: 1rem 1.25rem; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1);
+  font-size: 1rem; background: rgba(255,255,255,0.05); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); color: var(--text-primary);
+  outline: none; transition: all 0.3s ease; box-sizing: border-box;
+}
+
+.loginFormGroupPassword {
+  margin-bottom: 2rem;
+}
+
+.loginButton {
+  width: 100%; padding: 1rem 1.25rem; border-radius: 16px; border: none;
+  background: var(--fbc-gradient); color: white; font-size: 1.1rem; font-weight: 700;
+  cursor: pointer; transition: all 0.3s ease; box-shadow: 0 10px 30px rgba(245,158,11,0.3);
+  opacity: 1; position: relative; overflow: hidden;
+}
+.loginButton:disabled {
+  background: rgba(107,114,128,0.5); cursor: not-allowed; box-shadow: none; opacity: 0.7;
+}
+.loginButtonLoading {
+  display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+}
+.loginButtonSpinner {
+  width: 20px; height: 20px; border: 2px solid rgba(255,255,255,0.3);
+  border-top: 2px solid white; border-radius: 50%; animation: spin 1s linear infinite;
+}
+
+.loginTestUser {
+  margin-top: 2.5rem; padding: 1.5rem; border-radius: 16px;
+  background: rgba(255,255,255,0.03); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.08); position: relative; z-index: 1;
+}
+.loginTestUserTitle {
+  font-size: 1rem; font-weight: 600; color: var(--text-primary);
+  margin: 0 0 1rem 0; display: flex; align-items: center; gap: 0.5rem;
+}
+.loginTestUserBox {
+  background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.2);
+  border-radius: 12px; padding: 1rem; margin-bottom: 1rem;
+}
+.loginTestUserEmail, .loginTestUserPassword {
+  font-size: 0.9rem; color: var(--text-primary); margin: 0 0 0.5rem 0; font-weight: 500;
+}
+.loginTestUserEmail span, .loginTestUserPassword span {
+  color: var(--fbc-secondary); font-weight: 700; font-family: monospace;
+}
+.loginTestUserHint {
+  font-size: 0.8rem; color: var(--text-secondary); margin: 0; opacity: 0.8; font-style: italic;
+}

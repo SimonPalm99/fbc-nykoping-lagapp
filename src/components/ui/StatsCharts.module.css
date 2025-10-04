@@ -1,0 +1,8 @@
+/* StatsCharts.module.css - CSS-modul för statistikdiagram */
+.stats-card {
+  padding: 1.5rem;
+}
+.stats-title {
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+}

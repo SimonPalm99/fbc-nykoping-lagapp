@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import styles from "./ActivityEdit.module.css";
+
 interface ActivityFormState {
   name: string;
   description: string;
@@ -34,53 +36,45 @@ const ActivityEdit: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ maxWidth: 400, margin: "2rem auto" }}>
-      <div style={{ marginBottom: 16 }}>
-        <label>
-          Namn:
-          <input
-            type="text"
-            name="name"
-            value={form.name}
-            onChange={handleChange}
-            style={{ width: "100%", padding: 6, marginTop: 4 }}
-            required
-          />
-        </label>
+    <form onSubmit={handleSubmit} className={styles.formular}>
+      <div className={styles.falt}>
+        <label className={styles.etikett} htmlFor="name">Namn:</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          value={form.name}
+          onChange={handleChange}
+          className={styles.input}
+          required
+        />
       </div>
-      <div style={{ marginBottom: 16 }}>
-        <label>
-          Beskrivning:
-          <textarea
-            name="description"
-            value={form.description}
-            onChange={handleChange}
-            style={{ width: "100%", padding: 6, marginTop: 4, minHeight: 60 }}
-          />
-        </label>
+      <div className={styles.falt}>
+        <label className={styles.etikett} htmlFor="description">Beskrivning:</label>
+        <textarea
+          id="description"
+          name="description"
+          value={form.description}
+          onChange={handleChange}
+          className={styles.textarea}
+        />
       </div>
-      <div style={{ marginBottom: 16 }}>
-        <label>
+      <div className={styles.falt}>
+        <label className={styles.etikett} htmlFor="isActive">
           Aktiv?
           <input
             type="checkbox"
+            id="isActive"
             name="isActive"
             checked={form.isActive}
             onChange={handleChange}
-            style={{ marginLeft: 8 }}
+            className={styles.checkbox}
           />
         </label>
       </div>
       <button
         type="submit"
-        style={{
-          background: "#1976d2",
-          color: "#fff",
-          border: "none",
-          padding: "8px 18px",
-          borderRadius: 4,
-          cursor: "pointer",
-        }}
+        className={styles.knapp}
       >
         Spara
       </button>

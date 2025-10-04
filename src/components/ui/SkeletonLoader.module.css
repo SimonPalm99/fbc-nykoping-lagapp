@@ -1,0 +1,106 @@
+.skeleton-h-1 {
+  height: 1rem !important;
+}
+.skeleton-h-1_25 {
+  height: 1.25rem !important;
+}
+.skeleton-h-1_5 {
+  height: 1.5rem !important;
+}
+.skeleton-h-4 {
+  height: 4rem !important;
+}
+.skeleton-list-content {
+  flex: 1;
+}
+.skeleton-list-text70 {
+  width: 70%;
+}
+.skeleton-list-text50 {
+  height: 0.875rem;
+  width: 50%;
+}
+.skeleton-activity-title {
+  height: 1.25rem;
+  width: 50%;
+}
+.skeleton-activity-text70 {
+  width: 70%;
+}
+.skeleton-text-dynamic {
+  height: var(--skeleton-text-height, 1rem);
+}
+.skeleton-default-dynamic {
+  height: var(--skeleton-default-height, 4rem);
+}
+/* SkeletonLoader.module.css - CSS-modul för skelettladdare */
+.skeleton-card {
+  padding: 2rem;
+  height: var(--skeleton-card-height, auto);
+}
+.skeleton-title {
+  height: 1.5rem;
+  width: 60%;
+  margin-bottom: 1rem;
+}
+.skeleton-text {
+  height: 1rem;
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+.skeleton-text-short {
+  width: 80%;
+}
+.skeleton-list-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+.skeleton-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+}
+.skeleton-profile {
+  padding: 2rem;
+  text-align: center;
+}
+.skeleton-profile-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin: 0 auto 1rem;
+}
+.skeleton-profile-title {
+  height: 1.5rem;
+  width: 60%;
+  margin: 0 auto 0.5rem;
+}
+.skeleton-profile-text {
+  height: 1rem;
+  width: 40%;
+  margin: 0 auto;
+}
+.skeleton-activity {
+  padding: 1.5rem;
+}
+.skeleton-activity-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+.skeleton-badge {
+  height: 1.5rem;
+  width: 60px;
+  border-radius: 999px;
+}
+.skeleton-default {
+  height: 4rem;
+  width: 100%;
+  border-radius: 8px;
+}
+.skeleton-multi {
+  margin-bottom: 1rem;
+}

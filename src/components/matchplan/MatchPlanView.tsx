@@ -1,4 +1,5 @@
 import React from "react";
+import "./MatchPlanView.css";
 
 interface Props {
   activityId: string;
@@ -7,17 +8,17 @@ interface Props {
 
 const MatchPlanView: React.FC<Props> = ({ activityId, isLeader }) => {
   return (
-    <div style={{ maxWidth: 500, margin: "0 auto", padding: 16 }}>
+    <div className="matchplan-container">
       <h2>Matchplanering</h2>
       <p>
         Aktivitetens ID: <b>{activityId}</b>
       </p>
       {isLeader ? (
-        <div style={{ color: "green", marginBottom: 12 }}>
+        <div className="matchplan-leader">
           Du är ledare och kan redigera matchplanen.
         </div>
       ) : (
-        <div style={{ color: "blue", marginBottom: 12 }}>
+        <div className="matchplan-viewer">
           Du kan se matchplanen, men inte redigera.
         </div>
       )}
@@ -31,7 +32,10 @@ const MatchPlanView: React.FC<Props> = ({ activityId, isLeader }) => {
       </ul>
 
       {isLeader && (
-        <button style={{ marginTop: 18 }}>Redigera matchplan</button>
+        <>
+          <button className="edit-matchplan-btn">Redigera matchplan</button>
+          <button className="edit-matchplan-btn-secondary">Redigera matchplan</button>
+        </>
       )}
     </div>
   );

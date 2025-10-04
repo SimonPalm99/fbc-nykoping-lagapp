@@ -1,0 +1,21 @@
+.teamFundPanel {
+  margin-bottom: 24px;
+  background: #e4fbe1;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+  text-align: center;
+}
+.teamFundPanel__title {
+  color: #181c1e;
+}
+.teamFundPanel__total {
+  font-size: 28px;
+  font-weight: 700;
+  color: #4a9d2c;
+  margin-bottom: 4px;
+}
+.teamFundPanel__desc {
+  font-size: 13px;
+  color: #555;
+}

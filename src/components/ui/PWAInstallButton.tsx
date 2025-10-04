@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import styles from './PWAInstallButton.module.css';
 
 interface BeforeInstallPromptEvent extends Event {
   prompt(): Promise<void>;
@@ -64,34 +65,10 @@ export const PWAInstallButton: React.FC = () => {
   return (
     <button
       onClick={handleInstallClick}
-      style={{
-        background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
-        color: 'white',
-        border: 'none',
-        borderRadius: '12px',
-        padding: '12px 20px',
-        fontSize: '14px',
-        fontWeight: '600',
-        cursor: 'pointer',
-        display: 'flex',
-        alignItems: 'center',
-        gap: '8px',
-        transition: 'all 0.3s ease',
-        boxShadow: '0 4px 12px rgba(59, 130, 246, 0.3)',
-        position: 'relative',
-        overflow: 'hidden'
-      }}
-      onMouseOver={(e) => {
-        e.currentTarget.style.transform = 'translateY(-2px)';
-        e.currentTarget.style.boxShadow = '0 6px 16px rgba(59, 130, 246, 0.4)';
-      }}
-      onMouseOut={(e) => {
-        e.currentTarget.style.transform = 'translateY(0)';
-        e.currentTarget.style.boxShadow = '0 4px 12px rgba(59, 130, 246, 0.3)';
-      }}
+      className={styles['pwa-install-btn']}
       title="Installera FBC Nyköping-appen på din enhet"
     >
-      <span style={{ fontSize: '16px' }}>📱</span>
+      <span className={styles['pwa-install-btn-icon']}>📱</span>
       Installera App
     </button>
   );
@@ -131,7 +108,7 @@ export const PWAInstallButtonCompact: React.FC = () => {
     if (!deferredPrompt) return;
 
     deferredPrompt.prompt();
-    const { outcome: _outcome } = await deferredPrompt.userChoice;
+    await deferredPrompt.userChoice;
     
     setDeferredPrompt(null);
     setShowInstallButton(false);
@@ -144,27 +121,7 @@ export const PWAInstallButtonCompact: React.FC = () => {
   return (
     <button
       onClick={handleInstallClick}
-      style={{
-        background: 'none',
-        border: '1px solid var(--border-color)',
-        borderRadius: '8px',
-        padding: '8px',
-        cursor: 'pointer',
-        color: 'var(--text-secondary)',
-        transition: 'all 0.2s ease',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        fontSize: '16px'
-      }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.borderColor = '#22c55e';
-        e.currentTarget.style.color = '#22c55e';
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.borderColor = 'var(--border-color)';
-        e.currentTarget.style.color = 'var(--text-secondary)';
-      }}
+      className={styles['pwa-install-btn-compact']}
       title="Installera appen"
     >
       📱

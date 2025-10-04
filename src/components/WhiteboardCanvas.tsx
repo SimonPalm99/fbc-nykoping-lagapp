@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "./WhiteboardCanvas.module.css";
 
 interface WhiteboardCanvasProps {
   canvasRef: React.RefObject<HTMLCanvasElement | null>;
@@ -19,7 +20,7 @@ const WhiteboardCanvas: React.FC<WhiteboardCanvasProps> = ({
     ref={canvasRef}
     width={isMobile ? window.innerWidth : 1100}
     height={isMobile ? window.innerWidth * 0.6 : 650}
-    style={{ position: "absolute", left: 0, top: 0, zIndex: 1, touchAction: "none" }}
+    className={styles.canvas}
     onPointerDown={handlePointerDown}
     onPointerMove={handlePointerMove}
     onPointerUp={handlePointerUp}

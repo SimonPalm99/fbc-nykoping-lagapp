@@ -1,0 +1,329 @@
+/* Avancerade jämförelser - CSS-modul */
+
+.wrapper {
+  background: #1a202c;
+  padding: 20px;
+  border-radius: 12px;
+  color: #fff;
+}
+
+.header {
+  margin-bottom: 20px;
+}
+
+.titel {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.beskrivning {
+  margin: 4px 0 0 0;
+  color: #a0aec0;
+}
+
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #4a5568;
+  padding-bottom: 12px;
+}
+
+.tabKnapp {
+  padding: 8px 16px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  color: #a0aec0;
+  cursor: pointer;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tabKnappAktiv {
+  background: #3b82f6;
+  color: #fff;
+}
+
+.valSpelareBox {
+  background: #2d3748;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.valSpelareRubrik {
+  margin: 0 0 12px 0;
+}
+
+.valSpelareGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 8px;
+}
+
+.spelareKnapp {
+  padding: 8px 12px;
+  background: #1a202c;
+  border: 1px solid #4a5568;
+  border-radius: 6px;
+  color: #fff;
+  cursor: pointer;
+  text-align: left;
+}
+
+.spelareKnappVald {
+  background: #3b82f6;
+  border: 2px solid #60a5fa;
+}
+
+.jamforelseBox {
+  background: #2d3748;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.jamforelseRubrik {
+  margin: 0 0 16px 0;
+}
+
+.tabellScroll {
+  overflow-x: auto;
+}
+
+.tabell {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabellTh {
+  padding: 12px;
+  text-align: left;
+}
+
+.tabellThCenter {
+  text-align: center;
+}
+
+.tabellTr {
+  border-bottom: 2px solid #4a5568;
+}
+
+.tabellTd {
+  padding: 12px;
+}
+
+.tabellTdCenter {
+  text-align: center;
+}
+
+.tabellPoang {
+  font-weight: 700;
+}
+
+.tabellRanking {
+  font-weight: 600;
+}
+
+.tabellRankingChange {
+  font-size: 12px;
+}
+
+.konsistensBox {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.lagRubrik {
+  margin: 0 0 16px 0;
+}
+
+.lagGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+.lagKort {
+  background: #2d3748;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #4a5568;
+}
+
+.lagKortRekord {
+  border: 2px solid #f59e0b;
+}
+
+.lagKortRubrik {
+  margin: 0 0 12px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.lagKortGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.lagKortAktuell {
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  color: #3b82f6;
+}
+
+.lagKortForra {
+  text-align: center;
+  font-size: 16px;
+  color: #a0aec0;
+}
+
+.lagKortLabel {
+  font-size: 12px;
+  color: #a0aec0;
+}
+
+.lagKortForbattring {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  background: #1a202c;
+  border-radius: 4px;
+}
+
+.lagKortForbattringLabel {
+  font-size: 12px;
+}
+
+.lagKortForbattringVarde {
+  font-weight: 600;
+}
+
+.lagKortBast {
+  font-size: 11px;
+  color: #718096;
+  margin-top: 8px;
+  text-align: center;
+}
+
+.motRubrik {
+  margin: 0 0 16px 0;
+}
+
+.motGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 16px;
+}
+
+.motKort {
+  background: #2d3748;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.motKortRubrik {
+  margin: 0 0 12px 0;
+  font-weight: 700;
+}
+
+.motKortGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.motKortVinster {
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  color: #10b981;
+}
+
+.motKortForluster {
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  color: #ef4444;
+}
+
+.motKortOavgjorda {
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  color: #f59e0b;
+}
+
+.motKortVinstprocent {
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  color: #3b82f6;
+}
+
+.motKortLabel {
+  font-size: 10px;
+  color: #a0aec0;
+}
+
+.motKortSenaste {
+  background: #1a202c;
+  padding: 8px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.motKortSenasteLabel {
+  font-size: 12px;
+  color: #a0aec0;
+}
+
+.motKortSenasteVarde {
+  font-weight: 600;
+}
+
+.motKortForm {
+  font-size: 12px;
+  color: #a0aec0;
+  margin-bottom: 4px;
+}
+
+.motKortFormIkoner {
+  display: flex;
+  gap: 4px;
+}
+
+.tidslinjeRubrik {
+  margin: 0 0 16px 0;
+}
+
+.tidslinjeBox {
+  background: #2d3748;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.tidslinjeText {
+  color: #a0aec0;
+}
+
+.tidslinjeLista {
+  margin: 8px 0;
+  padding-left: 20px;
+}
+
+.tidslinjeP {
+  margin-top: 12px;
+  font-style: italic;
+}

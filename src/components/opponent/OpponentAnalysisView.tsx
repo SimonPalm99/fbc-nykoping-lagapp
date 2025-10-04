@@ -3,6 +3,7 @@ import { useOpponent } from "../../context/OpponentContext";
 import { OpponentAnalysis } from "../../types/opponent";
 import OpponentAnalysisEdit from "./OpponentAnalysisEdit";
 import { useToast } from "../ui/Toast";
+import styles from "./OpponentAnalysisView.module.css";
 
 interface OpponentAnalysisViewProps {
   analysis: OpponentAnalysis;
@@ -31,112 +32,6 @@ const OpponentAnalysisView: React.FC<OpponentAnalysisViewProps> = ({
     }
   };
 
-  const styles = {
-    container: {
-      background: 'var(--card-background)',
-      borderRadius: '12px',
-      padding: '1.5rem',
-      marginBottom: '1rem',
-      border: '1px solid var(--border-color)',
-      transition: 'all 0.2s ease'
-    },
-    header: {
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'flex-start',
-      marginBottom: '1rem'
-    },
-    title: {
-      color: 'var(--text-primary)',
-      fontSize: '1.25rem',
-      fontWeight: '600',
-      margin: 0
-    },
-    meta: {
-      color: 'var(--text-secondary)',
-      fontSize: '0.875rem',
-      marginTop: '0.25rem'
-    },
-    section: {
-      marginBottom: '1rem'
-    },
-    sectionTitle: {
-      color: 'var(--text-primary)',
-      fontSize: '1rem',
-      fontWeight: '600',
-      marginBottom: '0.5rem'
-    },
-    chipContainer: {
-      display: 'flex',
-      flexWrap: 'wrap' as const,
-      gap: '0.5rem',
-      marginTop: '0.5rem'
-    },
-    chip: {
-      background: 'var(--primary-color)',
-      color: '#ffffff',
-      padding: '0.25rem 0.75rem',
-      borderRadius: '16px',
-      fontSize: '0.875rem',
-      fontWeight: '500'
-    },
-    strengthChip: {
-      background: '#10b981',
-      color: '#ffffff',
-      padding: '0.25rem 0.75rem',
-      borderRadius: '16px',
-      fontSize: '0.875rem',
-      fontWeight: '500'
-    },
-    weaknessChip: {
-      background: '#ef4444',
-      color: '#ffffff',
-      padding: '0.25rem 0.75rem',
-      borderRadius: '16px',
-      fontSize: '0.875rem',
-      fontWeight: '500'
-    },
-    tacticsBox: {
-      background: 'rgba(59, 130, 246, 0.1)',
-      border: '1px solid rgba(59, 130, 246, 0.2)',
-      borderRadius: '8px',
-      padding: '1rem',
-      marginTop: '0.5rem'
-    },
-    notesBox: {
-      background: 'rgba(245, 158, 11, 0.1)',
-      border: '1px solid rgba(245, 158, 11, 0.2)',
-      borderRadius: '8px',
-      padding: '1rem',
-      marginTop: '0.5rem'
-    },
-    buttonGroup: {
-      display: 'flex',
-      gap: '0.5rem',
-      marginTop: '1rem'
-    },
-    button: {
-      padding: '0.5rem 1rem',
-      borderRadius: '8px',
-      border: 'none',
-      cursor: 'pointer',
-      fontWeight: '600',
-      fontSize: '0.875rem',
-      transition: 'all 0.2s ease'
-    },
-    primaryButton: {
-      background: 'var(--primary-color)',
-      color: '#ffffff'
-    },
-    dangerButton: {
-      background: '#ef4444',
-      color: '#ffffff'
-    },
-    secondaryButton: {
-      background: 'var(--border-color)',
-      color: 'var(--text-primary)'
-    }
-  };
 
   if (edit) {
     return (
@@ -154,26 +49,20 @@ const OpponentAnalysisView: React.FC<OpponentAnalysisViewProps> = ({
   }
 
   return (
-    <div style={styles.container}>
-      <div style={styles.header}>
+    <div className={styles["analys-container"]}>
+      <div className={styles["analys-header"]}>
         <div>
-          <h3 style={styles.title}>
+          <h3 className={styles["analys-titel"]}>
             🔍 Analys: {team?.name || analysis.teamId}
           </h3>
-          <div style={styles.meta}>
+          <div className={styles["analys-meta"]}>
             Skapad av {analysis.createdBy} • {new Date(analysis.createdAt).toLocaleDateString('sv-SE')}
           </div>
         </div>
         {isLeader && (
-          <div style={{
-            display: 'flex',
-            gap: '0.5rem'
-          }}>
+          <div className={styles["button-group"]}>
             <button
-              style={{
-                ...styles.button,
-                ...styles.secondaryButton
-              }}
+              className={`${styles["knapp"]} ${styles["knapp-sekundar"]}`}
               onClick={() => setShowDetails(!showDetails)}
             >
               {showDetails ? '📄 Dölj' : '📋 Visa mer'}
@@ -183,36 +72,36 @@ const OpponentAnalysisView: React.FC<OpponentAnalysisViewProps> = ({
       </div>
 
       {/* Styrkor */}
-      <div style={styles.section}>
-        <div style={styles.sectionTitle}>💪 Styrkor</div>
+      <div className={styles["analys-section"]}>
+        <div className={styles["analys-section-titel"]}>💪 Styrkor</div>
         {analysis.strengths && analysis.strengths.length > 0 ? (
-          <div style={styles.chipContainer}>
+          <div className={styles["chip-container"]}>
             {analysis.strengths.map((strength, index) => (
-              <span key={index} style={styles.strengthChip}>
+              <span key={index} className={`${styles["chip"]} ${styles["styrka-chip"]}`}>
                 {strength}
               </span>
             ))}
           </div>
         ) : (
-          <p style={{ color: 'var(--text-secondary)', margin: 0, fontStyle: 'italic' }}>
+          <p className={styles["ingen-info"]}>
             Inga styrkor dokumenterade
           </p>
         )}
       </div>
 
       {/* Svagheter */}
-      <div style={styles.section}>
-        <div style={styles.sectionTitle}>⚠️ Svagheter</div>
+      <div className={styles["analys-section"]}>
+        <div className={styles["analys-section-titel"]}>⚠️ Svagheter</div>
         {analysis.weaknesses && analysis.weaknesses.length > 0 ? (
-          <div style={styles.chipContainer}>
+          <div className={styles["chip-container"]}>
             {analysis.weaknesses.map((weakness, index) => (
-              <span key={index} style={styles.weaknessChip}>
+              <span key={index} className={`${styles["chip"]} ${styles["svaghet-chip"]}`}>
                 {weakness}
               </span>
             ))}
           </div>
         ) : (
-          <p style={{ color: 'var(--text-secondary)', margin: 0, fontStyle: 'italic' }}>
+          <p className={styles["ingen-info"]}>
             Inga svagheter dokumenterade
           </p>
         )}
@@ -220,10 +109,10 @@ const OpponentAnalysisView: React.FC<OpponentAnalysisViewProps> = ({
 
       {/* Taktik */}
       {analysis.tactics && (
-        <div style={styles.section}>
-          <div style={styles.sectionTitle}>📋 Taktisk analys</div>
-          <div style={styles.tacticsBox}>
-            <p style={{ margin: 0, color: 'var(--text-primary)', lineHeight: 1.5 }}>
+        <div className={styles["analys-section"]}>
+          <div className={styles["analys-section-titel"]}>📋 Taktisk analys</div>
+          <div className={styles["taktik-box"]}>
+            <p className={styles["analys-text"]}>
               {analysis.tactics}
             </p>
           </div>
@@ -232,19 +121,13 @@ const OpponentAnalysisView: React.FC<OpponentAnalysisViewProps> = ({
 
       {/* Detaljvy */}
       {showDetails && (
-        <div style={{
-          marginTop: '1rem',
-          padding: '1rem',
-          background: 'rgba(0,0,0,0.2)',
-          borderRadius: '8px',
-          border: '1px solid var(--border-color)'
-        }}>
+        <div className={styles["analys-detaljer"]}>
           {/* Anteckningar */}
           {analysis.notes && (
-            <div style={styles.section}>
-              <div style={styles.sectionTitle}>📝 Anteckningar</div>
-              <div style={styles.notesBox}>
-                <p style={{ margin: 0, color: 'var(--text-primary)', lineHeight: 1.5 }}>
+            <div className={styles["analys-section"]}>
+              <div className={styles["analys-section-titel"]}>📝 Anteckningar</div>
+              <div className={styles["anteckning-box"]}>
+                <p className={styles["analys-text"]}>
                   {analysis.notes}
                 </p>
               </div>
@@ -252,15 +135,10 @@ const OpponentAnalysisView: React.FC<OpponentAnalysisViewProps> = ({
           )}
 
           {/* Rekommendationer */}
-          <div style={styles.section}>
-            <div style={styles.sectionTitle}>💡 Rekommendationer</div>
-            <div style={{
-              background: 'rgba(16, 185, 129, 0.1)',
-              border: '1px solid rgba(16, 185, 129, 0.2)',
-              borderRadius: '8px',
-              padding: '1rem'
-            }}>
-              <ul style={{ margin: 0, color: 'var(--text-primary)', paddingLeft: '1.5rem' }}>
+          <div className={styles["analys-section"]}>
+            <div className={styles["analys-section-titel"]}>💡 Rekommendationer</div>
+            <div className={styles["rekommendation-box"]}>
+              <ul className={styles["rekommendation-lista"]}>
                 <li>Utnyttja deras svagheter i defensiven</li>
                 <li>Var uppmärksam på deras starka sidor</li>
                 <li>Anpassa vår taktik efter deras spelstil</li>
@@ -272,30 +150,21 @@ const OpponentAnalysisView: React.FC<OpponentAnalysisViewProps> = ({
 
       {/* Knappar */}
       {isLeader && (
-        <div style={styles.buttonGroup}>
+        <div className={styles["button-group"]}>
           <button
-            style={{
-              ...styles.button,
-              ...styles.primaryButton
-            }}
+            className={`${styles["knapp"]} ${styles["knapp-primar"]}`}
             onClick={() => setEdit(true)}
           >
             ✏️ Redigera
           </button>
           <button
-            style={{
-              ...styles.button,
-              ...styles.dangerButton
-            }}
+            className={`${styles["knapp"]} ${styles["knapp-fara"]}`}
             onClick={handleDelete}
           >
             🗑️ Ta bort
           </button>
           <button
-            style={{
-              ...styles.button,
-              ...styles.secondaryButton
-            }}
+            className={`${styles["knapp"]} ${styles["knapp-sekundar"]}`}
             onClick={() => {
               toast?.info('Export-funktion kommer i nästa version');
             }}

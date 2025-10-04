@@ -1,0 +1,76 @@
+.leagueRoot {
+  min-height: 100vh;
+  background: linear-gradient(135deg,#14532d 0%,#22c55e 100%);
+  padding: 0 0 3rem 0;
+}
+.leagueContainer {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2.5rem 1rem 0 1rem;
+}
+.leagueTitle {
+  color: #fff;
+  font-weight: 900;
+  font-size: 2.2rem;
+  margin-bottom: 0.7rem;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 8px #14532d;
+}
+.leagueInfo {
+  color: #d1fae5;
+  font-size: 1.15rem;
+  margin-bottom: 2.2rem;
+  background: #166534;
+  border-radius: 12px;
+  padding: 1.1rem 1.3rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+}
+.leagueTableWrapper {
+  background: rgba(20,83,45,0.97);
+  border-radius: 18px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.13);
+  padding: 1.5rem 1.2rem;
+  overflow-x: auto;
+  border: 1.5px solid #22c55e;
+}
+.leagueTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+.leagueTh {
+  text-align: center;
+  color: #22c55e;
+  font-weight: 800;
+  font-size: 1.08rem;
+  padding: 0.7rem 0.3rem;
+  border-bottom: 2px solid #166534;
+  letter-spacing: 0.5px;
+}
+.leagueThFirst {
+  text-align: left;
+}
+.leagueTr {
+  border-bottom: 1px solid #166534;
+}
+.leagueTrEven {
+  background: #14532d;
+}
+.leagueTrOdd {
+  background: #166534;
+}
+.leagueTd {
+  padding: 0.7rem 0.3rem;
+  font-weight: 700;
+  color: #fff;
+  font-size: 1.08rem;
+}
+.leagueTdCenter {
+  text-align: center;
+  color: #d1fae5;
+  font-weight: 600;
+}
+.leagueTdLast {
+  text-align: center;
+  color: #bbf7d0;
+  font-weight: 500;
+}

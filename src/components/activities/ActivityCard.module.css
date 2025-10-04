@@ -1,0 +1,68 @@
+/* ActivityCard.module.css */
+.kort {
+  background: var(--kort-bakgrund);
+  border-radius: 1.2rem;
+  box-shadow: 0 4px 16px rgba(46, 125, 50, 0.18);
+  border: 2px solid var(--primar-gron);
+  padding: 1.2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  cursor: pointer;
+  transition: box-shadow 0.2s, border 0.2s;
+  position: relative;
+}
+
+.rubrikrad {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.rubrik {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--text-primar);
+}
+
+.viktigt {
+  background: var(--gradient-guld);
+  color: white;
+  padding: 0.15rem 0.5rem;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.info {
+  color: var(--text-sekundar);
+  font-size: 0.98rem;
+}
+
+.samlingstid {
+  color: var(--primar-gron);
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin-top: 0.3rem;
+}
+
+.knapprad {
+  display: flex;
+  gap: 0.7rem;
+  margin-top: 0.5rem;
+}
+
+.knapp {
+  background: var(--primar-gron);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.35rem 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.knapp-logout {
+  background: #e53935;
+}

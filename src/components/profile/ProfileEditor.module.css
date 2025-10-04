@@ -1,0 +1,55 @@
+/* CSS-modul för ProfileEditor - svenska klassnamn */
+
+.formGroup input,
+.formGroup textarea,
+.formGroup select {
+  width: 100%;
+  padding: 8px;
+  margin: 6px 0 12px 0;
+  border-radius: 6px;
+  border: 1px solid #345;
+  background: #23272e;
+  color: #fff;
+}
+
+.formGroup label {
+  font-weight: 600;
+  color: #b8f27c;
+  margin-bottom: 2px;
+  display: block;
+  font-size: 15px;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.avatarPreview img {
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+}
+
+.uploadBtn {
+  background: #b8f27c;
+  color: #222;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.removeBtn {
+  background: #ef4444;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-left: 8px;
+}

@@ -1,0 +1,139 @@
+/* Whiteboard.module.css */
+
+.whiteboardRoot {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background: #f8fafc;
+  z-index: 100;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.toolbar {
+  display: flex;
+  gap: 1rem;
+  padding: 1.2rem 2rem;
+  background: rgba(34,197,94,0.10);
+  border-bottom: 2px solid #22c55e;
+  align-items: center;
+  flex-wrap: wrap;
+  z-index: 2;
+  position: relative;
+}
+.toolbarButton {
+  background: #222;
+  color: #fff;
+  border: none;
+  border-radius: 0.7rem;
+  padding: 0.7rem 1.7rem;
+  font-weight: 700;
+  font-size: 1.15rem;
+  cursor: pointer;
+  box-shadow: none;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.toolbarButtonActive {
+  background: #22c55e;
+  box-shadow: 0 2px 8px #22c55e22;
+}
+.toolbarButtonSave {
+  background: #FFD600;
+  color: #222;
+}
+.toolbarButtonLoad {
+  background: #2196F3;
+  color: #fff;
+}
+.toolbarColor {
+  border: 2px solid #fff;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  margin-right: 6px;
+  cursor: pointer;
+}
+.toolbarLabel {
+  margin-left: 1rem;
+  font-weight: 700;
+  color: #22c55e;
+  font-size: 1.1rem;
+}
+.toolbarSelect {
+  font-weight: 700;
+  border-radius: 0.7rem;
+  padding: 0.5rem 1.2rem;
+  border: 2px solid #22c55e;
+  background: #fff;
+  color: #222;
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+.whiteboardArea {
+  flex: 1;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background: #f8fafc;
+}
+.whiteboardSvg {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+.whiteboardCanvas {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border-radius: 1rem;
+  box-shadow: 0 2px 8px #22c55e22;
+  cursor: crosshair;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  transition: transform 0.2s;
+}
+.whiteboardCanvasMove {
+  cursor: grab;
+}
+.markerList {
+  position: absolute;
+  bottom: 24px;
+  left: 24px;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  z-index: 2;
+}
+.markerItem {
+  background: #fff;
+  border-radius: 0.7rem;
+  box-shadow: 0 2px 8px #22c55e22;
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+.markerLabel {
+  font-weight: 700;
+}
+.markerButton {
+  border: none;
+  border-radius: 0.7rem;
+  padding: 0.2rem 0.7rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.markerButtonRecord {
+  background: #FFD600;
+  color: #222;
+}
+.markerButtonPlay {
+  background: #22c55e;
+  color: #fff;
+}

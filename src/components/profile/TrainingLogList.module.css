@@ -1,0 +1,62 @@
+.training-log-empty {
+  background: #252c36;
+  color: #b8f27c;
+  border-radius: 8px;
+  padding: 12px;
+  margin: 16px auto;
+  text-align: center;
+}
+
+.training-log-section {
+  background: #22272e;
+  border-radius: 12px;
+  max-width: 500px;
+  margin: 16px auto;
+  padding: 18px;
+  color: #fff;
+  font-family: inherit;
+}
+
+.training-log-title {
+  color: #b8f27c;
+  font-size: 18px;
+  margin: 0;
+}
+
+.training-log-list {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 0 0;
+}
+
+.training-log-item {
+  background: #181c1e;
+  margin-bottom: 10px;
+  border-radius: 7px;
+  padding: 8px 12px;
+  font-size: 15px;
+}
+
+.training-log-date {
+  font-weight: 600;
+}
+
+.training-log-note {
+  margin-left: 8px;
+  color: #b8f27c;
+}
+
+@media (max-width: 600px) {
+  .training-log-section {
+    padding: 8px;
+    border-radius: 0;
+    max-width: 99vw;
+  }
+  .training-log-title {
+    font-size: 16px;
+  }
+  .training-log-item {
+    font-size: 14px;
+    padding: 6px 4px;
+  }
+}

@@ -1,0 +1,64 @@
+.snabbSection {
+  padding: 2rem 1.5rem 1rem;
+}
+.snabbRubrik {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+}
+.snabbGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.snabbLank {
+  text-decoration: none;
+  display: block;
+  transform: translateY(0);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.snabbKort {
+  background: var(--card-gradient, var(--card-background));
+  border: 2px solid var(--border-color);
+  border-radius: 20px;
+  padding: 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+.snabbKort[data-shadow="medium"] {
+  box-shadow: var(--shadow-medium);
+}
+.snabbGradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+}
+.snabbGradient[data-gradient] {
+  background: attr(data-gradient);
+}
+.snabbIcon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80px;
+}
+.snabbKortRubrik {
+  margin-bottom: 0.75rem;
+  font-size: 1.25rem;
+}
+.snabbKortText {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}

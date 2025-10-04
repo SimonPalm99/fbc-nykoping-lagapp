@@ -1,0 +1,163 @@
+.traininglog-intensity1 { background: #10b981; }
+.traininglog-intensity2 { background: #84cc16; }
+.traininglog-intensity3 { background: #f59e0b; }
+.traininglog-intensity4 { background: #f97316; }
+.traininglog-intensity5 { background: #ef4444; }
+.traininglog-meta-intensity1 { color: #10b981; }
+.traininglog-meta-intensity2 { color: #84cc16; }
+.traininglog-meta-intensity3 { color: #f59e0b; }
+.traininglog-meta-intensity4 { color: #f97316; }
+.traininglog-meta-intensity5 { color: #ef4444; }
+.traininglog-card {
+  background: linear-gradient(135deg, #1a1a1a, #262626);
+  border-radius: 16px;
+  padding: 1.5rem;
+  border: 1px solid #333;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+.traininglog-intensity {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+}
+.traininglog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+.traininglog-date {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #b8f27c;
+  margin-bottom: 0.25rem;
+}
+.traininglog-meta {
+  font-size: 0.875rem;
+  color: #9ca3af;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.traininglog-meta-intensity {
+  font-weight: 600;
+}
+.traininglog-meta-feeling {
+  font-size: 1.25rem;
+}
+.traininglog-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+.traininglog-action-btn {
+  background: transparent;
+  border: 1px solid #374151;
+  border-radius: 6px;
+  padding: 0.5rem;
+  color: #e2e8f0;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+}
+.traininglog-action-btn-edit:hover {
+  border-color: #b8f27c;
+  color: #b8f27c;
+}
+.traininglog-action-btn-delete:hover {
+  border-color: #ef4444;
+  color: #ef4444;
+}
+.traininglog-skills {
+  margin-bottom: 1rem;
+}
+.traininglog-skills-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #9ca3af;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.traininglog-skills-list {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.traininglog-skill {
+  background: #b8f27c20;
+  color: #b8f27c;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border: 1px solid #b8f27c40;
+}
+.traininglog-stats {
+  margin-bottom: 1rem;
+}
+.traininglog-stats-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #9ca3af;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.traininglog-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 0.75rem;
+}
+.traininglog-stat {
+  background: #0f0f0f;
+  padding: 0.75rem;
+  border-radius: 8px;
+  text-align: center;
+  border: 1px solid #333;
+}
+.traininglog-stat-value-goal {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #22c55e;
+  margin-bottom: 0.25rem;
+}
+.traininglog-stat-value-assist {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #f59e0b;
+  margin-bottom: 0.25rem;
+}
+.traininglog-stat-value-shot {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #8b5cf6;
+  margin-bottom: 0.25rem;
+}
+.traininglog-stat-label {
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
+.traininglog-note {
+  background: #0f0f0f;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid #333;
+}
+.traininglog-note-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #9ca3af;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.traininglog-note-text {
+  font-size: 0.875rem;
+  color: #e2e8f0;
+  line-height: 1.5;
+}

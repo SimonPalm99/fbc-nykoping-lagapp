@@ -1,5 +1,7 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
+import styles from './QuickActions.module.css';
 
 interface QuickAction {
   title: string;
@@ -9,102 +11,34 @@ interface QuickAction {
   gradient: string;
 }
 
+
 interface QuickActionsProps {
-  styles: any;
   quickActions: QuickAction[];
 }
 
-export const QuickActions: React.FC<QuickActionsProps> = ({ styles, quickActions }) => {
+
+export const QuickActions: React.FC<QuickActionsProps> = ({ quickActions }) => {
   return (
-    <section style={{ padding: "2rem 1.5rem 1rem" }}>
-      <h3 style={{
-        ...styles.typography.heading,
-        color: styles.textPrimary,
-        marginBottom: "1.5rem",
-        fontSize: "1.5rem",
-        display: "flex",
-        alignItems: "center",
-        gap: "0.75rem"
-      }}>
-        ⚡ Snabbåtgärder
-      </h3>
-      
-      <div style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-        gap: "1.5rem",
-        maxWidth: "1200px",
-        margin: "0 auto"
-      }}>
-        {quickActions.map((action, index) => (
-          <Link 
+    <section className={styles.snabbSection}>
+      <h3 className={styles.snabbRubrik}>⚡ Snabbåtgärder</h3>
+      <div className={styles.snabbGrid}>
+        {quickActions.map((action: QuickAction, index: number) => (
+          <Link
             key={index}
             to={action.path}
-            style={{
-              textDecoration: "none",
-              display: "block",
-              transform: "translateY(0)",
-              transition: "all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)"
+            className={styles.snabbLank}
+            onMouseEnter={e => {
+              e.currentTarget.style.transform = 'translateY(-8px)';
             }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = "translateY(-8px)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = "translateY(0)";
+            onMouseLeave={e => {
+              e.currentTarget.style.transform = 'translateY(0)';
             }}
           >
-            <div style={{
-              background: styles.gradients.card,
-              border: `2px solid ${styles.borderColor}`,
-              borderRadius: "20px",
-              padding: "2rem",
-              textAlign: "center",
-              boxShadow: styles.shadows.medium,
-              position: "relative",
-              overflow: "hidden",
-              backdropFilter: "blur(10px)"
-            }}>
-              {/* Gradient overlay */}
-              <div style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                right: 0,
-                height: "4px",
-                background: action.gradient
-              }} />
-              
-              {/* Icon */}
-              <div style={{
-                fontSize: "3rem",
-                marginBottom: "1rem",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                height: "80px"
-              }}>
-                {action.icon}
-              </div>
-              
-              {/* Content */}
-              <h4 style={{
-                ...styles.typography.heading,
-                color: styles.textPrimary,
-                marginBottom: "0.75rem",
-                fontSize: "1.25rem"
-              }}>
-                {action.title}
-              </h4>
-              
-              <p style={{
-                ...styles.typography.body,
-                color: styles.textSecondary,
-                margin: 0,
-                fontSize: "0.95rem",
-                lineHeight: "1.4"
-              }}>
-                {action.description}
-              </p>
+            <div className={styles.snabbKort} data-shadow="medium">
+              <div className={styles.snabbGradient} data-gradient={action.gradient} />
+              <div className={styles.snabbIcon}>{action.icon}</div>
+              <h4 className={styles.snabbKortRubrik}>{action.title}</h4>
+              <p className={styles.snabbKortText}>{action.description}</p>
             </div>
           </Link>
         ))}

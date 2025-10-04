@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from './SportIcon.module.css';
 
 interface SportIconProps {
   type: 'training' | 'match' | 'profile' | 'stats' | 'forum' | 'fines' | 'tactics' | 'health' | 'awards' | 'league' | 'chat' | 'settings' | 'goals' | 'assists' | 'matches' | 'news' | 'motivation' | 'overview';
@@ -166,8 +167,7 @@ const SportIcon: React.FC<SportIconProps> = ({ type, size = 24, color = 'current
       width={size}
       height={size}
       viewBox="0 0 24 24"
-      className={className}
-      style={{ flexShrink: 0 }}
+      className={`${styles.sporticon} ${className}`}
     >
       {getIconPath()}
     </svg>

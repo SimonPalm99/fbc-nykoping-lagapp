@@ -10,29 +10,23 @@ const XPProgress: React.FC<Props> = ({ userId }) => {
   const xp = 1234;
   const xpForNextLevel = 1500;
   const percent = Math.min((xp / xpForNextLevel) * 100, 100);
+  // Importera CSS-modul
+  // @ts-ignore
+  const styles = require('./XPProgress.module.css');
+  // Skapa en dynamisk klass för progressbarens bredd
+  const progressBarWidthClass = `${styles.xpProgressBarWidth}-${Math.round(percent)}`;
 
   return (
-    <section>
-      <h3>XP-progress för {userId}</h3>
+    <section className={styles.xpProgressSection}>
+      <h3 className={styles.xpProgressTitle}>XP-progress för användare: {userId}</h3>
       <div>
-        <span>Poäng: {xp} / {xpForNextLevel}</span>
-        <div style={{
-          background: "#eee",
-          borderRadius: 8,
-          height: 20,
-          marginTop: 8,
-          marginBottom: 4,
-          width: 300,
-          overflow: "hidden"
-        }}>
-          <div style={{
-            background: "#1976d2",
-            width: `${percent}%`,
-            height: "100%",
-            transition: "width .3s"
-          }}></div>
+        <span className={styles.xpProgressScore}>Poäng: {xp} / {xpForNextLevel}</span>
+        <div className={styles.xpProgressWrapper}>
+          <div
+            className={`${styles.xpProgressBar} ${progressBarWidthClass}`}
+          ></div>
         </div>
-        <span>{percent.toFixed(1)}%</span>
+        <span className={styles.xpProgressPercent}>{percent.toFixed(1)}%</span>
       </div>
     </section>
   );

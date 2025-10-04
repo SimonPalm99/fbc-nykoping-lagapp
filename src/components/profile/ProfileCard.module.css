@@ -1,0 +1,55 @@
+/* Alla stilar från inline i ProfileCard.tsx (profile) flyttade hit. */
+
+.profileCardRoot {
+  background: #22272e;
+  border-radius: 12px;
+  max-width: 500px;
+  margin: 16px auto;
+  padding: 18px;
+  color: #fff;
+  font-family: inherit;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.14);
+}
+
+.profileCardTitle {
+  color: #b8f27c;
+  font-size: 20px;
+  margin: 0;
+  text-align: center;
+}
+
+.profileCardEmail {
+  margin-top: 12px;
+}
+
+.profileCardIce {
+  margin-top: 4px;
+}
+
+.profileCardAbout {
+  margin-top: 4px;
+}
+
+.profileCardStatus {
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+.profileCardStatusApproved {
+  color: #b8f27c;
+}
+
+.profileCardStatusPending {
+  color: #e66;
+}
+
+@media (max-width: 600px) {
+  .profileCardRoot {
+    padding: 8px;
+    border-radius: 0;
+    max-width: 99vw;
+  }
+  .profileCardTitle {
+    font-size: 16px;
+  }
+}

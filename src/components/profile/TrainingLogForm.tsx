@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import styles from "./TrainingLogForm.module.css";
 import { TrainingLog } from "../../types/user";
 
 interface Props {
@@ -27,30 +28,20 @@ const TrainingLogForm: React.FC<Props> = ({ onAdd }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      style={{
-        background: "#22272e",
-        borderRadius: 12,
-        maxWidth: 500,
-        margin: "16px auto",
-        padding: 18,
-        color: "#fff",
-        display: "flex",
-        flexDirection: "column",
-        gap: 12,
-      }}
+      className={styles["training-log-form"]}
     >
-      <h3 style={{ color: "#b8f27c", fontSize: 18, margin: 0 }}>Lägg till träningslogg</h3>
-      <label>
+      <h3 className={styles["training-log-title"]}>Lägg till träningslogg</h3>
+      <label className={styles["training-log-label"]}>
         Datum
         <input
           type="date"
           value={date}
           onChange={e => setDate(e.target.value)}
           required
-          style={inputStyle}
+          className={styles["training-log-input"]}
         />
       </label>
-      <label>
+      <label className={styles["training-log-label"]}>
         Känsla: {feeling}
         <input
           type="range"
@@ -58,62 +49,30 @@ const TrainingLogForm: React.FC<Props> = ({ onAdd }) => {
           max={10}
           value={feeling}
           onChange={e => setFeeling(Number(e.target.value))}
-          style={{ width: "100%" }}
+          className={styles["training-log-range"]}
         />
       </label>
-      <label>
+      <label className={styles["training-log-label"]}>
         Anteckning
         <input
           type="text"
           value={note}
           onChange={e => setNote(e.target.value)}
           placeholder="Kort anteckning"
-          style={inputStyle}
+          className={styles["training-log-input"]}
         />
       </label>
       <button
         type="submit"
-        style={{
-          background: "#4a9d2c",
-          color: "#fff",
-          border: "none",
-          borderRadius: 8,
-          padding: "10px 0",
-          fontSize: 16,
-          cursor: "pointer",
-          fontWeight: 700,
-        }}
+        className={styles["training-log-button"]}
       >
         Spara logg
       </button>
-      <style>{`
-        @media (max-width: 600px) {
-          form {
-            padding: 8px;
-            border-radius: 0;
-            max-width: 99vw;
-          }
-          h3 {
-            font-size: 16px;
-          }
-          button, input {
-            font-size: 15px !important;
-          }
-        }
-      `}</style>
+      {/* Responsivitet hanteras i CSS-modulen */}
     </form>
   );
 };
 
-const inputStyle: React.CSSProperties = {
-  width: "100%",
-  padding: 8,
-  borderRadius: 6,
-  border: "1px solid #b8f27c",
-  marginTop: 4,
-  fontSize: 16,
-  background: "#181c1e",
-  color: "#fff",
-};
+
 
 export default TrainingLogForm;

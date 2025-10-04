@@ -1,0 +1,351 @@
+.activityCalendar {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  padding: 24px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.calendarHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.calendarTitle {
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+.viewSwitcher {
+  display: flex;
+  gap: 8px;
+}
+.viewButton {
+  background: #e5e7eb;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+.viewButton.active {
+  background: #22c55e;
+  color: #fff;
+}
+.calendarNavigation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+.navButton {
+  background: #e5e7eb;
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  font-weight: 700;
+  transition: background 0.2s;
+}
+.currentPeriod {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+.calendarFilters {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.searchBox {
+  flex: 1;
+}
+.searchInput {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+  font-size: 1rem;
+}
+.typeFilters {
+  display: flex;
+  gap: 8px;
+}
+.filterButton {
+  background: #e5e7eb;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+.filterButton.active {
+  background: #22c55e;
+  color: #fff;
+}
+.calendarContent {
+  margin-bottom: 24px;
+}
+.monthView {
+  width: 100%;
+}
+.weekdayHeaders {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 4px;
+}
+.weekdayHeader {
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #374151;
+}
+.monthGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+.calendarDay {
+  background: #f3f4f6;
+  min-height: 70px;
+  border-radius: 8px;
+  padding: 4px 4px 2px 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+  position: relative;
+}
+.calendarDay.today {
+  border: 2px solid #22c55e;
+}
+.calendarDay.otherMonth {
+  opacity: 0.5;
+}
+.dayNumber {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+.dayActivities {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.activityDot {
+  background: #22c55e;
+  color: #fff;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  margin-bottom: 2px;
+  cursor: pointer;
+  border: none;
+  font-weight: 500;
+  transition: box-shadow 0.2s;
+}
+.activityDot.important {
+  border: 2px solid #fbbf24;
+  font-weight: 700;
+}
+.moreActivities {
+  font-size: 0.8rem;
+  color: #374151;
+  margin-top: 2px;
+}
+.weekView {
+  display: flex;
+  gap: 8px;
+}
+.weekDay {
+  background: #f3f4f6;
+  border-radius: 8px;
+  flex: 1;
+  padding: 8px;
+}
+.weekDay.today {
+  border: 2px solid #22c55e;
+}
+.weekDayHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+.weekDayName {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+.weekDayNumber {
+  font-size: 1rem;
+  font-weight: 600;
+}
+.weekDayActivities {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.weekActivity {
+  background: #22c55e;
+  color: #fff;
+  border-radius: 6px;
+  padding: 6px 8px;
+  margin-bottom: 2px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: box-shadow 0.2s;
+}
+.weekActivity.important {
+  border: 2px solid #fbbf24;
+  font-weight: 700;
+}
+.activityTime {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.activityTitle {
+  font-size: 1rem;
+  font-weight: 600;
+}
+.activityLocation {
+  font-size: 0.85rem;
+  color: #374151;
+}
+.dayView {
+  width: 100%;
+}
+.dayHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.todayBadge {
+  background: #22c55e;
+  color: #fff;
+  border-radius: 6px;
+  padding: 2px 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.dayActivities {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.noActivities {
+  text-align: center;
+  color: #374151;
+  padding: 24px 0;
+}
+.noActivitiesIcon {
+  font-size: 2.5rem;
+  margin-bottom: 8px;
+}
+.btn {
+  background: #22c55e;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+.btn-primary {
+  background: #22c55e;
+}
+.btn-sm {
+  font-size: 0.85rem;
+  padding: 4px 10px;
+}
+.dayActivity {
+  background: #f3f4f6;
+  border-radius: 8px;
+  display: flex;
+  align-items: stretch;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: box-shadow 0.2s;
+}
+.activityTimeBar {
+  width: 8px;
+  border-radius: 8px 0 0 8px;
+  margin-right: 8px;
+}
+.activityContent {
+  flex: 1;
+  padding: 8px 0;
+}
+.activityHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+.importantIndicator {
+  color: #fbbf24;
+  font-size: 1.1rem;
+  margin-right: 2px;
+}
+.activityType {
+  background: #e5e7eb;
+  color: #374151;
+  border-radius: 6px;
+  padding: 2px 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.activityDetails {
+  font-size: 0.95rem;
+  color: #374151;
+}
+.activityDescription {
+  margin-top: 4px;
+  font-size: 0.95rem;
+}
+.activityTags {
+  margin-top: 4px;
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+.activityTag {
+  background: #e5e7eb;
+  color: #374151;
+  border-radius: 6px;
+  padding: 2px 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.absenceDeadline {
+  margin-top: 4px;
+  font-size: 0.85rem;
+  color: #c53030;
+  font-weight: 600;
+}
+.calendarStats {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  margin-top: 16px;
+}
+.statItem {
+  text-align: center;
+}
+.statNumber {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #22c55e;
+}
+.statLabel {
+  font-size: 0.95rem;
+  color: #374151;
+}

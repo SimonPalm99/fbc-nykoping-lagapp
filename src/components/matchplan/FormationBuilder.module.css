@@ -1,0 +1,213 @@
+.forward {
+  color: #3b82f6;
+}
+.defense {
+  color: #10b981;
+}
+.goalkeeper {
+  color: #f59e0b;
+}
+.grabbing {
+  cursor: grabbing !important;
+}
+.pointer {
+  cursor: pointer !important;
+}
+.formation-builder-container {
+  background: #1a202c;
+  padding: 20px;
+  border-radius: 12px;
+  color: #fff;
+}
+
+.formation-builder-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.formation-builder-header-btn {
+  padding: 6px 12px;
+  background: #4a5568;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.formation-builder-main {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 20px;
+}
+
+.formation-builder-player-panel {
+  background: #2d3748;
+  padding: 16px;
+  border-radius: 8px;
+  height: fit-content;
+}
+
+.formation-builder-player-list {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.formation-builder-player-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  margin: 4px 0;
+  background: #1a202c;
+  border-radius: 6px;
+}
+
+.formation-builder-player-item.in-formation {
+  background: #4a5568;
+  opacity: 0.7;
+}
+
+.formation-builder-player-btn {
+  padding: 2px 6px;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 10px;
+}
+
+.formation-builder-player-btn.add {
+  background: #10b981;
+}
+
+.formation-builder-player-btn.remove {
+  background: #ef4444;
+}
+
+.formation-builder-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.formation-builder-input,
+.formation-builder-select {
+  width: 100%;
+  padding: 8px 12px;
+  background: #2d3748;
+  border: 1px solid #4a5568;
+  border-radius: 6px;
+  color: #fff;
+}
+
+.formation-builder-label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 12px;
+}
+
+.formation-builder-canvas-container {
+  text-align: center;
+  margin-bottom: 16px;
+  background: #2d3748;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.formation-builder-canvas {
+  border: 2px solid #4a5568;
+  border-radius: 8px;
+  max-width: 100%;
+}
+
+.formation-builder-canvas-desc {
+  font-size: 12px;
+  color: #a0aec0;
+  margin: 8px 0 0 0;
+}
+
+.formation-builder-description {
+  margin-bottom: 16px;
+}
+
+.formation-builder-textarea {
+  width: 100%;
+  padding: 8px 12px;
+  background: #2d3748;
+  border: 1px solid #4a5568;
+  border-radius: 6px;
+  color: #fff;
+  resize: vertical;
+}
+
+.formation-builder-line-list {
+  background: #2d3748;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.formation-builder-line {
+  margin-bottom: 8px;
+}
+
+.formation-builder-line-title {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.formation-builder-line-players {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.formation-builder-line-player {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  background: #1a202c;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.formation-builder-line-select {
+  padding: 2px;
+  background: #4a5568;
+  border: none;
+  border-radius: 2px;
+  color: #fff;
+  font-size: 10px;
+}
+
+.formation-builder-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.formation-builder-action-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.formation-builder-action-btn.cancel {
+  background: #6b7280;
+}
+
+.formation-builder-action-btn.save {
+  background: #10b981;
+}
+
+.formation-builder-action-btn.save.disabled {
+  background: #4a5568;
+  cursor: not-allowed;
+}

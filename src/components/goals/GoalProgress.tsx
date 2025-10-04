@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from './GoalProgress.module.css';
 import SportIcon from '../ui/SportIcon';
 
 interface PersonalGoal {
@@ -19,128 +20,35 @@ interface GoalProgressProps {
 const GoalProgressCard: React.FC<{ goal: PersonalGoal }> = ({ goal }) => {
   const percentage = Math.min((goal.current / goal.target) * 100, 100);
   const isCompleted = goal.current >= goal.target;
-  
+  // Använd data-attribut för färg istället för inline-style
+  // Använd data-attribut för progress istället för inline-style
   return (
-    <div style={{
-      background: 'var(--card-background)',
-      borderRadius: '16px',
-      padding: '1.25rem',
-      border: `1px solid ${isCompleted ? goal.color + '40' : 'var(--border-color)'}`,
-      boxShadow: isCompleted ? `0 4px 16px ${goal.color}20` : '0 2px 12px rgba(0,0,0,0.1)',
-      position: 'relative',
-      overflow: 'hidden',
-      transition: 'all 0.3s ease'
-    }}>
-      {/* Background pattern for completed goals */}
-      {isCompleted && (
-        <div style={{
-          position: 'absolute',
-          top: -20,
-          right: -20,
-          width: 60,
-          height: 60,
-          background: `linear-gradient(45deg, ${goal.color}20, transparent)`,
-          borderRadius: '50%',
-          opacity: 0.3
-        }} />
-      )}
-      
-      <div style={{ 
-        display: 'flex', 
-        alignItems: 'center', 
-        gap: '0.75rem',
-        marginBottom: '1rem',
-        position: 'relative',
-        zIndex: 1
-      }}>
-        <div style={{
-          background: `linear-gradient(135deg, ${goal.color}, ${goal.color}cc)`,
-          borderRadius: '50%',
-          padding: '0.75rem',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          minWidth: '48px',
-          height: '48px',
-          boxShadow: `0 4px 12px ${goal.color}30`,
-          transition: 'transform 0.3s ease'
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.transform = 'scale(1.1) rotate(10deg)';
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.transform = 'scale(1) rotate(0deg)';
-        }}>
+    <div
+      className={`${isCompleted ? styles.goalProgressCardCompleted : styles.goalProgressCard} ${styles.goalProgressCard}`}
+      data-color={goal.color}
+    >
+      {isCompleted && <div className={styles.goalProgressCardPattern} />}
+      <div className={styles.goalProgressHeader}>
+        <div className={styles.goalProgressIcon}>
           <SportIcon type={goal.icon as any} size={24} color="#fff" />
         </div>
         <div>
-          <div style={{
-            fontWeight: 700,
-            fontSize: '1rem',
-            color: 'var(--text-primary)',
-            marginBottom: '0.25rem'
-          }}>
-            {goal.label}
-          </div>
-          <div style={{
-            fontSize: '0.9rem',
-            color: 'var(--text-secondary)',
-            fontWeight: 600
-          }}>
+          <div className={styles.goalProgressLabel}>{goal.label}</div>
+          <div className={styles.goalProgressStats}>
             {goal.current} av {goal.target}
             {isCompleted && (
-              <span style={{ 
-                color: goal.color, 
-                marginLeft: '0.5rem',
-                fontSize: '0.8rem'
-              }}>
-                ✅ Uppnått!
-              </span>
+              <span className={styles.goalProgressAchieved}>✅ Uppnått!</span>
             )}
           </div>
         </div>
       </div>
-
-      {/* Progress Bar */}
-      <div style={{
-        background: 'rgba(0,0,0,0.1)',
-        borderRadius: '8px',
-        height: '8px',
-        overflow: 'hidden',
-        position: 'relative'
-      }}>
-        <div style={{
-          background: `linear-gradient(90deg, ${goal.color}, ${goal.color}dd)`,
-          height: '100%',
-          width: `${percentage}%`,
-          borderRadius: '8px',
-          transition: 'width 0.8s ease-out',
-          boxShadow: `0 0 8px ${goal.color}40`
-        }} />
-        
-        {/* Shimmer effect for active progress */}
+      <div className={styles.goalProgressBarWrapper}>
+        <div className={styles.goalProgressBar} data-progress={percentage} />
         {!isCompleted && percentage > 0 && (
-          <div style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            background: `linear-gradient(90deg, transparent, ${goal.color}30, transparent)`,
-            animation: 'shimmer 2s infinite',
-            borderRadius: '8px'
-          }} />
+          <div className={styles.goalProgressBarShimmer} />
         )}
       </div>
-
-      {/* Progress percentage */}
-      <div style={{
-        textAlign: 'right',
-        marginTop: '0.5rem',
-        fontSize: '0.8rem',
-        fontWeight: 600,
-        color: percentage >= 80 ? goal.color : 'var(--text-secondary)'
-      }}>
+      <div className={percentage >= 80 ? styles.goalProgressPercentHigh : styles.goalProgressPercent}>
         {Math.round(percentage)}%
       </div>
     </div>
@@ -150,58 +58,17 @@ const GoalProgressCard: React.FC<{ goal: PersonalGoal }> = ({ goal }) => {
 const GoalProgress: React.FC<GoalProgressProps> = ({ goals, loading = false }) => {
   if (loading) {
     return (
-      <div style={{ 
-        display: 'grid', 
-        gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-        gap: '1rem'
-      }}>
+      <div className={styles.goalProgressGrid}>
         {[1, 2].map(i => (
-          <div key={i} style={{
-            background: 'var(--card-background)',
-            borderRadius: '16px',
-            padding: '1.25rem',
-            border: '1px solid var(--border-color)',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '1rem'
-          }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-              <div style={{
-                width: '48px',
-                height: '48px',
-                borderRadius: '50%',
-                background: 'linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%)',
-                backgroundSize: '200% 100%',
-                animation: 'shimmer 1.5s infinite'
-              }} />
-              <div style={{ flex: 1 }}>
-                <div style={{
-                  width: '60%',
-                  height: '1rem',
-                  background: 'linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%)',
-                  backgroundSize: '200% 100%',
-                  animation: 'shimmer 1.5s infinite',
-                  borderRadius: '4px',
-                  marginBottom: '0.5rem'
-                }} />
-                <div style={{
-                  width: '40%',
-                  height: '0.8rem',
-                  background: 'linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%)',
-                  backgroundSize: '200% 100%',
-                  animation: 'shimmer 1.5s infinite',
-                  borderRadius: '4px'
-                }} />
+          <div key={i} className={styles.goalProgressCard}>
+            <div className={styles.goalProgressHeader}>
+              <div className={`${styles.goalProgressIcon} ${styles.goalProgressSkeletonIcon}`} />
+              <div className={styles.goalProgressSkeletonTextWrapper}>
+                <div className={styles.goalProgressSkeletonTextMain} />
+                <div className={styles.goalProgressSkeletonTextSub} />
               </div>
             </div>
-            <div style={{
-              width: '100%',
-              height: '8px',
-              background: 'linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%)',
-              backgroundSize: '200% 100%',
-              animation: 'shimmer 1.5s infinite',
-              borderRadius: '4px'
-            }} />
+            <div className={styles.goalProgressSkeletonBar} />
           </div>
         ))}
       </div>
@@ -211,17 +78,11 @@ const GoalProgress: React.FC<GoalProgressProps> = ({ goals, loading = false }) =
   const displayGoals = goals.slice(0, 4); // Show top 4 goals
 
   return (
-    <div style={{ 
-      display: 'grid', 
-      gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-      gap: '1rem'
-    }}>
+    <div className={styles.goalProgressGrid}>
       {displayGoals.map((goal, index) => (
         <div 
           key={goal.id}
-          style={{
-            animation: `fadeIn 0.6s ease-out ${index * 0.1}s both`
-          }}
+          className={`${styles.goalProgressFadeIn} ${styles[`goalProgressFadeInDelay${index}`]}`}
         >
           <GoalProgressCard goal={goal} />
         </div>

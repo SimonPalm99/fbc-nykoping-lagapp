@@ -1,0 +1,198 @@
+.healthProfileManager {
+  background: var(--fbc-body-gradient, #f8fafc);
+  border-radius: 1.2rem;
+  box-shadow: 0 2px 8px #22c55e22;
+  padding: 1.5rem;
+  max-width: 700px;
+  margin: 2rem auto;
+}
+.profile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.2rem;
+}
+.header-actions .btn {
+  background: var(--fbc-primary-gradient, #2E7D32);
+  color: #fff;
+  border: none;
+  border-radius: 0.7rem;
+  padding: 0.5rem 1.2rem;
+  font-weight: 700;
+  font-size: 1.05rem;
+  cursor: pointer;
+}
+.profile-section {
+  background: var(--fbc-card-bg, #fff);
+  border-radius: 1rem;
+  box-shadow: 0 1px 4px #22c55e11;
+  margin-bottom: 1.5rem;
+  padding: 1rem 1.2rem;
+}
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.7rem;
+}
+.section-header h4 {
+  margin: 0;
+}
+.btn-edit {
+  background: none;
+  border: none;
+  color: var(--fbc-primary-green, #2E7D32);
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+.section-content {
+  margin-bottom: 0.5rem;
+}
+.form-group label,
+.detail-item label {
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+  display: block;
+}
+.form-group select,
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 0.6rem;
+  border-radius: 0.5rem;
+  border: 2px solid var(--fbc-primary-green, #2E7D32);
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+.form-group select {
+  background: #f8fafc;
+}
+.info-grid {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+.info-item {
+  min-width: 160px;
+  margin-bottom: 0.5rem;
+}
+.allergies-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.allergy-tag {
+  background: var(--fbc-gold, #FFB300);
+  color: #222;
+  border-radius: 0.7rem;
+  padding: 0.2rem 0.8rem;
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+}
+.btn-remove-tag {
+  background: none;
+  border: none;
+  color: #e53935;
+  font-size: 1.1rem;
+  margin-left: 0.3rem;
+  cursor: pointer;
+}
+.add-allergy input {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: 2px solid var(--fbc-primary-green, #2E7D32);
+  font-size: 1rem;
+}
+.medications-list, .conditions-list, .contacts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+.medication-card, .condition-card, .contact-card {
+  background: #f6fff6;
+  border-radius: 0.7rem;
+  padding: 0.7rem 1rem;
+  box-shadow: 0 1px 4px #22c55e11;
+}
+.medication-header, .condition-header, .contact-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.btn-remove {
+  background: none;
+  border: none;
+  color: #e53935;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+.medication-details, .condition-details, .contact-details {
+  margin-top: 0.5rem;
+}
+.detail-item {
+  margin-bottom: 0.2rem;
+}
+.severity.mild {
+  color: #388e3c;
+}
+.severity.moderate {
+  color: #fbc02d;
+}
+.severity.severe {
+  color: #e53935;
+}
+.status.active {
+  color: #388e3c;
+}
+.status.controlled {
+  color: #1976d2;
+}
+.status.chronic {
+  color: #e53935;
+}
+.primary-badge {
+  background: var(--fbc-primary-green, #2E7D32);
+  color: #fff;
+  border-radius: 0.5rem;
+  padding: 0.1rem 0.7rem;
+  font-size: 0.9rem;
+  margin-left: 0.5rem;
+}
+.add-form input,
+.add-form select,
+.add-form textarea {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: 2px solid var(--fbc-primary-green, #2E7D32);
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+.add-form .form-row {
+  display: flex;
+  gap: 0.7rem;
+}
+.add-form button {
+  background: var(--fbc-primary-gradient, #2E7D32);
+  color: #fff;
+  border: none;
+  border-radius: 0.7rem;
+  padding: 0.5rem 1.2rem;
+  font-weight: 700;
+  font-size: 1.05rem;
+  cursor: pointer;
+}
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+.loading {
+  color: var(--fbc-primary-green, #2E7D32);
+  font-weight: 700;
+  font-size: 1.2rem;
+  text-align: center;
+  margin-top: 2rem;
+}

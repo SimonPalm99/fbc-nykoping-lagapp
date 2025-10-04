@@ -1,0 +1,206 @@
+/* FBC theme & utility classes for TacticsLibrary */
+.libraryRoot {
+  background: #1a202c;
+  border-radius: 12px;
+  padding: 20px;
+  color: #fff;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.title {
+  margin: 0;
+}
+.addButton {
+  padding: 10px 20px;
+  background: #059669;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+  font-weight: bold;
+}
+.tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #4a5568;
+}
+.tabButton {
+  padding: 12px 24px;
+  background: transparent;
+  border: none;
+  border-radius: 8px 8px 0 0;
+  color: #fff;
+  cursor: pointer;
+}
+.tabButtonActive {
+  background: #2563eb;
+  font-weight: bold;
+}
+.filters {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.searchInput {
+  flex: 1;
+  min-width: 200px;
+  padding: 8px 12px;
+  background: #2d3748;
+  border: 1px solid #4a5568;
+  border-radius: 6px;
+  color: #fff;
+}
+.select {
+  padding: 8px 12px;
+  background: #2d3748;
+  border: 1px solid #4a5568;
+  border-radius: 6px;
+  color: #fff;
+}
+.tacticsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+}
+.templatesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+}
+.tacticCard {
+  background: #2d3748;
+  padding: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s;
+  border: 1px solid #4a5568;
+}
+.tacticCardHover {
+  transform: translateY(-2px);
+  border-color: #2563eb;
+}
+.tacticCardNoHover {
+  transform: translateY(0);
+  border-color: #4a5568;
+}
+.tacticCardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+.tacticTitle {
+  margin: 0;
+  font-size: 16px;
+  font-weight: bold;
+}
+.deleteButton {
+  background: #dc2626;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  padding: 4px 8px;
+  font-size: 12px;
+}
+.tacticDescription {
+  color: #a0aec0;
+  font-size: 14px;
+  margin: 0 0 12px 0;
+  line-height: 1.4;
+}
+.tacticTags {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.categoryTag {
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: bold;
+}
+.typeTag {
+  padding: 2px 8px;
+  background: #4a5568;
+  border-radius: 12px;
+  font-size: 12px;
+}
+.tacticMeta {
+  font-size: 12px;
+  color: #718096;
+  display: flex;
+  justify-content: space-between;
+}
+.sharedTag {
+  margin-top: 8px;
+  padding: 4px 8px;
+  background: #059669;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+}
+.emptyState {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 40px;
+  color: #a0aec0;
+}
+.createButton {
+  padding: 8px 16px;
+  background: #059669;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  cursor: pointer;
+  margin-top: 8px;
+}
+.templateCard {
+  background: #2d3748;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  border: 1px solid #4a5568;
+  transition: all 0.2s ease;
+}
+.templateCardHover {
+  transform: scale(1.02);
+  border-color: #7c3aed;
+}
+.templateCardNoHover {
+  transform: scale(1);
+  border-color: #4a5568;
+}
+.templateIcon {
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+.templateTitle {
+  margin: 0 0 4px 0;
+  font-size: 14px;
+}
+.templateDescription {
+  color: #a0aec0;
+  font-size: 12px;
+  margin: 0;
+}
+/* Kategori-bakgrundsfärger */
+.bgOffense {
+  background: #059669;
+}
+.bgDefense {
+  background: #dc2626;
+}
+.bgSpecialTeams {
+  background: #7c3aed;
+}
+.bgGeneral {
+  background: #4a5568;
+}

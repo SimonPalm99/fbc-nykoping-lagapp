@@ -1,0 +1,125 @@
+.livestats-root {
+  width: 100%;
+  min-height: 320px;
+}
+.livestats-controls {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.livestats-btn {
+  background: #222;
+  color: #fff;
+  border: none;
+  border-radius: 0.7rem;
+  padding: 0.7rem 1.2rem;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 2px 8px #22c55e22;
+  transition: background 0.2s, color 0.2s;
+}
+.livestats-btn-goal {
+  background: #22c55e;
+}
+.livestats-btn-assist {
+  background: #FFD600;
+  color: #222;
+}
+.livestats-btn-penalty {
+  background: #FF5252;
+}
+.livestats-btn-shot {
+  background: #2196F3;
+}
+.livestats-btn-save {
+  background: #22c55e;
+}
+.livestats-btn-export {
+  background: #22c55e;
+  margin-left: 2rem;
+}
+.livestats-input {
+  padding: 0.7rem;
+  border-radius: 0.7rem;
+  border: 1px solid #22c55e;
+  font-size: 1rem;
+  min-width: 120px;
+}
+.livestats-summary {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+.livestats-summary-box {
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 2px 8px #22c55e22;
+  width: 120px;
+  height: 90px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin: 0.5rem;
+}
+.livestats-summary-label {
+  color: #22c55e;
+}
+.livestats-summary-value {
+  font-size: 1.5rem;
+  color: #222;
+  font-weight: 900;
+}
+.livestats-log {
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 2px 8px #22c55e22;
+  padding: 1rem;
+  margin-bottom: 2rem;
+}
+.livestats-log-title {
+  font-weight: 700;
+  color: #22c55e;
+  margin-bottom: 0.7rem;
+}
+.livestats-log-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.livestats-log-item {
+  margin-bottom: 0.5rem;
+  color: #222;
+  font-weight: 500;
+}
+.livestats-log-type-goal {
+  color: #22c55e;
+  font-weight: 700;
+}
+.livestats-log-type-assist {
+  color: #FFD600;
+  font-weight: 700;
+}
+.livestats-log-type-penalty {
+  color: #FF5252;
+  font-weight: 700;
+}
+.livestats-log-type-shot {
+  color: #2196F3;
+  font-weight: 700;
+}
+.livestats-log-type-turnover {
+  color: #222;
+  font-weight: 700;
+}
+.livestats-log-time {
+  color: #888;
+  font-size: 0.95rem;
+}

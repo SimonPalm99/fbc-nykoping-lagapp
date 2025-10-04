@@ -1,0 +1,63 @@
+.theme-toggle-icon-rotated {
+  transform: rotate(180deg);
+}
+/* ThemeToggle.module.css - CSS-modul för tema-knappar */
+.theme-toggle {
+  background: transparent;
+  border: 2px solid var(--border-color);
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 18px;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+.theme-toggle-icon {
+  transition: transform 0.3s ease;
+}
+.animated-theme-toggle {
+  border: none;
+  border-radius: 25px;
+  width: 50px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 2px;
+  position: relative;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+}
+.animated-theme-toggle-dark {
+  background: linear-gradient(135deg, #1e293b, #334155);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+.animated-theme-toggle-light {
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  box-shadow: 0 2px 8px rgba(251,191,36,0.3);
+}
+.animated-theme-toggle-knob {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  transition: transform 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+.animated-theme-toggle-knob-dark {
+  transform: translateX(24px);
+}
+.animated-theme-toggle-knob-light {
+  transform: translateX(0px);
+}

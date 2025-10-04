@@ -1,0 +1,32 @@
+.teamstats-section {
+  background: #232323;
+  padding: 18px;
+  border-radius: 10px;
+  margin: 18px 0;
+}
+.teamstats-table {
+  width: 100%;
+  color: #fff;
+  border-collapse: collapse;
+}
+.teamstats-table th,
+.teamstats-table td {
+  padding: 8px 6px;
+  text-align: left;
+}
+.teamstats-table th {
+  background: #2d2d2d;
+  font-weight: 600;
+}
+.teamstats-table tr {
+  transition: background 0.2s;
+}
+.teamstats-table tr:first-child {
+  background: #354;
+}
+.teamstats-table tr:nth-child(even) {
+  background: #282828;
+}
+.teamstats-table tr:nth-child(odd) {
+  background: inherit;
+}

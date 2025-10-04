@@ -1,0 +1,49 @@
+/* CSS-modul för PostMatchFeedbackEdit - svenska klassnamn */
+
+.postMatchFeedbackForm {
+  background: #23272e;
+  border-radius: 9px;
+  padding: 18px;
+  margin-top: 20px;
+  box-shadow: 0 2px 14px #0002;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.input {
+  width: 100%;
+  padding: 8px;
+  margin: 6px 0 12px 0;
+  border-radius: 6px;
+  border: 1px solid #345;
+  background: #23272e;
+  color: #fff;
+}
+
+.label {
+  font-weight: 600;
+  color: #b8f27c;
+  margin-bottom: 2px;
+  display: block;
+  font-size: 15px;
+}
+
+.button {
+  width: 100%;
+  background: #b8f27c;
+  color: #222;
+  border: none;
+  border-radius: 6px;
+  padding: 10px;
+  font-weight: 700;
+  font-size: 17px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .postMatchFeedbackForm { padding: 8px !important; }
+  .input { font-size: 15px !important; }
+  .button { font-size: 15px !important; }
+}

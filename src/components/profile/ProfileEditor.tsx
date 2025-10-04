@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { User } from '../../types/user';
-import './ProfileEditor.css';
+import styles from './ProfileEditor.module.css';
 
 interface ProfileEditorProps {
   user: User;
@@ -9,16 +9,31 @@ interface ProfileEditorProps {
 }
 
 const ProfileEditor: React.FC<ProfileEditorProps> = ({ user, onSave, onCancel }) => {
+  // Funktion för att hantera primär kontakt
+  const handlePrimaryContactChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
+    if (e.target.checked) {
+      const updatedContacts = editedUser.iceContacts.map((c: any, i: number) => ({
+        ...c,
+        isPrimary: i === index
+      }));
+      setEditedUser(prev => ({
+        ...prev,
+        iceContacts: updatedContacts
+      }));
+    } else {
+      handleIceContactChange(index, 'isPrimary', false);
+    }
+  };
   const [editedUser, setEditedUser] = useState<User>({ ...user });
   const [activeSection, setActiveSection] = useState<'basic' | 'contact' | 'social' | 'preferences'>('basic');
   const [avatarPreview, setAvatarPreview] = useState<string>(user.profileImageUrl);
 
   const handleInputChange = (field: string, value: any) => {
-    setEditedUser(prev => ({
-      ...prev,
-      [field]: value
-    }));
-  };
+  setEditedUser(prev => ({
+    ...prev,
+    [field]: value
+  }));
+};
 
   const handleNestedInputChange = (parent: string, field: string, value: any) => {
     setEditedUser(prev => {
@@ -49,7 +64,7 @@ const ProfileEditor: React.FC<ProfileEditorProps> = ({ user, onSave, onCancel })
   };
 
   const addIceContact = () => {
-    setEditedUser(prev => ({
+  setEditedUser((prev: User) => ({
       ...prev,
       iceContacts: [
         ...prev.iceContacts,
@@ -66,7 +81,7 @@ const ProfileEditor: React.FC<ProfileEditorProps> = ({ user, onSave, onCancel })
   const removeIceContact = (index: number) => {
     setEditedUser(prev => ({
       ...prev,
-      iceContacts: prev.iceContacts.filter((_, i) => i !== index)
+  iceContacts: prev.iceContacts.filter((_: any, i: number) => i !== index)
     }));
   };
 
@@ -181,7 +196,7 @@ const ProfileEditor: React.FC<ProfileEditorProps> = ({ user, onSave, onCancel })
                     <img src={avatarPreview} alt="Profil" />
                   ) : (
                     <div className="avatar-placeholder">
-                      {editedUser.name.split(' ').map(n => n[0]).join('')}
+                      {editedUser.name.split(' ').map((n: string) => n[0]).join('')}
                     </div>
                   )}
                 </div>
@@ -191,7 +206,8 @@ const ProfileEditor: React.FC<ProfileEditorProps> = ({ user, onSave, onCancel })
                     id="avatar-upload"
                     accept="image/*"
                     onChange={handleAvatarChange}
-                    style={{ display: 'none' }}
+                    className={styles.uploadBtn}
+                    title="Välj profilbild"
                   />
                   <label htmlFor="avatar-upload" className="upload-btn">
                     Välj bild
@@ -219,6 +235,7 @@ const ProfileEditor: React.FC<ProfileEditorProps> = ({ user, onSave, onCancel })
                   value={editedUser.name}
                   onChange={(e) => handleInputChange('name', e.target.value)}
                   placeholder="Förnamn Efternamn"
+                  title="Namn"
                 />
               </div>
 
@@ -229,6 +246,7 @@ const ProfileEditor: React.FC<ProfileEditorProps> = ({ user, onSave, onCancel })
                   value={editedUser.email}
                   onChange={(e) => handleInputChange('email', e.target.value)}
                   placeholder="exempel@email.com"
+                  title="E-post"
                 />
               </div>
 
@@ -240,6 +258,7 @@ const ProfileEditor: React.FC<ProfileEditorProps> = ({ user, onSave, onCancel })
                   max="99"
                   value={editedUser.jerseyNumber}
                   onChange={(e) => handleInputChange('jerseyNumber', parseInt(e.target.value))}
+                  title="Tröjnummer"
                 />
               </div>
 
@@ -248,6 +267,7 @@ const ProfileEditor: React.FC<ProfileEditorProps> = ({ user, onSave, onCancel })
                 <select
                   value={editedUser.favoritePosition}
                   onChange={(e) => handleInputChange('favoritePosition', e.target.value)}
+                  title="Favoritposition"
                 >
                   {positions.map(pos => (
                     <option key={pos} value={pos}>{pos}</option>
@@ -261,6 +281,8 @@ const ProfileEditor: React.FC<ProfileEditorProps> = ({ user, onSave, onCancel })
                   type="date"
                   value={editedUser.birthday}
                   onChange={(e) => handleInputChange('birthday', e.target.value)}
+                  placeholder="ÅÅÅÅ-MM-DD"
+                  title="Födelsedatum"
                 />
               </div>
 
@@ -271,6 +293,7 @@ const ProfileEditor: React.FC<ProfileEditorProps> = ({ user, onSave, onCancel })
                   value={editedUser.phone}
                   onChange={(e) => handleInputChange('phone', e.target.value)}
                   placeholder="070-123 45 67"
+                  title="Telefonnummer"
                 />
               </div>
 
@@ -281,6 +304,7 @@ const ProfileEditor: React.FC<ProfileEditorProps> = ({ user, onSave, onCancel })
                   value={editedUser.address || ''}
                   onChange={(e) => handleInputChange('address', e.target.value)}
                   placeholder="Gatunamn 123, 12345 Stad"
+                  title="Adress"
                 />
               </div>
 
@@ -291,6 +315,7 @@ const ProfileEditor: React.FC<ProfileEditorProps> = ({ user, onSave, onCancel })
                   onChange={(e) => handleInputChange('about', e.target.value)}
                   placeholder="Berätta lite om dig själv, din innebandykarriär, intressen..."
                   rows={4}
+                  title="Om mig"
                 />
               </div>
 
@@ -301,6 +326,7 @@ const ProfileEditor: React.FC<ProfileEditorProps> = ({ user, onSave, onCancel })
                   onChange={(e) => handleInputChange('emergencyMedicalInfo', e.target.value)}
                   placeholder="Allergier, mediciner, eller annan viktig medicinsk information..."
                   rows={3}
+                  title="Medicinsk information"
                 />
                 <small>Endast synligt för ledare</small>
               </div>
@@ -316,7 +342,7 @@ const ProfileEditor: React.FC<ProfileEditorProps> = ({ user, onSave, onCancel })
             </p>
 
             <div className="ice-contacts">
-              {editedUser.iceContacts.map((contact, index) => (
+              {editedUser.iceContacts.map((contact: any, index: number) => (
                 <div key={index} className="ice-contact-card">
                   <div className="contact-header">
                     <h4>Kontakt {index + 1}</h4>
@@ -336,6 +362,7 @@ const ProfileEditor: React.FC<ProfileEditorProps> = ({ user, onSave, onCancel })
                         value={contact.name}
                         onChange={(e) => handleIceContactChange(index, 'name', e.target.value)}
                         placeholder="Förnamn Efternamn"
+                        title="Kontaktens namn"
                       />
                     </div>
 
@@ -346,6 +373,7 @@ const ProfileEditor: React.FC<ProfileEditorProps> = ({ user, onSave, onCancel })
                         value={contact.phone}
                         onChange={(e) => handleIceContactChange(index, 'phone', e.target.value)}
                         placeholder="070-123 45 67"
+                        title="Kontaktens telefonnummer"
                       />
                     </div>
 
@@ -354,6 +382,7 @@ const ProfileEditor: React.FC<ProfileEditorProps> = ({ user, onSave, onCancel })
                       <select
                         value={contact.relation}
                         onChange={(e) => handleIceContactChange(index, 'relation', e.target.value)}
+                        title="Relation"
                       >
                         <option value="">Välj relation</option>
                         {relations.map(rel => (
@@ -367,21 +396,8 @@ const ProfileEditor: React.FC<ProfileEditorProps> = ({ user, onSave, onCancel })
                         <input
                           type="checkbox"
                           checked={contact.isPrimary}
-                          onChange={(e) => {
-                            // Om denna markeras som primär, avmarkera alla andra
-                            if (e.target.checked) {
-                              const updatedContacts = editedUser.iceContacts.map((c, i) => ({
-                                ...c,
-                                isPrimary: i === index
-                              }));
-                              setEditedUser(prev => ({
-                                ...prev,
-                                iceContacts: updatedContacts
-                              }));
-                            } else {
-                              handleIceContactChange(index, 'isPrimary', false);
-                            }
-                          }}
+                          onChange={(e) => handlePrimaryContactChange(e, index)}
+                          title="Primär kontakt"
                         />
                         Primär kontakt
                       </label>
@@ -412,6 +428,7 @@ const ProfileEditor: React.FC<ProfileEditorProps> = ({ user, onSave, onCancel })
                   value={editedUser.socialMedia?.instagram || ''}
                   onChange={(e) => handleNestedInputChange('socialMedia', 'instagram', e.target.value)}
                   placeholder="@dittanvändarnamn"
+                  title="Instagram"
                 />
               </div>
 
@@ -422,6 +439,7 @@ const ProfileEditor: React.FC<ProfileEditorProps> = ({ user, onSave, onCancel })
                   value={editedUser.socialMedia?.facebook || ''}
                   onChange={(e) => handleNestedInputChange('socialMedia', 'facebook', e.target.value)}
                   placeholder="Ditt namn på Facebook"
+                  title="Facebook"
                 />
               </div>
 
@@ -432,6 +450,7 @@ const ProfileEditor: React.FC<ProfileEditorProps> = ({ user, onSave, onCancel })
                   value={editedUser.socialMedia?.twitter || ''}
                   onChange={(e) => handleNestedInputChange('socialMedia', 'twitter', e.target.value)}
                   placeholder="@dittanvändarnamn"
+                  title="Twitter/X"
                 />
               </div>
             </div>
@@ -495,6 +514,7 @@ const ProfileEditor: React.FC<ProfileEditorProps> = ({ user, onSave, onCancel })
                 <select
                   value={editedUser.preferences.language}
                   onChange={(e) => handleNestedInputChange('preferences', 'language', e.target.value)}
+                  title="Språk"
                 >
                   <option value="sv">Svenska</option>
                   <option value="en">English</option>
@@ -506,6 +526,7 @@ const ProfileEditor: React.FC<ProfileEditorProps> = ({ user, onSave, onCancel })
                 <select
                   value={editedUser.preferences.theme}
                   onChange={(e) => handleNestedInputChange('preferences', 'theme', e.target.value)}
+                  title="Tema"
                 >
                   <option value="auto">Automatiskt</option>
                   <option value="light">Ljust</option>

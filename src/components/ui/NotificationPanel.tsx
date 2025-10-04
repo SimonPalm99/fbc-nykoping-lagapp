@@ -37,15 +37,6 @@ export const NotificationPanel: React.FC<NotificationPanelProps> = ({ isOpen, on
     }
   };
 
-  const getPriorityColor = (priority: string) => {
-    switch (priority) {
-      case 'urgent': return 'var(--error-color)';
-      case 'high': return 'var(--warning-color)';
-      case 'medium': return 'var(--primary-color)';
-      case 'low': return 'var(--text-secondary)';
-      default: return 'var(--text-secondary)';
-    }
-  };
 
   const formatTime = (dateString: string) => {
     const date = new Date(dateString);
@@ -137,8 +128,7 @@ export const NotificationPanel: React.FC<NotificationPanelProps> = ({ isOpen, on
                       {getNotificationIcon(notification.type)}
                     </span>
                     <span 
-                      className="notification-priority"
-                      style={{ color: getPriorityColor(notification.priority) }}
+                      className={`notification-priority priority-${notification.priority}`}
                     >
                       ●
                     </span>

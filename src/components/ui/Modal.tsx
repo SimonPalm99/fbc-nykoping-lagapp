@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { createPortal } from 'react-dom';
-import './Modal.css';
+import styles from './Modal.module.css';
 
 interface ModalProps {
   isOpen: boolean;
@@ -248,7 +248,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
       title={title}
       size="sm"
       footer={
-        <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'flex-end' }}>
+        <div className={styles['confirm-modal-footer']}>
           <button
             className="loading-button loading-button-outline loading-button-md"
             onClick={onCancel}
@@ -264,12 +264,12 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
         </div>
       }
     >
-      <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem' }}>
-        <div style={{ fontSize: '2rem', marginTop: '0.25rem' }}>
+      <div className={styles['confirm-modal-content']}>
+        <div className={styles['confirm-modal-icon']}>
           {getIcon()}
         </div>
         <div>
-          <p style={{ margin: 0, lineHeight: 1.5, color: '#374151' }}>
+          <p className={styles['confirm-modal-message']}>
             {message}
           </p>
         </div>

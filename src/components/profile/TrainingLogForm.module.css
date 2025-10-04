@@ -1,0 +1,67 @@
+.training-log-form {
+  background: #22272e;
+  border-radius: 12px;
+  max-width: 500px;
+  margin: 16px auto;
+  padding: 18px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.training-log-title {
+  color: #b8f27c;
+  font-size: 18px;
+  margin: 0;
+}
+
+.training-log-label {
+  margin-bottom: 0;
+  color: #fff;
+  font-weight: 500;
+}
+
+.training-log-input {
+  width: 100%;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #b8f27c;
+  margin-top: 4px;
+  font-size: 16px;
+  background: #181c1e;
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+.training-log-range {
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.training-log-button {
+  background: #4a9d2c;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 0;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+@media (max-width: 600px) {
+  .training-log-form {
+    padding: 8px;
+    border-radius: 0;
+    max-width: 99vw;
+  }
+  .training-log-title {
+    font-size: 16px;
+  }
+  .training-log-button,
+  .training-log-input,
+  .training-log-range {
+    font-size: 15px !important;
+  }
+}

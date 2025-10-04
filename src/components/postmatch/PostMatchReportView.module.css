@@ -1,0 +1,67 @@
+.rapport-view {
+  background: #23272e;
+  border-radius: 9px;
+  margin-bottom: 18px;
+  padding: 16px;
+  box-shadow: 0 2px 14px #0002;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.rubrik {
+  color: #b8f27c;
+  font-weight: 600;
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.skapad {
+  color: #bbb;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.section {
+  margin-bottom: 8px;
+}
+
+.list {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.link {
+  color: #b8f27c;
+}
+
+.knapprad {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.knapp {
+  background: #b8f27c;
+  color: #23272e;
+  border: none;
+  border-radius: 6px;
+  font-weight: 700;
+  padding: 6px 24px;
+  cursor: pointer;
+}
+
+.knapp-ta-bort {
+  background: #e66;
+  color: #fff;
+}
+
+@media (max-width: 600px) {
+  .rapport-view {
+    font-size: 15px !important;
+  }
+  .knapp {
+    font-size: 14px !important;
+    padding: 6px 10px !important;
+  }
+}

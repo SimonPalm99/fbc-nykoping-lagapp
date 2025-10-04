@@ -1,0 +1,86 @@
+.rapport-form {
+  background: #23272e;
+  border-radius: 9px;
+  padding: 18px;
+  margin-top: 20px;
+  box-shadow: 0 2px 14px #0002;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.input {
+  width: 100%;
+  padding: 8px;
+  margin: 6px 0 12px 0;
+  border-radius: 6px;
+  border: 1px solid #345;
+  background: #23272e;
+  color: #fff;
+}
+
+.textarea {
+  width: 100%;
+  padding: 8px;
+  margin: 6px 0 12px 0;
+  border-radius: 6px;
+  border: 1px solid #345;
+  background: #23272e;
+  color: #fff;
+  min-height: 40px;
+  resize: vertical;
+}
+
+.button {
+  width: 100%;
+  background: #b8f27c;
+  color: #222;
+  border: none;
+  border-radius: 6px;
+  padding: 10px;
+  font-weight: 700;
+  font-size: 17px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.button-small {
+  width: auto;
+  padding: 7px 12px;
+  margin-top: 0;
+}
+
+.highlight-list {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.remove-btn {
+  margin-left: 7px;
+  color: #e66;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.link {
+  color: #b8f27c;
+}
+
+@media (max-width: 600px) {
+  .rapport-form {
+    padding: 8px !important;
+  }
+  .input, .textarea {
+    font-size: 15px !important;
+  }
+  .button {
+    font-size: 15px !important;
+  }
+}
+
+.button-cancel {
+  background: #e66;
+  color: #fff;
+  margin-top: 10px;
+}

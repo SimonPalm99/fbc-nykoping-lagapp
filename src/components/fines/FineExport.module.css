@@ -1,0 +1,20 @@
+.fineExport {
+  margin-top: 24px;
+}
+.fineExport__table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+.fineExport__theadRow {
+  background: #f7f7f7;
+}
+.fineExport__th,
+.fineExport__td {
+  border: 1px solid #ccc;
+  padding: 6px;
+}
+.fineExport__exportBtn {
+  margin-top: 8px;
+}

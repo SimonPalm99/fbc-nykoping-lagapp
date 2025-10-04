@@ -123,6 +123,8 @@ export const RehabPlanComponent: React.FC<RehabPlanProps> = ({ injury, user, onS
             type="text"
             value={plan.title}
             onChange={(e) => updatePlanField('title', e.target.value)}
+            placeholder="Ange titel för rehabiliteringsplan"
+            title="Titel för rehabiliteringsplan"
           />
         </div>
         
@@ -132,6 +134,8 @@ export const RehabPlanComponent: React.FC<RehabPlanProps> = ({ injury, user, onS
             value={plan.description}
             onChange={(e) => updatePlanField('description', e.target.value)}
             rows={3}
+            title="Beskrivning av rehabiliteringsplan"
+            placeholder="Ange beskrivning för rehabiliteringsplan"
           />
         </div>
 
@@ -142,6 +146,8 @@ export const RehabPlanComponent: React.FC<RehabPlanProps> = ({ injury, user, onS
               type="date"
               value={format(plan.startDate, 'yyyy-MM-dd')}
               onChange={(e) => updatePlanField('startDate', new Date(e.target.value))}
+              title="Startdatum för rehabiliteringsplan"
+              placeholder="Välj startdatum"
             />
           </div>
           
@@ -151,7 +157,9 @@ export const RehabPlanComponent: React.FC<RehabPlanProps> = ({ injury, user, onS
               type="date"
               value={format(plan.estimatedEndDate, 'yyyy-MM-dd')}
               onChange={(e) => updatePlanField('estimatedEndDate', new Date(e.target.value))}
-            />
+                title="Uppskattat slutdatum för rehabiliteringsplan"
+                placeholder="Välj uppskattat slutdatum"
+              />
           </div>
         </div>
       </div>
@@ -285,6 +293,8 @@ export const RehabPlanComponent: React.FC<RehabPlanProps> = ({ injury, user, onS
                       ...prev,
                       name: e.target.value
                     }))}
+                    title="Övningsnamn"
+                    placeholder="Ange övningsnamn"
                   />
                 </div>
 
@@ -292,6 +302,7 @@ export const RehabPlanComponent: React.FC<RehabPlanProps> = ({ injury, user, onS
                   <div className="form-group">
                     <label>Typ</label>
                     <select
+                      title="Typ av övning"
                       value={newExercise.type || ''}
                       onChange={(e) => setNewExercise(prev => ({
                         ...prev,
@@ -317,6 +328,8 @@ export const RehabPlanComponent: React.FC<RehabPlanProps> = ({ injury, user, onS
                         ...prev,
                         duration: parseInt(e.target.value)
                       }))}
+                      title="Varaktighet i minuter"
+                      placeholder="Ange varaktighet (min)"
                     />
                   </div>
                 </div>
@@ -331,6 +344,8 @@ export const RehabPlanComponent: React.FC<RehabPlanProps> = ({ injury, user, onS
                         ...prev,
                         sets: parseInt(e.target.value)
                       }))}
+                      title="Antal set"
+                      placeholder="Ange antal set"
                     />
                   </div>
 
@@ -343,12 +358,15 @@ export const RehabPlanComponent: React.FC<RehabPlanProps> = ({ injury, user, onS
                         ...prev,
                         repetitions: parseInt(e.target.value)
                       }))}
+                      title="Antal repetitioner"
+                      placeholder="Ange antal repetitioner"
                     />
                   </div>
 
                   <div className="form-group">
                     <label>Intensitet</label>
                     <select
+                      title="Intensitet"
                       value={newExercise.intensity || 'low'}
                       onChange={(e) => setNewExercise(prev => ({
                         ...prev,
@@ -371,6 +389,8 @@ export const RehabPlanComponent: React.FC<RehabPlanProps> = ({ injury, user, onS
                       description: e.target.value
                     }))}
                     rows={2}
+                    title="Beskrivning av övning"
+                    placeholder="Ange beskrivning för övningen"
                   />
                 </div>
 
@@ -383,6 +403,8 @@ export const RehabPlanComponent: React.FC<RehabPlanProps> = ({ injury, user, onS
                       instructions: e.target.value
                     }))}
                     rows={2}
+                    title="Instruktioner för övning"
+                    placeholder="Ange instruktioner för övningen"
                   />
                 </div>
 
@@ -395,6 +417,8 @@ export const RehabPlanComponent: React.FC<RehabPlanProps> = ({ injury, user, onS
                       precautions: e.target.value
                     }))}
                     rows={2}
+                    title="Försiktighetsåtgärder för övning"
+                    placeholder="Ange försiktighetsåtgärder för övningen"
                   />
                 </div>
               </div>
@@ -429,6 +453,7 @@ export const RehabPlanComponent: React.FC<RehabPlanProps> = ({ injury, user, onS
               onChange={(e) => updatePlanField('goals', e.target.value.split('\n').filter(g => g.trim()))}
               placeholder="Ett mål per rad..."
               rows={3}
+              title="Skriv ett mål per rad"
             />
           </div>
           
@@ -439,6 +464,7 @@ export const RehabPlanComponent: React.FC<RehabPlanProps> = ({ injury, user, onS
               onChange={(e) => updatePlanField('restrictions', e.target.value.split('\n').filter(r => r.trim()))}
               placeholder="En restriktion per rad..."
               rows={3}
+              title="Skriv en restriktion per rad"
             />
           </div>
         </div>

@@ -4,6 +4,7 @@ import { PWAInstallButtonCompact } from "./ui/PWAInstallButton";
 import { AuthManager } from "./auth/AuthManager";
 import { useAuth } from "../context/AuthContext";
 import { useNotifications } from "../context/NotificationContext";
+import styles from "./Navbar.module.css";
 
 const primaryNavLinks = [
   { path: "/", label: "Hem", icon: "🏠" },
@@ -91,105 +92,41 @@ export default function Navbar() {
 
   return (
     <>
-      <nav style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        right: 0,
-        zIndex: 1000,
-        background: "var(--bg-secondary)",
-        backdropFilter: "blur(20px)",
-        borderBottom: "2px solid var(--fbc-primary)",
-        padding: "0.75rem 0",
-        boxShadow: "var(--shadow-lg)"
-      }}>
-        <div className="container" style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: "1rem"
-        }}>
+      <nav className={styles.navbar}>
+        <div className={styles.container}>
           {/* Logo & Klubbnamn - FBC Nyköping Style */}
-          <NavLink to="/" style={{ 
-            display: "flex", 
-            alignItems: "center", 
-            gap: "0.75rem",
-            textDecoration: "none",
-            color: "inherit"
-          }}>
-            <div style={{
-              width: "42px",
-              height: "42px",
-              borderRadius: "50%",
-              background: "linear-gradient(135deg, var(--fbc-primary), var(--fbc-secondary))",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              boxShadow: "var(--shadow-glow)",
-              border: "2px solid var(--fbc-primary)"
-            }}>
+          <NavLink
+            to="/"
+            className={() => styles.logoLink}
+          >
+            <div className={styles.logoCircle}>
               <img 
                 src="/fbc-logo.jpg" 
                 alt="FBC Nyköping" 
-                style={{ 
-                  width: "100%", 
-                  height: "100%", 
-                  borderRadius: "50%",
-                  objectFit: "cover"
-                }}
+                className={styles.logoImg}
                 onError={(e) => {
                   e.currentTarget.style.display = "none";
                   e.currentTarget.parentElement!.innerHTML = '<span style="font-size: 20px; color: white; font-weight: bold;">⚡</span>';
                 }}
               />
             </div>
-            <div style={{ display: "flex", flexDirection: "column" }}>
-              <span style={{ 
-                fontWeight: "800", 
-                fontSize: "1.1rem",
-                color: "#ffffff",
-                lineHeight: "1.2",
-                letterSpacing: "-0.025em",
-                textShadow: "0 2px 4px rgba(0,0,0,0.3)"
-              }}>
-                FBC NYKÖPING
-              </span>
-              <span style={{ 
-                fontSize: "0.7rem", 
-                color: "#7CB342",
-                fontWeight: "600",
-                textTransform: "uppercase",
-                letterSpacing: "0.5px"
-              }}>
-                LAGAPP
-              </span>
+            <div className={styles.logoTextColumn}>
+              <span className={styles.logoTitle}>FBC NYKÖPING</span>
+              <span className={styles.logoSubtitle}>LAGAPP</span>
             </div>
           </NavLink>
 
           {/* Huvudnavigation - Desktop */}
-          <div style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "0.5rem"
-          }} className="desktop-nav">
+          <div className={styles.desktopNav}>
             {primaryNavLinks.map(link => (
               <NavLink
                 key={link.path}
                 to={link.path}
-                style={({ isActive }) => ({
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0.5rem",
-                  padding: "0.75rem 1rem",
-                  borderRadius: "12px",
-                  textDecoration: "none",
-                  fontSize: "0.875rem",
-                  fontWeight: "600",
-                  color: isActive ? "#22c55e" : "#64748b",
-                  background: isActive ? "rgba(34, 197, 94, 0.1)" : "transparent",
-                  border: isActive ? "1px solid rgba(34, 197, 94, 0.2)" : "1px solid transparent",
-                  transition: "all 0.2s ease"
-                })}
+                className={({ isActive }) =>
+                  isActive
+                    ? `${styles.navLink} ${styles.navLinkActive}`
+                    : styles.navLink
+                }
                 end={link.path === "/"}
               >
                 <span>{link.icon}</span>
@@ -198,77 +135,31 @@ export default function Navbar() {
             ))}
             
             {/* Mer-knapp med dropdown */}
-            <div ref={menuRef} style={{ position: "relative" }}>
+            <div ref={menuRef} className={styles.menuRelative}>
               <button
                 onClick={() => setShowMenu(!showMenu)}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0.5rem",
-                  padding: "0.75rem 1rem",
-                  borderRadius: "12px",
-                  textDecoration: "none",
-                  fontSize: "0.875rem",
-                  fontWeight: "600",
-                  color: showMenu ? "#22c55e" : "#64748b",
-                  background: showMenu ? "rgba(34, 197, 94, 0.1)" : "transparent",
-                  border: showMenu ? "1px solid rgba(34, 197, 94, 0.2)" : "1px solid transparent",
-                  transition: "all 0.2s ease",
-                  cursor: "pointer"
-                }}
+                className={showMenu ? `${styles.moreBtn} ${styles.moreBtnActive}` : styles.moreBtn}
               >
                 <span>📱</span>
                 <span className="nav-text">Mer</span>
-                <span style={{ 
-                  transform: showMenu ? "rotate(180deg)" : "rotate(0deg)",
-                  transition: "transform 0.2s ease"
-                }}>▼</span>
+                <span className={showMenu ? `${styles.moreIcon} ${styles.moreIconOpen}` : styles.moreIcon}>▼</span>
               </button>
               
               {/* Dropdown Menu */}
               {showMenu && (
-                <div 
-                  className="dropdown-menu"
-                  style={{
-                    position: "absolute",
-                    top: "100%",
-                    left: 0,
-                    right: 0,
-                    minWidth: "280px",
-                    background: "rgba(15, 23, 42, 0.95)",
-                    backdropFilter: "blur(20px)",
-                    border: "1px solid rgba(255, 255, 255, 0.1)",
-                    borderRadius: "16px",
-                    padding: "12px",
-                    marginTop: "8px",
-                    boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-                    zIndex: 1001,
-                    maxHeight: "400px",
-                    overflowY: "auto"
-                  }}
-                >
+                <div className={styles.dropdownMenu}>
                   {secondaryNavLinks.map(link => (
                     <NavLink
                       key={link.path}
                       to={link.path}
                       onClick={() => setShowMenu(false)}
-                      style={({ isActive }) => ({
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "0.75rem",
-                        padding: "0.75rem 1rem",
-                        borderRadius: "12px",
-                        textDecoration: "none",
-                        fontSize: "0.875rem",
-                        fontWeight: "600",
-                        color: isActive ? "#22c55e" : "#ffffff",
-                        background: isActive ? "rgba(34, 197, 94, 0.1)" : "transparent",
-                        border: isActive ? "1px solid rgba(34, 197, 94, 0.2)" : "1px solid transparent",
-                        transition: "all 0.2s ease",
-                        marginBottom: "4px"
-                      })}
+                      className={({ isActive }) =>
+                        isActive
+                          ? `${styles.dropdownLink} ${styles.dropdownLinkActive}`
+                          : styles.dropdownLink
+                      }
                     >
-                      <span style={{ fontSize: "1.1rem" }}>{link.icon}</span>
+                      <span className={styles.dropdownIcon}>{link.icon}</span>
                       <span>{link.label}</span>
                     </NavLink>
                   ))}
@@ -278,82 +169,25 @@ export default function Navbar() {
           </div>
 
           {/* Actions - Sök, Notifieringar, Profil */}
-          <div style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "0.5rem"
-          }}>
+          <div className={styles.actions}>
             {/* Sökknapp */}
             <button
               onClick={() => setShowSearch(!showSearch)}
-              style={{
-                background: "none",
-                border: "1px solid #e2e8f0",
-                borderRadius: "8px",
-                padding: "0.5rem",
-                cursor: "pointer",
-                color: "#64748b",
-                transition: "all 0.2s ease",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center"
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = "#22c55e";
-                e.currentTarget.style.color = "#22c55e";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = "#e2e8f0";
-                e.currentTarget.style.color = "#64748b";
-              }}
+              className={styles.searchBtn}
             >
               🔍
             </button>
 
             {/* Notifieringar - endast för inloggade användare */}
             {isAuthenticated && (
-              <div ref={notificationRef} style={{ position: "relative" }}>
+              <div ref={notificationRef} className={styles.notifContainer}>
                 <button
                   onClick={() => setShowNotifications(!showNotifications)}
-                  style={{
-                    background: "none",
-                    border: "1px solid #e2e8f0",
-                    borderRadius: "8px",
-                    padding: "0.5rem",
-                    cursor: "pointer",
-                    color: "#64748b",
-                    transition: "all 0.2s ease",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    position: "relative"
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = "#22c55e";
-                    e.currentTarget.style.color = "#22c55e";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = "#e2e8f0";
-                    e.currentTarget.style.color = "#64748b";
-                  }}
+                  className={styles.notifBtn}
                 >
                   🔔
                   {unreadCount > 0 && (
-                    <span style={{
-                      position: "absolute",
-                      top: "-2px",
-                      right: "-2px",
-                      background: "#ef4444",
-                      color: "white",
-                      borderRadius: "50%",
-                      width: "18px",
-                      height: "18px",
-                      fontSize: "0.625rem",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      fontWeight: "600"
-                    }}>
+                    <span className={styles.notifBadge}>
                       {unreadCount > 9 ? "9+" : unreadCount}
                     </span>
                   )}
@@ -361,54 +195,21 @@ export default function Navbar() {
 
                 {/* Notifikationspanel */}
                 {showNotifications && (
-                  <div style={{
-                    position: "absolute",
-                    top: "100%",
-                    right: 0,
-                    marginTop: "0.5rem",
-                    width: "320px",
-                    background: "rgba(255, 255, 255, 0.95)",
-                    backdropFilter: "blur(20px)",
-                    borderRadius: "12px",
-                    boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-                    border: "1px solid rgba(226, 232, 240, 0.8)",
-                    padding: "1rem",
-                    zIndex: 1001
-                  }}>
-                    <div style={{
-                      fontSize: "0.875rem",
-                      fontWeight: "600",
-                      color: "#0f172a",
-                      marginBottom: "1rem",
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center"
-                    }}>
+                  <div className={styles.notifPanel}>
+                    <div className={styles.notifPanelHeader}>
                       <span>Notifieringar</span>
                       {unreadCount > 0 && (
                         <button
                           onClick={markAllAsRead}
-                          style={{
-                            background: "none",
-                            border: "none",
-                            color: "#64748b",
-                            cursor: "pointer",
-                            fontSize: "0.75rem"
-                          }}
+                          className={styles.notifPanelMarkAll}
                         >
                           Markera alla som lästa
                         </button>
                       )}
                     </div>
-                    
-                    <div style={{ maxHeight: "300px", overflowY: "auto" }}>
+                    <div className={styles.notifList}>
                       {notifications.length === 0 ? (
-                        <div style={{
-                          textAlign: "center",
-                          color: "#64748b",
-                          fontSize: "0.875rem",
-                          padding: "2rem 1rem"
-                        }}>
+                        <div className={styles.notifEmpty}>
                           Inga notifieringar
                         </div>
                       ) : (
@@ -416,31 +217,19 @@ export default function Navbar() {
                           <div 
                             key={notification.id} 
                             onClick={() => markAsRead(notification.id)}
-                            style={{
-                              padding: "0.75rem",
-                              marginBottom: "0.5rem",
-                              background: notification.isRead ? "#f8fafc" : "#eff6ff",
-                              borderRadius: "8px",
-                              fontSize: "0.875rem",
-                              cursor: "pointer",
-                              transition: "all 0.2s ease"
-                            }}
+                            className={
+                              notification.isRead
+                                ? `${styles.notifItem} ${styles.notifItemRead}`
+                                : `${styles.notifItem} ${styles.notifItemUnread}`
+                            }
                           >
-                            <div style={{ 
-                              color: "#0f172a", 
-                              marginBottom: "0.25rem",
-                              fontWeight: notification.isRead ? "400" : "600"
-                            }}>
+                            <div className={styles.notifItemTitle}>
                               {notification.title}
                             </div>
-                            <div style={{ 
-                              color: "#64748b", 
-                              fontSize: "0.75rem",
-                              marginBottom: "0.25rem" 
-                            }}>
+                            <div className={styles.notifItemMsg}>
                               {notification.message}
                             </div>
-                            <div style={{ color: "#94a3b8", fontSize: "0.7rem" }}>
+                            <div className={styles.notifItemTime}>
                               {new Date(notification.createdAt).toLocaleString('sv-SE', {
                                 month: 'short',
                                 day: 'numeric', 
@@ -461,7 +250,7 @@ export default function Navbar() {
             <PWAInstallButtonCompact />
 
             {/* Auth Manager */}
-            <div style={{ marginLeft: "0.5rem" }}>
+            <div className={styles.pwaBtnWrap}>
               <AuthManager />
             </div>
           </div>
@@ -469,80 +258,32 @@ export default function Navbar() {
 
         {/* Sökfält */}
         {showSearch && (
-          <div ref={searchRef} style={{
-            background: "rgba(255, 255, 255, 0.95)",
-            borderTop: "1px solid rgba(226, 232, 240, 0.8)",
-            padding: "1rem 0"
-          }}>
+          <div ref={searchRef} className={styles.searchBarContainer}>
             <div className="container">
-              <form onSubmit={handleSearch} style={{
-                display: "flex",
-                gap: "0.5rem",
-                marginBottom: "1rem"
-              }}>
+              <form onSubmit={handleSearch} className={styles.searchForm}>
                 <input
                   type="text"
                   placeholder="Sök spelare, aktiviteter, inlägg..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  style={{
-                    flex: 1,
-                    padding: "0.75rem 1rem",
-                    borderRadius: "8px",
-                    border: "1px solid #e2e8f0",
-                    fontSize: "0.875rem",
-                    background: "white"
-                  }}
+                  className={styles.searchInput}
                   autoFocus
                 />
                 <button
                   type="submit"
-                  style={{
-                    background: "linear-gradient(135deg, #22c55e, #16a34a)",
-                    color: "white",
-                    border: "none",
-                    borderRadius: "8px",
-                    padding: "0.75rem 1.5rem",
-                    fontSize: "0.875rem",
-                    fontWeight: "600",
-                    cursor: "pointer"
-                  }}
+                  className={styles.searchSubmitBtn}
                 >
                   Sök
                 </button>
               </form>
 
               {/* Snabbsök-förslag */}
-              <div style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-                gap: "0.5rem"
-              }}>
+              <div className={styles.quickSearchGrid}>
                 {quickSearchSuggestions.map((suggestion, index) => (
                   <button
                     key={index}
                     onClick={suggestion.action}
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "0.5rem",
-                      padding: "0.75rem",
-                      background: "white",
-                      border: "1px solid #e2e8f0",
-                      borderRadius: "8px",
-                      fontSize: "0.875rem",
-                      cursor: "pointer",
-                      transition: "all 0.2s ease",
-                      textAlign: "left"
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.borderColor = "#22c55e";
-                      e.currentTarget.style.background = "#f0fdf4";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.borderColor = "#e2e8f0";
-                      e.currentTarget.style.background = "white";
-                    }}
+                    className={styles.quickSearchBtn}
                   >
                     <span>{suggestion.icon}</span>
                     <span>{suggestion.label}</span>
@@ -555,23 +296,8 @@ export default function Navbar() {
       </nav>
 
       {/* Mobilnavigation */}
-      <div style={{
-        position: "fixed",
-        bottom: 0,
-        left: 0,
-        right: 0,
-        zIndex: 1000,
-        background: "rgba(255, 255, 255, 0.95)",
-        backdropFilter: "blur(20px)",
-        borderTop: "1px solid rgba(226, 232, 240, 0.8)",
-        padding: "0.75rem 0",
-        display: "none"
-      }} className="mobile-nav">
-        <div style={{
-          display: "flex",
-          justifyContent: "space-around",
-          alignItems: "center"
-        }}>
+      <div className={`${styles.mobileNav} mobile-nav`}>
+        <div className={styles.mobileNavInner}>
           {primaryNavLinks.map(link => (
             <NavLink
               key={link.path}
@@ -590,7 +316,7 @@ export default function Navbar() {
               })}
               end={link.path === "/"}
             >
-              <span style={{ fontSize: "1.25rem" }}>{link.icon}</span>
+              <span className={styles.mobileNavIcon}>{link.icon}</span>
               <span>{link.label}</span>
             </NavLink>
           ))}
@@ -598,117 +324,67 @@ export default function Navbar() {
           {/* Mer-knapp för mobile */}
           <button
             onClick={() => setShowMenu(!showMenu)}
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              gap: "0.25rem",
-              padding: "0.5rem",
-              background: "none",
-              border: "none",
-              color: showMenu ? "#22c55e" : "#64748b",
-              fontSize: "0.75rem",
-              fontWeight: "600",
-              cursor: "pointer"
-            }}
+            className={
+              showMenu
+                ? `${styles.mobileMoreBtn} ${styles.mobileMoreBtnActive}`
+                : styles.mobileMoreBtn
+            }
           >
-            <span style={{ fontSize: "1.25rem" }}>📱</span>
+            <span className={styles.mobileMoreIcon}>📱</span>
             <span>Mer</span>
           </button>
+          {showMenu && (
+            <div
+              className={`${styles.mobileMenuOverlay} mobile-menu-overlay`}
+            >
+              <div className={styles.mobileMenuHeader}>
+                <h2 className={styles.mobileMenuTitle}>
+                  Meny
+                </h2>
+                <button
+                  onClick={() => setShowMenu(false)}
+                  className={styles.mobileMenuCloseBtn}
+                >
+                  ×
+                </button>
+              </div>
+              
+              <div 
+                className={`dropdown-menu ${styles.mobileMenuGrid}`}
+              >
+                {secondaryNavLinks.map(link => (
+                  <NavLink
+                    key={link.path}
+                    to={link.path}
+                    onClick={() => setShowMenu(false)}
+                    style={({ isActive }) => ({
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "1rem",
+                      padding: "1rem 1.5rem",
+                      borderRadius: "16px",
+                      textDecoration: "none",
+                      fontSize: "1rem",
+                      fontWeight: "600",
+                      color: isActive ? "#22c55e" : "#ffffff",
+                      background: isActive 
+                        ? "rgba(34, 197, 94, 0.1)" 
+                        : "rgba(255, 255, 255, 0.05)",
+                      border: isActive 
+                        ? "1px solid rgba(34, 197, 94, 0.2)" 
+                        : "1px solid rgba(255, 255, 255, 0.1)",
+                      transition: "all 0.2s ease"
+                    })}
+                  >
+                    <span className={styles.mobileMenuIcon}>{link.icon}</span>
+                    <span>{link.label}</span>
+                  </NavLink>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
-      
-      {/* Mobile Menu Overlay */}
-      {showMenu && (
-        <div style={{
-          position: "fixed",
-          top: "0",
-          left: "0",
-          right: "0",
-          bottom: "0",
-          background: "rgba(15, 23, 42, 0.98)",
-          backdropFilter: "blur(20px)",
-          zIndex: 1002,
-          display: "flex",
-          flexDirection: "column",
-          padding: "2rem 1rem",
-          overflowY: "auto"
-        }} className="mobile-menu-overlay">
-          <div style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginBottom: "2rem"
-          }}>
-            <h2 style={{
-              fontSize: "1.5rem",
-              fontWeight: "800",
-              color: "#ffffff",
-              margin: 0
-            }}>
-              Meny
-            </h2>
-            <button
-              onClick={() => setShowMenu(false)}
-              style={{
-                background: "rgba(255, 255, 255, 0.1)",
-                border: "none",
-                borderRadius: "50%",
-                width: "40px",
-                height: "40px",
-                color: "#ffffff",
-                fontSize: "1.5rem",
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center"
-              }}
-            >
-              ×
-            </button>
-          </div>
-          
-          <div 
-            className="dropdown-menu"
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-              gap: "1rem",
-              maxHeight: "calc(100vh - 120px)",
-              overflowY: "auto"
-            }}
-          >
-            {secondaryNavLinks.map(link => (
-              <NavLink
-                key={link.path}
-                to={link.path}
-                onClick={() => setShowMenu(false)}
-                style={({ isActive }) => ({
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "1rem",
-                  padding: "1rem 1.5rem",
-                  borderRadius: "16px",
-                  textDecoration: "none",
-                  fontSize: "1rem",
-                  fontWeight: "600",
-                  color: isActive ? "#22c55e" : "#ffffff",
-                  background: isActive 
-                    ? "rgba(34, 197, 94, 0.1)" 
-                    : "rgba(255, 255, 255, 0.05)",
-                  border: isActive 
-                    ? "1px solid rgba(34, 197, 94, 0.2)" 
-                    : "1px solid rgba(255, 255, 255, 0.1)",
-                  transition: "all 0.2s ease"
-                })}
-              >
-                <span style={{ fontSize: "1.5rem" }}>{link.icon}</span>
-                <span>{link.label}</span>
-              </NavLink>
-            ))}
-          </div>
-        </div>
-      )}
     </>
   );
 }

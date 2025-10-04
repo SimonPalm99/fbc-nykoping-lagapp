@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "./FineExport.module.css";
 import { Fine } from "../../types/fine";
 
 interface Props {
@@ -24,34 +25,27 @@ const FineExport: React.FC<Props> = ({ fines }) => {
   };
 
   return (
-    <section style={{ marginTop: 24 }}>
+    <section className={styles.fineExport}>
       <h3>Exportera böter</h3>
-      <table
-        style={{
-          width: "100%",
-          borderCollapse: "collapse",
-          marginBottom: 12,
-          fontSize: 14,
-        }}
-      >
+      <table className={styles.fineExport__table}>
         <thead>
-          <tr style={{ background: "#f7f7f7" }}>
-            <th style={{ border: "1px solid #ccc", padding: "6px" }}>Spelare</th>
-            <th style={{ border: "1px solid #ccc", padding: "6px" }}>Belopp</th>
-            <th style={{ border: "1px solid #ccc", padding: "6px" }}>Anledning</th>
+          <tr className={styles.fineExport__theadRow}>
+            <th className={styles.fineExport__th}>Spelare</th>
+            <th className={styles.fineExport__th}>Belopp</th>
+            <th className={styles.fineExport__th}>Anledning</th>
           </tr>
         </thead>
         <tbody>
           {fines.map((fine) => (
             <tr key={fine.id}>
-              <td style={{ border: "1px solid #ccc", padding: "6px" }}>{fine.playerId}</td>
-              <td style={{ border: "1px solid #ccc", padding: "6px" }}>{fine.amount} kr</td>
-              <td style={{ border: "1px solid #ccc", padding: "6px" }}>{fine.reason}</td>
+              <td className={styles.fineExport__td}>{fine.playerId}</td>
+              <td className={styles.fineExport__td}>{fine.amount} kr</td>
+              <td className={styles.fineExport__td}>{fine.reason}</td>
             </tr>
           ))}
         </tbody>
       </table>
-      <button onClick={handleExport}>Exportera till CSV</button>
+      <button onClick={handleExport} className={styles.fineExport__exportBtn}>Exportera till CSV</button>
     </section>
   );
 };

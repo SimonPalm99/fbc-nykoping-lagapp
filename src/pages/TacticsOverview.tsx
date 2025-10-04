@@ -56,42 +56,80 @@ const TacticsOverview: React.FC = () => {
     alert("Taktiken är kopierad till urklipp!");
   };
   return (
-    <div style={{ minHeight: "100vh", background: "linear-gradient(135deg, #101a10 60%, #22c55e 100%)", padding: "2rem 0" }}>
-      <div style={{ maxWidth: 900, margin: "0 auto", padding: "2rem", borderRadius: 32, boxShadow: "0 8px 32px #000a", background: "rgba(20,32,20,0.85)", border: "2px solid #22c55e" }}>
-        <h1 style={{ color: "#22c55e", fontWeight: 900, fontSize: "2.4rem", letterSpacing: "2px", textShadow: "0 2px 12px #000", marginBottom: 32 }}>Taktiker</h1>
-        <form onSubmit={handleSave} style={{ marginBottom: 32, background: "rgba(255,255,255,0.08)", padding: 24, borderRadius: 16 }}>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 24 }}>
-            <div style={{ flex: 1 }}>
-              <label style={{ color: "#fff", fontWeight: 700 }}>Namn:</label>
-              <input type="text" value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} required style={{ width: "100%", padding: 10, borderRadius: 8, border: "2px solid #22c55e", marginBottom: 12, fontSize: "1.1rem" }} />
-              <label style={{ color: "#fff", fontWeight: 700 }}>Beskrivning:</label>
-              <textarea value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} rows={3} style={{ width: "100%", padding: 10, borderRadius: 8, border: "2px solid #22c55e", marginBottom: 12, fontSize: "1.1rem" }} />
-              <label style={{ color: "#fff", fontWeight: 700 }}>Taggar (kommaseparerade):</label>
-              <input type="text" value={form.tags} onChange={e => setForm(f => ({ ...f, tags: e.target.value }))} style={{ width: "100%", padding: 10, borderRadius: 8, border: "2px solid #22c55e", marginBottom: 12, fontSize: "1.1rem" }} />
-              <label style={{ color: "#fff", fontWeight: 700 }}>Kategori:</label>
-              <select value={form.category} onChange={e => setForm(f => ({ ...f, category: e.target.value as Category }))} style={{ width: "100%", padding: 10, borderRadius: 8, border: "2px solid #22c55e", marginBottom: 12, fontSize: "1.1rem" }}>
+    <div className="tacticsOverviewRoot">
+      <div className="tacticsOverviewContainer">
+        <h1 className="tacticsOverviewTitle">Taktiker</h1>
+        <form onSubmit={handleSave} className="tacticsOverviewForm">
+          <div className="tacticsOverviewFormRow">
+            <div className="tacticsOverviewFormCol">
+              <label className="tacticsOverviewLabel" htmlFor="tactics-name">Namn:</label>
+              <input
+                id="tactics-name"
+                className="tacticsOverviewInput"
+                type="text"
+                value={form.name}
+                onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
+                required
+                title="Namn på taktik"
+                placeholder="Ange namn"
+              />
+              <label className="tacticsOverviewLabel" htmlFor="tactics-description">Beskrivning:</label>
+              <textarea
+                id="tactics-description"
+                className="tacticsOverviewTextarea"
+                value={form.description}
+                onChange={e => setForm(f => ({ ...f, description: e.target.value }))}
+                rows={3}
+                title="Beskrivning av taktik"
+                placeholder="Ange beskrivning"
+              />
+              <label className="tacticsOverviewLabel" htmlFor="tactics-tags">Taggar (kommaseparerade):</label>
+              <input
+                id="tactics-tags"
+                className="tacticsOverviewInput"
+                type="text"
+                value={form.tags}
+                onChange={e => setForm(f => ({ ...f, tags: e.target.value }))}
+                title="Taggar för taktik"
+                placeholder="Ange taggar"
+              />
+              <label className="tacticsOverviewLabel" htmlFor="tactics-category">Kategori:</label>
+              <select
+                id="tactics-category"
+                className="tacticsOverviewSelect"
+                value={form.category}
+                onChange={e => setForm(f => ({ ...f, category: e.target.value as Category }))}
+                title="Kategori för taktik"
+              >
                 {categories.map(cat => <option key={cat} value={cat}>{cat}</option>)}
               </select>
             </div>
-            <div style={{ flex: 1 }}>
-              <label style={{ color: "#fff", fontWeight: 700 }}>Whiteboard-bild:</label>
-              <input type="file" accept="image/*" onChange={handleImageChange} style={{ marginBottom: 12 }} />
-              {form.image && <img src={form.image} alt="Whiteboard" style={{ maxWidth: "100%", borderRadius: 12, marginTop: 8 }} />}
+            <div className="tacticsOverviewFormCol">
+              <label className="tacticsOverviewLabel" htmlFor="tactics-image">Whiteboard-bild:</label>
+              <input
+                id="tactics-image"
+                className="tacticsOverviewFileInput"
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                title="Ladda upp whiteboard-bild"
+              />
+              {form.image && <img src={form.image} alt="Whiteboard" className="tacticsOverviewImage" />}
             </div>
           </div>
-          <button type="submit" style={{ background: "#22c55e", color: "#fff", border: "none", borderRadius: 12, padding: "12px 32px", fontWeight: 700, fontSize: "1.1rem", marginTop: 16, boxShadow: "0 2px 8px #22c55e88", cursor: "pointer" }}>Spara taktik</button>
+          <button type="submit" className="tacticsOverviewButton">Spara taktik</button>
         </form>
-        <h2 style={{ color: "#22c55e", fontWeight: 700, fontSize: "1.3rem", marginBottom: 16 }}>Sparade taktiker</h2>
-        {tactics.length === 0 && <p style={{ color: "#aaa" }}>Du har ännu inte sparat några taktiker.</p>}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 24 }}>
+        <h2 className="tacticsOverviewSavedTitle">Sparade taktiker</h2>
+        {tactics.length === 0 && <p className="tacticsOverviewSavedEmpty">Du har ännu inte sparat några taktiker.</p>}
+        <div className="tacticsOverviewGrid">
           {tactics.map(tac => (
-            <div key={tac.id} style={{ background: "rgba(255,255,255,0.08)", borderRadius: 16, padding: 20, boxShadow: "0 2px 8px #22c55e33", color: "#fff" }}>
-              <h3 style={{ color: "#22c55e", fontWeight: 700, fontSize: "1.2rem" }}>{tac.name}</h3>
-              <div style={{ marginBottom: 8 }}><b>Kategori:</b> {tac.category}</div>
-              <div style={{ marginBottom: 8 }}><b>Taggar:</b> {tac.tags.join(", ")}</div>
-              <div style={{ marginBottom: 8 }}><b>Beskrivning:</b> {tac.description}</div>
-              {tac.image && <img src={tac.image} alt="Whiteboard" style={{ maxWidth: "100%", borderRadius: 12, margin: "12px 0" }} />}
-              <button onClick={() => handleShare(tac)} style={{ background: "#22c55e", color: "#fff", border: "none", borderRadius: 8, padding: "8px 24px", fontWeight: 700, fontSize: "1rem", marginTop: 8, boxShadow: "0 1px 4px #22c55e88", cursor: "pointer" }}>Dela till laget</button>
+            <div key={tac.id} className="tacticsOverviewCard">
+              <h3 className="tacticsOverviewCardTitle">{tac.name}</h3>
+              <div className="tacticsOverviewCardMeta"><b>Kategori:</b> {tac.category}</div>
+              <div className="tacticsOverviewCardMeta"><b>Taggar:</b> {tac.tags.join(", ")}</div>
+              <div className="tacticsOverviewCardMeta"><b>Beskrivning:</b> {tac.description}</div>
+              {tac.image && <img src={tac.image} alt="Whiteboard" className="tacticsOverviewCardImage" />}
+              <button onClick={() => handleShare(tac)} className="tacticsOverviewCardButton">Dela till laget</button>
             </div>
           ))}
         </div>

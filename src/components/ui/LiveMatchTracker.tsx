@@ -180,6 +180,8 @@ const LiveMatchTracker: React.FC<LiveMatchTrackerProps> = ({ className = '' }) =
             <select 
               value={newEventType} 
               onChange={(e) => setNewEventType(e.target.value as any)}
+              title="Välj händelsetyp"
+              aria-label="Välj händelsetyp"
             >
               <option value="goal">Mål</option>
               <option value="penalty">Utvisning</option>
@@ -189,6 +191,8 @@ const LiveMatchTracker: React.FC<LiveMatchTrackerProps> = ({ className = '' }) =
             <select 
               value={newEventTeam} 
               onChange={(e) => setNewEventTeam(e.target.value as any)}
+              title="Välj lag"
+              aria-label="Välj lag"
             >
               <option value="home">{liveMatch.homeTeam}</option>
               <option value="away">{liveMatch.awayTeam}</option>

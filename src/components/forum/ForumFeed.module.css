@@ -1,0 +1,116 @@
+.forumFeedRoot {
+  min-height: 100vh;
+  padding: 2rem 0.5rem;
+  background: var(--fbc-body-gradient);
+}
+
+.forumFeedContainer {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.forumFeedTitle {
+  color: var(--fbc-primary-green);
+  font-weight: 900;
+  font-size: 2rem;
+  margin-bottom: 1.2rem;
+}
+
+.forumForm {
+  background: var(--fbc-card-bg);
+  border-radius: 1.2rem;
+  box-shadow: 0 2px 8px #22c55e22;
+  padding: 1.2rem;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.forumInput,
+.forumTextarea {
+  padding: 0.7rem;
+  border-radius: 0.7rem;
+  border: 2px solid var(--fbc-primary-green);
+  font-size: 1.05rem;
+}
+
+.forumTextarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.forumImagePreview {
+  max-width: 100%;
+  border-radius: 10px;
+  margin-bottom: 0.5rem;
+}
+
+.forumFormActions {
+  display: flex;
+  gap: 1rem;
+}
+
+.forumButtonUpload {
+  background: var(--fbc-card-hover-gradient);
+  color: var(--fbc-primary-green);
+  border: none;
+  border-radius: 0.7rem;
+  padding: 0.7rem 1.2rem;
+  font-weight: 700;
+  font-size: 1.05rem;
+  cursor: pointer;
+}
+
+.forumButtonSubmit {
+  background: var(--fbc-primary-gradient);
+  color: white;
+  border: none;
+  border-radius: 0.7rem;
+  padding: 0.7rem 1.2rem;
+  font-weight: 700;
+  font-size: 1.05rem;
+  cursor: pointer;
+}
+
+.forumButtonSubmit:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.forumError {
+  color: #e53935;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.forumLoading {
+  color: var(--fbc-primary-green);
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.forumEmpty {
+  color: var(--fbc-text-secondary);
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.forumPostsList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+:root {
+  --fbc-primary-green: #2E7D32;
+  --fbc-accent-green: #4CAF50;
+  --fbc-gold: #FFB300;
+  --fbc-card-bg: #FFFFFF;
+  --fbc-text-primary: #1B5E20;
+  --fbc-text-secondary: #4A5568;
+  --fbc-primary-gradient: linear-gradient(135deg, #2E7D32 0%, #388E3C 50%, #4CAF50 100%);
+  --fbc-gold-gradient: linear-gradient(135deg, #FFB300 0%, #FF8F00 100%);
+  --fbc-body-gradient: linear-gradient(135deg, #FAFAFA 0%, #F1F8E9 30%, #E8F5E9 100%);
+  --fbc-card-hover-gradient: linear-gradient(135deg, rgba(46, 125, 50, 0.07) 0%, rgba(56, 142, 60, 0.07) 100%);
+}

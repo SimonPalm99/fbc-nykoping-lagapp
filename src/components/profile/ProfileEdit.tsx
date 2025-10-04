@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import styles from "./ProfileEdit.module.css";
 import { User, IceContact } from "../../types/user";
 
 interface Props {
@@ -69,33 +70,22 @@ const ProfileEdit: React.FC<Props> = ({ user, onSave }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      style={{
-        background: "#22272e",
-        borderRadius: 12,
-        maxWidth: 500,
-        margin: "16px auto",
-        padding: 18,
-        color: "#fff",
-        fontFamily: "inherit",
-        display: "flex",
-        flexDirection: "column",
-        gap: 14,
-      }}
+      className={styles["profile-edit-form"]}
     >
-      <h2 style={{ color: "#b8f27c", fontSize: 20, margin: 0, textAlign: "center" }}>
+      <h2 className={styles["profile-edit-title"]}>
         Redigera profil
       </h2>
-      <label>
+      <label className={styles["profile-edit-label"]}>
         Namn
         <input
           name="name"
           value={form.name}
           onChange={handleChange}
           required
-          style={inputStyle}
+          className={styles["profile-edit-input"]}
         />
       </label>
-      <label>
+      <label className={styles["profile-edit-label"]}>
         E-post
         <input
           name="email"
@@ -103,30 +93,30 @@ const ProfileEdit: React.FC<Props> = ({ user, onSave }) => {
           onChange={handleChange}
           type="email"
           required
-          style={inputStyle}
+          className={styles["profile-edit-input"]}
         />
       </label>
-      <label>
+      <label className={styles["profile-edit-label"]}>
         Profilbild-URL
         <input
           name="profileImageUrl"
           value={form.profileImageUrl || ""}
           onChange={handleChange}
           placeholder="https://"
-          style={inputStyle}
+          className={styles["profile-edit-input"]}
         />
       </label>
-      <label>
+      <label className={styles["profile-edit-label"]}>
         Födelsedag
         <input
           name="birthday"
           value={form.birthday || ""}
           onChange={handleChange}
           type="date"
-          style={inputStyle}
+          className={styles["profile-edit-input"]}
         />
       </label>
-      <label>
+      <label className={styles["profile-edit-label"]}>
         Tröjnummer
         <input
           name="jerseyNumber"
@@ -134,52 +124,52 @@ const ProfileEdit: React.FC<Props> = ({ user, onSave }) => {
           onChange={handleChange}
           type="number"
           required
-          style={inputStyle}
+          className={styles["profile-edit-input"]}
         />
       </label>
-      <label>
+      <label className={styles["profile-edit-label"]}>
         Roll
         <select
           name="role"
           value={form.role}
           onChange={handleChange}
-          style={inputStyle}
+          className={styles["profile-edit-select"]}
         >
           <option value="player">Spelare</option>
           <option value="leader">Ledare</option>
         </select>
       </label>
-      <label>
+      <label className={styles["profile-edit-label"]}>
         Position
         <input
           name="favoritePosition"
           value={form.favoritePosition || ""}
           onChange={handleChange}
-          style={inputStyle}
+          className={styles["profile-edit-input"]}
           placeholder="T.ex. Forward"
         />
       </label>
-      <label>
+      <label className={styles["profile-edit-label"]}>
         ICE-kontakt Namn
         <input
           name="iceContact.name"
           value={form.iceContacts[0]?.name || ""}
           onChange={handleChange}
           required
-          style={inputStyle}
+          className={styles["profile-edit-input"]}
         />
       </label>
-      <label>
+      <label className={styles["profile-edit-label"]}>
         ICE-kontakt Relation
         <input
           name="iceContact.relation"
           value={form.iceContacts[0]?.relation || ""}
           onChange={handleChange}
           required
-          style={inputStyle}
+          className={styles["profile-edit-input"]}
         />
       </label>
-      <label>
+      <label className={styles["profile-edit-label"]}>
         ICE-kontakt Telefon
         <input
           name="iceContact.phone"
@@ -187,83 +177,57 @@ const ProfileEdit: React.FC<Props> = ({ user, onSave }) => {
           onChange={handleChange}
           type="tel"
           required
-          style={inputStyle}
+          className={styles["profile-edit-input"]}
         />
       </label>
-      <label>
+      <label className={styles["profile-edit-label"]}>
         Om mig
         <textarea
           name="about"
           value={form.about || ""}
           onChange={handleChange}
           rows={2}
-          style={textareaStyle}
+          className={styles["profile-edit-textarea"]}
           placeholder="Kort beskrivning om dig själv"
         />
       </label>
 
-      <label>
+      <label className={styles["profile-edit-label"]}>
         Badges
-        <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
+        <div className={styles["profile-edit-badges-row"]}>
           {form.badges && form.badges.length > 0 ? (
             form.badges.map((b) => (
               <span
                 key={b.id}
-                style={{
-                  background: "#b8f27c",
-                  color: "#181c1e",
-                  borderRadius: 5,
-                  padding: "2px 7px",
-                  fontSize: 13,
-                  marginRight: 4,
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 3,
-                }}
+                className={styles["profile-edit-badge"]}
               >
                 {b.name}
                 <button
                   type="button"
                   aria-label="Ta bort badge"
                   onClick={() => removeBadge(b.id)}
-                  style={{
-                    marginLeft: 4,
-                    background: "transparent",
-                    border: "none",
-                    color: "#e66",
-                    cursor: "pointer",
-                    fontSize: 15,
-                  }}
+                  className={styles["profile-edit-badge-remove"]}
                 >
                   ×
                 </button>
               </span>
             ))
           ) : (
-            <i style={{ color: "#bbb" }}>Inga</i>
+            <i className={styles["profile-edit-badge-empty"]}>Inga</i>
           )}
         </div>
-        <div style={{ display: "flex", gap: 6, marginTop: 6 }}>
+        <div className={styles["profile-edit-badge-input-row"]}>
           <input
             type="text"
             value={badgeText}
             onChange={(e) => setBadgeText(e.target.value)}
             placeholder="Lägg till badge"
-            style={{ ...inputStyle, flex: 1 }}
+            className={`${styles["profile-edit-input"]} ${styles["profile-edit-badge-input"]}`}
           />
           <button
             type="button"
             onClick={addBadge}
-            style={{
-              background: "#b8f27c",
-              color: "#181c1e",
-              border: "none",
-              borderRadius: 5,
-              padding: "6px 12px",
-              fontWeight: 700,
-              cursor: "pointer",
-              fontSize: 15,
-            }}
+            className={styles["profile-edit-badge-add"]}
           >
             +
           </button>
@@ -272,53 +236,15 @@ const ProfileEdit: React.FC<Props> = ({ user, onSave }) => {
 
       <button
         type="submit"
-        style={{
-          background: "#4a9d2c",
-          color: "#fff",
-          border: "none",
-          borderRadius: 8,
-          padding: "10px 0",
-          fontSize: 18,
-          cursor: "pointer",
-          marginTop: 8,
-          fontWeight: 700,
-        }}
+        className={styles["profile-edit-button"]}
       >
         Spara ändringar
       </button>
-      <style>{`
-        @media (max-width: 600px) {
-          form {
-            padding: 8px;
-            border-radius: 0;
-            max-width: 99vw;
-          }
-          h2 {
-            font-size: 16px;
-          }
-          button, input, textarea, select {
-            font-size: 15px !important;
-          }
-        }
-      `}</style>
+      {/* Responsivitet hanteras i CSS-modulen */}
     </form>
   );
 };
 
-const inputStyle: React.CSSProperties = {
-  width: "100%",
-  padding: 8,
-  borderRadius: 6,
-  border: "1px solid #b8f27c",
-  marginTop: 4,
-  fontSize: 16,
-  background: "#181c1e",
-  color: "#fff",
-};
 
-const textareaStyle: React.CSSProperties = {
-  ...inputStyle,
-  resize: "vertical",
-};
 
 export default ProfileEdit;

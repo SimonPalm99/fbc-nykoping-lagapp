@@ -1,0 +1,22 @@
+.player-stats-section {
+  background: #f7f7f7;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+.player-stats-section h3 {
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+  color: #2c3e50;
+}
+.player-stats-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.player-stats-section li {
+  margin-bottom: 0.3rem;
+  font-size: 1rem;
+  color: #34495e;
+}

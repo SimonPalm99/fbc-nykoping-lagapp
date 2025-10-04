@@ -1,5 +1,6 @@
 import React from "react";
 import { TrainingLog } from "../../types/user";
+import styles from "./TrainingLogCard.module.css";
 
 interface TrainingLogCardProps {
   log: TrainingLog;
@@ -8,13 +9,6 @@ interface TrainingLogCardProps {
   showActions?: boolean;
 }
 
-const intensityColors = {
-  1: "#10b981",
-  2: "#84cc16", 
-  3: "#f59e0b",
-  4: "#f97316",
-  5: "#ef4444"
-};
 
 const intensityLabels = {
   1: "Lätt",
@@ -38,7 +32,6 @@ export const TrainingLogCard: React.FC<TrainingLogCardProps> = ({
   onDelete,
   showActions = true
 }) => {
-  const intensityColor = intensityColors[log.intensity as keyof typeof intensityColors];
   const intensityLabel = intensityLabels[log.intensity as keyof typeof intensityLabels];
   const feelingEmoji = feelingEmojis[log.feeling as keyof typeof feelingEmojis];
 
@@ -58,85 +51,35 @@ export const TrainingLogCard: React.FC<TrainingLogCardProps> = ({
   );
 
   return (
-    <div style={{
-      background: "linear-gradient(135deg, #1a1a1a, #262626)",
-      borderRadius: "16px",
-      padding: "1.5rem",
-      border: "1px solid #333",
-      boxShadow: "0 4px 16px rgba(0,0,0,0.4)",
-      transition: "all 0.3s ease",
-      position: "relative",
-      overflow: "hidden"
-    }}>
+    <div className={styles.traininglogCard}>
       {/* Intensitetsindikator */}
-      <div style={{
-        position: "absolute",
-        top: 0,
-        left: 0,
-        right: 0,
-        height: "4px",
-        background: intensityColor
-      }} />
+      <div className={
+        styles.traininglogIntensity + ' ' + styles[`traininglogIntensity${log.intensity}`]
+      } />
 
       {/* Header */}
-      <div style={{
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "flex-start",
-        marginBottom: "1rem"
-      }}>
+      <div className={styles.traininglogHeader}>
         <div>
-          <div style={{
-            fontSize: "1.125rem",
-            fontWeight: "700",
-            color: "#b8f27c",
-            marginBottom: "0.25rem"
-          }}>
+          <div className={styles.traininglogDate}>
             {formatDate(log.date)}
           </div>
-          <div style={{
-            fontSize: "0.875rem",
-            color: "#9ca3af",
-            display: "flex",
-            alignItems: "center",
-            gap: "0.75rem"
-          }}>
+          <div className={styles.traininglogMeta}>
             <span>⏱️ {log.duration} min</span>
-            <span style={{ color: intensityColor }}>
+            <span className={
+              styles.traininglogMetaIntensity + ' ' + styles[`traininglogMetaIntensity${log.intensity}`]
+            }>
               ⚡ {intensityLabel}
             </span>
-            <span style={{ fontSize: "1.25rem" }}>
-              {feelingEmoji}
-            </span>
+            <span className={styles.traininglogMetaFeeling}>{feelingEmoji}</span>
           </div>
         </div>
 
         {showActions && (onEdit || onDelete) && (
-          <div style={{
-            display: "flex",
-            gap: "0.5rem"
-          }}>
+          <div className={styles.traininglogActions}>
             {onEdit && (
               <button
                 onClick={() => onEdit(log)}
-                style={{
-                  background: "transparent",
-                  border: "1px solid #374151",
-                  borderRadius: "6px",
-                  padding: "0.5rem",
-                  color: "#e2e8f0",
-                  cursor: "pointer",
-                  fontSize: "0.875rem",
-                  transition: "all 0.2s ease"
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = "#b8f27c";
-                  e.currentTarget.style.color = "#b8f27c";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = "#374151";
-                  e.currentTarget.style.color = "#e2e8f0";
-                }}
+                className={styles.traininglogActionBtn + ' ' + styles.traininglogActionBtnEdit}
               >
                 ✏️
               </button>
@@ -144,24 +87,7 @@ export const TrainingLogCard: React.FC<TrainingLogCardProps> = ({
             {onDelete && (
               <button
                 onClick={() => onDelete(log.id)}
-                style={{
-                  background: "transparent",
-                  border: "1px solid #374151",
-                  borderRadius: "6px",
-                  padding: "0.5rem",
-                  color: "#e2e8f0",
-                  cursor: "pointer",
-                  fontSize: "0.875rem",
-                  transition: "all 0.2s ease"
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = "#ef4444";
-                  e.currentTarget.style.color = "#ef4444";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = "#374151";
-                  e.currentTarget.style.color = "#e2e8f0";
-                }}
+                className={styles.traininglogActionBtn + ' ' + styles.traininglogActionBtnDelete}
               >
                 🗑️
               </button>
@@ -172,37 +98,11 @@ export const TrainingLogCard: React.FC<TrainingLogCardProps> = ({
 
       {/* Färdigheter */}
       {log.skills && log.skills.length > 0 && (
-        <div style={{ marginBottom: "1rem" }}>
-          <div style={{
-            fontSize: "0.75rem",
-            fontWeight: "600",
-            color: "#9ca3af",
-            marginBottom: "0.5rem",
-            textTransform: "uppercase",
-            letterSpacing: "0.5px"
-          }}>
-            Tränade färdigheter
-          </div>
-          <div style={{
-            display: "flex",
-            gap: "0.5rem",
-            flexWrap: "wrap"
-          }}>
+        <div className={styles.traininglogSkills}>
+          <div className={styles.traininglogSkillsLabel}>Tränade färdigheter</div>
+          <div className={styles.traininglogSkillsList}>
             {log.skills.map((skill, index) => (
-              <span
-                key={index}
-                style={{
-                  background: "#b8f27c20",
-                  color: "#b8f27c",
-                  padding: "0.25rem 0.5rem",
-                  borderRadius: "4px",
-                  fontSize: "0.75rem",
-                  fontWeight: "500",
-                  border: "1px solid #b8f27c40"
-                }}
-              >
-                {skill}
-              </span>
+              <span key={index} className={styles.traininglogSkill}>{skill}</span>
             ))}
           </div>
         </div>
@@ -210,92 +110,25 @@ export const TrainingLogCard: React.FC<TrainingLogCardProps> = ({
 
       {/* Statistik */}
       {hasStats && (
-        <div style={{ marginBottom: "1rem" }}>
-          <div style={{
-            fontSize: "0.75rem",
-            fontWeight: "600",
-            color: "#9ca3af",
-            marginBottom: "0.5rem",
-            textTransform: "uppercase",
-            letterSpacing: "0.5px"
-          }}>
-            Statistik
-          </div>
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(80px, 1fr))",
-            gap: "0.75rem"
-          }}>
+        <div className={styles.traininglogStats}>
+          <div className={styles.traininglogStatsLabel}>Statistik</div>
+          <div className={styles.traininglogStatsGrid}>
             {(log.stats?.goals || 0) > 0 && (
-              <div style={{
-                background: "#0f0f0f",
-                padding: "0.75rem",
-                borderRadius: "8px",
-                textAlign: "center",
-                border: "1px solid #333"
-              }}>
-                <div style={{
-                  fontSize: "1.5rem",
-                  fontWeight: "700",
-                  color: "#22c55e",
-                  marginBottom: "0.25rem"
-                }}>
-                  {log.stats?.goals || 0}
-                </div>
-                <div style={{
-                  fontSize: "0.75rem",
-                  color: "#9ca3af"
-                }}>
-                  ⚽ Mål
-                </div>
+              <div className={styles.traininglogStat}>
+                <div className={styles.traininglogStatValueGoal}>{log.stats?.goals || 0}</div>
+                <div className={styles.traininglogStatLabel}>⚽ Mål</div>
               </div>
             )}
             {(log.stats?.assists || 0) > 0 && (
-              <div style={{
-                background: "#0f0f0f",
-                padding: "0.75rem",
-                borderRadius: "8px",
-                textAlign: "center",
-                border: "1px solid #333"
-              }}>
-                <div style={{
-                  fontSize: "1.5rem",
-                  fontWeight: "700",
-                  color: "#f59e0b",
-                  marginBottom: "0.25rem"
-                }}>
-                  {log.stats?.assists || 0}
-                </div>
-                <div style={{
-                  fontSize: "0.75rem",
-                  color: "#9ca3af"
-                }}>
-                  🎯 Assist
-                </div>
+              <div className={styles.traininglogStat}>
+                <div className={styles.traininglogStatValueAssist}>{log.stats?.assists || 0}</div>
+                <div className={styles.traininglogStatLabel}>🎯 Assist</div>
               </div>
             )}
             {(log.stats?.shots || 0) > 0 && (
-              <div style={{
-                background: "#0f0f0f",
-                padding: "0.75rem",
-                borderRadius: "8px",
-                textAlign: "center",
-                border: "1px solid #333"
-              }}>
-                <div style={{
-                  fontSize: "1.5rem",
-                  fontWeight: "700",
-                  color: "#8b5cf6",
-                  marginBottom: "0.25rem"
-                }}>
-                  {log.stats?.shots || 0}
-                </div>
-                <div style={{
-                  fontSize: "0.75rem",
-                  color: "#9ca3af"
-                }}>
-                  🏒 Skott
-                </div>
+              <div className={styles.traininglogStat}>
+                <div className={styles.traininglogStatValueShot}>{log.stats?.shots || 0}</div>
+                <div className={styles.traininglogStatLabel}>🏒 Skott</div>
               </div>
             )}
           </div>
@@ -304,29 +137,9 @@ export const TrainingLogCard: React.FC<TrainingLogCardProps> = ({
 
       {/* Anteckningar */}
       {log.note && (
-        <div style={{
-          background: "#0f0f0f",
-          padding: "1rem",
-          borderRadius: "8px",
-          border: "1px solid #333"
-        }}>
-          <div style={{
-            fontSize: "0.75rem",
-            fontWeight: "600",
-            color: "#9ca3af",
-            marginBottom: "0.5rem",
-            textTransform: "uppercase",
-            letterSpacing: "0.5px"
-          }}>
-            📝 Anteckningar
-          </div>
-          <div style={{
-            fontSize: "0.875rem",
-            color: "#e2e8f0",
-            lineHeight: 1.5
-          }}>
-            {log.note}
-          </div>
+        <div className={styles.traininglogNote}>
+          <div className={styles.traininglogNoteLabel}>📝 Anteckningar</div>
+          <div className={styles.traininglogNoteText}>{log.note}</div>
         </div>
       )}
     </div>

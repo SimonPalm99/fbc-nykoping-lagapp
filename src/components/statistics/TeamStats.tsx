@@ -1,15 +1,16 @@
 import React from "react";
 import { useStatistics } from "../../context/StatisticsContext";
 import { useUser } from "../../context/UserContext";
+import styles from "./TeamStats.module.css";
 
 const TeamStats: React.FC = () => {
   const { users } = useUser();
   const { getSummaryForUser } = useStatistics();
 
   return (
-    <section style={{ background: "#232323", padding: 18, borderRadius: 10, margin: "18px 0" }}>
+    <section className={styles.teamstatsSection}>
       <h3>Lagstatistik – Topp 5</h3>
-      <table style={{ width: "100%", color: "#fff", borderCollapse: "collapse" }}>
+      <table className={styles.teamstatsTable}>
         <thead>
           <tr>
             <th>Spelare</th>
@@ -27,7 +28,7 @@ const TeamStats: React.FC = () => {
             .sort((a, b) => b.goals - a.goals)
             .slice(0, 5)
             .map((row, i) => (
-              <tr key={i} style={{ background: i === 0 ? "#354" : "inherit" }}>
+              <tr key={i}>
                 <td>{row.name}</td>
                 <td>{row.goals}</td>
                 <td>{row.assists}</td>

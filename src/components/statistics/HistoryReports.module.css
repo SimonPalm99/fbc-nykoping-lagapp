@@ -1,0 +1,264 @@
+/* Modern och mörk statistikvy för HistoryReports */
+
+.wrapper {
+  background: #1a202c;
+  padding: 20px;
+  border-radius: 12px;
+  color: #fff;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+}
+.subtitle {
+  margin: 4px 0 0 0;
+  color: #a0aec0;
+}
+.pdfBtn {
+  padding: 8px 16px;
+  background: #10b981;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 600;
+}
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #4a5568;
+  padding-bottom: 12px;
+}
+.tabBtn {
+  padding: 8px 16px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  color: #a0aec0;
+  cursor: pointer;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.tabBtnActive {
+  background: #3b82f6;
+  color: #fff;
+}
+.filters {
+  background: #2d3748;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+.filtersTitle {
+  margin: 0 0 12px 0;
+}
+.filtersGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+.label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 14px;
+  color: #a0aec0;
+}
+.select {
+  width: 100%;
+  padding: 8px;
+  background: #1a202c;
+  border: 1px solid #4a5568;
+  border-radius: 4px;
+  color: #fff;
+}
+.generateBtn {
+  margin-top: 12px;
+  padding: 8px 16px;
+  background: #3b82f6;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 600;
+}
+.generateBtnDisabled {
+  background: #4a5568;
+  cursor: not-allowed;
+}
+.report {
+  background: #2d3748;
+  padding: 20px;
+  border-radius: 8px;
+}
+.reportTitle {
+  margin: 0 0 16px 0;
+}
+.reportGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+.reportCard {
+  background: #1a202c;
+  padding: 16px;
+  border-radius: 6px;
+}
+.reportCardNumber {
+  font-size: 24px;
+  font-weight: bold;
+}
+.reportCardLabel {
+  color: #a0aec0;
+}
+.topGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+}
+.topCard {
+  background: #1a202c;
+  padding: 16px;
+  border-radius: 6px;
+}
+.topTitle {
+  margin: 0 0 12px 0;
+}
+.topText {
+  font-size: 14px;
+}
+.topTextItem {
+  margin-bottom: 8px;
+}
+.milestoneRecent {
+  background: #2d3748;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+.milestoneRecentTitle {
+  margin: 0 0 12px 0;
+  color: #10b981;
+}
+.milestoneItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: #1a202c;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  border: 2px solid #10b981;
+}
+.milestoneIcon {
+  font-size: 24px;
+}
+.milestonePlayer {
+  font-weight: 600;
+}
+.milestoneDate {
+  font-size: 12px;
+  color: #a0aec0;
+}
+.milestoneNew {
+  background: #10b981;
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.milestoneAll {
+  background: #2d3748;
+  padding: 16px;
+  border-radius: 8px;
+}
+.milestoneAllTitle {
+  margin: 0 0 12px 0;
+}
+.milestoneValue {
+  font-size: 14px;
+  font-weight: 600;
+  color: #3b82f6;
+}
+.awardsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+}
+.awardCard {
+  background: #2d3748;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #4a5568;
+}
+.awardCardMvp {
+  border: 2px solid #f59e0b;
+}
+.awardHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.awardTitle {
+  font-weight: 600;
+  color: #f59e0b;
+}
+.awardPlayer {
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+.awardDesc {
+  font-size: 14px;
+  color: #a0aec0;
+  margin-bottom: 8px;
+}
+.awardFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: #718096;
+}
+.mvpSection {
+  background: #2d3748;
+  padding: 16px;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+.mvpTitle {
+  margin: 0 0 12px 0;
+}
+.mvpRow {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.mvpSelect {
+  flex: 1;
+  padding: 8px;
+  background: #1a202c;
+  border: 1px solid #4a5568;
+  border-radius: 4px;
+  color: #fff;
+}
+.mvpBtn {
+  padding: 8px 16px;
+  background: #f59e0b;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 600;
+}

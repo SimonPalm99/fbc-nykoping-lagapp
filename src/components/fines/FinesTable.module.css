@@ -1,0 +1,54 @@
+.finesTable {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.finesTable__item {
+  background: #22272e;
+  border-radius: 9px;
+  margin-bottom: 11px;
+  padding: 9px 13px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  font-size: 16px;
+}
+.finesTable__item--paid {
+  opacity: 0.6;
+  border-left: 7px solid #b8f27c;
+}
+.finesTable__item--unpaid {
+  opacity: 1;
+  border-left: 7px solid #e66;
+}
+.finesTable__status {
+  margin-left: 10px;
+  font-weight: 700;
+}
+.finesTable__status--paid {
+  color: #b8f27c;
+}
+.finesTable__status--unpaid {
+  color: #e66;
+}
+.finesTable__reason {
+  font-size: 14px;
+  color: #b8f27c;
+  margin-top: 2px;
+}
+.finesTable__meta {
+  font-size: 13px;
+  color: #bbb;
+  margin-top: 1px;
+}
+@media (max-width: 600px) {
+  .finesTable__item,
+  input,
+  select,
+  button {
+    font-size: 15px !important;
+  }
+  .finesTable {
+    padding-left: 0 !important;
+  }
+}

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import styles from './WeeklyHighlights.module.css';
 
 interface PlayerOfWeek {
   id: string;
@@ -38,10 +39,6 @@ export const WeeklyHighlights: React.FC<WeeklyHighlightsProps> = ({
   const [teamNotices, setTeamNotices] = useState<string[]>([]);
 
   useEffect(() => {
-    loadWeeklyData();
-  }, []);
-
-  const loadWeeklyData = () => {
     // Mock data för veckans spelare
     if (showPlayerOfWeek) {
       setPlayerOfWeek({
@@ -57,9 +54,6 @@ export const WeeklyHighlights: React.FC<WeeklyHighlightsProps> = ({
 
     // Mock data för födelsedagar denna vecka
     if (showBirthdays) {
-      // const _today = new Date();
-      // const _nextWeek = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
-      
       setBirthdays([
         {
           id: '1',
@@ -89,7 +83,8 @@ export const WeeklyHighlights: React.FC<WeeklyHighlightsProps> = ({
         "⚠️ Kom ihåg att betala medlemsavgiften senast 30/6"
       ]);
     }
-  };
+  }, [showPlayerOfWeek, showBirthdays, showTeamNotices]);
+
 
   const calculateAge = (birthDate: string): number => {
     const today = new Date();
@@ -131,96 +126,34 @@ export const WeeklyHighlights: React.FC<WeeklyHighlightsProps> = ({
   }
 
   return (
-    <section className="weekly-highlights" style={{ marginBottom: "3rem" }}>
-      <h2 style={{
-        fontSize: "clamp(1.25rem, 3vw, 1.75rem)",
-        marginBottom: "2rem",
-        color: "var(--accent-green)",
-        fontWeight: "700",
-        display: "flex",
-        alignItems: "center",
-        gap: "0.5rem"
-      }}>
+    <section className={styles['weekly-highlights']}>
+      <h2 className={styles['weekly-highlights-title']}>
         🌟 Veckans höjdpunkter
       </h2>
-      
-      <div style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-        gap: "1.5rem"
-      }}>
+      <div className={styles['weekly-highlights-grid']}>
         {/* Veckans spelare */}
         {showPlayerOfWeek && playerOfWeek && (
-          <div style={{
-            background: "linear-gradient(135deg, #22c55e, #16a34a)",
-            color: "#ffffff",
-            borderRadius: "20px",
-            padding: "2rem",
-            textAlign: "center",
-            position: "relative",
-            overflow: "hidden"
-          }}>
-            {/* Background pattern */}
-            <div style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              background: "url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><circle cx=\"50\" cy=\"50\" r=\"2\" fill=\"white\" opacity=\"0.1\"/><circle cx=\"20\" cy=\"20\" r=\"1\" fill=\"white\" opacity=\"0.1\"/><circle cx=\"80\" cy=\"30\" r=\"1.5\" fill=\"white\" opacity=\"0.1\"/></svg>')",
-              backgroundSize: "50px 50px",
-              opacity: 0.3
-            }} />
-            
-            <div style={{ position: "relative", zIndex: 1 }}>
-              <div style={{ fontSize: "3rem", marginBottom: "1rem" }}>🌟</div>
-              
-              <h3 style={{
-                margin: "0 0 0.5rem 0",
-                fontSize: "1.25rem",
-                fontWeight: "700"
-              }}>
+          <div className={styles['player-of-week']}>
+            <div className={styles['player-of-week-bg']} />
+            <div className={styles['player-of-week-content']}>
+              <div className={styles['player-of-week-icon']}>🌟</div>
+              <h3 className={styles['player-of-week-title']}>
                 Veckans spelare - v.{playerOfWeek.week}
               </h3>
-              
-              <div style={{ 
-                fontSize: "1.5rem", 
-                fontWeight: "700", 
-                marginBottom: "0.5rem" 
-              }}>
+              <div className={styles['player-of-week-name']}>
                 {playerOfWeek.name}
               </div>
-              
               {(playerOfWeek.jerseyNumber || playerOfWeek.position) && (
-                <div style={{ 
-                  fontSize: "0.875rem", 
-                  opacity: 0.9, 
-                  marginBottom: "1rem" 
-                }}>
+                <div className={styles['player-of-week-meta']}>
                   {playerOfWeek.jerseyNumber && `#${playerOfWeek.jerseyNumber}`}
                   {playerOfWeek.jerseyNumber && playerOfWeek.position && " • "}
                   {playerOfWeek.position}
                 </div>
               )}
-              
-              <div style={{ 
-                fontSize: "0.875rem", 
-                opacity: 0.9, 
-                lineHeight: 1.5,
-                marginBottom: "1rem",
-                fontStyle: "italic"
-              }}>
+              <div className={styles['player-of-week-reason']}>
                 "{playerOfWeek.reason}"
               </div>
-              
-              <div style={{ 
-                fontSize: "0.75rem", 
-                fontWeight: "600",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "0.5rem"
-              }}>
+              <div className={styles['player-of-week-votes']}>
                 <span>🗳️</span>
                 <span>{playerOfWeek.votes} röster</span>
               </div>
@@ -230,99 +163,47 @@ export const WeeklyHighlights: React.FC<WeeklyHighlightsProps> = ({
 
         {/* Födelsedagar */}
         {showBirthdays && birthdays.length > 0 && (
-          <div style={{
-            background: "var(--card-background)",
-            borderRadius: "20px",
-            padding: "2rem",
-            border: "2px solid #f59e0b",
-            boxShadow: "var(--shadow-medium)"
-          }}>
-            <div style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "0.75rem",
-              marginBottom: "1.5rem"
-            }}>
-              <span style={{ fontSize: "2rem" }}>🎂</span>
-              <h3 style={{
-                margin: 0,
-                fontSize: "1.25rem",
-                fontWeight: "700",
-                color: "var(--text-primary)"
-              }}>
+          <div className={styles['birthdays-card']}>
+            <div className={styles['birthdays-header']}>
+              <span className={styles['birthdays-header-icon']}>🎂</span>
+              <h3 className={styles['birthdays-header-title']}>
                 Födelsedagar denna vecka
               </h3>
             </div>
-            
-            <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+            <div className={styles['birthdays-list']}>
               {birthdays.map((birthday) => (
                 <div
                   key={birthday.id}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "1rem",
-                    padding: "1rem",
-                    background: birthday.isToday ? "#fef3c7" : "var(--muted-background)",
-                    borderRadius: "12px",
-                    border: birthday.isToday ? "2px solid #f59e0b" : "1px solid var(--border-color)"
-                  }}
+                  className={
+                    `${styles['birthday-item']} ` +
+                    (birthday.isToday ? styles['birthday-item-today'] : styles['birthday-item-normal'])
+                  }
                 >
-                  <div style={{
-                    width: "40px",
-                    height: "40px",
-                    borderRadius: "50%",
-                    background: birthday.profilePicture ? "none" : "linear-gradient(135deg, #f59e0b, #d97706)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    color: "#ffffff",
-                    fontWeight: "600",
-                    fontSize: "0.875rem",
-                    flexShrink: 0
-                  }}>
+                  <div className={styles['birthday-avatar']}>
                     {birthday.profilePicture ? (
                       <img 
                         src={birthday.profilePicture} 
                         alt={birthday.name}
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                          borderRadius: "50%",
-                          objectFit: "cover"
-                        }}
+                        className={styles['birthday-avatar-img']}
                       />
                     ) : (
                       birthday.name.split(' ').map(n => n[0]).join('')
                     )}
                   </div>
-                  
-                  <div style={{ flex: 1 }}>
-                    <div style={{
-                      fontWeight: "600",
-                      color: "var(--text-primary)",
-                      marginBottom: "0.25rem"
-                    }}>
+                  <div className={styles['birthday-info']}>
+                    <div className={styles['birthday-name']}>
                       {birthday.name}
                       {birthday.jerseyNumber && (
-                        <span style={{ 
-                          fontSize: "0.75rem", 
-                          color: "var(--text-secondary)",
-                          marginLeft: "0.5rem"
-                        }}>
+                        <span className={styles['birthday-jersey']}>
                           #{birthday.jerseyNumber}
                         </span>
                       )}
                     </div>
-                    <div style={{
-                      fontSize: "0.75rem",
-                      color: "var(--text-secondary)"
-                    }}>
+                    <div className={styles['birthday-date']}>
                       {formatBirthdayDate(birthday.birthday)} • Fyller {birthday.age} år
                     </div>
                   </div>
-                  
-                  <div style={{ fontSize: "1.5rem" }}>
+                  <div className={styles['birthday-cake']}>
                     {birthday.isToday ? "🎉" : "🎂"}
                   </div>
                 </div>
@@ -333,49 +214,18 @@ export const WeeklyHighlights: React.FC<WeeklyHighlightsProps> = ({
 
         {/* Lagnotiser */}
         {showTeamNotices && teamNotices.length > 0 && (
-          <div style={{
-            background: "var(--card-background)",
-            borderRadius: "20px",
-            padding: "2rem",
-            border: "2px solid #3b82f6",
-            boxShadow: "var(--shadow-medium)"
-          }}>
-            <div style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "0.75rem",
-              marginBottom: "1.5rem"
-            }}>
-              <span style={{ fontSize: "2rem" }}>📢</span>
-              <h3 style={{
-                margin: 0,
-                fontSize: "1.25rem",
-                fontWeight: "700",
-                color: "var(--text-primary)"
-              }}>
+          <div className={styles['teamnotices-card']}>
+            <div className={styles['teamnotices-header']}>
+              <span className={styles['teamnotices-header-icon']}>📢</span>
+              <h3 className={styles['teamnotices-header-title']}>
                 Lagnotiser
               </h3>
             </div>
-            
-            <div style={{ 
-              display: "flex", 
-              flexDirection: "column", 
-              gap: "0.75rem",
-              maxHeight: "200px",
-              overflowY: "auto"
-            }}>
+            <div className={styles['teamnotices-list']}>
               {teamNotices.map((notice, index) => (
                 <div
                   key={index}
-                  style={{
-                    padding: "0.75rem 1rem",
-                    background: "var(--muted-background)",
-                    borderRadius: "8px",
-                    fontSize: "0.875rem",
-                    lineHeight: 1.5,
-                    color: "var(--text-primary)",
-                    borderLeft: "4px solid #3b82f6"
-                  }}
+                  className={styles['teamnotices-item']}
                 >
                   {notice}
                 </div>

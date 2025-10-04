@@ -1,0 +1,60 @@
+/* ActivityEdit.module.css */
+.formular {
+  max-width: 400px;
+  margin: 2rem auto;
+  background: var(--kort-bakgrund, #fff);
+  border-radius: 1rem;
+  box-shadow: 0 2px 12px #1976d222;
+  padding: 2rem 1.2rem;
+}
+
+.falt {
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.etikett {
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: var(--text-primar, #222);
+}
+
+.input {
+  width: 100%;
+  padding: 6px;
+  margin-top: 4px;
+  border-radius: 4px;
+  border: 1px solid #bdbdbd;
+  font-size: 1rem;
+}
+
+.textarea {
+  width: 100%;
+  padding: 6px;
+  margin-top: 4px;
+  min-height: 60px;
+  border-radius: 4px;
+  border: 1px solid #bdbdbd;
+  font-size: 1rem;
+}
+
+.checkbox {
+  margin-left: 8px;
+}
+
+.knapp {
+  background: #1976d2;
+  color: #fff;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: background 0.2s;
+}
+
+.knapp:hover {
+  background: #1565c0;
+}

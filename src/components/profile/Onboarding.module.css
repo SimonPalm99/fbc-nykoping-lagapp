@@ -1,0 +1,64 @@
+.onboarding-form {
+  max-width: 400px;
+  margin: 0 auto;
+  background: #23272e;
+  border-radius: 10px;
+  padding: 24px 18px;
+  box-shadow: 0 2px 14px #0002;
+}
+
+.onboarding-label {
+  display: block;
+  margin-bottom: 12px;
+  color: #fff;
+  font-weight: 500;
+}
+
+.onboarding-input {
+  width: 100%;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #345;
+  background: #20242a;
+  color: #fff;
+  margin-top: 4px;
+  margin-bottom: 8px;
+}
+
+.onboarding-select {
+  width: 100%;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #345;
+  background: #20242a;
+  color: #fff;
+  margin-top: 4px;
+  margin-bottom: 8px;
+}
+
+.onboarding-fieldset {
+  border: 1px solid #345;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 16px;
+  background: #20242a;
+}
+
+.onboarding-legend {
+  color: #b8f27c;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.onboarding-button {
+  width: 100%;
+  background: #b8f27c;
+  color: #222;
+  border: none;
+  border-radius: 6px;
+  padding: 10px;
+  font-weight: 700;
+  font-size: 17px;
+  margin-top: 10px;
+  cursor: pointer;
+}

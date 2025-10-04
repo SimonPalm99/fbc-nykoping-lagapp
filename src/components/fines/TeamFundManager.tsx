@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { TeamFund, FundTransaction, FundAllocation } from '../../types/fine';
-import './TeamFundManager.css';
+import styles from './TeamFundManager.module.css';
 
 interface TeamFundManagerProps {
   fund: TeamFund;
@@ -122,43 +122,43 @@ export const TeamFundManager: React.FC<TeamFundManagerProps> = ({ fund, onUpdate
   };
 
   return (
-    <div className="team-fund-manager">
-      <div className="fund-header">
+  <div className={styles.teamFundManager}>
+  <div className={styles.fundHeader}>
         <h2>Lagkassa</h2>
-        <div className="fund-balance">
-          <span className="balance-label">Saldo:</span>
-          <span className="balance-amount">{formatCurrency(fund.currentBalance)}</span>
+  <div className={styles.fundBalance}>
+          <span className={styles.balanceLabel}>Saldo:</span>
+          <span className={styles.balanceAmount}>{formatCurrency(fund.currentBalance)}</span>
         </div>
       </div>
 
-      <div className="fund-tabs">
+  <div className={styles.fundTabs}>
         <button
-          className={`tab ${activeTab === 'overview' ? 'active' : ''}`}
+          className={`${styles.tab} ${activeTab === 'overview' ? styles.active : ''}`}
           onClick={() => setActiveTab('overview')}
         >
           📊 Översikt
         </button>
         <button
-          className={`tab ${activeTab === 'transactions' ? 'active' : ''}`}
+          className={`${styles.tab} ${activeTab === 'transactions' ? styles.active : ''}`}
           onClick={() => setActiveTab('transactions')}
         >
           💰 Transaktioner
         </button>
         <button
-          className={`tab ${activeTab === 'allocations' ? 'active' : ''}`}
+          className={`${styles.tab} ${activeTab === 'allocations' ? styles.active : ''}`}
           onClick={() => setActiveTab('allocations')}
         >
           📋 Budget
         </button>
         <button
-          className={`tab ${activeTab === 'expenses' ? 'active' : ''}`}
+          className={`${styles.tab} ${activeTab === 'expenses' ? styles.active : ''}`}
           onClick={() => setActiveTab('expenses')}
         >
           🧾 Utgifter
         </button>
       </div>
 
-      <div className="fund-content">
+  <div className={styles.fundContent}>
         {activeTab === 'overview' && (
           <div className="overview-section">
             <div className="overview-cards">
@@ -279,11 +279,9 @@ export const TeamFundManager: React.FC<TeamFundManagerProps> = ({ fund, onUpdate
                     <h4>{allocation.purpose}</h4>
                     <div className="allocation-progress">
                       <div className="progress-bar">
-                        <div 
-                          className="progress-fill"
-                          style={{ 
-                            width: `${Math.min((allocation.spentAmount / allocation.budgetAmount) * 100, 100)}%`
-                          }}
+                        <div
+                          className={styles.progressFill + ' ' + styles[`progressFill${Math.round(Math.min((allocation.spentAmount / allocation.budgetAmount) * 100, 100))}`]}
+                          aria-label={`Progress: ${Math.min((allocation.spentAmount / allocation.budgetAmount) * 100, 100)}%`}
                         ></div>
                       </div>
                       <span className="progress-text">
@@ -324,6 +322,8 @@ export const TeamFundManager: React.FC<TeamFundManagerProps> = ({ fund, onUpdate
                 <select
                   value={newTransaction.type}
                   onChange={(e) => setNewTransaction({...newTransaction, type: e.target.value as 'income' | 'expense'})}
+                  className={styles.input}
+                  title="Välj typ av transaktion"
                 >
                   <option value="income">Inkomst</option>
                   <option value="expense">Utgift</option>
@@ -335,6 +335,8 @@ export const TeamFundManager: React.FC<TeamFundManagerProps> = ({ fund, onUpdate
                 <select
                   value={newTransaction.category}
                   onChange={(e) => setNewTransaction({...newTransaction, category: e.target.value as any})}
+                  className={styles.input}
+                  title="Välj kategori"
                 >
                   <option value="böter">Böter</option>
                   <option value="sponsring">Sponsring</option>
@@ -351,6 +353,7 @@ export const TeamFundManager: React.FC<TeamFundManagerProps> = ({ fund, onUpdate
                   value={newTransaction.amount}
                   onChange={(e) => setNewTransaction({...newTransaction, amount: parseFloat(e.target.value) || 0})}
                   placeholder="0"
+                  title="Belopp (SEK)"
                 />
               </div>
 
@@ -370,6 +373,8 @@ export const TeamFundManager: React.FC<TeamFundManagerProps> = ({ fund, onUpdate
                   type="date"
                   value={newTransaction.date}
                   onChange={(e) => setNewTransaction({...newTransaction, date: e.target.value})}
+                  title="Datum"
+                  placeholder="Datum"
                 />
               </div>
 
@@ -422,6 +427,7 @@ export const TeamFundManager: React.FC<TeamFundManagerProps> = ({ fund, onUpdate
                   value={newAllocation.purpose}
                   onChange={(e) => setNewAllocation({...newAllocation, purpose: e.target.value})}
                   placeholder="T.ex. Lagresa, Utrustning, etc."
+                  title="Syfte"
                 />
               </div>
 
@@ -432,6 +438,7 @@ export const TeamFundManager: React.FC<TeamFundManagerProps> = ({ fund, onUpdate
                   value={newAllocation.budgetAmount}
                   onChange={(e) => setNewAllocation({...newAllocation, budgetAmount: parseFloat(e.target.value) || 0})}
                   placeholder="0"
+                  title="Budget (SEK)"
                 />
               </div>
             </div>

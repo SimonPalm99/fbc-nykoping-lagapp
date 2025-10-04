@@ -1,0 +1,69 @@
+/* FBC Matchverktyg Theme */
+.root {
+  min-height: 100vh;
+  background: var(--background-gradient, #101a10);
+  padding: 2rem;
+}
+.title {
+  color: var(--fbc-green, #22c55e);
+  font-weight: 900;
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  letter-spacing: 2px;
+  text-shadow: 0 2px 8px #000;
+}
+.subtitle {
+  color: #fff;
+  text-align: center;
+  font-size: 1.1rem;
+  margin-bottom: 2.5rem;
+  text-shadow: 0 1px 4px #000;
+}
+.tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+}
+.toolLink {
+  text-decoration: none;
+}
+.toolCard {
+  background: #fff;
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 24px #22c55e44;
+  padding: 2rem;
+  min-width: 260px;
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.2s;
+  color: #101a10;
+  border: 4px solid var(--fbc-green, #22c55e);
+}
+.toolCard:hover {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 8px 32px #22c55e66;
+}
+.icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: var(--fbc-green, #22c55e);
+  text-shadow: 0 2px 8px #000;
+}
+.toolTitle {
+  font-weight: 700;
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+  text-align: center;
+  letter-spacing: 1px;
+  color: var(--fbc-green, #22c55e);
+}
+.toolDesc {
+  color: #222;
+  font-size: 1rem;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}

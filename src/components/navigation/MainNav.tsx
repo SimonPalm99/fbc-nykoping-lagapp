@@ -11,27 +11,14 @@ const navItems = [
 
 const MainNav: React.FC = () => {
   return (
-    <nav style={{
-      display: "flex",
-      gap: 18,
-      margin: "20px 0",
-      paddingBottom: 8,
-      borderBottom: "1px solid #ddd"
-    }}>
+    <nav className="huvudnavigering">
       {navItems.map(item => (
         <NavLink
           key={item.to}
           to={item.to}
-          style={({ isActive }) => ({
-            background: isActive ? "#1976d2" : "transparent",
-            color: isActive ? "#fff" : "#222",
-            border: "none",
-            borderRadius: 4,
-            padding: "6px 14px",
-            cursor: "pointer",
-            fontWeight: isActive ? 700 : 400,
-            textDecoration: "none"
-          })}
+          className={({ isActive }) =>
+            isActive ? "navlank aktiv" : "navlank"
+          }
           end={item.to === "/"}
         >
           {item.label}

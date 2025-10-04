@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from './StatsCharts.module.css';
 import {
   LineChart,
   Line,
@@ -33,8 +34,8 @@ export const PerformanceChart: React.FC = () => {
   ];
 
   return (
-    <div className="card" style={{ padding: '1.5rem' }}>
-      <h3 style={{ marginBottom: '1rem', color: 'var(--text-primary)' }}>
+    <div className={`card ${styles['stats-card']}`}>
+      <h3 className={styles['stats-title']}>
         📈 Prestation över tid
       </h3>
       <ResponsiveContainer width="100%" height={300}>
@@ -95,8 +96,8 @@ export const GoalDistributionChart: React.FC = () => {
   ];
 
   return (
-    <div className="card" style={{ padding: '1.5rem' }}>
-      <h3 style={{ marginBottom: '1rem', color: 'var(--text-primary)' }}>
+    <div className={`card ${styles['stats-card']}`}>
+      <h3 className={styles['stats-title']}>
         🥅 Målfördelning per position
       </h3>
       <ResponsiveContainer width="100%" height={300}>
@@ -142,8 +143,8 @@ export const MatchStatsChart: React.FC = () => {
   ];
 
   return (
-    <div className="card" style={{ padding: '1.5rem' }}>
-      <h3 style={{ marginBottom: '1rem', color: 'var(--text-primary)' }}>
+    <div className={`card ${styles['stats-card']}`}>
+      <h3 className={styles['stats-title']}>
         🏒 Senaste matcherna
       </h3>
       <ResponsiveContainer width="100%" height={300}>
@@ -189,8 +190,8 @@ export const PlayerRadarChart: React.FC<{playerName: string}> = ({ playerName })
   ];
 
   return (
-    <div className="card" style={{ padding: '1.5rem' }}>
-      <h3 style={{ marginBottom: '1rem', color: 'var(--text-primary)' }}>
+    <div className={`card ${styles['stats-card']}`}>
+      <h3 className={styles['stats-title']}>
         🎯 {playerName} - Färdighetsprofil
       </h3>
       <ResponsiveContainer width="100%" height={300}>
@@ -239,8 +240,8 @@ export const SeasonProgressChart: React.FC = () => {
   ];
 
   return (
-    <div className="card" style={{ padding: '1.5rem' }}>
-      <h3 style={{ marginBottom: '1rem', color: 'var(--text-primary)' }}>
+    <div className={`card ${styles['stats-card']}`}>
+      <h3 className={styles['stats-title']}>
         🏆 Säsongsutveckling
       </h3>
       <ResponsiveContainer width="100%" height={300}>

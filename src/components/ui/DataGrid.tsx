@@ -3,6 +3,7 @@
  */
 
 import React, { useState, useMemo, useCallback, useRef } from 'react';
+import './DataGrid.css';
 
 export interface Column<T = any> {
   key: keyof T;
@@ -100,7 +101,7 @@ export function DataGrid<T = any>({
   bordered = true,
   hoverable = true,
   virtual = false,
-  height = 400,
+  // height = 400, // Removed unused prop
   emptyText = 'Ingen data tillgänglig',
   stickyHeader = false
 }: DataGridProps<T>) {
@@ -263,23 +264,7 @@ export function DataGrid<T = any>({
   if (loading) {
     return (
       <div className={`data-grid loading ${className}`}>
-        <div style={{
-          width: "100%",
-          height: "300px",
-          background: "linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%)",
-          backgroundSize: "200% 100%",
-          animation: "loading 1.5s infinite",
-          borderRadius: "8px"
-        }}>
-          <style>
-            {`
-              @keyframes loading {
-                0% { background-position: 200% 0; }
-                100% { background-position: -200% 0; }
-              }
-            `}
-          </style>
-        </div>
+        <div className="data-grid-loading-skeleton"></div>
       </div>
     );
   }
@@ -288,150 +273,130 @@ export function DataGrid<T = any>({
   if (filteredData.length === 0) {
     return (
       <div className={`data-grid empty ${className}`}>
-        <div className="empty-state">
-          {emptyText}
-        </div>
+        <div className="data-grid-empty">{emptyText}</div>
       </div>
     );
   }
 
-  const tableClasses = [
-    'data-grid',
-    `size-${size}`,
-    striped && 'striped',
-    bordered && 'bordered',
-    hoverable && 'hoverable',
-    stickyHeader && 'sticky-header',
-    className
-  ].filter(Boolean).join(' ');
-
+  // Main table rendering
   return (
-    <div className={tableClasses}>
-      <div className="table-container" style={{ height: virtual ? height : undefined }}>
-        <table ref={tableRef} className="table">
-          <thead>
-            <tr>
-              {rowSelection && (
-                <th className="selection-column">
-                  {rowSelection.type !== 'radio' && (
-                    <input
-                      type="checkbox"
-                      checked={selectedRowKeys.length === paginatedData.length && paginatedData.length > 0}
-                      ref={(input) => {
-                        if (input) {
-                          input.indeterminate = selectedRowKeys.length > 0 && selectedRowKeys.length < paginatedData.length;
-                        }
-                      }}
-                      onChange={(e) => handleSelectAll(e.target.checked)}
-                    />
-                  )}
-                </th>
-              )}
-              
-              {columns.map((column) => {
-                const key = String(column.key);
-                const width = column.width;
-                const isSorted = sortInfo?.key === key;
-                
-                return (
-                  <th
-                    key={key}
-                    className={`
-                      ${column.align ? `text-${column.align}` : ''}
-                      ${column.sortable ? 'sortable' : ''}
-                      ${isSorted ? `sorted-${sortInfo.direction}` : ''}
-                    `}
-                    style={{
-                      width,
-                      minWidth: column.minWidth,
-                      maxWidth: column.maxWidth
+    <div
+      className={`data-grid ${className} ${bordered ? 'bordered' : ''} ${striped ? 'striped' : ''} ${hoverable ? 'hoverable' : ''} size-${size}${virtual ? ' virtual-scroll' : ''}`}
+    >
+      <table
+        ref={tableRef}
+        className={`data-grid-table${stickyHeader ? ' sticky-header' : ''}${virtual ? ' table-virtual' : ''}`}
+      >
+        <thead>
+          <tr>
+            {rowSelection && (
+              <th className="data-grid-selection-col">
+                {rowSelection.type === 'checkbox' && (
+                  <input
+                    type="checkbox"
+                    title="Välj alla rader"
+                    checked={
+                      paginatedData.length > 0 &&
+                      paginatedData.every((record, idx) =>
+                        selectedRowKeys.includes(getRowKey(record, idx))
+                      )
+                    }
+                    ref={el => {
+                      if (el) {
+                        el.indeterminate =
+                          paginatedData.some((record, idx) =>
+                            selectedRowKeys.includes(getRowKey(record, idx))
+                          ) &&
+                          !paginatedData.every((record, idx) =>
+                            selectedRowKeys.includes(getRowKey(record, idx))
+                          );
+                      }
                     }}
-                    onClick={() => handleSort(column)}
-                  >
-                    <div className="th-content">
-                      <span className="title">{column.title}</span>
-                      {column.sortable && (
-                        <span className="sort-icons">
-                          <span className={`sort-asc ${isSorted && sortInfo.direction === 'asc' ? 'active' : ''}`}>
-                            ↑
-                          </span>
-                          <span className={`sort-desc ${isSorted && sortInfo.direction === 'desc' ? 'active' : ''}`}>
-                            ↓
-                          </span>
-                        </span>
-                      )}
-                    </div>
-                    
-                    {column.resizable && (
-                      <div
-                        className="resize-handle"
-                        onMouseDown={(e) => {
-                          // Column resize logic would go here
-                          e.preventDefault();
-                        }}
+                    onChange={e => handleSelectAll(e.target.checked)}
+                  />
+                )}
+              </th>
+            )}
+            {columns.map((col) => (
+              <th
+                key={String(col.key)}
+                className={`data-grid-col${col.sortable ? ' sortable' : ''}${col.fixed ? ` fixed-${col.fixed}` : ''}${col.align ? ` align-${col.align}` : ''}${col.width ? ` col-width-${String(col.key)}` : ''}${col.minWidth ? ` col-minwidth-${String(col.key)}` : ''}${col.maxWidth ? ` col-maxwidth-${String(col.key)}` : ''}`}
+                onClick={() => handleSort(col)}
+              >
+                <span>{col.title}</span>
+                {col.sortable && (
+                  <span className="sort-indicator">
+                    {sortInfo?.key === String(col.key)
+                      ? sortInfo.direction === 'asc'
+                        ? '▲'
+                        : '▼'
+                      : ''}
+                  </span>
+                )}
+                {col.filterable && col.filterDropdown && (
+                  <span className="filter-dropdown">{col.filterDropdown}</span>
+                )}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {paginatedData.map((record, rowIdx) => {
+            const key = getRowKey(record, rowIdx);
+            const isSelected = selectedRowKeys.includes(key);
+
+            return (
+              <tr
+                key={key}
+                className={isSelected ? 'selected' : ''}
+                onClick={() => onRowClick?.(record, rowIdx)}
+                onDoubleClick={() => onRowDoubleClick?.(record, rowIdx)}
+              >
+                {rowSelection && (
+                  <td className="data-grid-selection-col">
+                    {rowSelection.type === 'radio' ? (
+                      <input
+                        type="radio"
+                        checked={isSelected}
+                        disabled={rowSelection.getCheckboxProps?.(record)?.disabled}
+                        name={rowSelection.getCheckboxProps?.(record)?.name || 'data-grid-radio'}
+                        title="Välj rad"
+                        onChange={e => handleRowSelect(record, e.target.checked)}
+                      />
+                    ) : (
+                      <input
+                        type="checkbox"
+                        checked={isSelected}
+                        disabled={rowSelection.getCheckboxProps?.(record)?.disabled}
+                        name={rowSelection.getCheckboxProps?.(record)?.name}
+                        title="Välj rad"
+                        onChange={e => handleRowSelect(record, e.target.checked)}
                       />
                     )}
-                  </th>
-                );
-              })}
-            </tr>
-          </thead>
-          
-          <tbody>
-            {paginatedData.map((record, index) => {
-              const key = getRowKey(record, index);
-              const isSelected = selectedRowKeys.includes(key);
-              const checkboxProps = rowSelection?.getCheckboxProps?.(record) || {};
-              
-              return (
-                <tr
-                  key={key}
-                  className={`
-                    ${isSelected ? 'selected' : ''}
-                    ${onRowClick ? 'clickable' : ''}
-                  `}
-                  onClick={() => onRowClick?.(record, index)}
-                  onDoubleClick={() => onRowDoubleClick?.(record, index)}
-                >
-                  {rowSelection && (
-                    <td className="selection-column">
-                      <input
-                        type={rowSelection.type || 'checkbox'}
-                        name={checkboxProps.name}
-                        checked={isSelected}
-                        disabled={checkboxProps.disabled}
-                        onChange={(e) => handleRowSelect(record, e.target.checked)}
-                        onClick={(e) => e.stopPropagation()}
-                      />
-                    </td>
-                  )}
-                  
-                  {columns.map((column) => (
-                    <td
-                      key={String(column.key)}
-                      className={column.align ? `text-${column.align}` : ''}
-                    >
-                      {renderCell(column, record, index)}
-                    </td>
-                  ))}
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-      
+                  </td>
+                )}
+                {columns.map((col) => (
+                  <td
+                    key={String(col.key)}
+                    className={`data-grid-col${col.fixed ? ` fixed-${col.fixed}` : ''}${col.align ? ` align-${col.align}` : ''}${col.width ? ` col-width-${String(col.key)}` : ''}${col.minWidth ? ` col-minwidth-${String(col.key)}` : ''}${col.maxWidth ? ` col-maxwidth-${String(col.key)}` : ''}`}
+                  >
+                    {renderCell(col, record, rowIdx)}
+                  </td>
+                ))}
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
       {pagination && (
-        <div className="pagination-container">
-          <Pagination
-            current={pagination.current}
-            pageSize={pagination.pageSize}
-            total={pagination.total}
-            {...(pagination.showSizeChanger !== undefined && { showSizeChanger: pagination.showSizeChanger })}
-            {...(pagination.showQuickJumper !== undefined && { showQuickJumper: pagination.showQuickJumper })}
-            {...(pagination.onChange && { onChange: pagination.onChange })}
-          />
-        </div>
+        <Pagination
+          current={pagination.current}
+          pageSize={pagination.pageSize}
+          total={pagination.total}
+          showSizeChanger={pagination.showSizeChanger}
+          showQuickJumper={pagination.showQuickJumper}
+          onChange={pagination.onChange ?? (() => {})}
+        />
       )}
     </div>
   );
@@ -442,9 +407,9 @@ interface PaginationProps {
   current: number;
   pageSize: number;
   total: number;
-  showSizeChanger?: boolean;
-  showQuickJumper?: boolean;
-  onChange?: (page: number, pageSize: number) => void;
+  showSizeChanger?: boolean | undefined;
+  showQuickJumper?: boolean | undefined;
+  onChange: (page: number, pageSize: number) => void;
 }
 
 function Pagination({
@@ -500,6 +465,7 @@ function Pagination({
           <select
             value={pageSize}
             onChange={(e) => handleSizeChange(Number(e.target.value))}
+            title="Välj antal per sida"
           >
             <option value={10}>10 / sida</option>
             <option value={20}>20 / sida</option>

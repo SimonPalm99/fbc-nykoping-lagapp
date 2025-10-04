@@ -1,0 +1,43 @@
+/* Alla stilar från inline i ExercisesTacticsTabs i App.tsx flyttade hit. */
+
+.tabsRoot {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #101a10 60%, #22c55e 100%);
+  padding: 2rem 0;
+}
+
+.tabsContainer {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+  border-radius: 32px;
+  box-shadow: 0 8px 32px #000a;
+  background: rgba(20,32,20,0.85);
+  border: 2px solid #22c55e;
+}
+
+.tabsRow {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  margin-bottom: 32px;
+}
+
+.tabsButton {
+  border: 2px solid #22c55e;
+  border-radius: 12px;
+  padding: 10px 32px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: #101a10;
+  color: #22c55e;
+  box-shadow: none;
+}
+
+.tabsButtonActive {
+  background: #22c55e;
+  color: #fff;
+  box-shadow: 0 2px 8px #22c55e88;
+}

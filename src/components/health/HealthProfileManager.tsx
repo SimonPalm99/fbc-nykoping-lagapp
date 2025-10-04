@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { HealthProfile, EmergencyContact, MedicalCondition } from '../../types/health';
-import './HealthProfileManager.css';
+import styles from './HealthProfileManager.module.css';
 
 interface HealthProfileManagerProps {
   userId: string;
@@ -195,6 +195,8 @@ export const HealthProfileManager: React.FC<HealthProfileManagerProps> = ({
                   <select
                     value={profile.bloodType || ''}
                     onChange={(e) => updateProfile({ bloodType: e.target.value })}
+                    className={styles.formGroupSelect}
+                    title="Välj blodgrupp"
                   >
                     <option value="">Välj blodgrupp</option>
                     <option value="A+">A+</option>
@@ -488,76 +490,91 @@ export const HealthProfileManager: React.FC<HealthProfileManagerProps> = ({
                 <div className="form-section">
                   <h5>Läkarinformation</h5>
                   <div className="form-group">
-                    <label>Läkarens namn</label>                  <input
-                    type="text"
-                    value={profile.doctorInfo?.name || ''}
-                    onChange={(e) => updateProfile({
-                      doctorInfo: {
-                        name: e.target.value,
-                        clinic: profile.doctorInfo?.clinic || '',
-                        phone: profile.doctorInfo?.phone || '',
-                        ...(profile.doctorInfo?.email && { email: profile.doctorInfo.email })
-                      }
-                    })}
-                  />
+                    <label>Läkarens namn</label>
+                    <input
+                      type="text"
+                      value={profile.doctorInfo?.name || ''}
+                      onChange={(e) => updateProfile({
+                        doctorInfo: {
+                          name: e.target.value,
+                          clinic: profile.doctorInfo?.clinic || '',
+                          phone: profile.doctorInfo?.phone || '',
+                          ...(profile.doctorInfo?.email && { email: profile.doctorInfo.email })
+                        }
+                      })}
+                      placeholder="Läkarens namn"
+                      title="Läkarens namn"
+                    />
                   </div>
                   <div className="form-group">
-                    <label>Klinik/Vårdcentral</label>                  <input
-                    type="text"
-                    value={profile.doctorInfo?.clinic || ''}
-                    onChange={(e) => updateProfile({
-                      doctorInfo: {
-                        name: profile.doctorInfo?.name || '',
-                        clinic: e.target.value,
-                        phone: profile.doctorInfo?.phone || '',
-                        ...(profile.doctorInfo?.email && { email: profile.doctorInfo.email })
-                      }
-                    })}
-                  />
+                    <label>Klinik/Vårdcentral</label>
+                    <input
+                      type="text"
+                      value={profile.doctorInfo?.clinic || ''}
+                      onChange={(e) => updateProfile({
+                        doctorInfo: {
+                          name: profile.doctorInfo?.name || '',
+                          clinic: e.target.value,
+                          phone: profile.doctorInfo?.phone || '',
+                          ...(profile.doctorInfo?.email && { email: profile.doctorInfo.email })
+                        }
+                      })}
+                      placeholder="Klinik/Vårdcentral"
+                      title="Klinik/Vårdcentral"
+                    />
                   </div>
                   <div className="form-group">
-                    <label>Telefon</label>                  <input
-                    type="tel"
-                    value={profile.doctorInfo?.phone || ''}
-                    onChange={(e) => updateProfile({
-                      doctorInfo: {
-                        name: profile.doctorInfo?.name || '',
-                        clinic: profile.doctorInfo?.clinic || '',
-                        phone: e.target.value,
-                        ...(profile.doctorInfo?.email && { email: profile.doctorInfo.email })
-                      }
-                    })}
-                  />
+                    <label>Telefon</label>
+                    <input
+                      type="tel"
+                      value={profile.doctorInfo?.phone || ''}
+                      onChange={(e) => updateProfile({
+                        doctorInfo: {
+                          name: profile.doctorInfo?.name || '',
+                          clinic: profile.doctorInfo?.clinic || '',
+                          phone: e.target.value,
+                          ...(profile.doctorInfo?.email && { email: profile.doctorInfo.email })
+                        }
+                      })}
+                      placeholder="Telefon"
+                      title="Telefon"
+                    />
                   </div>
                 </div>
 
                 <div className="form-section">
                   <h5>Försäkringsinformation</h5>
                   <div className="form-group">
-                    <label>Försäkringsbolag</label>                  <input
-                    type="text"
-                    value={profile.insuranceInfo?.provider || ''}
-                    onChange={(e) => updateProfile({
-                      insuranceInfo: {
-                        provider: e.target.value,
-                        policyNumber: profile.insuranceInfo?.policyNumber || '',
-                        expirationDate: profile.insuranceInfo?.expirationDate || new Date()
-                      }
-                    })}
-                  />
+                    <label>Försäkringsbolag</label>
+                    <input
+                      type="text"
+                      value={profile.insuranceInfo?.provider || ''}
+                      onChange={(e) => updateProfile({
+                        insuranceInfo: {
+                          provider: e.target.value,
+                          policyNumber: profile.insuranceInfo?.policyNumber || '',
+                          expirationDate: profile.insuranceInfo?.expirationDate || new Date()
+                        }
+                      })}
+                      placeholder="Försäkringsbolag"
+                      title="Försäkringsbolag"
+                    />
                   </div>
                   <div className="form-group">
-                    <label>Försäkringsnummer</label>                  <input
-                    type="text"
-                    value={profile.insuranceInfo?.policyNumber || ''}
-                    onChange={(e) => updateProfile({
-                      insuranceInfo: {
-                        provider: profile.insuranceInfo?.provider || '',
-                        policyNumber: e.target.value,
-                        expirationDate: profile.insuranceInfo?.expirationDate || new Date()
-                      }
-                    })}
-                  />
+                    <label>Försäkringsnummer</label>
+                    <input
+                      type="text"
+                      value={profile.insuranceInfo?.policyNumber || ''}
+                      onChange={(e) => updateProfile({
+                        insuranceInfo: {
+                          provider: profile.insuranceInfo?.provider || '',
+                          policyNumber: e.target.value,
+                          expirationDate: profile.insuranceInfo?.expirationDate || new Date()
+                        }
+                      })}
+                      placeholder="Försäkringsnummer"
+                      title="Försäkringsnummer"
+                    />
                   </div>
                 </div>
               </div>
@@ -726,6 +743,7 @@ const AddConditionForm: React.FC<{
             ...prev, 
             severity: e.target.value as any 
           }))}
+          title="Välj svårighetsgrad"
         >
           <option value="mild">Mild</option>
           <option value="moderate">Måttlig</option>
@@ -737,6 +755,7 @@ const AddConditionForm: React.FC<{
             ...prev, 
             status: e.target.value as any 
           }))}
+          title="Välj status"
         >
           <option value="active">Aktiv</option>
           <option value="controlled">Kontrollerad</option>

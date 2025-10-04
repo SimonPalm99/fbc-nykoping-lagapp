@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import styles from "./RegistrationForm.module.css";
 import { useAuth } from '../../context/AuthContext';
 import { UserRegistration } from '../../types/auth';
 import { LoadingButton } from '../ui/LoadingButton';
@@ -356,30 +357,30 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="" size="lg" className="auth-modal registration-modal">
-      <div className="auth-form-container registration-container">
+  <Modal isOpen={isOpen} onClose={onClose} title="" size="lg" className={styles.authModal ?? ''}>
+      <div className={styles.authFormContainer}>
         {/* Header */}
-        <div className="auth-form-header">
-          <div className="auth-logo">🏒</div>
-          <h2 className="auth-title">Välkommen till FBC Nyköping!</h2>
-          <p className="auth-subtitle">Skapa ditt konto i bara några enkla steg</p>
+        <div className={styles.authFormHeader}>
+          <div className={styles.authLogo}>🏒</div>
+          <h2 className={styles.authTitle}>Välkommen till FBC Nyköping!</h2>
+          <p className={styles.authSubtitle}>Skapa ditt konto i bara några enkla steg</p>
         </div>
 
         {/* Progress Indicator */}
-        <div className="progress-indicator">
-          <div className="progress-bar">
-            <div className="progress-fill" style={{ width: `${(currentStep / 3) * 100}%` }}></div>
+        <div className={styles.progressIndicator}>
+          <div className={styles.progressBar}>
+            <div className={styles.progressFill} data-width={Math.round((currentStep / 3) * 100)}></div>
           </div>
-          <div className="step-indicators">
+          <div className={styles.stepIndicators}>
             {[1, 2, 3].map(step => (
               <div 
                 key={step} 
-                className={`step-indicator ${currentStep === step ? 'active' : ''} ${currentStep > step ? 'completed' : ''}`}
+                className={`${styles.stepIndicator} ${currentStep === step ? styles.active : ''} ${currentStep > step ? styles.completed : ''}`}
               >
-                <div className="step-circle">
+                <div className={styles.stepCircle}>
                   {currentStep > step ? '✓' : step}
                 </div>
-                <span className="step-label">
+                <span className={styles.stepLabel}>
                   {step === 1 ? 'Grundinfo' : step === 2 ? 'Spelinfo' : 'Nödkontakt'}
                 </span>
               </div>
@@ -389,12 +390,12 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({
 
         {renderStep()}
 
-        <div className="form-actions">
+        <div className={styles.formActions}>
           {currentStep > 1 && (
             <button 
               type="button" 
               onClick={handlePrevious}
-              className="btn btn-secondary"
+              className={`${styles.btn} ${styles.btnSecondary}`}
             >
               Föregående
             </button>
@@ -403,7 +404,7 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({
           {currentStep < 3 ? (
             <LoadingButton
               onClick={handleNext}
-              className="btn btn-primary"
+              className={`${styles.btn} ${styles.btnPrimary}`}
             >
               Nästa
             </LoadingButton>
@@ -411,14 +412,14 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({
             <LoadingButton
               onClick={handleSubmit}
               loading={isLoading}
-              className="btn btn-primary"
+              className={`${styles.btn} ${styles.btnPrimary}`}
             >
               Registrera
             </LoadingButton>
           )}
         </div>
 
-        <div className="registration-info">
+        <div className={styles.registrationInfo}>
           <p>
             När du registrerar dig kommer din ansökan att granskas av en ledare. 
             Du får tillgång till appen när din ansökan godkänts.

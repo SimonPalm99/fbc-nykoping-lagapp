@@ -1,4 +1,5 @@
 import React, { useMemo } from "react";
+import styles from "./TrainingLogStats.module.css";
 import { TrainingLog } from "../../types/user";
 
 interface TrainingLogStatsProps {
@@ -102,28 +103,10 @@ export const TrainingLogStats: React.FC<TrainingLogStatsProps> = ({
 
   if (!stats) {
     return (
-      <div style={{
-        background: "#0f0f0f",
-        borderRadius: "16px",
-        padding: "2rem",
-        textAlign: "center",
-        border: "1px solid #333"
-      }}>
-        <div style={{ fontSize: "2rem", marginBottom: "1rem" }}>📊</div>
-        <h3 style={{
-          fontSize: "1.25rem",
-          fontWeight: "600",
-          color: "#e2e8f0",
-          marginBottom: "0.5rem"
-        }}>
-          Ingen träningsdata
-        </h3>
-        <p style={{
-          color: "#9ca3af",
-          fontSize: "0.875rem"
-        }}>
-          Lägg till träningsloggar för att se statistik
-        </p>
+      <div className={styles["ingen-data-kort"]}>
+        <div className={styles["ingen-data-ikon"]}>📊</div>
+        <h3 className={styles["ingen-data-titel"]}>Ingen träningsdata</h3>
+        <p className={styles["ingen-data-text"]}>Lägg till träningsloggar för att se statistik</p>
       </div>
     );
   }
@@ -136,254 +119,69 @@ export const TrainingLogStats: React.FC<TrainingLogStatsProps> = ({
   };
 
   const intensityLabels = ["Lätt", "Låg", "Medel", "Hög", "Max"];
-  const intensityColors = ["#10b981", "#84cc16", "#f59e0b", "#f97316", "#ef4444"];
+  // intensityColors borttagen, hanteras via CSS-klasser
 
   return (
-    <div style={{
-      background: "linear-gradient(135deg, #1a1a1a, #262626)",
-      borderRadius: "16px",
-      padding: "2rem",
-      border: "1px solid #333",
-      boxShadow: "0 4px 16px rgba(0,0,0,0.4)"
-    }}>
-      <h3 style={{
-        fontSize: "1.5rem",
-        fontWeight: "700",
-        color: "#b8f27c",
-        marginBottom: "2rem",
-        display: "flex",
-        alignItems: "center",
-        gap: "0.75rem"
-      }}>
+    <div className={styles["statistik-kort"]}>
+      <h3 className={styles["statistik-titel"]}>
         📊 Träningsstatistik - {timeframeLabels[timeframe]}
       </h3>
 
       {/* Grundläggande statistik */}
-      <div style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
-        gap: "1rem",
-        marginBottom: "2rem"
-      }}>
-        <div style={{
-          background: "#0f0f0f",
-          padding: "1.5rem",
-          borderRadius: "12px",
-          textAlign: "center",
-          border: "1px solid #333"
-        }}>
-          <div style={{
-            fontSize: "2rem",
-            fontWeight: "700",
-            color: "#b8f27c",
-            marginBottom: "0.5rem"
-          }}>
-            {stats.totalSessions}
-          </div>
-          <div style={{
-            fontSize: "0.875rem",
-            color: "#9ca3af",
-            fontWeight: "600"
-          }}>
-            🏃‍♂️ Träningar
-          </div>
+      <div className={styles["statistik-grid"]}>
+        <div className={styles["statistik-sektion"]}>
+          <div className={`${styles["statistik-varde"]} ${styles["statistik-varde-traningar"]}`}>{stats.totalSessions}</div>
+          <div className={styles["statistik-label"]}>🏃‍♂️ Träningar</div>
         </div>
-
-        <div style={{
-          background: "#0f0f0f",
-          padding: "1.5rem",
-          borderRadius: "12px",
-          textAlign: "center",
-          border: "1px solid #333"
-        }}>
-          <div style={{
-            fontSize: "2rem",
-            fontWeight: "700",
-            color: "#22c55e",
-            marginBottom: "0.5rem"
-          }}>
-            {Math.round(stats.totalMinutes / 60)}h
-          </div>
-          <div style={{
-            fontSize: "0.875rem",
-            color: "#9ca3af",
-            fontWeight: "600"
-          }}>
-            ⏱️ Total tid
-          </div>
+        <div className={styles["statistik-sektion"]}>
+          <div className={`${styles["statistik-varde"]} ${styles["statistik-varde-tid"]}`}>{Math.round(stats.totalMinutes / 60)}h</div>
+          <div className={styles["statistik-label"]}>⏱️ Total tid</div>
         </div>
-
-        <div style={{
-          background: "#0f0f0f",
-          padding: "1.5rem",
-          borderRadius: "12px",
-          textAlign: "center",
-          border: "1px solid #333"
-        }}>
-          <div style={{
-            fontSize: "2rem",
-            fontWeight: "700",
-            color: "#f59e0b",
-            marginBottom: "0.5rem"
-          }}>
-            {stats.averageDuration}m
-          </div>
-          <div style={{
-            fontSize: "0.875rem",
-            color: "#9ca3af",
-            fontWeight: "600"
-          }}>
-            📊 Snitt/träning
-          </div>
+        <div className={styles["statistik-sektion"]}>
+          <div className={`${styles["statistik-varde"]} ${styles["statistik-varde-snitt"]}`}>{stats.averageDuration}m</div>
+          <div className={styles["statistik-label"]}>📊 Snitt/träning</div>
         </div>
-
-        <div style={{
-          background: "#0f0f0f",
-          padding: "1.5rem",
-          borderRadius: "12px",
-          textAlign: "center",
-          border: "1px solid #333"
-        }}>
-          <div style={{
-            fontSize: "2rem",
-            fontWeight: "700",
-            color: "#8b5cf6",
-            marginBottom: "0.5rem"
-          }}>
-            {stats.currentStreak}
-          </div>
-          <div style={{
-            fontSize: "0.875rem",
-            color: "#9ca3af",
-            fontWeight: "600"
-          }}>
-            🔥 Dagars streak
-          </div>
+        <div className={styles["statistik-sektion"]}>
+          <div className={`${styles["statistik-varde"]} ${styles["statistik-varde-streak"]}`}>{stats.currentStreak}</div>
+          <div className={styles["statistik-label"]}>🔥 Dagars streak</div>
         </div>
       </div>
 
       {/* Intensitet och känsla */}
-      <div style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-        gap: "2rem",
-        marginBottom: "2rem"
-      }}>
+      <div className={styles["intensitet-kansla-grid"]}>
         <div>
-          <h4 style={{
-            fontSize: "1.125rem",
-            fontWeight: "600",
-            color: "#e2e8f0",
-            marginBottom: "1rem"
-          }}>
-            ⚡ Genomsnittlig intensitet
-          </h4>
-          <div style={{
-            background: "#0f0f0f",
-            padding: "1.5rem",
-            borderRadius: "12px",
-            textAlign: "center",
-            border: "1px solid #333"
-          }}>
-            <div style={{
-              fontSize: "3rem",
-              fontWeight: "700",
-              color: intensityColors[Math.round(stats.averageIntensity) - 1],
-              marginBottom: "0.5rem"
-            }}>
-              {stats.averageIntensity}
-            </div>
-            <div style={{
-              fontSize: "0.875rem",
-              color: "#9ca3af"
-            }}>
-              {intensityLabels[Math.round(stats.averageIntensity) - 1]}
-            </div>
+          <h4 className={styles["intensitet-titel"]}>⚡ Genomsnittlig intensitet</h4>
+          <div className={styles["intensitet-kort"]}>
+            <div className={`${styles["intensitet-varde"]} ${styles[`intensity-level-${Math.round(stats.averageIntensity)}`]}`}>{stats.averageIntensity}</div>
+            <div className={styles["intensitet-label"]}>{intensityLabels[Math.round(stats.averageIntensity) - 1]}</div>
           </div>
         </div>
-
         <div>
-          <h4 style={{
-            fontSize: "1.125rem",
-            fontWeight: "600",
-            color: "#e2e8f0",
-            marginBottom: "1rem"
-          }}>
-            😊 Genomsnittlig känsla
-          </h4>
-          <div style={{
-            background: "#0f0f0f",
-            padding: "1.5rem",
-            borderRadius: "12px",
-            textAlign: "center",
-            border: "1px solid #333"
-          }}>
-            <div style={{
-              fontSize: "3rem",
-              marginBottom: "0.5rem"
-            }}>
+          <h4 className={styles["kansla-titel"]}>😊 Genomsnittlig känsla</h4>
+          <div className={styles["kansla-kort"]}>
+            <div className={styles["kansla-ikon"]}>
               {stats.averageFeeling >= 4.5 ? "🤩" : 
                stats.averageFeeling >= 3.5 ? "😊" :
                stats.averageFeeling >= 2.5 ? "😐" : 
                stats.averageFeeling >= 1.5 ? "😕" : "😰"}
             </div>
-            <div style={{
-              fontSize: "1.25rem",
-              fontWeight: "700",
-              color: "#b8f27c"
-            }}>
-              {stats.averageFeeling}/5
-            </div>
+            <div className={styles["kansla-varde"]}>{stats.averageFeeling}/5</div>
           </div>
         </div>
       </div>
 
       {/* Mest tränade färdigheter */}
       {stats.topSkills.length > 0 && (
-        <div style={{ marginBottom: "2rem" }}>
-          <h4 style={{
-            fontSize: "1.125rem",
-            fontWeight: "600",
-            color: "#e2e8f0",
-            marginBottom: "1rem"
-          }}>
-            🎯 Mest tränade färdigheter
-          </h4>
-          <div style={{
-            display: "flex",
-            gap: "0.5rem",
-            flexWrap: "wrap"
-          }}>
+        <div className={styles["fardigheter-sektion"]}>
+          <h4 className={styles["fardigheter-titel"]}>🎯 Mest tränade färdigheter</h4>
+          <div className={styles["fardigheter-lista"]}>
             {stats.topSkills.map(([skill, count], index) => (
               <div
                 key={skill}
-                style={{
-                  background: index === 0 ? "#b8f27c20" : "#0f0f0f",
-                  border: index === 0 ? "1px solid #b8f27c" : "1px solid #333",
-                  padding: "0.75rem 1rem",
-                  borderRadius: "8px",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0.5rem"
-                }}
+                className={`${styles["fardighet-kort"]}${index === 0 ? " " + styles["fardighet-topp"] : ""}`}
               >
-                <span style={{
-                  fontSize: "0.875rem",
-                  fontWeight: "600",
-                  color: index === 0 ? "#b8f27c" : "#e2e8f0"
-                }}>
-                  {skill}
-                </span>
-                <span style={{
-                  background: index === 0 ? "#b8f27c" : "#374151",
-                  color: index === 0 ? "#000" : "#e2e8f0",
-                  padding: "0.25rem 0.5rem",
-                  borderRadius: "4px",
-                  fontSize: "0.75rem",
-                  fontWeight: "600"
-                }}>
-                  {count}
-                </span>
+                <span className={`${styles["fardighet-namn"]}${index === 0 ? " " + styles["fardighet-namn-topp"] : ""}`}>{skill}</span>
+                <span className={`${styles["fardighet-count"]}${index === 0 ? " " + styles["fardighet-count-topp"] : ""}`}>{count}</span>
               </div>
             ))}
           </div>
@@ -392,90 +190,25 @@ export const TrainingLogStats: React.FC<TrainingLogStatsProps> = ({
 
       {/* Prestation */}
       {(stats.totalStats.goals > 0 || stats.totalStats.assists > 0 || stats.totalStats.shots > 0) && (
-        <div>
-          <h4 style={{
-            fontSize: "1.125rem",
-            fontWeight: "600",
-            color: "#e2e8f0",
-            marginBottom: "1rem"
-          }}>
-            🏆 Prestation
-          </h4>
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))",
-            gap: "1rem"
-          }}>
+        <div className={styles["prestation-sektion"]}>
+          <h4 className={styles["prestation-titel"]}>🏆 Prestation</h4>
+          <div className={styles["prestation-grid"]}>
             {stats.totalStats.goals > 0 && (
-              <div style={{
-                background: "#0f0f0f",
-                padding: "1rem",
-                borderRadius: "8px",
-                textAlign: "center",
-                border: "1px solid #333"
-              }}>
-                <div style={{
-                  fontSize: "1.5rem",
-                  fontWeight: "700",
-                  color: "#22c55e",
-                  marginBottom: "0.25rem"
-                }}>
-                  {stats.totalStats.goals}
-                </div>
-                <div style={{
-                  fontSize: "0.75rem",
-                  color: "#9ca3af"
-                }}>
-                  ⚽ Mål
-                </div>
+              <div className={`${styles["prestation-kort"]} ${styles["prestation-mal"]}`}>
+                <div className={`${styles["prestation-varde"]} ${styles["prestation-varde-mal"]}`}>{stats.totalStats.goals}</div>
+                <div className={styles["prestation-label"]}>⚽ Mål</div>
               </div>
             )}
             {stats.totalStats.assists > 0 && (
-              <div style={{
-                background: "#0f0f0f",
-                padding: "1rem",
-                borderRadius: "8px",
-                textAlign: "center",
-                border: "1px solid #333"
-              }}>
-                <div style={{
-                  fontSize: "1.5rem",
-                  fontWeight: "700",
-                  color: "#f59e0b",
-                  marginBottom: "0.25rem"
-                }}>
-                  {stats.totalStats.assists}
-                </div>
-                <div style={{
-                  fontSize: "0.75rem",
-                  color: "#9ca3af"
-                }}>
-                  🎯 Assist
-                </div>
+              <div className={`${styles["prestation-kort"]} ${styles["prestation-assist"]}`}>
+                <div className={`${styles["prestation-varde"]} ${styles["prestation-varde-assist"]}`}>{stats.totalStats.assists}</div>
+                <div className={styles["prestation-label"]}>🎯 Assist</div>
               </div>
             )}
             {stats.totalStats.shots > 0 && (
-              <div style={{
-                background: "#0f0f0f",
-                padding: "1rem",
-                borderRadius: "8px",
-                textAlign: "center",
-                border: "1px solid #333"
-              }}>
-                <div style={{
-                  fontSize: "1.5rem",
-                  fontWeight: "700",
-                  color: "#8b5cf6",
-                  marginBottom: "0.25rem"
-                }}>
-                  {stats.totalStats.shots}
-                </div>
-                <div style={{
-                  fontSize: "0.75rem",
-                  color: "#9ca3af"
-                }}>
-                  🏒 Skott
-                </div>
+              <div className={`${styles["prestation-kort"]} ${styles["prestation-skott"]}`}>
+                <div className={`${styles["prestation-varde"]} ${styles["prestation-varde-skott"]}`}>{stats.totalStats.shots}</div>
+                <div className={styles["prestation-label"]}>🏒 Skott</div>
               </div>
             )}
           </div>

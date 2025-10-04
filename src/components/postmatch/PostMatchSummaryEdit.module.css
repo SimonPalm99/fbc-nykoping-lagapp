@@ -1,0 +1,30 @@
+.sammanfattning-container {
+  background: #23272e;
+  border-radius: 9px;
+  padding: 18px;
+  margin-top: 20px;
+  box-shadow: 0 2px 14px #0002;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.falt {
+  margin-bottom: 10px;
+  color: #fff;
+  background: #20242a;
+  padding: 8px 12px;
+  border-radius: 6px;
+}
+
+.skapad {
+  color: #aaa;
+  font-size: 13px;
+  margin-top: 8px;
+}
+
+@media (max-width: 600px) {
+  .sammanfattning-container {
+    font-size: 15px !important;
+  }
+}

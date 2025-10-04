@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import styles from "./AbsenceForm.module.css";
 import { Activity } from "../../types/activity";
 
 interface Props {
@@ -56,18 +57,11 @@ const AbsenceForm: React.FC<Props> = ({
 
   if (hasDeadlinePassed && !isAbsent) {
     return (
-      <div style={{
-        background: "#fed7d7",
-        color: "#c53030",
-        padding: "12px",
-        borderRadius: "8px",
-        margin: "16px 0",
-        textAlign: "center"
-      }}>
-        <div style={{ fontWeight: 600, marginBottom: "4px" }}>
+      <div className={styles.absenceDeadlinePassed}>
+        <div className={styles.absenceDeadlinePassedTitle}>
           Anmälningstiden har gått ut
         </div>
-        <div style={{ fontSize: "14px" }}>
+        <div className={styles.absenceDeadlinePassedText}>
           Du kan inte längre anmäla frånvaro för denna aktivitet. 
           Kontakta ledarna om du inte kan delta.
         </div>
@@ -76,31 +70,13 @@ const AbsenceForm: React.FC<Props> = ({
   }
 
   return (
-    <div style={{
-      background: "#2d3748",
-      padding: "20px",
-      borderRadius: "12px",
-      margin: "16px 0",
-      color: "#fff"
-    }}>
-      <h3 style={{ 
-        margin: "0 0 16px 0", 
-        color: isAbsent ? "#f56565" : "#b8f27c",
-        fontSize: "18px"
-      }}>
+    <div className={styles.absenceForm}>
+      <h3 className={isAbsent ? `${styles.absenceFormTitle} ${styles.absenceFormTitleAbsent}` : `${styles.absenceFormTitle} ${styles.absenceFormTitlePresent}`}>
         {isAbsent ? "Du är anmäld som frånvarande" : "Anmäl frånvaro"}
       </h3>
 
       {activity.absenceDeadline && (
-        <div style={{
-          background: "#ed8936",
-          color: "#fff",
-          padding: "8px 12px",
-          borderRadius: "6px",
-          fontSize: "14px",
-          marginBottom: "16px",
-          fontWeight: 500
-        }}>
+        <div className={styles.absenceDeadline}>
           ⏰ Sista anmälan: {new Date(activity.absenceDeadline).toLocaleDateString('sv-SE', {
             weekday: 'short',
             year: 'numeric',
@@ -114,23 +90,15 @@ const AbsenceForm: React.FC<Props> = ({
 
       {isAbsent ? (
         <div>
-          <div style={{
-            background: "#f56565",
-            color: "#fff",
-            padding: "12px",
-            borderRadius: "8px",
-            marginBottom: "16px",
-            display: "flex",
-            alignItems: "center"
-          }}>
-            <span style={{ fontSize: "20px", marginRight: "8px" }}>❌</span>
+          <div className={styles.absenceInfo}>
+            <span className={styles.absenceInfoIcon}>❌</span>
             <div>
-              <div style={{ fontWeight: 600 }}>Anmäld som frånvarande</div>
-              <div style={{ fontSize: "14px", opacity: 0.9 }}>
+              <div className={styles.absenceInfoText}>Anmäld som frånvarande</div>
+              <div className={styles.absenceInfoReason}>
                 Anledning: {currentParticipation?.absenceReason || "Ingen anledning angiven"}
               </div>
               {currentParticipation?.absenceDate && (
-                <div style={{ fontSize: "12px", opacity: 0.8 }}>
+                <div className={styles.absenceInfoDate}>
                   Anmäld: {new Date(currentParticipation.absenceDate).toLocaleDateString('sv-SE')}
                 </div>
               )}
@@ -140,16 +108,7 @@ const AbsenceForm: React.FC<Props> = ({
           <button
             onClick={handleCancel}
             disabled={isSubmitting || hasDeadlinePassed}
-            style={{
-              background: hasDeadlinePassed ? "#4a5568" : "#48bb78",
-              color: "#fff",
-              border: "none",
-              padding: "10px 20px",
-              borderRadius: "8px",
-              cursor: hasDeadlinePassed ? "not-allowed" : "pointer",
-              fontWeight: 600,
-              opacity: isSubmitting ? 0.7 : 1
-            }}
+            className={styles.absenceCancelBtn}
           >
             {isSubmitting ? "Uppdaterar..." : 
              hasDeadlinePassed ? "Anmälningstiden har gått ut" : "Ångra frånvaroanmälan"}
@@ -157,91 +116,46 @@ const AbsenceForm: React.FC<Props> = ({
         </div>
       ) : (
         <form onSubmit={handleSubmit}>
-          <div style={{ marginBottom: "16px" }}>
-            <label style={{ 
-              display: "block", 
-              marginBottom: "8px", 
-              fontWeight: 500,
-              fontSize: "14px"
-            }}>
+          <div className={styles.absenceFormField}>
+            <label className={styles.absenceFormLabel}>
               Anledning till frånvaro *
             </label>
-            
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: "12px" }}>
+            <div className={styles.absenceCommonReasons}>
               {commonReasons.map(commonReason => (
                 <button
                   key={commonReason}
                   type="button"
                   onClick={() => setReason(commonReason)}
-                  style={{
-                    background: reason === commonReason ? "#3182ce" : "transparent",
-                    color: "#fff",
-                    border: "1px solid #4a5568",
-                    padding: "6px 12px",
-                    borderRadius: "16px",
-                    fontSize: "12px",
-                    cursor: "pointer",
-                    transition: "all 0.2s"
-                  }}
+                  className={reason === commonReason ? `${styles.absenceCommonReasonBtn} ${styles.selected}` : styles.absenceCommonReasonBtn}
                 >
                   {commonReason}
                 </button>
               ))}
             </div>
-
             <textarea
               value={reason}
               onChange={(e) => setReason(e.target.value)}
               placeholder="Ange anledning till frånvaro..."
               required
               rows={3}
-              style={{
-                width: "100%",
-                padding: "12px",
-                background: "#1a202c",
-                border: "1px solid #4a5568",
-                borderRadius: "8px",
-                color: "#fff",
-                fontSize: "14px",
-                resize: "vertical",
-                fontFamily: "inherit"
-              }}
+              className={styles.absenceTextarea}
             />
           </div>
 
-          <div style={{
-            background: "#fed7d7",
-            color: "#c53030",
-            padding: "12px",
-            borderRadius: "8px",
-            marginBottom: "16px",
-            fontSize: "14px"
-          }}>
-            <div style={{ fontWeight: 600, marginBottom: "4px" }}>
-              ⚠️ Viktigt att komma ihåg:
-            </div>
-            <ul style={{ margin: 0, paddingLeft: "16px" }}>
+          <div className={styles.absenceWarning}>
+            <div className={styles.absenceWarningTitle}>⚠️ Viktigt att komma ihåg:</div>
+            <ul className={styles.absenceWarningList}>
               <li>Anmäl frånvaro i god tid</li>
               <li>Sen frånvaroanmälan kan medföra böter</li>
               <li>Kontakta ledarna vid akut sjukdom</li>
             </ul>
           </div>
 
-          <div style={{ display: "flex", gap: "12px" }}>
+          <div className={styles.absenceSubmitWrapper}>
             <button
               type="submit"
               disabled={!reason.trim() || isSubmitting}
-              style={{
-                background: !reason.trim() ? "#4a5568" : "#f56565",
-                color: "#fff",
-                border: "none",
-                padding: "12px 24px",
-                borderRadius: "8px",
-                cursor: !reason.trim() ? "not-allowed" : "pointer",
-                fontWeight: 600,
-                opacity: isSubmitting ? 0.7 : 1,
-                flex: 1
-              }}
+              className={styles.absenceSubmitBtn}
             >
               {isSubmitting ? "Anmäler..." : "Anmäl frånvaro"}
             </button>

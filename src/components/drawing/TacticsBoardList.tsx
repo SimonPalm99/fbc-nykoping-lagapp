@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import styles from "./TacticsBoardList.module.css";
 
 export interface TacticsBoard {
   id: string;
@@ -51,61 +52,42 @@ const TacticsBoardList: React.FC<Props> = ({ isLeader }) => {
   };
 
   return (
-    <div style={{ maxWidth: 450, margin: "0 auto", border: "1px solid #bbb", borderRadius: 8, padding: 14, background: "#f8f9fa" }}>
+    <div className={styles.tacticsBoardList}>
       <h3>Taktiktavlor</h3>
       {isLeader && (
-        <div style={{ marginBottom: 12 }}>
+        <div className={styles.tacticsBoardList__header}>
           <input
             placeholder="Ny tavlas rubrik"
             value={newTitle}
             onChange={(e) => setNewTitle(e.target.value)}
-            style={{ marginRight: 8 }}
+            className={styles.tacticsBoardList__input}
           />
           <button onClick={handleAdd}>Skapa tavla</button>
         </div>
       )}
-      <ul>
+      <ul className={styles.tacticsBoardList__list}>
         {boards.map((b) => (
           <li
             key={b.id}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              background: selected === b.id ? "#e0eaff" : undefined,
-              borderRadius: 4,
-              padding: "6px 0",
-              marginBottom: 2,
-            }}
+            className={selected === b.id
+              ? `${styles["tacticsBoardList__item"]} ${styles["tacticsBoardList__item--selected"]}`
+              : styles["tacticsBoardList__item"]}
           >
             <button
-              style={{
-                flex: 1,
-                textAlign: "left",
-                background: "none",
-                border: "none",
-                cursor: "pointer",
-                fontWeight: selected === b.id ? "bold" : "normal",
-                fontSize: 16,
-              }}
+              className={selected === b.id
+                ? `${styles["tacticsBoardList__titleBtn"]} ${styles["tacticsBoardList__titleBtn--selected"]}`
+                : styles["tacticsBoardList__titleBtn"]}
               onClick={() => setSelected(b.id)}
             >
               {b.title}
             </button>
-            <span style={{ fontSize: 11, color: "#888", marginLeft: 6 }}>
+            <span className={styles.tacticsBoardList__meta}>
               {new Date(b.createdAt).toLocaleDateString()} ({b.createdBy})
             </span>
             {isLeader && (
               <button
                 onClick={() => handleDelete(b.id)}
-                style={{
-                  marginLeft: 10,
-                  color: "#fff",
-                  background: "#fa5252",
-                  border: "none",
-                  borderRadius: 4,
-                  padding: "2px 7px",
-                  cursor: "pointer",
-                }}
+                className={styles.tacticsBoardList__deleteBtn}
                 title="Radera tavla"
               >
                 🗑
@@ -115,14 +97,14 @@ const TacticsBoardList: React.FC<Props> = ({ isLeader }) => {
         ))}
       </ul>
       {selected && (
-        <div style={{ marginTop: 16, background: "#fffbe6", padding: 10, borderRadius: 6 }}>
+        <div className={styles.tacticsBoardList__details}>
           <b>Visar tavla:</b> {boards.find((b) => b.id === selected)?.title}
           {/* Här kan du rendera själva taktiktavlan, t.ex. <TacticsBoardCanvas boardId={selected} /> */}
         </div>
       )}
-      {!selected && <div style={{ marginTop: 18, color: "#888" }}>Välj en tavla för att visa detaljer.</div>}
+      {!selected && <div className={styles.tacticsBoardList__empty}>Välj en tavla för att visa detaljer.</div>}
       {isLeader && (
-        <div style={{ marginTop: 22, color: "#228be6", fontWeight: 500 }}>
+        <div className={styles.tacticsBoardList__leaderInfo}>
           Du har ledarbehörighet och kan skapa/radera tavlor.
         </div>
       )}

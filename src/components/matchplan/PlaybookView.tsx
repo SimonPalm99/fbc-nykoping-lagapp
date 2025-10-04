@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useToast } from "../ui/Toast";
+import styles from "./PlaybookView.module.css";
 
 interface Formation {
   id: string;
@@ -74,246 +75,111 @@ const PlaybookView: React.FC<Props> = ({
     { id: "instructions", name: "Instruktioner", icon: "📝" }
   ];
 
-  const styles = {
-    container: {
-      background: "#1a1a1a",
-      minHeight: "100vh",
-      color: "#ffffff",
-      padding: "20px"
-    },
-    header: {
-      background: "linear-gradient(135deg, #262626, #1a1a1a)",
-      borderRadius: "16px",
-      padding: "2rem",
-      marginBottom: "2rem",
-      textAlign: "center" as const,
-      border: "1px solid #333"
-    },
-    tabs: {
-      display: "flex",
-      gap: "1rem",
-      marginBottom: "2rem",
-      borderBottom: "1px solid #333",
-      paddingBottom: "1rem",
-      overflowX: "auto" as const
-    },
-    tab: {
-      padding: "0.75rem 1.5rem",
-      borderRadius: "8px",
-      border: "1px solid #333",
-      background: "#262626",
-      color: "#ccc",
-      cursor: "pointer",
-      transition: "all 0.2s ease",
-      fontWeight: "500" as const,
-      whiteSpace: "nowrap" as const,
-      minWidth: "120px"
-    },
-    activeTab: {
-      background: "var(--primary-color)",
-      color: "#ffffff",
-      borderColor: "var(--primary-color)"
-    },
-    card: {
-      background: "#262626",
-      borderRadius: "12px",
-      padding: "1.5rem",
-      border: "1px solid #333",
-      marginBottom: "1rem"
-    },
-    button: {
-      padding: "0.75rem 1.5rem",
-      borderRadius: "8px",
-      border: "none",
-      cursor: "pointer",
-      fontWeight: "600" as const,
-      fontSize: "0.875rem",
-      transition: "all 0.2s ease"
-    }
-  };
-
   return (
-    <div style={styles.container}>
+    <div className={styles.container}>
       {/* Header */}
-      <header style={styles.header}>
-        <h1 style={{ 
-          fontSize: "2.5rem", 
-          margin: "0 0 1rem 0",
-          fontWeight: "700",
-          background: "linear-gradient(135deg, #10b981, #3b82f6)",
-          WebkitBackgroundClip: "text",
-          WebkitTextFillColor: "transparent",
-          backgroundClip: "text"
-        }}>
+      <header className={styles.header}>
+        <h1 className={styles["header-title"]}>
           📖 {matchPlan.matchTitle}
         </h1>
-        <div style={{ fontSize: "1.25rem", color: "#ccc", marginBottom: "1rem" }}>
+        <div className={styles["header-subtitle"]}>
           vs {matchPlan.opponent} • {new Date(matchPlan.date).toLocaleDateString("sv-SE")} • {matchPlan.venue}
         </div>
-        
         {/* Bekräftelse-status */}
-        <div style={{
-          background: "#333",
-          borderRadius: "12px",
-          padding: "1rem",
-          marginTop: "1rem"
-        }}>
-          <div style={{ marginBottom: "0.5rem", fontSize: "0.875rem", color: "#ccc" }}>
+        <div className={styles["confirm-status"]}>
+          <div className={styles["confirm-status-label"]}>
             Bekräftat av spelare: {matchPlan.confirmedBy.length}/20 ({Math.round(confirmationRate)}%)
           </div>
-          <div style={{
-            background: "#1a1a1a",
-            borderRadius: "8px",
-            height: "8px",
-            overflow: "hidden"
-          }}>
-            <div style={{
-              background: "linear-gradient(90deg, #10b981, #3b82f6)",
-              height: "100%",
-              width: `${confirmationRate}%`,
-              transition: "width 0.3s ease"
-            }} />
+          <div className={styles["confirm-bar"]}>
+            <div className={styles["confirm-bar-fill"]} data-width={confirmationRate} />
           </div>
-          
           {playerId && !readonly && (
             <button
               onClick={handleConfirm}
               disabled={isConfirmed}
-              style={{
-                ...styles.button,
-                background: isConfirmed ? "#10b981" : "var(--primary-color)",
-                color: "#ffffff",
-                marginTop: "1rem",
-                opacity: isConfirmed ? 0.7 : 1
-              }}
+              className={isConfirmed ? `${styles["confirm-btn"]} ${styles["confirm-btn-confirmed"]}` : styles["confirm-btn"]}
             >
               {isConfirmed ? "✅ Bekräftad" : "📋 Bekräfta att jag läst"}
             </button>
           )}
         </div>
       </header>
-
       {/* Navigation */}
-      <div style={styles.tabs}>
+      <div className={styles.tabs}>
         {sections.map(section => (
           <button
             key={section.id}
-            style={{
-              ...styles.tab,
-              ...(currentSection === section.id ? styles.activeTab : {})
-            }}
+            className={currentSection === section.id ? `${styles.tab} ${styles["tab-active"]}` : styles.tab}
             onClick={() => setCurrentSection(section.id as any)}
           >
             {section.icon} {section.name}
           </button>
         ))}
       </div>
-
       {/* Content */}
       {currentSection === "overview" && (
         <div>
-          <div style={{ 
-            display: "grid", 
-            gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-            gap: "1rem",
-            marginBottom: "2rem"
-          }}>
-            <div style={styles.card}>
-              <div style={{ fontSize: "2rem", fontWeight: "bold", color: "#3b82f6", marginBottom: "0.5rem" }}>
-                {matchPlan.formations.length}
-              </div>
-              <div style={{ color: "#ccc" }}>Formationer</div>
+          <div className={`${styles.grid} ${styles["grid-auto"]} ${styles["grid-margin-bottom"]}`}> 
+            <div className={styles.card}>
+              <div className={`${styles["card-title"]} ${styles["card-title-blue"]}`}>{matchPlan.formations.length}</div>
+              <div className={styles["card-label"]}>Formationer</div>
             </div>
-            <div style={styles.card}>
-              <div style={{ fontSize: "2rem", fontWeight: "bold", color: "#f59e0b", marginBottom: "0.5rem" }}>
-                {matchPlan.tactics.length}
-              </div>
-              <div style={{ color: "#ccc" }}>Taktiska instruktioner</div>
+            <div className={styles.card}>
+              <div className={`${styles["card-title"]} ${styles["card-title-orange"]}`}>{matchPlan.tactics.length}</div>
+              <div className={styles["card-label"]}>Taktiska instruktioner</div>
             </div>
-            <div style={styles.card}>
-              <div style={{ fontSize: "2rem", fontWeight: "bold", color: "#10b981", marginBottom: "0.5rem" }}>
-                {matchPlan.keys.length}
-              </div>
-              <div style={{ color: "#ccc" }}>Nycklar till seger</div>
+            <div className={styles.card}>
+              <div className={`${styles["card-title"]} ${styles["card-title-green"]}`}>{matchPlan.keys.length}</div>
+              <div className={styles["card-label"]}>Nycklar till seger</div>
             </div>
-            <div style={styles.card}>
-              <div style={{ fontSize: "2rem", fontWeight: "bold", color: "#8b5cf6", marginBottom: "0.5rem" }}>
-                {matchPlan.specialPlays.length}
-              </div>
-              <div style={{ color: "#ccc" }}>Specialspel</div>
+            <div className={styles.card}>
+              <div className={`${styles["card-title"]} ${styles["card-title-purple"]}`}>{matchPlan.specialPlays.length}</div>
+              <div className={styles["card-label"]}>Specialspel</div>
             </div>
           </div>
-
           {/* Nycklar till seger */}
           {matchPlan.keys.length > 0 && (
-            <div style={styles.card}>
-              <h3 style={{ color: "#8b5cf6", marginBottom: "1rem" }}>🔑 Nycklar till seger</h3>
-              <ul style={{ margin: 0, paddingLeft: "1.5rem", color: "#ccc" }}>
+            <div className={styles.card}>
+              <h3 className={styles["special-plays-title"]}>🔑 Nycklar till seger</h3>
+              <ul className={styles["keys-list"]}>
                 {matchPlan.keys.map((key, index) => (
-                  <li key={index} style={{ marginBottom: "0.5rem" }}>{key}</li>
+                  <li key={index} className={styles["keys-list-item"]}>{key}</li>
                 ))}
               </ul>
             </div>
           )}
-
           {/* Tränaranteckningar */}
           {matchPlan.coachNotes && (
-            <div style={styles.card}>
-              <h3 style={{ color: "#10b981", marginBottom: "1rem" }}>💬 Tränaranteckningar</h3>
-              <p style={{ margin: 0, color: "#ccc", lineHeight: 1.6 }}>
-                {matchPlan.coachNotes}
-              </p>
+            <div className={styles.card}>
+              <h3 className={styles["coach-notes-title"]}>💬 Tränaranteckningar</h3>
+              <p className={styles["coach-notes"]}>{matchPlan.coachNotes}</p>
             </div>
           )}
         </div>
       )}
-
       {currentSection === "formations" && (
         <div>
-          <div style={{ display: "grid", gap: "1rem" }}>
+          <div className={styles.grid}>
             {matchPlan.formations.map(formation => (
               <div
                 key={formation.id}
-                style={{
-                  ...styles.card,
-                  cursor: "pointer",
-                  transition: "all 0.2s ease"
-                }}
+                className={`${styles.card} ${styles["formation-card"]}`}
                 onClick={() => setSelectedFormation(selectedFormation?.id === formation.id ? null : formation)}
               >
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <div className={styles["formation-card-header"]}>
                   <div>
-                    <h4 style={{ margin: "0 0 0.5rem 0", color: "#3b82f6" }}>
-                      🏒 {formation.name}
-                    </h4>
-                    <div style={{ fontSize: "0.875rem", color: "#ccc", marginBottom: "0.5rem" }}>
-                      Typ: {formation.type} • {formation.players.length} spelare
-                    </div>
-                    <p style={{ margin: 0, color: "#ccc", fontSize: "0.875rem" }}>
-                      {formation.description}
-                    </p>
+                    <h4 className={styles["formation-card-title"]}>🏒 {formation.name}</h4>
+                    <div className={styles["formation-card-meta"]}>Typ: {formation.type} • {formation.players.length} spelare</div>
+                    <p className={styles["formation-card-desc"]}>{formation.description}</p>
                   </div>
-                  <div style={{ fontSize: "1.5rem", color: "#666" }}>
-                    {selectedFormation?.id === formation.id ? "▼" : "▶"}
-                  </div>
+                  <div className={styles["formation-card-arrow"]}>{selectedFormation?.id === formation.id ? "▼" : "▶"}</div>
                 </div>
-                
                 {selectedFormation?.id === formation.id && (
-                  <div style={{
-                    marginTop: "1rem",
-                    padding: "1rem",
-                    background: "#1a1a1a",
-                    borderRadius: "8px",
-                    border: "1px solid #333"
-                  }}>
-                    <h5 style={{ color: "#10b981", marginBottom: "0.5rem" }}>Spelarpositioner:</h5>
-                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "0.5rem" }}>
+                  <div className={styles["formation-card-details"]}>
+                    <h5 className={styles["formation-card-details-title"]}>Spelarpositioner:</h5>
+                    <div className={styles["formation-card-details-list"]}>
                       {formation.players.map((player, index) => (
-                        <div key={index} style={{ 
-                          fontSize: "0.875rem", 
-                          color: "#ccc",
-                          padding: "0.25rem 0"
-                        }}>
+                        <div key={index} className={styles["formation-card-details-item"]}>
                           • Linje {player.line}: {player.position} (#{player.playerId})
                         </div>
                       ))}
@@ -325,83 +191,49 @@ const PlaybookView: React.FC<Props> = ({
           </div>
         </div>
       )}
-
       {currentSection === "tactics" && (
         <div>
-          <div style={{ display: "grid", gap: "1rem" }}>
+          <div className={styles.grid}>
             {matchPlan.tactics.map(tactic => (
               <div
                 key={tactic.id}
-                style={{
-                  ...styles.card,
-                  borderLeft: `4px solid ${
-                    tactic.priority === "high" ? "#ef4444" :
-                    tactic.priority === "medium" ? "#f59e0b" : "#6b7280"
-                  }`
-                }}
+                className={`${styles.card} ${styles["tactic-card"]}`}
               >
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "0.5rem" }}>
-                  <h4 style={{ margin: 0, color: "#f59e0b" }}>
-                    📋 {tactic.title}
-                  </h4>
-                  <div style={{
-                    padding: "0.25rem 0.5rem",
-                    borderRadius: "4px",
-                    fontSize: "0.75rem",
-                    fontWeight: "600",
-                    background: tactic.priority === "high" ? "#ef4444" :
-                              tactic.priority === "medium" ? "#f59e0b" : "#6b7280",
-                    color: "#ffffff"
-                  }}>
-                    {tactic.priority === "high" ? "HÖG" :
-                     tactic.priority === "medium" ? "MEDEL" : "LÅG"}
-                  </div>
+                <div className={styles["tactic-card-header"]}>
+                  <h4 className={styles["tactic-card-title"]}>📋 {tactic.title}</h4>
+                  <div className={styles["tactic-card-priority"]}>{tactic.priority === "high" ? "HÖG" : tactic.priority === "medium" ? "MEDEL" : "LÅG"}</div>
                 </div>
-                <div style={{ fontSize: "0.875rem", color: "#999", marginBottom: "0.5rem" }}>
-                  Kategori: {tactic.category}
-                </div>
-                <p style={{ margin: 0, color: "#ccc", lineHeight: 1.6 }}>
-                  {tactic.description}
-                </p>
+                <div className={styles["tactic-card-category"]}>Kategori: {tactic.category}</div>
+                <p className={styles["tactic-card-desc"]}>{tactic.description}</p>
               </div>
             ))}
           </div>
         </div>
       )}
-
       {currentSection === "instructions" && (
         <div>
           {Object.keys(matchPlan.playerInstructions).length > 0 ? (
-            <div style={{ display: "grid", gap: "1rem" }}>
+            <div className={styles["instructions-list"]}>
               {Object.entries(matchPlan.playerInstructions).map(([playerId, instruction]) => (
-                <div key={playerId} style={styles.card}>
-                  <h4 style={{ margin: "0 0 0.5rem 0", color: "#3b82f6" }}>
-                    👤 Spelare #{playerId}
-                  </h4>
-                  <p style={{ margin: 0, color: "#ccc", lineHeight: 1.6 }}>
-                    {instruction}
-                  </p>
+                <div key={playerId} className={`${styles.card} ${styles["instructions-card"]}`}>
+                  <h4 className={styles["instructions-card-title"]}>👤 Spelare #{playerId}</h4>
+                  <p className={styles["instructions-card-desc"]}>{instruction}</p>
                 </div>
               ))}
             </div>
           ) : (
-            <div style={{
-              ...styles.card,
-              textAlign: "center",
-              color: "#666"
-            }}>
-              <div style={{ fontSize: "3rem", marginBottom: "1rem" }}>📝</div>
-              <p style={{ margin: 0 }}>Inga individuella spelarinstruktioner tillgängliga</p>
+            <div className={`${styles.card} ${styles["instructions-empty"]}`}>
+              <div className={styles["instructions-empty-icon"]}>📝</div>
+              <p>Inga individuella spelarinstruktioner tillgängliga</p>
             </div>
           )}
-
           {/* Specialspel */}
           {matchPlan.specialPlays.length > 0 && (
-            <div style={{ ...styles.card, marginTop: "2rem" }}>
-              <h3 style={{ color: "#8b5cf6", marginBottom: "1rem" }}>⚡ Specialspel</h3>
-              <ul style={{ margin: 0, paddingLeft: "1.5rem", color: "#ccc" }}>
+            <div className={`${styles.card} ${styles["special-plays-card"]}`}>
+              <h3 className={styles["special-plays-title"]}>⚡ Specialspel</h3>
+              <ul className={styles["special-plays-list"]}>
                 {matchPlan.specialPlays.map((play, index) => (
-                  <li key={index} style={{ marginBottom: "0.5rem" }}>{play}</li>
+                  <li key={index} className={styles["special-plays-list-item"]}>{play}</li>
                 ))}
               </ul>
             </div>

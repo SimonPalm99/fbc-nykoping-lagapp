@@ -1,0 +1,127 @@
+.kommandeSection {
+  padding: 1rem 1.5rem 2rem;
+}
+.kommandeHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+.kommandeRubrik {
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0;
+}
+.kommandeLank {
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  border: 2px solid var(--primary-green);
+  transition: all 0.3s ease;
+  color: var(--primary-green);
+  background: transparent;
+}
+.kommandeLank:hover {
+  background: var(--primary-green);
+  color: white;
+}
+.kommandeTomKort {
+  background: var(--card-gradient, var(--card-background));
+  border: 2px solid var(--border-color);
+  border-radius: 16px;
+  padding: 3rem 2rem;
+  text-align: center;
+  box-shadow: var(--shadow-small);
+}
+.kommandeTomIcon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+.kommandeTomRubrik {
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+}
+.kommandeTomText {
+  margin: 0;
+}
+.kommandeList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.kommandeAktivKort {
+  background: var(--card-gradient, var(--card-background));
+  border: 2px solid var(--border-color);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: var(--shadow-small);
+  position: relative;
+  overflow: hidden;
+}
+.kommandeAktivGradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+}
+.kommandeAktivGradient[data-gradient] {
+  background: attr(data-gradient);
+}
+.kommandeAktivContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+.kommandeAktivInfo {
+  flex: 1;
+}
+.kommandeAktivTop {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+.kommandeAktivIcon {
+  font-size: 1.5rem;
+}
+.kommandeAktivTyp {
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.kommandeAktivTyp[data-bg] {
+  background: attr(data-bg);
+}
+.kommandeAktivTyp[data-color] {
+  color: attr(data-color);
+}
+.kommandeAktivDatum,
+.kommandeAktivTid,
+.kommandeAktivPlats {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+.kommandeAktivExtra {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+.kommandeAktivDagar {
+  background: var(--primary-gradient);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}

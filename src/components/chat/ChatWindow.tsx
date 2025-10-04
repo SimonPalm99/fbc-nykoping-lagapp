@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 
+import styles from "./ChatWindow.module.css";
+
 export interface ChatMessage {
   id: string;
   user: string;
@@ -29,60 +31,32 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ messages, onSend, currentUser }
   };
 
   return (
-    <div
-      style={{
-        border: "1px solid #ccc",
-        borderRadius: 6,
-        maxWidth: 400,
-        width: '100%',
-        margin: "0 auto",
-        display: "flex",
-        flexDirection: "column",
-        background: "#fafbfc",
-        height: 350,
-      }}
-      className="chat-window-responsive"
-    >
-      <div
-        style={{
-          maxHeight: 250,
-          overflowY: "auto",
-          padding: 8,
-          flex: 1,
-        }}
-      >
+    <div className={styles.chatWindow}>
+      <div className={styles.chatMessages}>
         {messages.map((msg) => (
           <div
             key={msg.id}
-            style={{
-              margin: "6px 0",
-              background: msg.user === currentUser ? "#d0ebff" : "#eee",
-              borderRadius: 4,
-              padding: "5px 10px",
-              alignSelf: msg.user === currentUser ? "flex-end" : "flex-start",
-              textAlign: msg.user === currentUser ? "right" : "left",
-              maxWidth: "75%",
-            }}
+            className={`${styles.chatMessage} ${msg.user === currentUser ? styles.chatMessageSelf : styles.chatMessageOther}`}
           >
-            <span style={{ fontWeight: "bold", fontSize: 12 }}>
+            <span className={styles.chatMessageUser}>
               {msg.user}:
             </span>{" "}
-            <span style={{ fontSize: 14 }}>{msg.text}</span>
-            <div style={{ fontSize: 10, color: "#888" }}>
+            <span className={styles.chatMessageText}>{msg.text}</span>
+            <div className={styles.chatMessageTime}>
               {new Date(msg.timestamp).toLocaleTimeString()}
             </div>
           </div>
         ))}
         <div ref={messagesEndRef} />
       </div>
-      <form onSubmit={handleSend} style={{ display: "flex", borderTop: "1px solid #ccc", padding: 8 }}>
+      <form onSubmit={handleSend} className={styles.chatInputForm}>
         <input
           value={input}
           onChange={e => setInput(e.target.value)}
           placeholder="Skriv ett meddelande..."
-          style={{ flex: 1, padding: 8, border: "none", outline: "none", borderRadius: 4, background: "#fff" }}
+          className={styles.chatInput}
         />
-        <button type="submit" style={{ padding: "0 16px", marginLeft: 8 }}>
+        <button type="submit" className={styles.chatSendButton}>
           Skicka
         </button>
       </form>

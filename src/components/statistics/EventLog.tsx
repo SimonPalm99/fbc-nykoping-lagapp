@@ -19,7 +19,7 @@ const EventLog: React.FC<EventLogProps> = ({ activityId }) => {
       <ul>
         {shownActivities.map(a => (
           <li key={a.id}>
-            {a.title} - {a.date} {a.canceled && <span style={{ color: "red" }}>[Inställd]</span>}
+            {a.title} - {a.date} {a.canceled && <span className="eventlog-canceled">[Inställd]</span>}
           </li>
         ))}
       </ul>

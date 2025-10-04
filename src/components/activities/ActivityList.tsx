@@ -175,12 +175,11 @@ const ActivityList: React.FC<ActivityListProps> = ({
           <div className="filter-section">
             <h4>Aktivitetstyp</h4>
             <div className="type-filters">
-              {activityTypes.map(({ type, label, icon, color }) => (
+              {activityTypes.map(({ type, label, icon }) => (
                 <button
                   key={type}
-                  className={`type-filter ${selectedTypes.includes(type) ? 'active' : ''}`}
+                  className={`type-filter ${selectedTypes.includes(type) ? 'active' : ''} type-filter-${type}`}
                   onClick={() => toggleTypeFilter(type)}
-                  style={{ '--type-color': color } as React.CSSProperties}
                 >
                   <span className="type-icon">{icon}</span>
                   <span className="type-label">{label}</span>

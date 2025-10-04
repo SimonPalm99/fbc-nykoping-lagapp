@@ -1,0 +1,62 @@
+.fineList {
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+  background: #21252b;
+  border-radius: 12px;
+  overflow: auto;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  margin-bottom: 30px;
+}
+.fineList__table {
+  width: 100%;
+  border-collapse: collapse;
+  color: #fff;
+  font-family: inherit;
+  font-size: 15px;
+}
+.fineList__theadRow {
+  background: #181c1e;
+}
+.fineList__th,
+.fineList__td {
+  padding: 10px 2px;
+}
+.fineList__emptyRow {
+  text-align: center;
+  padding: 16px;
+  color: #b8f27c;
+}
+.fineList__row {
+  background: #23272f;
+}
+.fineList__paid {
+  color: #b8f27c;
+}
+.fineList__unpaid {
+  color: #ff6464;
+}
+@media (max-width: 600px) {
+  .fineList {
+    overflow-x: auto;
+  }
+  .fineList__table,
+  .fineList__theadRow,
+  .fineList__tbody,
+  .fineList__th,
+  .fineList__td,
+  .fineList__row {
+    display: block;
+  }
+  .fineList__th,
+  .fineList__td {
+    padding: 12px 4px;
+    min-width: 120px;
+  }
+  .fineList__theadRow {
+    display: none;
+  }
+  .fineList__row {
+    margin-bottom: 12px;
+  }
+}

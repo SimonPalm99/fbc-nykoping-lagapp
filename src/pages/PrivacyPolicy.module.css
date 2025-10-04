@@ -1,0 +1,51 @@
+/* FBC Privacy Policy Theme */
+.root {
+  min-height: 100vh;
+  background: var(--background-gradient, #F1F8E9);
+  color: var(--text-primary, #1B5E20);
+  font-family: inherit;
+  padding: 2rem 0;
+  position: relative;
+}
+.card {
+  max-width: 900px;
+  margin: 0 auto;
+  background: var(--card-background, #fff);
+  border-radius: 1.2rem;
+  box-shadow: 0 4px 16px rgba(46, 125, 50, 0.18);
+  border: 2px solid var(--primary-green, #2E7D32);
+  padding: 2.5rem 2rem;
+  position: relative;
+}
+.title {
+  font-weight: 900;
+  font-size: 2rem;
+  color: var(--primary-green, #2E7D32);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+.subtitle {
+  font-size: 1.15rem;
+  color: var(--text-secondary, #4A5568);
+  margin-bottom: 1.5rem;
+}
+.sectionTitle {
+  color: var(--primary-green, #2E7D32);
+  font-size: 1.25rem;
+  margin-top: 1.5rem;
+}
+.list {
+  font-size: 1.05rem;
+  color: var(--text-secondary, #4A5568);
+  margin-bottom: 1.2rem;
+}
+.contact {
+  font-size: 1.05rem;
+  color: var(--text-secondary, #4A5568);
+}
+.updated {
+  margin-top: 2.5rem;
+  text-align: center;
+  color: var(--text-secondary, #4A5568);
+  font-size: 0.95rem;
+}

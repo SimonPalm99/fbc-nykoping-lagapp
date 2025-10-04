@@ -1,0 +1,248 @@
+.canceled {
+  opacity: 0.5;
+}
+/* FBC Nyköping theme styles for Matchanalys */
+
+.root {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #101a10 60%, #22c55e 100%);
+  padding: 2rem 0;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem;
+  border-radius: 32px;
+  box-shadow: 0 8px 32px #000a;
+  background: rgba(20,32,20,0.85);
+  border: 2px solid #22c55e;
+}
+
+.heading {
+  color: #22c55e;
+  font-weight: 900;
+  font-size: 2.3rem;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 2px 8px #22c55e88;
+}
+
+.subheading {
+  color: #d1fae5;
+  font-size: 1.15rem;
+  margin-bottom: 2rem;
+  font-weight: 500;
+}
+
+.input {
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  border-radius: 8px;
+  border: 1px solid #22c55e;
+  background: #181c18;
+  color: #d1fae5;
+}
+
+.card {
+  background: #181c18;
+  border-radius: 20px;
+  box-shadow: 0 4px 16px #22c55e22;
+  border: 2px solid #22c55e;
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.cardTitle {
+  color: #22c55e;
+  font-weight: 900;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+}
+
+.cardDate {
+  color: #d1fae5;
+  font-weight: 700;
+  margin-bottom: 0.7rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.label {
+  color: #22c55e;
+  font-weight: 700;
+}
+
+.textarea {
+  width: 100%;
+  margin-bottom: 12px;
+  padding: 0.5rem;
+  border-radius: 8px;
+  border: 1px solid #22c55e;
+  background: #181c18;
+  color: #d1fae5;
+}
+
+.fileInput {
+  margin-bottom: 12px;
+}
+
+.fileList {
+  margin-bottom: 12px;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.fileCard {
+  background: #222;
+  border-radius: 8px;
+  padding: 8px;
+  color: #d1fae5;
+  min-width: 120px;
+  text-align: center;
+}
+
+.fileImg {
+  max-width: 100px;
+  max-height: 80px;
+  border-radius: 6px;
+  margin-bottom: 4px;
+}
+
+.fileVideo {
+  max-width: 100px;
+  max-height: 80px;
+  border-radius: 6px;
+  margin-bottom: 4px;
+}
+
+.fileIcon {
+  font-size: 24px;
+}
+
+.fileName {
+  font-size: 13px;
+}
+
+.buttonRow {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.saveBtn {
+  background: #22c55e;
+  color: #fff;
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  padding: 0.7rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.closeBtn {
+  background: #ef4444;
+  color: #fff;
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  padding: 0.7rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.loading {
+  color: #22c55e;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.notFound {
+  color: #ef4444;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.matchGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+}
+
+.matchCard {
+  background: #181c18;
+  border-radius: 20px;
+  box-shadow: 0 4px 16px #22c55e22;
+  border: 2px solid #22c55e;
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.matchTitle {
+  color: #22c55e;
+  font-weight: 900;
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+}
+
+.matchDate {
+  color: #d1fae5;
+  font-weight: 700;
+  margin-bottom: 0.7rem;
+}
+
+.matchDesc {
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+.analysisRow {
+  margin-top: 1rem;
+}
+
+.analysisTitle {
+  color: #22c55e;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.analysisSummary {
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.analysisRating {
+  color: #d1fae5;
+  font-weight: 700;
+}
+
+.analysisNone {
+  color: #d1fae5;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.actionRow {
+  margin-top: 1.5rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.actionBtn {
+  background: #2563eb;
+  color: #fff;
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  padding: 0.7rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+}

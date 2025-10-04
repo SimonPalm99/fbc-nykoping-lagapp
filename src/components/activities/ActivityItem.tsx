@@ -1,6 +1,8 @@
+
 import React from "react";
 import { Activity } from "../../types/activity";
 import { useTheme } from "../../context/ThemeContext";
+import styles from "./ActivityItem.module.css";
 
 interface Props {
   activity: Activity;
@@ -38,15 +40,7 @@ const ActivityItem: React.FC<Props> = ({
     return icons[type] || "📅";
   };
 
-  const getStatusColor = (status: string) => {
-    switch(status) {
-      case "attending": return "#48bb78";
-      case "absent": return "#f56565";
-      case "maybe": return "#ed8936";
-      case "not_responded": return "#a0aec0";
-      default: return "#a0aec0";
-    }
-  };
+  // Status color is now handled by CSS var in module
 
   const getStatusText = (status: string) => {
     switch(status) {
@@ -79,113 +73,117 @@ const ActivityItem: React.FC<Props> = ({
 
   return (
     <div
-      className={`activity-item-card ${isDark ? 'dark' : ''} ${activity.canceled ? 'canceled' : ''} ${activity.important ? 'important' : ''}`}
+      className={[
+        styles.activityItemCard,
+        isDark ? styles.dark : '',
+        activity.canceled ? styles.canceled : '',
+        activity.important ? styles.important : ''
+      ].join(' ')}
       onClick={onClick}
       tabIndex={onClick ? 0 : undefined}
-      role={onClick ? "button" : undefined}
+      {...(onClick ? { role: "button" } : {})}
     >
       {/* Header med typ och titel */}
-      <div className="activity-item-header">
-        <div className="activity-item-title-section">
-          <span className="activity-type-icon">
+      <div className={styles.activityItemHeader}>
+        <div className={styles.activityItemTitleSection}>
+          <span className={styles.activityTypeIcon}>
             {getTypeIcon(activity.type)}
           </span>
-          <div className="activity-title-container">
-            <div className="activity-title" style={{ color: activity.color || '#3b82f6' }}>
+          <div className={styles.activityTitleContainer}>
+            <div
+              className={styles.activityTitle}
+              data-color={activity.color ? activity.color : undefined}
+            >
               {activity.title}
             </div>
-            <div className="activity-type-label">
+            <div className={styles.activityTypeLabel}>
               {activity.type}
             </div>
           </div>
         </div>
-
         {/* Status badges */}
-        <div className="activity-badges">
+        <div className={styles.activityBadges}>
           {activity.important && (
-            <span className="badge badge-important">
+            <span className={`${styles.badge} ${styles.badgeImportant}`}>
               VIKTIGT
             </span>
           )}
           {activity.canceled && (
-            <span className="badge badge-canceled">
+            <span className={`${styles.badge} ${styles.badgeCanceled}`}>
               INSTÄLLD
             </span>
           )}
           {activity.tags && activity.tags.map(tag => (
-            <span key={tag} className="badge badge-tag">
+            <span key={tag} className={`${styles.badge} ${styles.badgeTag}`}>
               {tag}
             </span>
           ))}
         </div>
       </div>
-
       {/* Tid och plats */}
-      <div className="activity-datetime">
-        <span className="activity-date">{formatDate(activity.date)}</span>
+      <div className={styles.activityDatetime}>
+        <span>{formatDate(activity.date)}</span>
         {activity.startTime && (
-          <span className="activity-time">
+          <span className={styles.activityTime}>
             {' '}kl {activity.startTime}{activity.endTime && <>–{activity.endTime}</>}
           </span>
         )}
         {activity.location && (
-          <span className="activity-location">
-            {' '}@ <span className="location-name">{activity.location}</span>
+          <span className={styles.activityLocation}>
+            {' '}@ <span className={styles.locationName}>{activity.location}</span>
           </span>
         )}
       </div>
-
       {/* Beskrivning */}
       {activity.description && (
-        <div className="activity-description">
+        <div className={styles.activityDescription}>
           {activity.description}
         </div>
       )}
-
       {/* Användarens deltagandestatus */}
       {currentUserParticipation && (
-        <div 
-          className={`user-participation-status status-${currentUserParticipation.status}`}
-          style={{ '--status-color': getStatusColor(currentUserParticipation.status) } as React.CSSProperties}
+        <div
+          className={[
+            styles.userParticipationStatus,
+            `status-${currentUserParticipation.status}`
+          ].join(' ')}
         >
-          <div className="status-indicator"></div>
-          <span className="status-text">
+          <div className={styles.statusIndicator}></div>
+          <span className={styles.statusText}>
             Din status: {getStatusText(currentUserParticipation.status)}
           </span>
           {currentUserParticipation.absenceReason && (
-            <span className="absence-reason">
+            <span className={styles.absenceReason}>
               ({currentUserParticipation.absenceReason})
             </span>
           )}
         </div>
       )}
-
       {/* Deltagarstatistik */}
       {showParticipants && activity.participants.length > 0 && (
-        <div className="participation-stats">
-          <span className="stat stat-attending">✓ {attendingCount} kommer</span>
-          <span className="stat stat-absent">✗ {absentCount} frånvarande</span>
+        <div className={styles.participationStats}>
+          <span className={`${styles.stat} ${styles.statAttending}`}>✓ {attendingCount} kommer</span>
+          <span className={`${styles.stat} ${styles.statAbsent}`}>✗ {absentCount} frånvarande</span>
           {notRespondedCount > 0 && (
-            <span className="stat stat-not-responded">? {notRespondedCount} inte svarat</span>
+            <span className={`${styles.stat} ${styles.statNotResponded}`}>? {notRespondedCount} inte svarat</span>
           )}
         </div>
       )}
-
       {/* Länkar och extra info */}
-      <div className="activity-footer">
+      <div className={styles.activityFooter}>
         {activity.mapUrl && (
           <a
             href={activity.mapUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="activity-link"
+            className={styles.activityLink}
             onClick={e => e.stopPropagation()}
           >
             📍 Karta
           </a>
         )}
         {activity.absenceDeadline && (
-          <span className="deadline-warning">
+          <span className={styles.deadlineWarning}>
             ⏰ Sista anmälan: {new Date(activity.absenceDeadline).toLocaleDateString('sv-SE')}
           </span>
         )}

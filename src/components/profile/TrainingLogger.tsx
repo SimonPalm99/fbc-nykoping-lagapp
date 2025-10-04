@@ -157,6 +157,7 @@ const TrainingLogger: React.FC<TrainingLoggerProps> = ({ onSave, onCancel, exist
                   type="date"
                   value={formData.date}
                   onChange={(e) => handleInputChange('date', e.target.value)}
+                  title="Välj datum för träningen"
                 />
               </div>
 
@@ -168,6 +169,8 @@ const TrainingLogger: React.FC<TrainingLoggerProps> = ({ onSave, onCancel, exist
                   max="300"
                   value={formData.duration}
                   onChange={(e) => handleInputChange('duration', parseInt(e.target.value))}
+                  title="Ange träningslängd i minuter"
+                  placeholder="Minuter"
                 />
               </div>
 
@@ -181,6 +184,7 @@ const TrainingLogger: React.FC<TrainingLoggerProps> = ({ onSave, onCancel, exist
                     value={formData.feeling}
                     onChange={(e) => handleInputChange('feeling', parseInt(e.target.value))}
                     className="slider feeling"
+                    title="Välj känsla"
                   />
                   <div className="slider-labels">
                     <span>😫</span>
@@ -202,6 +206,7 @@ const TrainingLogger: React.FC<TrainingLoggerProps> = ({ onSave, onCancel, exist
                     value={formData.intensity}
                     onChange={(e) => handleInputChange('intensity', parseInt(e.target.value))}
                     className="slider intensity"
+                    title="Välj intensitet"
                   />
                   <div className="slider-labels">
                     <span>🚶</span>
@@ -220,6 +225,7 @@ const TrainingLogger: React.FC<TrainingLoggerProps> = ({ onSave, onCancel, exist
                   onChange={(e) => handleInputChange('note', e.target.value)}
                   placeholder="Beskriv hur träningen gick, vad du fokuserade på, hur du kände dig..."
                   rows={4}
+                  title="Anteckningar om träningen"
                 />
               </div>
             </div>
@@ -266,6 +272,7 @@ const TrainingLogger: React.FC<TrainingLoggerProps> = ({ onSave, onCancel, exist
                   onChange={(e) => setCustomSkill(e.target.value)}
                   placeholder="Lägg till egen färdighet..."
                   onKeyPress={(e) => e.key === 'Enter' && addCustomSkill()}
+                  title="Lägg till egen färdighet"
                 />
                 <button type="button" onClick={addCustomSkill}>
                   Lägg till
@@ -290,6 +297,8 @@ const TrainingLogger: React.FC<TrainingLoggerProps> = ({ onSave, onCancel, exist
                   min="0"
                   value={formData.stats.goals}
                   onChange={(e) => handleStatsChange('goals', parseInt(e.target.value) || 0)}
+                  title="Antal mål"
+                  placeholder="Mål"
                 />
               </div>
 
@@ -300,6 +309,8 @@ const TrainingLogger: React.FC<TrainingLoggerProps> = ({ onSave, onCancel, exist
                   min="0"
                   value={formData.stats.assists}
                   onChange={(e) => handleStatsChange('assists', parseInt(e.target.value) || 0)}
+                  title="Antal assist"
+                  placeholder="Assist"
                 />
               </div>
 
@@ -310,6 +321,8 @@ const TrainingLogger: React.FC<TrainingLoggerProps> = ({ onSave, onCancel, exist
                   min="0"
                   value={formData.stats.shots}
                   onChange={(e) => handleStatsChange('shots', parseInt(e.target.value) || 0)}
+                  title="Antal skott"
+                  placeholder="Skott"
                 />
               </div>
             </div>

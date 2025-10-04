@@ -1,0 +1,42 @@
+.huvudHeader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #181c1e;
+  padding: 14px 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  flex-direction: row;
+}
+.huvudHeader.mobile {
+  flex-direction: column;
+  padding: 10px 0;
+}
+.huvudHeaderText {
+  text-align: left;
+}
+.huvudHeaderText.mobile {
+  text-align: center;
+}
+.huvudTitle {
+  color: #fff;
+  font-weight: 700;
+  font-size: 24px;
+  letter-spacing: 1px;
+  line-height: 1.1;
+}
+.huvudTitle.mobile {
+  font-size: 19px;
+}
+.huvudSubtitle {
+  font-weight: 400;
+  font-size: 13px;
+  color: #b8f27c;
+  letter-spacing: 0.5px;
+  margin-top: 3px;
+}
+.huvudSubtitle.mobile {
+  font-size: 11px;
+}

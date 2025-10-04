@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "./LeaderBadgePanel.module.css";
 
 interface Props {
   leaderId: string;
@@ -15,32 +16,17 @@ const LeaderBadgePanel: React.FC<Props> = ({ leaderId }) => {
   // Här kan du t.ex. filtrera badges eller hämta dem asynkront i framtiden
   
   return (
-    <section style={{
-      background: "#f7f9fa",
-      borderRadius: 8,
-      padding: 20,
-      boxShadow: "0 2px 8px rgba(0,0,0,0.07)",
-      marginBottom: 24,
-      maxWidth: 400
-    }}>
-      <h3 style={{ marginBottom: 12 }}>
-        Ledarmärken för <span style={{ color: "#1976d2" }}>{leaderId}</span>
+    <section className={styles.leaderBadgePanel}>
+      <h3 className={styles.leaderBadgePanel__title}>
+        Ledarmärken för <span className={styles.leaderBadgePanel__leader}>{leaderId}</span>
       </h3>
-      <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+      <ul className={styles.leaderBadgePanel__list}>
         {badges.map((badge, idx) => (
-          <li key={idx} style={{
-            display: "flex",
-            alignItems: "center",
-            marginBottom: 14,
-            background: "#fff",
-            borderRadius: 6,
-            padding: "10px 14px",
-            boxShadow: "0 1px 2px rgba(0,0,0,0.04)"
-          }}>
-            <span style={{ fontSize: 28, marginRight: 14 }}>{badge.icon}</span>
+          <li key={idx} className={styles.leaderBadgePanel__item}>
+            <span className={styles.leaderBadgePanel__icon}>{badge.icon}</span>
             <div>
-              <div style={{ fontWeight: 600 }}>{badge.name}</div>
-              <div style={{ fontSize: 13, color: "#555" }}>{badge.description}</div>
+              <div className={styles.leaderBadgePanel__name}>{badge.name}</div>
+              <div className={styles.leaderBadgePanel__desc}>{badge.description}</div>
             </div>
           </li>
         ))}

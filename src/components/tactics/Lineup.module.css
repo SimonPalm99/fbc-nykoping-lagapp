@@ -1,0 +1,117 @@
+.lineup-root {
+  width: 100%;
+  min-height: 320px;
+}
+.lineup-nav {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  justify-content: center;
+}
+.lineup-nav-btn {
+  background: #222;
+  color: #fff;
+  border: none;
+  border-radius: 0.7rem;
+  padding: 0.5rem 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.lineup-nav-btn-femma {
+  background: #22c55e;
+}
+.lineup-nav-btn-pp {
+  background: #FFD600;
+  color: #222;
+}
+.lineup-nav-btn-bp {
+  background: #2196F3;
+  color: #fff;
+}
+.lineup-nav-btn-export {
+  background: #22c55e;
+  margin-left: 2rem;
+}
+.lineup-positions {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+.lineup-pos-box {
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 2px 8px #22c55e22;
+  width: 110px;
+  height: 110px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #22c55e;
+  margin: 0.5rem;
+  position: relative;
+}
+.lineup-pos-player-femma {
+  background: #22c55e;
+  color: #fff;
+  border-radius: 0.7rem;
+  padding: 0.5rem 1rem;
+  margin-top: 0.5rem;
+  cursor: grab;
+  font-weight: 700;
+}
+.lineup-pos-player-pp {
+  background: #FFD600;
+  color: #222;
+  border-radius: 0.7rem;
+  padding: 0.5rem 1rem;
+  margin-top: 0.5rem;
+  cursor: grab;
+  font-weight: 700;
+}
+.lineup-pos-player-bp {
+  background: #2196F3;
+  color: #fff;
+  border-radius: 0.7rem;
+  padding: 0.5rem 1rem;
+  margin-top: 0.5rem;
+  cursor: grab;
+  font-weight: 700;
+}
+.lineup-pos-remove-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: #FF5252;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.lineup-bench {
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 2px 8px #22c55e22;
+  padding: 1rem;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.lineup-bench-player {
+  background: #222;
+  color: #fff;
+  border-radius: 0.7rem;
+  padding: 0.5rem 1rem;
+  font-weight: 700;
+  cursor: grab;
+  min-width: 90px;
+}

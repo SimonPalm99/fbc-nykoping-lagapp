@@ -1,4 +1,6 @@
+
 import React, { useRef, useState } from "react";
+import styles from "./TacticsBoardCanvas.module.css";
 
 interface Point {
   x: number;
@@ -90,29 +92,41 @@ const TacticsBoardCanvas: React.FC<TacticsBoardCanvasProps> = ({ width = 500, he
   }, [lines, width, height]);
 
   return (
-    <div>
-      <div style={{ display: "flex", gap: 4, marginBottom: 4 }}>
+    <div className={styles.tacticsBoardRoot}>
+      <div className={styles.tacticsToolbar}>
         {COLORS.map(c => (
           <button
             key={c}
             onClick={() => setCurrentColor(c)}
-            style={{
-              background: c,
-              width: 24,
-              height: 24,
-              border: c === currentColor ? "2px solid #000" : "1px solid #ccc",
-              borderRadius: "50%",
-            }}
+            className={[
+              styles.tacticsColorBtn,
+              c === currentColor ? styles.selected : ''
+              , styles[`color${c.replace('#','')}`]
+            ].join(' ')}
+            aria-label={`Välj färg ${c}`}
           />
         ))}
-        <input type="range" min={2} max={8} value={currentSize} onChange={e => setCurrentSize(Number(e.target.value))} />
-        <button onClick={() => setLines([])}>Rensa</button>
+        <input
+          type="range"
+          min={2}
+          max={8}
+          value={currentSize}
+          onChange={e => setCurrentSize(Number(e.target.value))}
+          className={styles.tacticsRange}
+          title="Välj tjocklek på pennan"
+        />
+        <button
+          className={styles.tacticsClearBtn}
+          onClick={() => setLines([])}
+        >
+          Rensa
+        </button>
       </div>
       <canvas
         ref={canvasRef}
         width={width}
         height={height}
-        style={{ border: "2px solid #495057", touchAction: "none", background: "#fff" }}
+        className={styles.tacticsCanvas}
         onMouseDown={startDrawing}
         onMouseMove={draw}
         onMouseUp={endDrawing}

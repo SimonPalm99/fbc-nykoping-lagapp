@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "./FineList.module.css";
 import { Fine } from "../../types/fine";
 import { players } from "../../data/players";
 
@@ -10,77 +11,38 @@ interface Props {
 
 const FineList: React.FC<Props> = ({ fines }) => {
   return (
-    <div
-      style={{
-        width: "100%",
-        maxWidth: 520,
-        margin: "0 auto",
-        background: "#21252b",
-        borderRadius: 12,
-        overflow: "auto",
-        boxShadow: "0 2px 8px rgba(0,0,0,0.10)",
-        marginBottom: 30,
-      }}
-    >
-      <table
-        style={{
-          width: "100%",
-          borderCollapse: "collapse",
-          color: "#fff",
-          fontFamily: "inherit",
-          fontSize: 15,
-        }}
-      >
+    <div className={styles.fineList}>
+      <table className={styles.fineList__table}>
         <thead>
-          <tr style={{ background: "#181c1e" }}>
-            <th style={{ padding: "10px 2px" }}>Spelare</th>
-            <th style={{ padding: "10px 2px" }}>Belopp</th>
-            <th style={{ padding: "10px 2px" }}>Anledning</th>
-            <th style={{ padding: "10px 2px" }}>Datum</th>
-            <th style={{ padding: "10px 2px" }}>Betald</th>
+          <tr className={styles.fineList__theadRow}>
+            <th className={styles.fineList__th}>Spelare</th>
+            <th className={styles.fineList__th}>Belopp</th>
+            <th className={styles.fineList__th}>Anledning</th>
+            <th className={styles.fineList__th}>Datum</th>
+            <th className={styles.fineList__th}>Betald</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className={styles.fineList__tbody}>
           {fines.length === 0 && (
             <tr>
-              <td colSpan={5} style={{ textAlign: "center", padding: 16, color: "#b8f27c" }}>
+              <td colSpan={5} className={styles.fineList__emptyRow}>
                 Inga böter ännu
               </td>
             </tr>
           )}
           {fines.map((fine) => (
-            <tr key={fine.id} style={{ background: "#23272f" }}>
-              <td style={{ padding: "8px 2px" }}>{getPlayerName(fine.playerId)}</td>
-              <td style={{ padding: "8px 2px" }}>{fine.amount} kr</td>
-              <td style={{ padding: "8px 2px" }}>{fine.reason}</td>
-              <td style={{ padding: "8px 2px" }}>{fine.date}</td>
-              <td style={{ padding: "8px 2px", color: fine.paid ? "#b8f27c" : "#ff6464" }}>
+            <tr key={fine.id} className={styles.fineList__row}>
+              <td className={styles.fineList__td}>{getPlayerName(fine.playerId)}</td>
+              <td className={styles.fineList__td}>{fine.amount} kr</td>
+              <td className={styles.fineList__td}>{fine.reason}</td>
+              <td className={styles.fineList__td}>{fine.date}</td>
+              <td className={fine.paid ? styles.fineList__paid : styles.fineList__unpaid}>
                 {fine.paid ? "Ja" : "Nej"}
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-      <style>{`
-        @media (max-width: 600px) {
-          div {
-            overflow-x: auto;
-          }
-          table, thead, tbody, th, td, tr {
-            display: block;
-          }
-          th, td {
-            padding: 12px 4px;
-            min-width: 120px;
-          }
-          thead {
-            display: none;
-          }
-          tr {
-            margin-bottom: 12px;
-          }
-        }
-      `}</style>
     </div>
   );
 };

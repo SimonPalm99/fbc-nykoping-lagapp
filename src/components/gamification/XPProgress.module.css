@@ -1,0 +1,32 @@
+.xpProgressSection {
+  padding: 1rem 0;
+}
+.xpProgressTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+.xpProgressWrapper {
+  background: #eee;
+  border-radius: 8px;
+  height: 20px;
+  margin-top: 8px;
+  margin-bottom: 4px;
+  width: 300px;
+  overflow: hidden;
+}
+.xpProgressBar {
+  background: #1976d2;
+  height: 100%;
+  transition: width .3s;
+  width: var(--xp-progress-width, 0%);
+}
+.xpProgressScore {
+  font-size: 1rem;
+  font-weight: 500;
+}
+.xpProgressPercent {
+  font-size: 0.95rem;
+  color: #1976d2;
+  font-weight: 500;
+}

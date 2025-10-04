@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import styles from "./Onboarding.module.css";
 import { useUser } from "../../context/UserContext";
 import { UserRole } from "../../types/user";
 
@@ -82,62 +83,62 @@ const Onboarding: React.FC = () => {
   if (done) return <div>Registrering skickad! Invändar på ledargodkännande.</div>;
 
   return (
-    <form onSubmit={handleSubmit} style={{maxWidth: 400, margin: "0 auto"}}>
+    <form onSubmit={handleSubmit} className={styles["onboarding-form"]}>
       <h2>Skapa konto</h2>
-      <label>
+      <label className={styles["onboarding-label"]}>
         Namn
-        <input name="name" value={form.name} onChange={handleChange} required />
+        <input name="name" value={form.name} onChange={handleChange} required className={styles["onboarding-input"]} />
       </label>
-      <label>
+      <label className={styles["onboarding-label"]}>
         E-post
-        <input name="email" type="email" value={form.email} onChange={handleChange} required />
+        <input name="email" type="email" value={form.email} onChange={handleChange} required className={styles["onboarding-input"]} />
       </label>
-      <label>
+      <label className={styles["onboarding-label"]}>
         Tröjnummer
-        <input name="jerseyNumber" type="number" value={form.jerseyNumber} onChange={handleChange} required />
+        <input name="jerseyNumber" type="number" value={form.jerseyNumber} onChange={handleChange} required className={styles["onboarding-input"]} />
       </label>
-      <label>
+      <label className={styles["onboarding-label"]}>
         Födelsedag
-        <input name="birthday" type="date" value={form.birthday} onChange={handleChange} />
+        <input name="birthday" type="date" value={form.birthday} onChange={handleChange} className={styles["onboarding-input"]} />
       </label>
-      <label>
+      <label className={styles["onboarding-label"]}>
         Roll
-        <select name="role" value={form.role} onChange={handleChange}>
+        <select name="role" value={form.role} onChange={handleChange} className={styles["onboarding-select"]}>
           {roles.map(r => <option key={r} value={r}>{r}</option>)}
         </select>
       </label>
-      <label>
+      <label className={styles["onboarding-label"]}>
         Position (favorit)
-        <input name="favoritePosition" value={form.favoritePosition} onChange={handleChange} />
+        <input name="favoritePosition" value={form.favoritePosition} onChange={handleChange} className={styles["onboarding-input"]} />
       </label>
-      <label>
+      <label className={styles["onboarding-label"]}>
         Om mig
-        <input name="about" value={form.about} onChange={handleChange} />
+        <input name="about" value={form.about} onChange={handleChange} className={styles["onboarding-input"]} />
       </label>
-      <label>
+      <label className={styles["onboarding-label"]}>
         Mobilnummer
-        <input name="phone" value={form.phone} onChange={handleChange} />
+        <input name="phone" value={form.phone} onChange={handleChange} className={styles["onboarding-input"]} />
       </label>
-      <label>
+      <label className={styles["onboarding-label"]}>
         Profilbild (URL)
-        <input name="profileImageUrl" value={form.profileImageUrl} onChange={handleChange} />
+        <input name="profileImageUrl" value={form.profileImageUrl} onChange={handleChange} className={styles["onboarding-input"]} />
       </label>
-      <fieldset>
-        <legend>Nödkontakt (ICE)</legend>
-        <label>
+      <fieldset className={styles["onboarding-fieldset"]}>
+        <legend className={styles["onboarding-legend"]}>Nödkontakt (ICE)</legend>
+        <label className={styles["onboarding-label"]}>
           Namn
-          <input name="name" value={form.iceContacts[0]?.name || ""} onChange={handleICE} />
+          <input name="name" value={form.iceContacts[0]?.name || ""} onChange={handleICE} className={styles["onboarding-input"]} />
         </label>
-        <label>
+        <label className={styles["onboarding-label"]}>
           Relation
-          <input name="relation" value={form.iceContacts[0]?.relation || ""} onChange={handleICE} />
+          <input name="relation" value={form.iceContacts[0]?.relation || ""} onChange={handleICE} className={styles["onboarding-input"]} />
         </label>
-        <label>
+        <label className={styles["onboarding-label"]}>
           Telefon
-          <input name="phone" value={form.iceContacts[0]?.phone || ""} onChange={handleICE} />
+          <input name="phone" value={form.iceContacts[0]?.phone || ""} onChange={handleICE} className={styles["onboarding-input"]} />
         </label>
       </fieldset>
-      <button type="submit" style={{marginTop:10}}>Registrera</button>
+      <button type="submit" className={styles["onboarding-button"]}>Registrera</button>
     </form>
   );
 };

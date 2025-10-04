@@ -1,4 +1,6 @@
+
 import React, { useState } from 'react';
+import styles from './QuickAccessConfig.module.css';
 
 interface QuickAccessItem {
   id: string;
@@ -49,113 +51,51 @@ const QuickAccessConfig: React.FC<QuickAccessConfigProps> = ({
   };
 
   return (
-    <div style={{
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      background: 'rgba(0,0,0,0.8)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      zIndex: 1002,
-      padding: '1rem'
-    }}>
-      <div style={{
-        background: 'var(--card-background)',
-        borderRadius: '20px',
-        padding: '2rem',
-        maxWidth: '500px',
-        width: '100%',
-        maxHeight: '80vh',
-        overflowY: 'auto',
-        border: '1px solid var(--border-color)'
-      }}>
-        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-          <h3 style={{ 
-            color: 'var(--text-primary)', 
-            marginBottom: '0.5rem',
-            fontSize: '1.3rem',
-            fontWeight: 700
-          }}>
+    <div className={styles.overlay}>
+      <div className={styles.kort}>
+        <div className={styles.titel}>
+          <h3 className={styles.titelRubrik}>
             ⚡ Anpassa snabbåtkomst
           </h3>
-          <p style={{ 
-            color: 'var(--text-secondary)', 
-            fontSize: '0.9rem',
-            margin: 0
-          }}>
+          <p className={styles.titelBeskrivning}>
             Välj 4 funktioner som ska visas på startsidan ({tempSelection.length}/4)
           </p>
         </div>
 
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-          gap: '0.75rem',
-          marginBottom: '2rem'
-        }}>
+        <div className={styles.valGrid}>
           {availableItems.map(item => {
             const isSelected = tempSelection.includes(item.id);
             const canSelect = tempSelection.length < 4 || isSelected;
-            
+
+            // Flytta färg till data-attribut för CSS
             return (
               <div
                 key={item.id}
                 onClick={() => canSelect && handleToggleItem(item.id)}
-                style={{
-                  background: isSelected 
-                    ? `linear-gradient(135deg, ${item.color}20, ${item.color}10)`
-                    : 'var(--card-background)',
-                  border: isSelected 
-                    ? `2px solid ${item.color}` 
-                    : '1px solid var(--border-color)',
-                  borderRadius: '12px',
-                  padding: '1rem',
-                  cursor: canSelect ? 'pointer' : 'not-allowed',
-                  opacity: canSelect ? 1 : 0.5,
-                  transition: 'all 0.2s ease',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.75rem'
-                }}
+                className={
+                  `${styles.valKort} ` +
+                  (isSelected ? styles.selected : styles.unselected) +
+                  (!canSelect ? ' ' + styles.disabled : '')
+                }
+                data-selected={isSelected ? 'true' : 'false'}
+                data-color={item.color}
               >
-                <div style={{
-                  fontSize: '1.5rem',
-                  background: isSelected ? item.color : 'var(--text-secondary)',
-                  color: '#fff',
-                  borderRadius: '8px',
-                  padding: '0.5rem',
-                  minWidth: '40px',
-                  height: '40px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center'
-                }}>
+                <div
+                  className={styles.valIcon}
+                  data-selected={isSelected ? 'true' : 'false'}
+                  data-color={item.color}
+                >
                   {item.icon}
                 </div>
                 <div>
-                  <div style={{
-                    fontWeight: 600,
-                    color: 'var(--text-primary)',
-                    marginBottom: '0.25rem'
-                  }}>
-                    {item.label}
-                  </div>
-                  <div style={{
-                    fontSize: '0.8rem',
-                    color: 'var(--text-secondary)'
-                  }}>
-                    {item.desc}
-                  </div>
+                  <div className={styles.valText}>{item.label}</div>
+                  <div className={styles.valDesc}>{item.desc}</div>
                 </div>
                 {isSelected && (
-                  <div style={{
-                    marginLeft: 'auto',
-                    color: item.color,
-                    fontSize: '1.2rem'
-                  }}>
+                  <div
+                    className={styles.valCheck}
+                    data-color={item.color}
+                  >
                     ✓
                   </div>
                 )}
@@ -164,42 +104,20 @@ const QuickAccessConfig: React.FC<QuickAccessConfigProps> = ({
           })}
         </div>
 
-        <div style={{ 
-          display: 'flex', 
-          gap: '1rem',
-          justifyContent: 'flex-end'
-        }}>
+        <div className={styles.knappRad}>
           <button
             onClick={onClose}
-            style={{
-              padding: '0.75rem 1.5rem',
-              borderRadius: '12px',
-              border: '1px solid var(--border-color)',
-              background: 'transparent',
-              color: 'var(--text-primary)',
-              fontWeight: 600,
-              cursor: 'pointer',
-              fontSize: '0.9rem'
-            }}
+            className={`${styles.knapp} ${styles.knappAvbryt}`}
           >
             Avbryt
           </button>
           <button
             onClick={handleSave}
             disabled={tempSelection.length !== 4}
-            style={{
-              padding: '0.75rem 1.5rem',
-              borderRadius: '12px',
-              border: 'none',
-              background: tempSelection.length === 4 
-                ? 'var(--fbc-primary)' 
-                : 'var(--text-secondary)',
-              color: '#fff',
-              fontWeight: 600,
-              cursor: tempSelection.length === 4 ? 'pointer' : 'not-allowed',
-              fontSize: '0.9rem',
-              opacity: tempSelection.length === 4 ? 1 : 0.6
-            }}
+            className={
+              `${styles.knapp} ${styles.knappSpara}` +
+              (tempSelection.length !== 4 ? ' ' + styles.disabled : '')
+            }
           >
             Spara ({tempSelection.length}/4)
           </button>

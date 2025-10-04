@@ -6,6 +6,7 @@ import {
   DropResult
 } from "@hello-pangea/dnd";
 import innebandyplan from "../assets/innebandyplan-liggande.svg";
+import css from "./Laguppstallning.module.css";
 import { usersAPI } from "../services/apiService";
 import { lineupAPI } from "../services/lineupAPI";
 // Spara senaste drag-koordinater (mus/touch)
@@ -200,31 +201,35 @@ export default function Laguppstallning() {
     });
   }
 
-  function renderPlan(lineupKey: string, positions: Position[], half: boolean = false) {
+  // Set CSS variables for position absolutely via JavaScript (since pure CSS can't read data attributes into variables)
+  useEffect(() => {
+    Object.entries(lineups).forEach(([_, positions]) => {
+      positions.forEach((pos, idx) => {
+        const el = document.querySelector(
+          `[data-pos-x][data-pos-y][data-draggable-index="${idx}"]`
+        ) as HTMLElement | null;
+        if (el) {
+          el.style.setProperty("--pos-x", `${pos.x}px`);
+          el.style.setProperty("--pos-y", `${pos.y}px`);
+        }
+      });
+    });
+  }, [lineups]);
+
+  function renderPlan(lineupKey: string, positions: Position[]) {
     return (
       <div
         ref={el => { planRefs.current[lineupKey] = el || null; }}
-        id={`plan-${lineupKey}`}
-        style={{
-          position: "relative",
-          width: "100%",
-          maxWidth: half ? 400 : 800,
-          height: "min(60vw, 500px)",
-          minHeight: 260,
-          background: `url(${innebandyplan}) center/contain no-repeat`,
-          border: "2px solid #22c55e",
-          borderRadius: 24,
-          margin: "0 auto",
-          boxSizing: "border-box",
-          overflow: "auto",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center"
-        }}
+        className={css.planContainer}
       >
+        <img src={innebandyplan} alt="Innebandyplan" className={css.planImg} />
         <Droppable droppableId={`plan-${lineupKey}`} type="plan">
           {(planProvided: any) => (
-            <div ref={planProvided.innerRef} {...planProvided.droppableProps} style={{ width: "100%", height: "100%", position: "absolute", left: 0, top: 0 }}>
+            <div
+              ref={planProvided.innerRef}
+              {...planProvided.droppableProps}
+              className={css.positionsLayer}
+            >
               {positions.map((pos, idx) => {
                 const player = allPlayers.find(p => p.id === pos.playerId);
                 return (
@@ -233,27 +238,10 @@ export default function Laguppstallning() {
                       <div
                         ref={provided.innerRef}
                         {...provided.droppableProps}
-                        style={{
-                          position: "absolute",
-                          left: `${pos.x}px`,
-                          top: `${pos.y}px`,
-                          transform: "translate(-50%, -50%)",
-                          width: 160,
-                          height: 56,
-                          background: player ? "#101a10cc" : "#fff8",
-                          border: player ? "2px solid #22c55e" : "2px dashed #22c55e",
-                          borderRadius: 16,
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          fontWeight: 700,
-                          color: player ? "#fff" : "#222",
-                          fontSize: "1.2rem",
-                          boxShadow: player ? "0 2px 12px #22c55e88" : "0 1px 4px #22c55e33",
-                          cursor: player ? "pointer" : "grab",
-                          transition: "all 0.2s",
-                          zIndex: 3
-                        }}
+                        className={player ? `${css.positionDroppable} ${css.player}` : css.positionDroppable}
+                        data-pos-x={pos.x}
+                        data-pos-y={pos.y}
+                        data-draggable-index={idx}
                       >
                         {player ? (
                           <Draggable draggableId={player.id} index={0} key={player.id}>
@@ -262,17 +250,11 @@ export default function Laguppstallning() {
                                 ref={providedDraggable.innerRef}
                                 {...providedDraggable.draggableProps}
                                 {...providedDraggable.dragHandleProps}
-                                style={{
-                                  display: "flex",
-                                  alignItems: "center",
-                                  justifyContent: "center",
-                                  width: "100%",
-                                  height: "100%",
-                                  ...providedDraggable.draggableProps.style
-                                }}
+                                className={`${css.playerContent} ${css.playerDraggableContent}`}
+                                data-draggable-index={idx}
                               >
                                 {`${player.name} (${player.id})`}
-                                <button onClick={() => handleRemove(lineupKey, idx)} style={{ marginLeft: 8, background: "#ef4444", color: "#fff", border: "none", borderRadius: 8, padding: "2px 8px", cursor: "pointer" }}>Ta bort</button>
+                                <button onClick={() => handleRemove(lineupKey, idx)} className={css.removeBtn}>Ta bort</button>
                               </div>
                             )}
                           </Draggable>
@@ -283,15 +265,7 @@ export default function Laguppstallning() {
                                 ref={providedDraggable.innerRef}
                                 {...providedDraggable.draggableProps}
                                 {...providedDraggable.dragHandleProps}
-                                style={{
-                                  width: "100%",
-                                  height: "100%",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  justifyContent: "center",
-                                  opacity: player ? 0.5 : 1,
-                                  ...providedDraggable.draggableProps.style
-                                }}
+                                className={`${css.playerContent} ${player ? css.playerContentDisabled : ""} ${css.draggablePosition}`}
                               >
                                 Tom position
                               </div>
@@ -315,84 +289,37 @@ export default function Laguppstallning() {
   // --- JSX ---
   return (
     <DragDropContext onDragEnd={onDragEnd} onDragUpdate={onDragUpdate}>
-      <div style={{
-        minHeight: "100vh",
-        background: "linear-gradient(135deg, #101a10 60%, #22c55e 100%)",
-        padding: "2rem 0",
-        fontFamily: "'Montserrat', 'Segoe UI', Arial, sans-serif"
-      }}>
-        <style>{`
-          @media (max-width: 700px) {
-            .laguppstallning-container {
-              padding: 0.5rem;
-              border-radius: 0;
-              box-shadow: none;
-            }
-            .laguppstallning-header h1 {
-              font-size: 2rem;
-            }
-            .lineup-section {
-              padding: 1rem;
-              margin-bottom: 16px;
-            }
-            .comment-area {
-              font-size: 1rem;
-              min-height: 48px;
-            }
-          }
-          @media (max-width: 500px) {
-            .laguppstallning-header h1 {
-              font-size: 1.3rem;
-            }
-            .lineup-section {
-              padding: 0.5rem;
-            }
-          }
-        `}</style>
-        <div className="laguppstallning-container" style={{ maxWidth: 900, margin: "0 auto", padding: "2rem", borderRadius: 32, boxShadow: "0 8px 32px #000a", background: "rgba(20,32,20,0.85)", backdropFilter: "blur(8px)", border: "2px solid #22c55e" }}>
-          <div className="laguppstallning-header" style={{ display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "2rem" }}>
-            <h1 style={{ color: "#22c55e", fontWeight: 900, fontSize: "2.8rem", letterSpacing: "2px", textShadow: "0 2px 12px #000" }}>Laguppställningar</h1>
+      <div className={css.root}>
+        <div className={css.container}>
+          <div className={css.header}>
+            <h1 className={css.heading}>Laguppställningar</h1>
           </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: 32 }}>
-            <button onClick={handleSave} style={{ alignSelf: "flex-end", marginBottom: 16, background: "#22c55e", color: "#fff", fontWeight: 700, fontSize: "1.1rem", border: "none", borderRadius: 12, padding: "0.7rem 2rem", cursor: "pointer", boxShadow: "0 2px 8px #22c55e55" }}>
+          <div className={css.flexColumn}>
+            <button onClick={handleSave} className={css.saveBtn}>
               Spara laguppställning
             </button>
-            {saveStatus && <div style={{ color: saveStatus.includes("Fel") ? "#ef4444" : "#22c55e", fontWeight: 700, marginBottom: 16 }}>{saveStatus}</div>}
+            {saveStatus && (
+              <div className={saveStatus.includes("Fel") ? `${css.saveStatus} ${css.error}` : `${css.saveStatus} ${css.success}`}>{saveStatus}</div>
+            )}
             {[...lineupTypes, ...specialTypes].map(({ key: lineupKey, label }) => (
-              <div key={lineupKey} className="lineup-section" style={{ width: "100%", background: "rgba(255,255,255,0.08)", borderRadius: 24, boxShadow: "0 2px 16px #22c55e33", padding: "2rem", marginBottom: 32 }}>
-                <h2 style={{ color: "#22c55e", fontWeight: 700, fontSize: "1.3rem", margin: "1rem 0" }}>{label}</h2>
-                <div style={{ marginBottom: 20 }}>
-                  <label htmlFor={`comment-${lineupKey}`} style={{ display: "block", fontWeight: 700, color: "#22c55e", marginBottom: 6, fontSize: "1.08rem" }}>
+              <div key={lineupKey} className={css.lineupSection}>
+                <h2 className={css.lineupLabel}>{label}</h2>
+                <div className={css.commentContainer}>
+                  <label htmlFor={`comment-${lineupKey}`} className={css.commentLabel}>
                     Kommentar / fokus för {label}
                   </label>
                   <textarea
                     id={`comment-${lineupKey}`}
-                    className="comment-area"
+                    className={css.commentArea}
                     value={lineupComments[lineupKey]}
                     onChange={e => setLineupComments(c => ({ ...c, [lineupKey]: e.target.value }))}
                     placeholder={label + " kommentar/fokus..."}
-                    style={{
-                      width: "100%",
-                      minHeight: 64,
-                      maxHeight: 180,
-                      padding: "0.8rem 1rem",
-                      borderRadius: 12,
-                      fontSize: "1.08rem",
-                      background: "#101a10",
-                      color: "#22c55e",
-                      border: "2px solid #22c55e",
-                      boxShadow: "0 2px 8px #22c55e22",
-                      resize: "vertical",
-                      outline: "none",
-                      fontFamily: "inherit",
-                      transition: "border 0.2s"
-                    }}
                   />
-                  <span style={{ color: "#888", fontSize: "0.95rem", marginTop: 4, display: "block" }}>
+                  <span className={css.commentHelp}>
                     Skriv en kommentar om femmans fokus, taktik eller viktiga punkter.
                   </span>
                 </div>
-                {renderPlan(lineupKey, lineups[lineupKey] ?? [], false)}
+                {renderPlan(lineupKey, lineups[lineupKey] ?? [])}
               </div>
             ))}
             <Droppable droppableId="availablePlayers" direction="horizontal">
@@ -400,9 +327,9 @@ export default function Laguppstallning() {
                 <div
                   ref={provided.innerRef}
                   {...provided.droppableProps}
-                  style={{ width: "100%", background: "rgba(255,255,255,0.08)", borderRadius: 24, boxShadow: "0 2px 16px #22c55e33", padding: "2rem", marginBottom: 32, minHeight: 80, display: "flex", flexWrap: "wrap", gap: 8 }}
+                  className={css.availablePlayers}
                 >
-                  <h2 style={{ color: "#22c55e", fontWeight: 700, fontSize: "1.2rem", margin: "1rem 0", width: "100%" }}>Tillgängliga spelare</h2>
+                  <h2 className={css.availableLabel}>Tillgängliga spelare</h2>
                   {allPlayers.filter(p => !Object.values(lineups).flat().map(pos => pos.playerId).includes(p.id)).map((p, idx) => (
                     <Draggable draggableId={p.id} index={idx} key={p.id}>
                       {(providedDraggable: any) => (
@@ -410,18 +337,8 @@ export default function Laguppstallning() {
                           ref={providedDraggable.innerRef}
                           {...providedDraggable.draggableProps}
                           {...providedDraggable.dragHandleProps}
-                          style={{
-                            background: "#101a10cc",
-                            color: "#fff",
-                            borderRadius: 8,
-                            padding: "0.5rem 1rem",
-                            fontWeight: 700,
-                            fontSize: "1rem",
-                            border: "2px solid #22c55e",
-                            cursor: "grab",
-                            marginBottom: 8,
-                            ...providedDraggable.draggableProps.style
-                          }}
+                          className={css.playerDraggable}
+                          data-draggable-index={idx}
                         >
                           {p.name} ({p.id})
                         </div>

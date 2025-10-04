@@ -1,0 +1,157 @@
+/* Whiteboard styles - flytta hit alla inline-stilar från Whiteboard.tsx */
+
+.whiteboardRoot {
+  width: 100vw;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0A0A0A 0%, #0D1B0D 30%, #1B2E1B 100%);
+  color: #F1F8E9;
+  font-family: inherit;
+  padding: 1.2rem 0;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.whiteboardContainer {
+  position: relative;
+  width: 100%;
+  max-width: 1100px;
+  height: 650px;
+  background: #222;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(46,125,50,0.18);
+  overflow: hidden;
+  touch-action: none;
+  border: 2px solid #22c55e;
+}
+
+.whiteboardHeader {
+  position: absolute;
+  left: 50%;
+  top: 24px;
+  transform: translateX(-50%);
+  background: linear-gradient(120deg, #2E7D32 0%, #388E3C 100%);
+  color: #fff;
+  border-radius: 8px;
+  padding: 0.5rem 1.2rem;
+  font-weight: 700;
+  font-size: 1.18rem;
+  box-shadow: 0 2px 8px rgba(46,125,50,0.10);
+  z-index: 10;
+}
+
+.whiteboardImage {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  opacity: 0.10;
+  pointer-events: none;
+  filter: blur(1px) grayscale(0.2);
+}
+
+/* FBC theme buttons and controls */
+.whiteboardSaveBtn, .whiteboardLoadBtn, .whiteboardDeleteBtn, .whiteboardRenameBtn, .exerciseStartBtn, .exerciseSaveStepBtn, .exerciseBackStepBtn, .exerciseForwardStepBtn, .exerciseCancelBtn, .exercisePauseBtn, .exercisePlayBtn, .exerciseStepBtn, .actionBtn {
+  background: #22c55e;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.4rem 1.2rem;
+  font-weight: 700;
+  font-size: 1.05rem;
+  box-shadow: 0 2px 8px rgba(46,125,50,0.10);
+  margin: 0.2rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.whiteboardDeleteBtn {
+  background: #e53935;
+}
+.whiteboardRenameBtn {
+  background: #FFB300;
+  color: #222;
+}
+.exerciseCancelBtn {
+  background: #e53935;
+}
+.exercisePauseBtn {
+  background: #FFB300;
+  color: #222;
+}
+.exercisePlayBtn {
+  background: #388E3C;
+}
+.exerciseStepBtn {
+  background: #22c55e;
+}
+.exerciseStepBtn:last-child {
+  background: #388E3C;
+}
+.whiteboardNameInput, .whiteboardRenameInput {
+  width: 220px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1.5px solid #22c55e;
+  margin-bottom: 0.7rem;
+  padding: 0.5rem;
+}
+.whiteboardSelect {
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1.5px solid #22c55e;
+  margin-bottom: 0.7rem;
+  padding: 0.5rem;
+}
+.whiteboardListHeader {
+  font-weight: 700;
+  color: #22c55e;
+  margin-bottom: 0.5rem;
+}
+.whiteboardRenameSpan {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.stepSavedMessage {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #FFB300;
+  color: #222;
+  border-radius: 8px;
+  padding: 0.3rem 1.2rem;
+  font-weight: 700;
+  font-size: 1rem;
+  box-shadow: 0 2px 8px rgba(46,125,50,0.10);
+  z-index: 20;
+}
+/* Responsive/mobile styles */
+.mobile {
+  max-width: 100vw !important;
+  padding-left: 0.5rem !important;
+  padding-right: 0.5rem !important;
+}
+
+/* Lägg till fler klasser efter behov */
+.pendingMarkerWrapper {
+  position: absolute;
+  z-index: 30;
+  left: var(--left);
+  top: var(--top);
+}
+
+.textInputOverlayWrapper {
+  position: absolute;
+  z-index: 20;
+  left: var(--left);
+  top: var(--top);
+}
+
+/* Dynamically set --left and --top from data attributes */
+

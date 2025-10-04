@@ -1,0 +1,40 @@
+.marker {
+  position: absolute;
+  left: attr(data-left px);
+  top: attr(data-top px);
+  width: attr(data-size px);
+  height: attr(data-size px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  -webkit-user-select: none;
+  user-select: none;
+}
+.marker-player {
+  background: #2E7D32;
+  color: #fff;
+  border-radius: 50%;
+  font-size: 1.15rem;
+}
+.marker-opponent {
+  background: #e53935;
+  color: #fff;
+  border-radius: 50%;
+  font-size: 1.15rem;
+}
+.marker-ball {
+  background: #111;
+  color: #fff;
+  border-radius: 50%;
+  font-size: 0.95rem;
+  border: 2px solid #fff;
+}
+.marker-grab {
+  cursor: grab;
+}
+.marker-default {
+  cursor: default;
+}

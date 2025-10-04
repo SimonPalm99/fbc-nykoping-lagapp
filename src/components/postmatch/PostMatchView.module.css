@@ -1,0 +1,36 @@
+.postmatch-container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.reflektions-sektion {
+  margin-top: 30px;
+}
+
+.reflektions-textarea {
+  width: 100%;
+}
+
+.reflektions-knapp {
+  margin-top: 10px;
+}
+
+.status-ledare {
+  color: green;
+}
+
+.status-deltagare {
+  color: blue;
+}
+
+.leader-section {
+  margin-top: 24px;
+}
+
+.leader-button {
+  background: #faad14;
+  color: #222;
+  padding: 8px 18px;
+  border-radius: 6px;
+}

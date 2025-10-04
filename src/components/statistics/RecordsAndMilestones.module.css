@@ -1,0 +1,256 @@
+.headerWrapper {
+  margin-bottom: 20px;
+}
+.celebrationOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.5s ease-in;
+}
+.celebrationModal {
+  background: linear-gradient(135deg, #1a202c, #2d3748);
+  padding: 40px;
+  border-radius: 20px;
+  text-align: center;
+  border: var(--rarity-border, 3px solid #64748b);
+  box-shadow: var(--rarity-glow, none);
+  animation: pulse 2s infinite;
+}
+.celebrationIcon {
+  font-size: 64px;
+  margin-bottom: 16px;
+}
+.celebrationTitle {
+  margin: 0 0 8px 0;
+  color: var(--rarity-color, #fff);
+  font-size: 28px;
+  font-weight: bold;
+}
+.celebrationDesc {
+  margin: 0 0 16px 0;
+  color: #a0aec0;
+  font-size: 16px;
+}
+.celebrationRarity {
+  background: var(--rarity-bg, #64748b);
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+.celebrationButton {
+  padding: 12px 24px;
+  background: #3b82f6;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 600;
+}
+/* RecordsAndMilestones.module.css */
+.container {
+  background: #1a202c;
+  padding: 20px;
+  border-radius: 12px;
+  color: #fff;
+  position: relative;
+}
+.header {
+  margin-bottom: 20px;
+}
+.headerTitle {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+}
+.headerDesc {
+  margin: 4px 0 0 0;
+  color: #a0aec0;
+}
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #4a5568;
+  padding-bottom: 12px;
+}
+.tabButton {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  background: transparent;
+  color: #a0aec0;
+}
+.tabButtonActive {
+  background: #3b82f6;
+  color: #fff;
+}
+.filters {
+  background: #2d3748;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.filterLabel {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 12px;
+  color: #a0aec0;
+}
+.filterSelect {
+  padding: 6px;
+  background: #1a202c;
+  border: 1px solid #4a5568;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 14px;
+}
+.filterCount {
+  margin-left: auto;
+  font-size: 14px;
+  color: #a0aec0;
+}
+.achievementsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 16px;
+}
+.achievementCard {
+  background: linear-gradient(135deg, #2d3748, #1a202c);
+  padding: 20px;
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+  border: var(--rarity-border, 2px solid #64748b);
+  box-shadow: var(--rarity-glow, none);
+}
+.rarityIndicator {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: var(--rarity-bg, #64748b);
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.achievementIcon {
+  font-size: 48px;
+  text-align: center;
+  margin-bottom: 12px;
+}
+.achievementTitle {
+  margin: 0 0 8px 0;
+  font-weight: 700;
+  font-size: 18px;
+  text-align: center;
+  color: var(--rarity-color, #fff);
+}
+.achievementDesc {
+  margin: 0 0 12px 0;
+  color: #a0aec0;
+  font-size: 14px;
+  text-align: center;
+  line-height: 1.4;
+}
+.achievementInfo {
+  background: #1a202c;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+.achievementInfoRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.achievementPlayer {
+  font-weight: 600;
+  color: #fff;
+}
+.achievementValue {
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--rarity-color, #fff);
+}
+.achievementContext {
+  font-size: 12px;
+  color: #718096;
+}
+.badges {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+.badge {
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 600;
+  color: #fff;
+}
+.badgePersonal {
+  background: #10b981;
+}
+.badgeTeam {
+  background: #f59e0b;
+}
+.badgeLeague {
+  background: #8b5cf6;
+}
+.achievementDate {
+  font-size: 11px;
+  color: #64748b;
+  text-align: right;
+}
+.celebrateButton {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  padding: 4px 8px;
+  background: rgba(59, 130, 246, 0.8);
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 600;
+}
+.emptyState {
+  text-align: center;
+  padding: 40px;
+  color: #a0aec0;
+}
+.emptyIcon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+.emptyTitle {
+  margin: 0 0 8px 0;
+}
+.emptyDesc {
+  margin: 0;
+}

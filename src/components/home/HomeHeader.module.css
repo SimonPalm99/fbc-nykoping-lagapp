@@ -1,0 +1,110 @@
+.homeHeaderAvatarImg {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.homeHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+  position: relative;
+  border-bottom: 2px solid var(--primary-green);
+  box-shadow: var(--shadow-medium);
+  background: var(--card-background);
+}
+.homeHeaderBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gradient-primary);
+}
+.homeHeaderProfile {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 16px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+.homeHeaderProfile:hover {
+  background: var(--gradient-card-hover);
+  transform: scale(1.02);
+}
+.homeHeaderProfile:active {
+  background: transparent;
+  transform: scale(1);
+}
+.homeHeaderAvatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--gradient-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+  border: 3px solid var(--primary-green);
+  box-shadow: var(--shadow-small);
+  position: relative;
+  transition: all 0.3s ease;
+}
+.homeHeaderOnline {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #4CAF50;
+  border: 2px solid white;
+}
+.homeHeaderName {
+  margin: 0;
+  font-size: 1.3rem;
+  color: var(--text-primary);
+  font-weight: 700;
+}
+.homeHeaderInfo {
+  margin: 0.25rem 0 0 0;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.homeHeaderBadge {
+  background: var(--gradient-gold);
+  color: white;
+  padding: 0.125rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.homeHeaderRole {
+  background: var(--primary-green);
+  color: white;
+  padding: 0.125rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.homeHeaderPoints {
+  background: rgba(0,0,0,0.1);
+  color: var(--text-secondary);
+  padding: 0.125rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+.homeHeaderPointsDark {
+  background: rgba(255,255,255,0.1);
+}

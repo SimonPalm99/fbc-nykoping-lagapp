@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { PostMatchFeedback } from "../../types/postmatch";
+import styles from "./PostMatchFeedbackEdit.module.css";
 
 interface Props {
   initial?: Partial<PostMatchFeedback>;
@@ -7,37 +8,6 @@ interface Props {
   userId: string;
   onSave: (feedback: PostMatchFeedback) => void;
 }
-
-const inputStyle: React.CSSProperties = {
-  width: "100%",
-  padding: "8px",
-  margin: "6px 0 12px 0",
-  borderRadius: 6,
-  border: "1px solid #345",
-  background: "#23272e",
-  color: "#fff",
-};
-
-const labelStyle: React.CSSProperties = {
-  fontWeight: 600,
-  color: "#b8f27c",
-  marginBottom: 2,
-  display: "block",
-  fontSize: 15,
-};
-
-const buttonStyle: React.CSSProperties = {
-  width: "100%",
-  background: "#b8f27c",
-  color: "#222",
-  border: "none",
-  borderRadius: 6,
-  padding: "10px",
-  fontWeight: 700,
-  fontSize: 17,
-  marginTop: 10,
-  cursor: "pointer",
-};
 
 const PostMatchFeedbackEdit: React.FC<Props> = ({
   initial,
@@ -76,34 +46,29 @@ const PostMatchFeedbackEdit: React.FC<Props> = ({
   return (
     <form
       onSubmit={handleSubmit}
-      style={{
-        background: "#23272e",
-        borderRadius: 9,
-        padding: 18,
-        marginTop: 20,
-        boxShadow: "0 2px 14px #0002",
-        maxWidth: 480,
-        marginLeft: "auto",
-        marginRight: "auto",
-      }}
+      className={styles.postMatchFeedbackForm}
     >
-      <label style={labelStyle}>Spelar-ID</label>
+      <label className={styles.label}>Spelar-ID</label>
       <input
         name="userId"
         value={form.userId}
-        style={inputStyle}
+        className={styles.input}
         disabled
+        title="Spelar-ID"
+        placeholder="Ange spelarens ID"
       />
 
-      <label style={labelStyle}>Match-ID</label>
+      <label className={styles.label}>Match-ID</label>
       <input
         name="matchId"
         value={form.matchId}
-        style={inputStyle}
+        className={styles.input}
         disabled
+        title="Match-ID"
+        placeholder="Ange matchens ID"
       />
 
-      <label style={labelStyle}>Betyg (1-5)</label>
+      <label className={styles.label}>Betyg (1-5)</label>
       <input
         name="rating"
         type="number"
@@ -111,30 +76,25 @@ const PostMatchFeedbackEdit: React.FC<Props> = ({
         max={5}
         value={form.rating}
         onChange={handleChange}
-        style={inputStyle}
+        className={styles.input}
         required
+        title="Betyg"
+        placeholder="Ange betyg mellan 1 och 5"
       />
 
-      <label style={labelStyle}>Kommentar</label>
+      <label className={styles.label}>Kommentar</label>
       <textarea
         name="comment"
         value={form.comment}
         onChange={handleChange}
         rows={3}
-        style={inputStyle}
+        className={styles.input}
         placeholder="Kommentar om matchen eller egen insats"
       />
 
-      <button type="submit" style={buttonStyle}>
+      <button type="submit" className={styles.button}>
         Spara feedback
       </button>
-      <style>{`
-        @media (max-width: 600px) {
-          form { padding: 8px !important; }
-          input, textarea, select { font-size: 15px !important; }
-          button { font-size: 15px !important; }
-        }
-      `}</style>
     </form>
   );
 };

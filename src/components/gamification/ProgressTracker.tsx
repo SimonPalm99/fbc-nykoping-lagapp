@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from './ProgressTracker.module.css';
 
 interface ProgressTrackerProps {
   current: number;
@@ -22,106 +23,37 @@ const ProgressTracker: React.FC<ProgressTrackerProps> = ({
   const percentage = Math.min((current / target) * 100, 100);
   const isComplete = current >= target;
 
-  const getColorClasses = (color: string) => {
-    switch (color) {
-      case 'green':
-        return {
-          bg: 'bg-green-500',
-          text: 'text-green-600',
-          bgLight: 'bg-green-100'
-        };
-      case 'purple':
-        return {
-          bg: 'bg-purple-500',
-          text: 'text-purple-600',
-          bgLight: 'bg-purple-100'
-        };
-      case 'orange':
-        return {
-          bg: 'bg-orange-500',
-          text: 'text-orange-600',
-          bgLight: 'bg-orange-100'
-        };
-      case 'red':
-        return {
-          bg: 'bg-red-500',
-          text: 'text-red-600',
-          bgLight: 'bg-red-100'
-        };
-      default:
-        return {
-          bg: 'bg-blue-500',
-          text: 'text-blue-600',
-          bgLight: 'bg-blue-100'
-        };
-    }
-  };
+  // Removed unused getColorClasses and getSizeClasses functions
 
-  const getSizeClasses = (size: string) => {
-    switch (size) {
-      case 'sm':
-        return {
-          height: 'h-2',
-          text: 'text-xs',
-          padding: 'p-2'
-        };
-      case 'lg':
-        return {
-          height: 'h-4',
-          text: 'text-base',
-          padding: 'p-4'
-        };
-      default:
-        return {
-          height: 'h-3',
-          text: 'text-sm',
-          padding: 'p-3'
-        };
-    }
-  };
-
-  const colorClasses = getColorClasses(color);
-  const sizeClasses = getSizeClasses(size);
+  const barColorClass = styles[`progressTracker__bar--${color}`] || styles['progressTracker__bar--blue'];
+  const barSizeClass = styles[`progressTracker__bar--${size}`] || styles['progressTracker__bar--md'];
+  const labelSizeClass = styles[`progressTracker__label--${size}`] || styles['progressTracker__label--md'];
 
   return (
-    <div className={`${sizeClasses.padding} bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700`}>
-      <div className="flex justify-between items-center mb-2">
-        <span className={`font-medium text-gray-900 dark:text-white ${sizeClasses.text}`}>
-          {label}
-        </span>
-        <div className="flex items-center gap-2">
+    <div className={styles.progressTracker}>
+      <div className={styles.progressTracker__header}>
+        <span className={`${styles.progressTracker__label} ${labelSizeClass}`}>{label}</span>
+        <div className={styles.progressTracker__headerRight}>
           {showPercentage && (
-            <span className={`${colorClasses.text} font-semibold ${sizeClasses.text}`}>
-              {Math.round(percentage)}%
-            </span>
+            <span className={styles.progressTracker__percentage}>{Math.round(percentage)}%</span>
           )}
           {isComplete && (
-            <span className="text-green-500 text-sm">✓</span>
+            <span className={styles.progressTracker__check}>✓</span>
           )}
         </div>
       </div>
-      
-      <div className={`w-full bg-gray-200 dark:bg-gray-700 rounded-full ${sizeClasses.height} overflow-hidden`}>
-        <div 
-          className={`${colorClasses.bg} ${sizeClasses.height} rounded-full transition-all duration-500 ease-out ${
-            animated ? 'animate-pulse' : ''
-          } ${isComplete ? 'animate-bounce' : ''}`}
-          style={{ width: `${percentage}%` }}
+      <div className={styles.progressTracker__barWrapper}>
+        <div
+          className={`${styles.progressTracker__bar} ${barColorClass} ${barSizeClass} ${isComplete ? styles['progressTracker__bar--complete'] : ''} ${animated ? styles['progressTracker__bar--animated'] : ''}`}
+          data-width={percentage}
         >
-          {animated && (
-            <div className="w-full h-full bg-white opacity-30 rounded-full animate-pulse"></div>
-          )}
+          {animated && <div className={styles.progressTracker__barPulse}></div>}
         </div>
       </div>
-      
-      <div className="flex justify-between items-center mt-2">
-        <span className={`text-gray-500 ${sizeClasses.text}`}>
-          {current.toLocaleString()} av {target.toLocaleString()}
-        </span>
+      <div className={styles.progressTracker__footer}>
+        <span className={styles.progressTracker__footerLabel}>{current.toLocaleString()} av {target.toLocaleString()}</span>
         {!isComplete && (
-          <span className={`text-gray-400 ${sizeClasses.text}`}>
-            {(target - current).toLocaleString()} kvar
-          </span>
+          <span className={styles.progressTracker__footerLeft}>{(target - current).toLocaleString()} kvar</span>
         )}
       </div>
     </div>

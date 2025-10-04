@@ -1,0 +1,57 @@
+/* FBC TacticsBoardCanvas Theme */
+.tacticsBoardRoot {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.tacticsToolbar {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 4px;
+  align-items: center;
+}
+.tacticsColorBtn {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+  background: #fff;
+  cursor: pointer;
+  transition: border 0.2s;
+  outline: none;
+  padding: 0;
+}
+.tacticsColorBtn.selected {
+  border: 2px solid #000;
+}
+.tacticsRange {
+  margin: 0 0.5rem;
+}
+.tacticsClearBtn {
+  background: #e53935;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.3rem 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-left: 0.5rem;
+  transition: background 0.2s;
+}
+.tacticsClearBtn:hover {
+  background: #b71c1c;
+}
+.tacticsCanvas {
+  border: 2px solid #495057;
+  touch-action: none;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(46,125,50,0.07);
+}
+
+/* Color button backgrounds */
+.color228be6 { background: #228be6 !important; }
+.colorfa5252 { background: #fa5252 !important; }
+.color40c057 { background: #40c057 !important; }
+.colorfab005 { background: #fab005 !important; }
+.color495057 { background: #495057 !important; }

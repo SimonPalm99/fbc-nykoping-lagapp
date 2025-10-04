@@ -77,11 +77,16 @@ const AdminApproveUsers: React.FC<Props> = ({ users, onApprove, onReject }) => {
               <div className="user-basic-info">
                 <div className="user-avatar">
                   {user.profileImageUrl ? (
-                    <img src={user.profileImageUrl} alt={user.name} />
+                    <img 
+                      src={user.profileImageUrl} 
+                      alt={user.name} 
+                      onError={e => { e.currentTarget.src = '/default-avatar.png'; }}
+                    />
                   ) : (
-                    <div className="avatar-placeholder">
-                      {user.name.split(' ').map(n => n[0]).join('')}
-                    </div>
+                    <img 
+                      src="/default-avatar.png" 
+                      alt={user.name} 
+                    />
                   )}
                 </div>
                 

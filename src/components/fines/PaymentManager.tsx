@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { Fine, Payment } from '../../types/fine';
-import './PaymentManager.css';
+import styles from './PaymentManager.module.css';
 
 interface PaymentManagerProps {
   fines: Fine[];
@@ -130,22 +130,24 @@ export const PaymentManager: React.FC<PaymentManagerProps> = ({
   };
 
   return (
-    <div className="payment-manager">
-      <div className="payment-header">
+  <div className={styles.paymentManager}>
+  <div className={styles.paymentHeader}>
         <h2>Betalningshantering</h2>
-        <div className="payment-summary">
-          <span className="summary-text">
+  <div className={styles.paymentSummary}>
+          <span className={styles.summaryText}>
             Obetalt totalt: {formatCurrency(unpaidFines.reduce((sum, fine) => sum + fine.amount, 0))}
           </span>
         </div>
       </div>
 
-      <div className="payment-filters">
-        <div className="filter-group">
+  <div className={styles.paymentFilters}>
+  <div className={styles.filterGroup}>
           <label>Spelare:</label>
           <select
             value={filterUserId}
             onChange={(e) => setFilterUserId(e.target.value)}
+            className={styles.input}
+            title="Filtrera på spelare"
           >
             <option value="all">Alla spelare</option>
             {users.map(user => (
@@ -156,11 +158,13 @@ export const PaymentManager: React.FC<PaymentManagerProps> = ({
           </select>
         </div>
 
-        <div className="filter-group">
+  <div className={styles.filterGroup}>
           <label>Status:</label>
           <select
             value={filterStatus}
             onChange={(e) => setFilterStatus(e.target.value as any)}
+            className={styles.input}
+            title="Filtrera på status"
           >
             <option value="all">Alla status</option>
             <option value="pending">Väntande</option>
@@ -191,6 +195,7 @@ export const PaymentManager: React.FC<PaymentManagerProps> = ({
               type="checkbox"
               checked={selectedFines.length === filteredFines.length && filteredFines.length > 0}
               onChange={handleSelectAll}
+              title="Välj alla böter"
             />
             <label>Välj alla ({filteredFines.length})</label>
           </div>
@@ -210,6 +215,7 @@ export const PaymentManager: React.FC<PaymentManagerProps> = ({
                     checked={selectedFines.includes(fine.id)}
                     onChange={() => handleToggleFine(fine.id)}
                     onClick={(e) => e.stopPropagation()}
+                    title={`Välj böter för ${getUserName(fine.playerId)}`}
                   />
                 </div>
                 <div className="fine-status">

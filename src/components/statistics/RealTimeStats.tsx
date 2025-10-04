@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { StatisticEvent, StatEventType } from "../../types/statistics";
 import { useToast } from "../ui/Toast";
+import styles from "./RealTimeStats.module.css";
 
 interface Props {
   activityId: string;
@@ -41,17 +42,6 @@ const RealTimeStats: React.FC<Props> = ({ activityId, onEventAdded, readonly = f
   const [onIcePlayers, setOnIcePlayers] = useState<string[]>([]);
   const [comment, setComment] = useState("");
   const [gameMode, setGameMode] = useState<"5v5" | "powerplay" | "penalty">("5v5");
-  const [_shots, _setShots] = useState<Array<{
-    id: string;
-    x: number;
-    y: number;
-    type: "goal" | "shot" | "save" | "miss";
-    playerId: string;
-    playerName: string;
-    playerNumber: number;
-    time: string;
-    comment?: string;
-  }>>([]);
 
   // Händelsetyper
   const eventTypes: { type: StatEventType; icon: string; color: string }[] = [
@@ -82,7 +72,7 @@ const RealTimeStats: React.FC<Props> = ({ activityId, onEventAdded, readonly = f
   }, [isRecording]);
 
   // Rita planen för skottkarta
-  const drawRink = () => {
+  const drawRink = React.useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -130,7 +120,7 @@ const RealTimeStats: React.FC<Props> = ({ activityId, onEventAdded, readonly = f
         ctx.fill();
       }
     });
-  };
+  }, [events]);
 
   // Hantera klick på planen
   const handleCanvasClick = (e: React.MouseEvent<HTMLCanvasElement>) => {
@@ -189,28 +179,17 @@ const RealTimeStats: React.FC<Props> = ({ activityId, onEventAdded, readonly = f
     if (showShotMap) {
       drawRink();
     }
-  }, [showShotMap, events]);
+  }, [showShotMap, drawRink]);
 
   if (!isLeader() && readonly) {
     return (
-      <div style={{ 
-        background: "#1a202c", 
-        padding: "20px", 
-        borderRadius: "12px",
-        textAlign: "center",
-        color: "#a0aec0"
-      }}>
+      <div className={styles.readonlyContainer}>
         <h3>📊 Matchstatistik</h3>
-        <p>Endast ledare kan registrera statistik under match.</p>
-        <div style={{ marginTop: "20px" }}>
+        <p className={styles.readonlyText}>Endast ledare kan registrera statistik under match.</p>
+        <div className={styles.readonlyEvents}>
           <h4>Senaste händelser:</h4>
           {events.slice(-5).map(event => (
-            <div key={event.id} style={{ 
-              background: "#2d3748", 
-              padding: "8px", 
-              margin: "4px 0", 
-              borderRadius: "6px" 
-            }}>
+            <div key={event.id} className={styles.readonlyEventItem}>
               {event.time} - {event.type} - {mockPlayers.find(p => p.id === event.userId)?.name}
             </div>
           ))}
@@ -220,40 +199,14 @@ const RealTimeStats: React.FC<Props> = ({ activityId, onEventAdded, readonly = f
   }
 
   return (
-    <div style={{ 
-      background: "#1a202c", 
-      padding: "20px", 
-      borderRadius: "12px",
-      color: "#fff"
-    }}>
-      <div style={{ 
-        display: "flex", 
-        justifyContent: "space-between", 
-        alignItems: "center",
-        marginBottom: "20px"
-      }}>
-        <h3>📊 Realtidsstatistik</h3>
-        <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-          <div style={{ 
-            fontSize: "24px", 
-            fontWeight: "bold",
-            background: "#2d3748",
-            padding: "8px 16px",
-            borderRadius: "8px"
-          }}>
-            {currentTime}
-          </div>
+    <div className={styles.container}>
+      <div className={styles.header}>
+  <h3>📊 Realtidsstatistik</h3>
+  <div className={styles.headerRow}>
+          <div className={styles.timer}>{currentTime}</div>
           <button
             onClick={() => setIsRecording(!isRecording)}
-            style={{
-              padding: "8px 16px",
-              background: isRecording ? "#ef4444" : "#10b981",
-              border: "none",
-              borderRadius: "8px",
-              color: "#fff",
-              cursor: "pointer",
-              fontWeight: "600"
-            }}
+            className={`${styles.button} ${isRecording ? styles.buttonPause : styles.buttonStart}`}
           >
             {isRecording ? "⏸️ Pausa" : "▶️ Starta"}
           </button>
@@ -261,23 +214,14 @@ const RealTimeStats: React.FC<Props> = ({ activityId, onEventAdded, readonly = f
       </div>
 
       {/* Spelläge */}
-      <div style={{ marginBottom: "20px" }}>
-          <label style={{ display: "block", marginBottom: "8px", fontWeight: "600" }}>
-            Spelläge:
-          </label>
-          <div style={{ display: "flex", gap: "8px" }}>
+      <div className={styles.sectionMargin}>
+        <label className={styles.label}>Spelläge:</label>
+        <div className={styles.buttonGroup}>
             {["5v5", "powerplay", "penalty"].map(mode => (
               <button
                 key={mode}
                 onClick={() => setGameMode(mode as any)}
-                style={{
-                  padding: "6px 12px",
-                  background: gameMode === mode ? "#3b82f6" : "#4a5568",
-                  border: "none",
-                  borderRadius: "6px",
-                  color: "#fff",
-                  cursor: "pointer"
-                }}
+                className={`${styles.modeButton} ${gameMode === mode ? styles.modeActive : styles.modeInactive}`}
               >
                 {mode === "5v5" ? "5v5" : mode === "powerplay" ? "Powerplay" : "Boxplay"}
               </button>
@@ -286,27 +230,14 @@ const RealTimeStats: React.FC<Props> = ({ activityId, onEventAdded, readonly = f
         </div>
 
         {/* Spelare på plan */}
-        <div style={{ marginBottom: "20px" }}>
+        <div className={styles.sectionMargin}>
           <h4>🏒 Spelare på plan ({onIcePlayers.length}/6):</h4>
-          <div style={{ 
-            display: "grid", 
-            gridTemplateColumns: "repeat(auto-fill, minmax(150px, 1fr))",
-            gap: "8px",
-            marginTop: "8px"
-          }}>
+          <div className={styles.onIceGrid}>
             {mockPlayers.map(player => (
               <button
                 key={player.id}
                 onClick={() => togglePlayerOnIce(player.id)}
-                style={{
-                  padding: "8px",
-                  background: onIcePlayers.includes(player.id) ? "#10b981" : "#4a5568",
-                  border: "none",
-                  borderRadius: "6px",
-                  color: "#fff",
-                  cursor: "pointer",
-                  fontSize: "12px"
-                }}
+                className={`${styles.onIceButton} ${onIcePlayers.includes(player.id) ? styles.onIceActive : styles.onIceInactive}`}
               >
                 #{player.jerseyNumber} {player.name}
               </button>
@@ -315,28 +246,14 @@ const RealTimeStats: React.FC<Props> = ({ activityId, onEventAdded, readonly = f
         </div>
 
         {/* Händelsetyper */}
-        <div style={{ marginBottom: "20px" }}>
+        <div className={styles.sectionMargin}>
           <h4>📝 Registrera händelse:</h4>
-          <div style={{ 
-            display: "grid", 
-            gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))",
-            gap: "8px",
-            marginTop: "8px"
-          }}>
-            {eventTypes.map(({ type, icon, color }) => (
+          <div className={styles.eventTypeGrid}>
+            {eventTypes.map(({ type, icon }) => (
               <button
                 key={type}
                 onClick={() => setSelectedEventType(type)}
-                style={{
-                  padding: "12px 8px",
-                  background: selectedEventType === type ? color : "#4a5568",
-                  border: "none",
-                  borderRadius: "8px",
-                  color: "#fff",
-                  cursor: "pointer",
-                  fontSize: "12px",
-                  fontWeight: "600"
-                }}
+                className={`${styles.eventTypeButton} ${selectedEventType === type ? styles.eventTypeActive : styles.eventTypeInactive} ${selectedEventType === type ? styles[`eventTypeColor_${type}`] : ''}`}
               >
                 {icon} {type}
               </button>
@@ -345,21 +262,16 @@ const RealTimeStats: React.FC<Props> = ({ activityId, onEventAdded, readonly = f
         </div>
 
         {/* Spelarval */}
-        <div style={{ marginBottom: "20px" }}>
-          <label style={{ display: "block", marginBottom: "8px", fontWeight: "600" }}>
+        <div className={styles.sectionMargin}>
+          <label htmlFor="playerSelect" className={styles.label}>
             Välj spelare:
           </label>
           <select
+            id="playerSelect"
+            aria-label="Välj spelare"
             value={selectedPlayer}
             onChange={(e) => setSelectedPlayer(e.target.value)}
-            style={{
-              width: "100%",
-              padding: "8px 12px",
-              background: "#2d3748",
-              border: "1px solid #4a5568",
-              borderRadius: "6px",
-              color: "#fff"
-            }}
+            className={styles.select}
           >
             <option value="">-- Välj spelare --</option>
             {mockPlayers.map(player => (
@@ -371,42 +283,26 @@ const RealTimeStats: React.FC<Props> = ({ activityId, onEventAdded, readonly = f
         </div>
 
         {/* Kommentar */}
-        <div style={{ marginBottom: "20px" }}>
-          <label style={{ display: "block", marginBottom: "8px", fontWeight: "600" }}>
+        <div className={styles.sectionMargin}>
+          <label htmlFor="commentInput" className={styles.label}>
             Kommentar (valfri):
           </label>
           <input
+            id="commentInput"
             type="text"
             value={comment}
             onChange={(e) => setComment(e.target.value)}
             placeholder="T.ex. 'Bra skott från kanten'"
-            style={{
-              width: "100%",
-              padding: "8px 12px",
-              background: "#2d3748",
-              border: "1px solid #4a5568",
-              borderRadius: "6px",
-              color: "#fff"
-            }}
+            className={styles.input}
           />
         </div>
 
         {/* Registrera knapp */}
-        <div style={{ marginBottom: "20px" }}>
+        <div className={styles.sectionMargin}>
           <button
             onClick={() => addEvent(selectedEventType)}
             disabled={!selectedPlayer}
-            style={{
-              width: "100%",
-              padding: "12px",
-              background: !selectedPlayer ? "#4a5568" : "#3b82f6",
-              border: "none",
-              borderRadius: "8px",
-              color: "#fff",
-              cursor: !selectedPlayer ? "not-allowed" : "pointer",
-              fontWeight: "600",
-              fontSize: "16px"
-            }}
+            className={`${styles.registerButton} ${selectedPlayer ? styles.registerButtonActive : styles.registerButtonInactive}`}
           >
             📝 Registrera {selectedEventType}
           </button>
@@ -414,32 +310,19 @@ const RealTimeStats: React.FC<Props> = ({ activityId, onEventAdded, readonly = f
 
         {/* Skottkarta */}
         {(selectedEventType === "skott" || selectedEventType === "mål") && (
-          <div style={{ marginBottom: "20px" }}>
-            <div style={{ 
-              display: "flex", 
-              justifyContent: "space-between", 
-              alignItems: "center",
-              marginBottom: "10px"
-            }}>
+          <div className={styles.sectionMargin}>
+            <div className={styles.shotMapHeader}>
               <h4>🎯 Skottkarta</h4>
               <button
                 onClick={() => setShowShotMap(!showShotMap)}
-                style={{
-                  padding: "6px 12px",
-                  background: "#6b7280",
-                  border: "none",
-                  borderRadius: "6px",
-                  color: "#fff",
-                  cursor: "pointer"
-                }}
+                className={styles.shotMapToggle}
               >
                 {showShotMap ? "Dölj" : "Visa"}
               </button>
             </div>
-            
             {showShotMap && (
-              <div style={{ textAlign: "center" }}>
-                <p style={{ fontSize: "12px", color: "#a0aec0", marginBottom: "8px" }}>
+              <div className={styles.shotMapCenter}>
+                <p className={styles.shotMapText}>
                   Klicka på planen för att markera skottposition
                 </p>
                 <canvas
@@ -447,36 +330,15 @@ const RealTimeStats: React.FC<Props> = ({ activityId, onEventAdded, readonly = f
                   width={400}
                   height={200}
                   onClick={handleCanvasClick}
-                  style={{
-                    border: "2px solid #4a5568",
-                    borderRadius: "8px",
-                    cursor: "crosshair",
-                    maxWidth: "100%"
-                  }}
+                  className={styles.shotMapCanvas}
                 />
-                <div style={{ 
-                  display: "flex", 
-                  justifyContent: "center", 
-                  gap: "16px",
-                  marginTop: "8px",
-                  fontSize: "12px"
-                }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
-                    <div style={{ 
-                      width: "8px", 
-                      height: "8px", 
-                      background: "#10b981", 
-                      borderRadius: "50%" 
-                    }}></div>
+                <div className={styles.shotMapLegend}>
+                  <div className={styles.shotMapLegendItem}>
+                    <div className={styles.shotMapGoal}></div>
                     Mål
                   </div>
-                  <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
-                    <div style={{ 
-                      width: "8px", 
-                      height: "8px", 
-                      background: "#ef4444", 
-                      borderRadius: "50%" 
-                    }}></div>
+                  <div className={styles.shotMapLegendItem}>
+                    <div className={styles.shotMapShot}></div>
                     Skott
                   </div>
                 </div>
@@ -488,53 +350,27 @@ const RealTimeStats: React.FC<Props> = ({ activityId, onEventAdded, readonly = f
         {/* Händelselogg */}
         <div>
           <h4>📋 Händelselogg ({events.length}):</h4>
-          <div style={{ 
-            maxHeight: "300px", 
-            overflowY: "auto",
-            background: "#2d3748",
-            borderRadius: "8px",
-            padding: "10px"
-          }}>
+          <div className={styles.eventLog}>
             {events.length === 0 ? (
-              <p style={{ color: "#a0aec0", textAlign: "center" }}>
+              <p className={styles.eventLogEmpty}>
                 Inga händelser registrerade än
               </p>
             ) : (
               events.slice().reverse().map(event => {
                 const player = mockPlayers.find(p => p.id === event.userId);
                 return (
-                  <div
-                    key={event.id}
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      padding: "8px",
-                      margin: "4px 0",
-                      background: "#1a202c",
-                      borderRadius: "6px",
-                      fontSize: "14px"
-                    }}
-                  >
+                  <div key={event.id} className={styles.eventLogItem}>
                     <div>
                       <strong>{event.time}</strong> - {event.type} - {player?.name}
                       {event.comment && (
-                        <div style={{ fontSize: "12px", color: "#a0aec0" }}>
+                        <div className={styles.eventLogComment}>
                           {event.comment}
                         </div>
                       )}
                     </div>
                     <button
                       onClick={() => removeEvent(event.id)}
-                      style={{
-                        background: "#ef4444",
-                        border: "none",
-                        borderRadius: "4px",
-                        color: "#fff",
-                        cursor: "pointer",
-                        padding: "4px 8px",
-                        fontSize: "12px"
-                      }}
+                      className={styles.eventLogRemove}
                     >
                       ❌
                     </button>

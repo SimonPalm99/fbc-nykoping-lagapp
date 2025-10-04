@@ -1,0 +1,538 @@
+/* Preview export/dela/bekräftelse-knappar */
+.preview-actions-row {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.preview-action-btn-export {
+  padding: 8px 16px;
+  background: #3b82f6;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+}
+.preview-action-btn-share {
+  padding: 8px 16px;
+  background: #10b981;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+}
+.preview-action-btn-confirm {
+  padding: 8px 16px;
+  background: #f59e0b;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+}
+/* Preview/Sammanfattning/Status */
+.preview-wrapper {
+  background: #2d3748;
+  padding: 20px;
+  border-radius: 8px;
+  border: 2px dashed #4a5568;
+}
+.preview-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+.preview-title {
+  margin: 0 0 8px 0;
+  font-size: 24px;
+  color: #10b981;
+}
+.preview-subtitle {
+  font-size: 16px;
+  color: #a0aec0;
+}
+.preview-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.preview-summary-block {
+  text-align: center;
+}
+.preview-summary-count {
+  font-size: 32px;
+  font-weight: bold;
+}
+.preview-summary-formation {
+  color: #3b82f6;
+}
+.preview-summary-tactic {
+  color: #f59e0b;
+}
+.preview-summary-player {
+  color: #10b981;
+}
+.preview-summary-key {
+  color: #8b5cf6;
+}
+.preview-summary-label {
+  font-size: 14px;
+  color: #a0aec0;
+}
+.preview-status {
+  background: #1a202c;
+  padding: 16px;
+  border-radius: 8px;
+  text-align: center;
+}
+.preview-status-title {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+.preview-status-incomplete {
+  color: #ef4444;
+}
+.preview-status-almost {
+  color: #f59e0b;
+}
+.preview-status-ready {
+  color: #10b981;
+}
+.preview-status-desc {
+  color: #a0aec0;
+  margin: 0 0 16px 0;
+  font-size: 14px;
+}
+/* Spelare-sektion */
+.spelare-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+}
+.spelare-kort {
+  background: #2d3748;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #4a5568;
+}
+.spelare-kort-ej-tillganglig {
+  border: 1px solid #ef4444;
+}
+.spelare-kort-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.spelare-namn {
+  margin: 0 0 4px 0;
+}
+.spelare-position {
+  display: inline-block;
+  padding: 2px 8px;
+  background: #4a5568;
+  border-radius: 4px;
+  font-size: 12px;
+}
+.spelare-status {
+  padding: 2px 6px;
+  background: #ef4444;
+  border-radius: 4px;
+  font-size: 10px;
+}
+.spelare-instruktioner {
+  width: 100%;
+  padding: 8px 12px;
+  background: #1a202c;
+  border: 1px solid #4a5568;
+  border-radius: 6px;
+  color: #fff;
+  resize: vertical;
+}
+.spelare-instruktioner-disabled {
+  background: #374151;
+  color: #9ca3af;
+}
+/* Specialspel */
+.specialspel-wrapper {
+  margin-top: 32px;
+}
+.specialspel-list {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0;
+  padding: 8px;
+  background: #2d3748;
+  border-radius: 6px;
+}
+.specialspel-play-text {
+  flex: 1;
+}
+.specialspel-remove-btn {
+  background: #ef4444;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  padding: 4px 8px;
+  font-size: 12px;
+}
+.specialspel-add-btn {
+  padding: 6px 12px;
+  background: #3b82f6;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+}
+/* Formationer grid och actions */
+.formationer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+}
+.formationer-actions-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}
+.formationer-action-btn-rit {
+  padding: 8px 16px;
+  background: #7c3aed;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 600;
+}
+.formationer-action-btn-tactic {
+  padding: 8px 16px;
+  background: #10b981;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 600;
+}
+/* --- Formationer --- */
+/* Taktik-kort och lista */
+.tactic-list {
+  display: grid;
+  gap: 16px;
+}
+.tactic-card {
+  background: #2d3748;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #6b7280;
+}
+.tactic-card-high {
+  border-color: #ef4444;
+}
+.tactic-card-medium {
+  border-color: #f59e0b;
+}
+.tactic-card-low {
+  border-color: #6b7280;
+}
+.tactic-card-grid {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 16px;
+}
+.tactic-title-input {
+  width: 100%;
+  padding: 8px 12px;
+  background: #1a202c;
+  border: 1px solid #4a5568;
+  border-radius: 6px;
+  color: #fff;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.tactic-desc-textarea {
+  width: 100%;
+  padding: 8px 12px;
+  background: #1a202c;
+  border: 1px solid #4a5568;
+  border-radius: 6px;
+  color: #fff;
+  resize: vertical;
+}
+.tactic-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+  align-items: center;
+}
+.tactic-delete-btn {
+  background: #ef4444;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  cursor: pointer;
+  padding: 8px 12px;
+  height: fit-content;
+}
+.tactic-empty {
+  text-align: center;
+  padding: 40px;
+  background: #2d3748;
+  border-radius: 8px;
+  color: #a0aec0;
+}
+.tactic-empty-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+.formationer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.formationer-header-title {
+  margin: 0;
+}
+.formationer-ny-btn {
+  padding: 8px 16px;
+  background: #10b981;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 600;
+}
+.formationer-tom {
+  text-align: center;
+  padding: 40px;
+  background: #2d3748;
+  border-radius: 8px;
+  color: #a0aec0;
+}
+.formationer-tom-ikon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+.formationer-kort {
+  background: #2d3748;
+  padding: 16px;
+  border-radius: 8px;
+}
+.formationer-kort-default {
+  border: 2px solid #10b981;
+}
+.formationer-kort-normal {
+  border: 1px solid #4a5568;
+}
+.formationer-kort-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+.formationer-kort-titel {
+  margin: 0 0 4px 0;
+}
+.formationer-kort-stjarna {
+  color: #10b981;
+}
+.formationer-kort-typ {
+  display: inline-block;
+  padding: 2px 8px;
+  background: #4a5568;
+  border-radius: 4px;
+  font-size: 12px;
+}
+.formationer-kort-btns {
+  display: flex;
+  gap: 4px;
+}
+.formationer-kort-redigera-btn {
+  background: #3b82f6;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  padding: 4px 8px;
+  font-size: 12px;
+}
+.formationer-kort-radera-btn {
+  background: #ef4444;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  padding: 4px 8px;
+  font-size: 12px;
+}
+.formationer-kort-spelare {
+  font-size: 14px;
+  color: #a0aec0;
+  margin-bottom: 8px;
+}
+.formationer-kort-beskrivning {
+  font-size: 12px;
+  color: #e2e8f0;
+  margin: 8px 0;
+  font-style: italic;
+}
+.formationer-kort-linjer {
+  font-size: 12px;
+}
+.formationer-kort-linje {
+  margin-right: 8px;
+}
+/*
+  CSS-modul för MatchPlanCreator
+  Alla klasser och kommentarer på svenska
+*/
+
+.matchplan-root {
+  background: #1a202c;
+  padding: 20px;
+  border-radius: 12px;
+  color: #fff;
+}
+
+.matchplan-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.matchplan-header-title {
+  margin: 0;
+}
+
+.matchplan-header-btns {
+  display: flex;
+  gap: 8px;
+}
+
+.matchplan-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.matchplan-btn-cancel {
+  background: #6b7280;
+}
+
+.matchplan-btn-save {
+  background: #10b981;
+  font-weight: 600;
+}
+
+.matchplan-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #4a5568;
+  padding-bottom: 10px;
+}
+
+.matchplan-tab {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.matchplan-tab-active {
+  background: #3b82f6;
+  font-weight: 600;
+}
+
+.matchplan-tab-inactive {
+  background: #4a5568;
+}
+
+.matchplan-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.matchplan-info-section {
+  display: grid;
+  gap: 16px;
+}
+
+.matchplan-label {
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+.matchplan-input {
+  width: 100%;
+  padding: 8px 12px;
+  background: #2d3748;
+  border: 1px solid #4a5568;
+  border-radius: 6px;
+  color: #fff;
+}
+
+.matchplan-textarea {
+  width: 100%;
+  padding: 12px;
+  background: #2d3748;
+  border: 1px solid #4a5568;
+  border-radius: 6px;
+  color: #fff;
+  resize: vertical;
+}
+
+.matchplan-keys-section {
+  margin-top: 16px;
+}
+
+.matchplan-key-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 4px 0;
+}
+
+.matchplan-key-dot {
+  font-size: 12px;
+}
+
+.matchplan-key-text {
+  flex: 1;
+  font-size: 14px;
+}
+
+.matchplan-key-btn {
+  background: #ef4444;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  padding: 2px 6px;
+  font-size: 12px;
+}
+
+.matchplan-key-add-btn {
+  padding: 4px 8px;
+  background: #3b82f6;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 12px;
+  margin-top: 8px;
+}

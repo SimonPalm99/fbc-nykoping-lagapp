@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import styles from "./LiveStats.module.css";
 
 const eventTypes = [
   { key: "goal", label: "Mål", color: "#22c55e" },
@@ -34,32 +35,76 @@ const LiveStats: React.FC = () => {
   };
 
   return (
-    <div style={{ width: '100%', minHeight: 320 }}>
-      <div style={{ display:'flex', gap:'1rem', marginBottom:'1rem', flexWrap:'wrap', justifyContent:'center' }}>
+    <div className={styles.livestatsRoot}>
+      <div className={styles.livestatsControls}>
         {eventTypes.map(et => (
-          <button key={et.key} onClick={() => logEvent(et.key)} style={{ background:et.color, color:'#fff', border:'none', borderRadius:'0.7rem', padding:'0.7rem 1.2rem', fontWeight:700, fontSize:'1rem', cursor:'pointer', boxShadow:'0 2px 8px #22c55e22' }}>{et.label}</button>
+          <button
+            key={et.key}
+            onClick={() => logEvent(et.key)}
+            className={
+              styles.livestatsBtn + ' ' +
+              (et.key === 'goal' ? styles.livestatsBtnGoal : '') +
+              (et.key === 'assist' ? styles.livestatsBtnAssist : '') +
+              (et.key === 'penalty' ? styles.livestatsBtnPenalty : '') +
+              (et.key === 'shot' ? styles.livestatsBtnShot : '')
+            }
+          >
+            {et.label}
+          </button>
         ))}
-        <input type="text" value={player} onChange={e => setPlayer(e.target.value)} placeholder="Spelare (valfritt)" style={{ padding:'0.7rem', borderRadius:'0.7rem', border:'1px solid #22c55e', fontSize:'1rem', minWidth:120 }} />
-        <button onClick={saveStats} style={{ background:'#22c55e', color:'#fff', border:'none', borderRadius:'0.7rem', padding:'0.7rem 1.2rem', fontWeight:700, fontSize:'1rem', cursor:'pointer', marginLeft:'2rem' }}>Spara</button>
+        <input
+          type="text"
+          value={player}
+          onChange={e => setPlayer(e.target.value)}
+          placeholder="Spelare (valfritt)"
+          className={styles.livestatsInput}
+        />
+        <button
+          onClick={saveStats}
+          className={styles.livestatsBtn + ' ' + styles.livestatsBtnExport}
+        >Spara</button>
       </div>
       {/* Statistik summering */}
-      <div style={{ display:'flex', gap:'2rem', flexWrap:'wrap', justifyContent:'center', marginBottom:'2rem' }}>
+      <div className={styles.livestatsSummary}>
         {eventTypes.map(et => (
-          <div key={et.key} style={{ background:'#fff', borderRadius:'1rem', boxShadow:'0 2px 8px #22c55e22', width:120, height:90, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', fontWeight:700, fontSize:'1.1rem', color:et.color, margin:'0.5rem' }}>
-            <div>{et.label}</div>
-            <div style={{ fontSize:'1.5rem', color:'#222', fontWeight:900 }}>{stats[et.key]}</div>
+          <div
+            key={et.key}
+            className={
+              styles.livestatsSummaryBox + ' ' +
+              (et.key === 'goal' ? styles.livestatsBtnGoal : '') +
+              (et.key === 'assist' ? styles.livestatsBtnAssist : '') +
+              (et.key === 'penalty' ? styles.livestatsBtnPenalty : '') +
+              (et.key === 'shot' ? styles.livestatsBtnShot : '')
+            }
+          >
+            <div className={styles.livestatsSummaryLabel}>{et.label}</div>
+            <div className={styles.livestatsSummaryValue}>{stats[et.key]}</div>
           </div>
         ))}
       </div>
       {/* Loggade händelser */}
-      <div style={{ background:'#fff', borderRadius:'1rem', boxShadow:'0 2px 8px #22c55e22', padding:'1rem', marginBottom:'2rem' }}>
-        <div style={{ fontWeight:700, color:'#22c55e', marginBottom:'0.7rem' }}>Loggade händelser</div>
-        <ul style={{ listStyle:'none', padding:0, margin:0 }}>
-          {events.map((ev, i) => (
-            <li key={i} style={{ marginBottom:'0.5rem', color:'#222', fontWeight:500 }}>
-              <span style={{ color:eventTypes.find(et=>et.key===ev.type)?.color, fontWeight:700 }}>{eventTypes.find(et=>et.key===ev.type)?.label}</span> {ev.player && <span>({ev.player})</span>} <span style={{ color:'#888', fontSize:'0.95rem' }}>{ev.time}</span>
-            </li>
-          ))}
+      <div className={styles.livestatsLog}>
+        <div className={styles.livestatsLogTitle}>Loggade händelser</div>
+        <ul className={styles.livestatsLogList}>
+          {events.map((ev, i) => {
+            const et = eventTypes.find(e => e.key === ev.type);
+            return (
+              <li key={i} className={styles.livestatsLogItem}>
+                <span
+                  className={
+                    et?.key === 'goal' ? styles.livestatsLogTypeGoal :
+                    et?.key === 'assist' ? styles.livestatsLogTypeAssist :
+                    et?.key === 'penalty' ? styles.livestatsLogTypePenalty :
+                    et?.key === 'shot' ? styles.livestatsLogTypeShot :
+                    et?.key === 'turnover' ? styles.livestatsLogTypeTurnover : ''
+                  }
+                >
+                  {et?.label}
+                </span>
+                {ev.player && <span>({ev.player})</span>} <span className={styles.livestatsLogTime}>{ev.time}</span>
+              </li>
+            );
+          })}
         </ul>
       </div>
     </div>

@@ -1,0 +1,231 @@
+/* FBC Profile styles - all styles from Profile.tsx inline moved here */
+
+.profileRoot {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a2e1a 100%);
+  color: #F1F8E9;
+  padding: 2rem 0.5rem;
+  font-family: inherit;
+}
+.profileContainer {
+  max-width: 800px;
+  margin: 0 auto;
+}
+.profileCard {
+  background: rgba(16,32,16,0.97);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 32px rgba(34,197,94,0.18), 0 2px 24px #0008;
+  padding: 2rem 1.2rem 1.5rem 1.2rem;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.1rem;
+  text-align: center;
+}
+.profileImageWrapper {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: #14532d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  position: relative;
+  overflow: hidden;
+}
+.profileImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+.profileInitial {
+  font-size: 2.5rem;
+  color: #fff;
+  font-weight: bold;
+}
+.profileName {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+.profileInfo {
+  font-size: 1.15rem;
+  color: #F1F8E9;
+  margin-bottom: 0.5rem;
+}
+.profileInfoSecondary {
+  font-size: 1.05rem;
+  color: #C8E6C9;
+  margin-bottom: 0.5rem;
+}
+.profileStatsRow {
+  display: flex;
+  gap: 2.2rem;
+  justify-content: center;
+  margin-top: 1.2rem;
+}
+.profileStatsCol {
+  text-align: center;
+}
+.profileStatsValue {
+  font-size: 1.7rem;
+  font-weight: bold;
+  color: #22c55e;
+}
+.profileStatsLabel {
+  color: #C8E6C9;
+  font-size: 1.08rem;
+}
+.profileLogWrapper {
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 1.2rem 0;
+}
+.profileLogHeader {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #22c55e;
+  margin-bottom: 1rem;
+}
+.profileLogStatsRow {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  margin-bottom: 1.2rem;
+  background: rgba(34,197,94,0.07);
+  border-radius: 1rem;
+  padding: 1rem 0.7rem;
+}
+.profileLogStatsCol {
+  text-align: center;
+}
+.profileLogStatsValue {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #22c55e;
+}
+.profileLogStatsLabel {
+  color: #C8E6C9;
+  font-size: 1.05rem;
+}
+.profileLogList {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 1.2rem;
+}
+.profileLogItem {
+  background: rgba(16,32,16,0.97);
+  border-radius: 1rem;
+  margin-bottom: 0.7rem;
+  padding: 0.9rem 1.2rem;
+  color: #F1F8E9;
+  box-shadow: 0 1px 8px #22c55e22;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  position: relative;
+}
+.profileLogType {
+  font-weight: bold;
+  color: #22c55e;
+  font-size: 1.08rem;
+}
+.profileLogMeta {
+  font-size: 0.98rem;
+  color: #C8E6C9;
+}
+.profileLogNote {
+  font-size: 0.98rem;
+  margin-top: 2px;
+}
+.profileLogActions {
+  display: flex;
+  gap: 0.7rem;
+  margin-top: 0.5rem;
+}
+.profileLogBtn {
+  background: #14532d;
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.3rem 0.8rem;
+  cursor: pointer;
+}
+.profileLogBtnDelete {
+  background: #b91c1c;
+}
+.profileForm {
+  background: rgba(16,32,16,0.97);
+  border-radius: 1.2rem;
+  padding: 1.2rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 1px 8px #22c55e22;
+  color: #F1F8E9;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+.profileFormBtn {
+  background: #22c55e;
+  color: #fff;
+  border: none;
+  border-radius: 0.9rem;
+  padding: 0.8rem 1.3rem;
+  font-weight: bold;
+  font-size: 1.08rem;
+  cursor: pointer;
+  box-shadow: 0 1px 8px #22c55e33;
+  margin-bottom: 1rem;
+  margin-top: 0.5rem;
+}
+.profileFormBtnCancel {
+  background: #222;
+}
+.profileFeedback {
+  color: #22c55e;
+  margin-top: 0.7rem;
+  font-weight: bold;
+}
+.profileTabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+.profileTabBtn {
+  background: rgba(34,34,34,0.85);
+  color: #C8E6C9;
+  border: none;
+  border-radius: 0.7rem;
+  padding: 0.6rem 1.2rem;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: none;
+  transition: background 0.2s;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+.profileTabBtnActive {
+  background: rgba(34,197,94,0.95);
+  color: #fff;
+  box-shadow: 0 1px 6px #22c55e33;
+}
+.profileTabContent {
+  animation: fadeInProfile 0.7s;
+}
+@media (max-width: 600px) {
+  .profileCard, .profileContainer { max-width: 98vw !important; padding: 0.5rem !important; }
+  .profileTabs { flex-direction: column !important; gap: 0.2rem !important; }
+}
+@keyframes fadeInProfile {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: none; }
+}

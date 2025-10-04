@@ -1,6 +1,7 @@
 import React from "react";
 import { useStatistics } from "../../context/StatisticsContext";
 import { useUser } from "../../context/UserContext";
+import styles from "./PlayerStats.module.css";
 
 const PlayerStats: React.FC<{ userId: string }> = ({ userId }) => {
   const { getSummaryForUser } = useStatistics();
@@ -12,7 +13,7 @@ const PlayerStats: React.FC<{ userId: string }> = ({ userId }) => {
   const stats = getSummaryForUser(userId);
 
   return (
-    <section style={{ background: "#242424", padding: 18, borderRadius: 10, margin: "18px 0" }}>
+    <section className={styles["player-stats-section"]}>
       <h3>{user.name} – Statistik</h3>
       <ul>
         <li>Mål: {stats.goals}</li>

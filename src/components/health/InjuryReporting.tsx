@@ -1,3 +1,4 @@
+import styles from './InjuryReporting.module.css';
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { InjuryReport } from '../../types/health';
@@ -13,7 +14,7 @@ const InjuryReporting: React.FC<InjuryReportingProps> = ({ user }) => {
   const [selectedTab, setSelectedTab] = useState<'report' | 'my_injuries' | 'team_overview' | 'emergency'>('report');
   const [injuries, setInjuries] = useState<InjuryReport[]>([]);
   const [showReportForm, setShowReportForm] = useState(false);
-  const [_selectedInjury, setSelectedInjury] = useState<InjuryReport | null>(null);
+  const [selectedInjury, setSelectedInjury] = useState<InjuryReport | null>(null);
   
   const [newReport, setNewReport] = useState<Partial<InjuryReport>>({
     injuryType: 'Akut skada',
@@ -136,26 +137,6 @@ const InjuryReporting: React.FC<InjuryReportingProps> = ({ user }) => {
     }
   };
 
-  const getSeverityColor = (severity: string) => {
-    switch (severity) {
-      case 'minor': return '#10b981';
-      case 'moderate': return '#f59e0b';
-      case 'severe': return '#ef4444';
-      case 'critical': return '#dc2626';
-      default: return '#64748b';
-    }
-  };
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'reported': return '#3b82f6';
-      case 'under_treatment': return '#f59e0b';
-      case 'recovering': return '#10b981';
-      case 'ready_to_play': return '#22c55e';
-      case 'long_term': return '#ef4444';
-      default: return '#64748b';
-    }
-  };
 
   const getStatusText = (status: string) => {
     switch (status) {
@@ -179,48 +160,77 @@ const InjuryReporting: React.FC<InjuryReportingProps> = ({ user }) => {
   ];
 
   return (
-    <div style={{
-      background: "#1a202c",
-      padding: "20px",
-      borderRadius: "12px",
-      color: "#fff"
-    }}>
+    <div className={styles.injuryReportingRoot}>
+      {/* Injury Details Modal */}
+      {selectedInjury && (
+        <div className={styles.injuryReportingModalOverlay}>
+          <div className={styles.injuryReportingModal}>
+            <button
+              className={styles.injuryReportingModalClose}
+              onClick={() => setSelectedInjury(null)}
+              title="Stäng"
+            >
+              ✖
+            </button>
+            <h3 className={styles.injuryReportingModalTitle}>
+              {getCategoryIcon(selectedInjury.bodyPart)} {selectedInjury.injuryType} - {selectedInjury.bodyPart}
+            </h3>
+            <div className={styles.injuryReportingModalSection}>
+              <strong>Beskrivning:</strong>
+              <p>{selectedInjury.description}</p>
+            </div>
+            <div className={styles.injuryReportingModalSection}>
+              <strong>Rapporterad:</strong> {new Date(selectedInjury.dateReported).toLocaleDateString('sv-SE')}
+            </div>
+            {selectedInjury.dateOfInjury && (
+              <div className={styles.injuryReportingModalSection}>
+                <strong>Skadedatum:</strong> {new Date(selectedInjury.dateOfInjury).toLocaleDateString('sv-SE')}
+              </div>
+            )}
+            {selectedInjury.expectedRecoveryDate && (
+              <div className={styles.injuryReportingModalSection}>
+                <strong>Förväntad återkomst:</strong> {new Date(selectedInjury.expectedRecoveryDate).toLocaleDateString('sv-SE')}
+              </div>
+            )}
+            <div className={styles.injuryReportingModalSection}>
+              <strong>Status:</strong> {getStatusText(selectedInjury.status)}
+            </div>
+            <div className={styles.injuryReportingModalSection}>
+              <strong>Allvarlighetsgrad:</strong> {selectedInjury.severity === 'minor' ? 'Lindrig' : selectedInjury.severity === 'moderate' ? 'Måttlig' : selectedInjury.severity === 'severe' ? 'Allvarlig' : 'Kritisk'}
+            </div>
+            {selectedInjury.treatmentNotes.length > 0 && (
+              <div className={styles.injuryReportingModalSection}>
+                <strong>Behandlingsplan:</strong>
+                <ul>
+                  {selectedInjury.treatmentNotes.map((note, idx) => (
+                    <li key={idx}>{note}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {/* Add more details if needed */}
+          </div>
+        </div>
+      )}
       {/* Header */}
-      <div style={{ marginBottom: "20px" }}>
-        <h2 style={{ margin: 0, fontSize: "24px", fontWeight: "700" }}>
-          🏥 Skaderapport & Hälsa
-        </h2>
-        <p style={{ margin: "4px 0 0 0", color: "#a0aec0" }}>
+      <div className={styles.injuryReportingHeader}>
+        <h2 className={styles.injuryReportingTitle}>🏥 Skaderapport & Hälsa</h2>
+        <p className={styles.injuryReportingSubtitle}>
           Anmäl skador, följ rehabilitering och håll koll på lagets hälsostatus
         </p>
       </div>
 
       {/* Tabs */}
-      <div style={{
-        display: "flex",
-        gap: "8px",
-        marginBottom: "20px",
-        borderBottom: "1px solid #4a5568",
-        paddingBottom: "12px",
-        flexWrap: "wrap"
-      }}>
+      <div className={styles.injuryReportingTabs}>
         {tabs.map(tab => (
           <button
             key={tab.id}
             onClick={() => setSelectedTab(tab.id as any)}
-            style={{
-              padding: "8px 16px",
-              background: selectedTab === tab.id ? "#3b82f6" : "transparent",
-              border: "none",
-              borderRadius: "6px",
-              color: selectedTab === tab.id ? "#fff" : "#a0aec0",
-              cursor: "pointer",
-              fontWeight: "600",
-              display: "flex",
-              alignItems: "center",
-              gap: "6px",
-              fontSize: "14px"
-            }}
+            className={
+              selectedTab === tab.id
+                ? `${styles.injuryReportingTabButton} ${styles.injuryReportingTabButtonActive}`
+                : styles.injuryReportingTabButton
+            }
           >
             <span>{tab.icon}</span>
             {tab.name}
@@ -232,49 +242,25 @@ const InjuryReporting: React.FC<InjuryReportingProps> = ({ user }) => {
       {selectedTab === 'report' && (
         <div>
           {!showReportForm ? (
-            <div style={{
-              background: "#2d3748",
-              padding: "20px",
-              borderRadius: "8px",
-              textAlign: "center"
-            }}>
-              <div style={{ fontSize: "48px", marginBottom: "16px" }}>🏥</div>
-              <h3 style={{ margin: "0 0 8px 0" }}>Anmäl en skada</h3>
-              <p style={{ margin: "0 0 20px 0", color: "#a0aec0" }}>
+            <div className={`${styles.injuryReportingForm} ${styles.injuryReportingFormCentered}`}>
+              <div className={styles.injuryReportingFormIcon}>🏥</div>
+              <h3 className={styles.injuryReportingFormTitle}>Anmäl en skada</h3>
+              <p className={styles.injuryReportingFormSubtitle}>
                 Rapportera skador så att våra ledare kan hjälpa dig med rehabilitering
               </p>
               <button
                 onClick={() => setShowReportForm(true)}
-                style={{
-                  padding: "12px 24px",
-                  background: "#ef4444",
-                  border: "none",
-                  borderRadius: "8px",
-                  color: "#fff",
-                  cursor: "pointer",
-                  fontWeight: "600",
-                  fontSize: "16px"
-                }}
+                className={styles.injuryReportingButton}
               >
                 📝 Anmäl Skada
               </button>
             </div>
           ) : (
-            <div style={{
-              background: "#2d3748",
-              padding: "20px",
-              borderRadius: "8px"
-            }}>
-              <h3 style={{ margin: "0 0 16px 0" }}>Anmäl ny skada</h3>
-              
-              <div style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-                gap: "16px",
-                marginBottom: "16px"
-              }}>
+            <div className={styles.injuryReportingForm}>
+              <h3 className={styles.injuryReportingFormTitle}>Anmäl ny skada</h3>
+              <div className={styles.injuryReportingFormGrid}>
                 <div>
-                  <label style={{ display: "block", marginBottom: "4px", fontSize: "14px", color: "#a0aec0" }}>
+                  <label className={styles.injuryReportingLabel}>
                     Beskrivning *
                   </label>
                   <textarea
@@ -282,33 +268,19 @@ const InjuryReporting: React.FC<InjuryReportingProps> = ({ user }) => {
                     onChange={(e) => setNewReport(prev => ({ ...prev, description: e.target.value }))}
                     placeholder="Beskriv skadan och hur den uppstod..."
                     rows={3}
-                    style={{
-                      width: "100%",
-                      padding: "8px",
-                      background: "#1a202c",
-                      border: "1px solid #4a5568",
-                      borderRadius: "4px",
-                      color: "#fff",
-                      resize: "vertical"
-                    }}
+                    className={styles.injuryReportingTextarea}
                   />
                 </div>
 
                 <div>
-                  <label style={{ display: "block", marginBottom: "4px", fontSize: "14px", color: "#a0aec0" }}>
+                  <label className={styles.injuryReportingLabel}>
                     Kroppsdel
                   </label>
                   <select
                     value={newReport.bodyPart || ''}
                     onChange={(e) => setNewReport(prev => ({ ...prev, bodyPart: e.target.value }))}
-                    style={{
-                      width: "100%",
-                      padding: "8px",
-                      background: "#1a202c",
-                      border: "1px solid #4a5568",
-                      borderRadius: "4px",
-                      color: "#fff"
-                    }}
+                    className={styles.injuryReportingSelect}
+                    title="Välj kroppsdel"
                   >
                     <option value="Fotled/Fot">Fotled/Fot</option>
                     <option value="Knä/Ben">Knä/Ben</option>
@@ -321,7 +293,7 @@ const InjuryReporting: React.FC<InjuryReportingProps> = ({ user }) => {
                 </div>
 
                 <div>
-                  <label style={{ display: "block", marginBottom: "4px", fontSize: "14px", color: "#a0aec0" }}>
+                  <label className={styles.injuryReportingLabel}>
                     Typ av skada
                   </label>
                   <input
@@ -329,32 +301,19 @@ const InjuryReporting: React.FC<InjuryReportingProps> = ({ user }) => {
                     value={newReport.injuryType || ''}
                     onChange={(e) => setNewReport(prev => ({ ...prev, injuryType: e.target.value }))}
                     placeholder="T.ex. Stukning, Träning, Överbelastning..."
-                    style={{
-                      width: "100%",
-                      padding: "8px",
-                      background: "#1a202c",
-                      border: "1px solid #4a5568",
-                      borderRadius: "4px",
-                      color: "#fff"
-                    }}
+                    className={styles.injuryReportingInput}
                   />
                 </div>
 
                 <div>
-                  <label style={{ display: "block", marginBottom: "4px", fontSize: "14px", color: "#a0aec0" }}>
+                  <label className={styles.injuryReportingLabel}>
                     Allvarlighetsgrad
                   </label>
                   <select
                     value={newReport.severity}
                     onChange={(e) => setNewReport(prev => ({ ...prev, severity: e.target.value as any }))}
-                    style={{
-                      width: "100%",
-                      padding: "8px",
-                      background: "#1a202c",
-                      border: "1px solid #4a5568",
-                      borderRadius: "4px",
-                      color: "#fff"
-                    }}
+                    className={styles.injuryReportingSelect}
+                    title="Välj allvarlighetsgrad"
                   >
                     <option value="minor">Lindrig</option>
                     <option value="moderate">Måttlig</option>
@@ -364,7 +323,7 @@ const InjuryReporting: React.FC<InjuryReportingProps> = ({ user }) => {
                 </div>
 
                 <div>
-                  <label style={{ display: "block", marginBottom: "4px", fontSize: "14px", color: "#a0aec0" }}>
+                  <label className={styles.injuryReportingLabel}>
                     När inträffade skadan?
                   </label>
                   <input
@@ -374,66 +333,36 @@ const InjuryReporting: React.FC<InjuryReportingProps> = ({ user }) => {
                         newReport.dateOfInjury.toISOString().split('T')[0] : 
                         newReport.dateOfInjury) : ''}
                     onChange={(e) => setNewReport(prev => ({ ...prev, dateOfInjury: new Date(e.target.value) }))}
-                    style={{
-                      width: "100%",
-                      padding: "8px",
-                      background: "#1a202c",
-                      border: "1px solid #4a5568",
-                      borderRadius: "4px",
-                      color: "#fff"
-                    }}
+                    className={styles.injuryReportingInput}
+                    title="Välj datum för skadan"
+                    placeholder="Välj datum"
                   />
                 </div>
               </div>
 
-              <div style={{ marginBottom: "16px" }}>
-                <label style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "8px",
-                  cursor: "pointer"
-                }}>
+              <div className={styles.injuryReportingCheckboxRow}>
+                <label className={styles.injuryReportingCheckboxLabel}>
                   <input
                     type="checkbox"
                     checked={newReport.isPrivate}
                     onChange={(e) => setNewReport(prev => ({ ...prev, isPrivate: e.target.checked }))}
                   />
-                  <span style={{ fontSize: "14px" }}>
+                  <span className={styles.injuryReportingCheckboxText}>
                     🔒 Privat rapport (endast synlig för ledare)
                   </span>
                 </label>
               </div>
 
-              <div style={{
-                display: "flex",
-                gap: "12px",
-                justifyContent: "flex-end"
-              }}>
+              <div className={styles.injuryReportingFormActions}>
                 <button
                   onClick={() => setShowReportForm(false)}
-                  style={{
-                    padding: "8px 16px",
-                    background: "#4a5568",
-                    border: "none",
-                    borderRadius: "6px",
-                    color: "#fff",
-                    cursor: "pointer",
-                    fontWeight: "600"
-                  }}
+                  className={`${styles.injuryReportingButton} ${styles.injuryReportingButtonCancel}`}
                 >
                   Avbryt
                 </button>
                 <button
                   onClick={submitReport}
-                  style={{
-                    padding: "8px 16px",
-                    background: "#ef4444",
-                    border: "none",
-                    borderRadius: "6px",
-                    color: "#fff",
-                    cursor: "pointer",
-                    fontWeight: "600"
-                  }}
+                  className={styles.injuryReportingButton}
                 >
                   📝 Skicka Rapport
                 </button>
@@ -446,160 +375,112 @@ const InjuryReporting: React.FC<InjuryReportingProps> = ({ user }) => {
       {/* My Injuries Tab */}
       {selectedTab === 'my_injuries' && (
         <div>
-          <h3 style={{ margin: "0 0 16px 0" }}>Mina Skador</h3>
-          
+          <h3 className={styles.injuryReportingSectionTitle}>Mina Skador</h3>
           {myInjuries.length === 0 ? (
-            <div style={{
-              background: "#2d3748",
-              padding: "40px",
-              borderRadius: "8px",
-              textAlign: "center"
-            }}>
-              <div style={{ fontSize: "48px", marginBottom: "16px" }}>💪</div>
-              <h4 style={{ margin: "0 0 8px 0" }}>Inga aktiva skador!</h4>
-              <p style={{ margin: 0, color: "#a0aec0" }}>
+            <div className={styles.injuryReportingEmptyCard}>
+              <div className={styles.injuryReportingEmptyIcon}>💪</div>
+              <h4 className={styles.injuryReportingEmptyTitle}>Inga aktiva skador!</h4>
+              <p className={styles.injuryReportingEmptyText}>
                 Håll dig skadefri och fortsätt träna hårt!
               </p>
             </div>
           ) : (
-            <div style={{
-              display: "grid",
-              gap: "16px"
-            }}>
+            <div className={styles.injuryReportingInjuryList}>
               {myInjuries.map(injury => (
                 <div
                   key={injury.id}
-                  style={{
-                    background: "#2d3748",
-                    padding: "16px",
-                    borderRadius: "8px",
-                    border: `2px solid ${getStatusColor(injury.status)}`
-                  }}
+                  className={
+                    `${styles.injuryReportingInjuryCard} ` +
+                    (injury.status === 'reported' ? styles.statusReported :
+                     injury.status === 'under_treatment' ? styles.statusUnderTreatment :
+                     injury.status === 'recovering' ? styles.statusRecovering :
+                     injury.status === 'ready_to_play' ? styles.statusReadyToPlay :
+                     injury.status === 'long_term' ? styles.statusLongTerm :
+                     styles.statusDefault)
+                  }
                 >
-                  <div style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "flex-start",
-                    marginBottom: "12px"
-                  }}>
-                    <div style={{ flex: 1 }}>
-                      <div style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "8px",
-                        marginBottom: "4px"
-                      }}>
-                        <span style={{ fontSize: "20px" }}>
-                          {getCategoryIcon(injury.bodyPart)}
-                        </span>
-                        <h4 style={{ margin: 0, fontWeight: "600" }}>
+                  <div className={styles.injuryReportingInjuryHeader}>
+                    <div className={styles.injuryReportingInjuryHeaderLeft}>
+                      <div className={styles.injuryReportingInjuryHeaderIconTitle}>
+                        <span className={styles.injuryReportingInjuryIcon}> {getCategoryIcon(injury.bodyPart)} </span>
+                        <h4 className={styles.injuryReportingInjuryTitle}>
                           {injury.injuryType} - {injury.bodyPart}
                         </h4>
                       </div>
-                      <p style={{ margin: "0 0 8px 0", color: "#a0aec0", fontSize: "14px" }}>
+                      <p className={styles.injuryReportingInjuryDesc}>
                         {injury.description}
                       </p>
                     </div>
-                    
-                    <div style={{
-                      background: getStatusColor(injury.status),
-                      color: "#fff",
-                      padding: "4px 8px",
-                      borderRadius: "4px",
-                      fontSize: "12px",
-                      fontWeight: "600"
-                    }}>
+                    <div
+                      className={
+                        `${styles.injuryReportingInjuryStatus} ` +
+                        (injury.status === 'reported' ? styles.statusReportedBg :
+                         injury.status === 'under_treatment' ? styles.statusUnderTreatmentBg :
+                         injury.status === 'recovering' ? styles.statusRecoveringBg :
+                         injury.status === 'ready_to_play' ? styles.statusReadyToPlayBg :
+                         injury.status === 'long_term' ? styles.statusLongTermBg :
+                         styles.statusDefaultBg)
+                      }
+                    >
                       {getStatusText(injury.status)}
                     </div>
                   </div>
-
-                  <div style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
-                    gap: "12px",
-                    marginBottom: "12px"
-                  }}>
+                  <div className={styles.injuryReportingInjuryMetaGrid}>
                     <div>
-                      <div style={{ fontSize: "12px", color: "#a0aec0" }}>Rapporterad</div>
-                      <div style={{ fontSize: "14px", fontWeight: "600" }}>
+                      <div className={styles.injuryReportingInjuryMetaLabel}>Rapporterad</div>
+                      <div className={styles.injuryReportingInjuryMetaValue}>
                         {new Date(injury.dateReported).toLocaleDateString('sv-SE')}
                       </div>
                     </div>
-                    
                     {injury.expectedRecoveryDate && (
                       <div>
-                        <div style={{ fontSize: "12px", color: "#a0aec0" }}>Förväntad återkomst</div>
-                        <div style={{ fontSize: "14px", fontWeight: "600" }}>
+                        <div className={styles.injuryReportingInjuryMetaLabel}>Förväntad återkomst</div>
+                        <div className={styles.injuryReportingInjuryMetaValue}>
                           {new Date(injury.expectedRecoveryDate).toLocaleDateString('sv-SE')}
                         </div>
                       </div>
                     )}
-                    
                     <div>
-                      <div style={{ fontSize: "12px", color: "#a0aec0" }}>Allvarlighetsgrad</div>
-                      <div style={{
-                        fontSize: "14px",
-                        fontWeight: "600",
-                        color: getSeverityColor(injury.severity)
-                      }}>
+                      <div className={styles.injuryReportingInjuryMetaLabel}>Allvarlighetsgrad</div>
+                      <div
+                        className={
+                          `${styles.injuryReportingInjuryMetaValue} ` +
+                          (injury.severity === 'minor' ? styles.severityMinor :
+                           injury.severity === 'moderate' ? styles.severityModerate :
+                           injury.severity === 'severe' ? styles.severitySevere :
+                           styles.severityCritical)
+                        }
+                      >
                         {injury.severity === 'minor' ? 'Lindrig' :
                          injury.severity === 'moderate' ? 'Måttlig' :
                          injury.severity === 'severe' ? 'Allvarlig' : 'Kritisk'}
                       </div>
                     </div>
                   </div>
-
                   {injury.treatmentNotes.length > 0 && (
-                    <div style={{
-                      background: "#1a202c",
-                      padding: "12px",
-                      borderRadius: "6px"
-                    }}>
-                      <div style={{ fontSize: "12px", color: "#a0aec0", marginBottom: "6px" }}>
+                    <div className={styles.injuryReportingInjuryPlanCard}>
+                      <div className={styles.injuryReportingInjuryPlanLabel}>
                         Behandlingsplan:
                       </div>
-                      <ul style={{ margin: 0, paddingLeft: "16px" }}>
+                      <ul className={styles.injuryReportingInjuryPlanList}>
                         {injury.treatmentNotes.map((note, index) => (
-                          <li key={index} style={{ fontSize: "14px", marginBottom: "2px" }}>
+                          <li key={index} className={styles.injuryReportingInjuryPlanListItem}>
                             {note}
                           </li>
                         ))}
                       </ul>
                     </div>
                   )}
-
-                  <div style={{
-                    display: "flex",
-                    gap: "8px",
-                    marginTop: "12px"
-                  }}>
+                  <div className={styles.injuryReportingInjuryActions}>
                     <button
                       onClick={() => setSelectedInjury(injury)}
-                      style={{
-                        padding: "6px 12px",
-                        background: "#3b82f6",
-                        border: "none",
-                        borderRadius: "4px",
-                        color: "#fff",
-                        cursor: "pointer",
-                        fontSize: "12px",
-                        fontWeight: "600"
-                      }}
+                      className={styles.injuryReportingInjuryActionButton}
                     >
                       📋 Detaljer
                     </button>
                     {injury.status !== 'ready_to_play' && (
                       <button
-                        style={{
-                          padding: "6px 12px",
-                          background: "#10b981",
-                          border: "none",
-                          borderRadius: "4px",
-                          color: "#fff",
-                          cursor: "pointer",
-                          fontSize: "12px",
-                          fontWeight: "600"
-                        }}
+                        className={styles.injuryReportingInjuryActionButtonGreen}
                       >
                         📝 Uppdatera Status
                       </button>
@@ -615,38 +496,16 @@ const InjuryReporting: React.FC<InjuryReportingProps> = ({ user }) => {
       {/* Team Overview Tab */}
       {selectedTab === 'team_overview' && (
         <div>
-          <div style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginBottom: "16px"
-          }}>
-            <h3 style={{ margin: 0 }}>Lagöversikt - Skador</h3>
+          <div className={styles.injuryReportingOverviewHeader}>
+            <h3 className={styles.injuryReportingSectionTitle}>Lagöversikt - Skador</h3>
             {isLeader() && (
-              <button
-                style={{
-                  padding: "8px 16px",
-                  background: "#10b981",
-                  border: "none",
-                  borderRadius: "6px",
-                  color: "#fff",
-                  cursor: "pointer",
-                  fontWeight: "600",
-                  fontSize: "14px"
-                }}
-              >
+              <button className={styles.injuryReportingExportButton}>
                 📊 Exportera Rapport
               </button>
             )}
           </div>
-
           {/* Status Overview */}
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
-            gap: "12px",
-            marginBottom: "20px"
-          }}>
+          <div className={styles.injuryReportingStatusGrid}>
             {[
               { status: 'reported', label: 'Rapporterade', count: teamInjuries.filter(i => i.status === 'reported').length },
               { status: 'under_treatment', label: 'Under behandling', count: teamInjuries.filter(i => i.status === 'under_treatment').length },
@@ -655,109 +514,95 @@ const InjuryReporting: React.FC<InjuryReportingProps> = ({ user }) => {
             ].map(item => (
               <div
                 key={item.status}
-                style={{
-                  background: "#2d3748",
-                  padding: "16px",
-                  borderRadius: "8px",
-                  textAlign: "center",
-                  border: `2px solid ${getStatusColor(item.status)}`
-                }}
+                className={
+                  `${styles.injuryReportingStatusCard} ` +
+                  (item.status === 'reported' ? styles.statusReported :
+                   item.status === 'under_treatment' ? styles.statusUnderTreatment :
+                   item.status === 'recovering' ? styles.statusRecovering :
+                   item.status === 'ready_to_play' ? styles.statusReadyToPlay :
+                   item.status === 'long_term' ? styles.statusLongTerm :
+                   styles.statusDefault)
+                }
               >
-                <div style={{
-                  fontSize: "24px",
-                  fontWeight: "bold",
-                  color: getStatusColor(item.status),
-                  marginBottom: "4px"
-                }}>
+                <div
+                  className={
+                    `${styles.injuryReportingStatusCount} ` +
+                    (item.status === 'reported' ? styles.statusReportedText :
+                     item.status === 'under_treatment' ? styles.statusUnderTreatmentText :
+                     item.status === 'recovering' ? styles.statusRecoveringText :
+                     item.status === 'ready_to_play' ? styles.statusReadyToPlayText :
+                     item.status === 'long_term' ? styles.statusLongTermText :
+                     styles.statusDefaultText)
+                  }
+                >
                   {item.count}
                 </div>
-                <div style={{ fontSize: "12px", color: "#a0aec0" }}>
+                <div className={styles.injuryReportingStatusLabel}>
                   {item.label}
                 </div>
               </div>
             ))}
           </div>
-
           {/* Team Injuries List */}
-          <div style={{
-            display: "grid",
-            gap: "12px"
-          }}>
+          <div className={styles.injuryReportingTeamList}>
             {teamInjuries.map(injury => {
               const playerName = injury.playerId === '1' ? 'Simon Andersson' : 
                                 injury.playerId === '2' ? 'Anna Svensson' : 
                                 injury.playerId === '3' ? 'Erik Nilsson' : 'Okänd spelare';
-              
               return (
                 <div
                   key={injury.id}
-                  style={{
-                    background: "#2d3748",
-                    padding: "16px",
-                    borderRadius: "8px",
-                    border: `1px solid ${getStatusColor(injury.status)}`
-                  }}
+                  className={
+                    `${styles.injuryReportingTeamCard} ` +
+                    (injury.status === 'reported' ? styles.statusReported :
+                     injury.status === 'under_treatment' ? styles.statusUnderTreatment :
+                     injury.status === 'recovering' ? styles.statusRecovering :
+                     injury.status === 'ready_to_play' ? styles.statusReadyToPlay :
+                     injury.status === 'long_term' ? styles.statusLongTerm :
+                     styles.statusDefault)
+                  }
                 >
-                  <div style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "flex-start"
-                  }}>
-                    <div style={{ flex: 1 }}>
-                      <div style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "8px",
-                        marginBottom: "4px"
-                      }}>
-                        <span style={{ fontSize: "16px" }}>
-                          {getCategoryIcon(injury.bodyPart)}
-                        </span>
-                        <span style={{ fontWeight: "600" }}>{playerName}</span>
-                        <span style={{ color: "#a0aec0" }}>-</span>
-                        <span>{injury.injuryType} - {injury.bodyPart}</span>
-                      </div>
-                      
-                      {!injury.isPrivate && (
-                        <p style={{ margin: "0 0 8px 0", color: "#a0aec0", fontSize: "14px" }}>
-                          {injury.description}
-                        </p>
-                      )}
-                      
-                      <div style={{ fontSize: "12px", color: "#718096" }}>
-                        Rapporterad: {new Date(injury.dateReported).toLocaleDateString('sv-SE')}
-                        {injury.expectedRecoveryDate && (
-                          <span> | Återkomst: {new Date(injury.expectedRecoveryDate).toLocaleDateString('sv-SE')}</span>
-                        )}
-                      </div>
+                  <div className={styles.injuryReportingTeamCardHeader}>
+                    <div className={styles.injuryReportingTeamCardHeaderLeft}>
+                      <span className={styles.injuryReportingTeamCardIcon}>{getCategoryIcon(injury.bodyPart)}</span>
+                      <span className={styles.injuryReportingTeamCardPlayer}>{playerName}</span>
+                      <span className={styles.injuryReportingTeamCardDash}>-</span>
+                      <span>{injury.injuryType} - {injury.bodyPart}</span>
                     </div>
-                    
-                    <div style={{
-                      background: getStatusColor(injury.status),
-                      color: "#fff",
-                      padding: "4px 8px",
-                      borderRadius: "4px",
-                      fontSize: "12px",
-                      fontWeight: "600"
-                    }}>
+                    <div
+                      className={
+                        `${styles.injuryReportingTeamCardStatus} ` +
+                        (injury.status === 'reported' ? styles.statusReportedBg :
+                         injury.status === 'under_treatment' ? styles.statusUnderTreatmentBg :
+                         injury.status === 'recovering' ? styles.statusRecoveringBg :
+                         injury.status === 'ready_to_play' ? styles.statusReadyToPlayBg :
+                         injury.status === 'long_term' ? styles.statusLongTermBg :
+                         styles.statusDefaultBg)
+                      }
+                    >
                       {getStatusText(injury.status)}
                     </div>
+                  </div>
+                  {!injury.isPrivate && (
+                    <p className={styles.injuryReportingTeamCardDesc}>
+                      {injury.description}
+                    </p>
+                  )}
+                  <div className={styles.injuryReportingTeamCardMeta}>
+                    Rapporterad: {new Date(injury.dateReported).toLocaleDateString('sv-SE')}
+                    {injury.expectedRecoveryDate && (
+                      <span> | Återkomst: {new Date(injury.expectedRecoveryDate).toLocaleDateString('sv-SE')}</span>
+                    )}
                   </div>
                 </div>
               );
             })}
           </div>
-
           {teamInjuries.length === 0 && (
-            <div style={{
-              background: "#2d3748",
-              padding: "40px",
-              borderRadius: "8px",
-              textAlign: "center"
-            }}>
-              <div style={{ fontSize: "48px", marginBottom: "16px" }}>💪</div>
-              <h4 style={{ margin: "0 0 8px 0" }}>Inga aktiva skador i laget!</h4>
-              <p style={{ margin: 0, color: "#a0aec0" }}>
+            <div className={styles.injuryReportingEmptyCard}>
+              <div className={styles.injuryReportingEmptyIcon}>💪</div>
+              <h4 className={styles.injuryReportingEmptyTitle}>Inga aktiva skador i laget!</h4>
+              <p className={styles.injuryReportingEmptyText}>
                 Fantastiskt! Alla spelare är redo för träning och match.
               </p>
             </div>
@@ -768,16 +613,10 @@ const InjuryReporting: React.FC<InjuryReportingProps> = ({ user }) => {
       {/* Emergency Info Tab */}
       {selectedTab === 'emergency' && (
         <div>
-          <h3 style={{ margin: "0 0 16px 0" }}>🚨 Nödinformation</h3>
-          
-          <div style={{
-            background: "#dc2626",
-            padding: "16px",
-            borderRadius: "8px",
-            marginBottom: "20px"
-          }}>
-            <h4 style={{ margin: "0 0 8px 0", color: "#fff" }}>Vid akut skada:</h4>
-            <ol style={{ margin: 0, paddingLeft: "20px", color: "#fee2e2" }}>
+          <h3 className={styles.injuryReportingEmergencyTitle}>🚨 Nödinformation</h3>
+          <div className={styles.injuryReportingEmergencyCard}>
+            <h4 className={styles.injuryReportingEmergencyCardTitle}>Vid akut skada:</h4>
+            <ol className={styles.injuryReportingEmergencyList}>
               <li>Kontakta 112 vid allvarlig skada</li>
               <li>Administrera första hjälpen</li>
               <li>Kontakta förälder/vårdnadshavare (under 18 år)</li>
@@ -785,29 +624,20 @@ const InjuryReporting: React.FC<InjuryReportingProps> = ({ user }) => {
               <li>Kontakta ledare: <strong>+46 70 123 45 67</strong></li>
             </ol>
           </div>
-
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-            gap: "16px"
-          }}>
-            <div style={{
-              background: "#2d3748",
-              padding: "16px",
-              borderRadius: "8px"
-            }}>
-              <h4 style={{ margin: "0 0 12px 0" }}>📞 Viktiga Kontakter</h4>
-              <div style={{ fontSize: "14px" }}>
-                <div style={{ marginBottom: "8px" }}>
+          <div className={styles.injuryReportingEmergencyGrid}>
+            <div className={styles.injuryReportingEmergencyInfoCard}>
+              <h4 className={styles.injuryReportingEmergencyInfoTitle}>📞 Viktiga Kontakter</h4>
+              <div className={styles.injuryReportingEmergencyInfoText}>
+                <div className={styles.injuryReportingEmergencyInfoRow}>
                   <strong>Akutvård:</strong> 112
                 </div>
-                <div style={{ marginBottom: "8px" }}>
+                <div className={styles.injuryReportingEmergencyInfoRow}>
                   <strong>Vårdguiden:</strong> 1177
                 </div>
-                <div style={{ marginBottom: "8px" }}>
+                <div className={styles.injuryReportingEmergencyInfoRow}>
                   <strong>Huvudtränare:</strong> +46 70 123 45 67
                 </div>
-                <div style={{ marginBottom: "8px" }}>
+                <div className={styles.injuryReportingEmergencyInfoRow}>
                   <strong>Lagläkare:</strong> +46 70 987 65 43
                 </div>
                 <div>
@@ -815,40 +645,30 @@ const InjuryReporting: React.FC<InjuryReportingProps> = ({ user }) => {
                 </div>
               </div>
             </div>
-
-            <div style={{
-              background: "#2d3748",
-              padding: "16px",
-              borderRadius: "8px"
-            }}>
-              <h4 style={{ margin: "0 0 12px 0" }}>🏥 Närliggande Vårdcentral</h4>
-              <div style={{ fontSize: "14px" }}>
-                <div style={{ marginBottom: "8px" }}>
+            <div className={styles.injuryReportingEmergencyInfoCard}>
+              <h4 className={styles.injuryReportingEmergencyInfoTitle}>🏥 Närliggande Vårdcentral</h4>
+              <div className={styles.injuryReportingEmergencyInfoText}>
+                <div className={styles.injuryReportingEmergencyInfoRow}>
                   <strong>Nyköpings Vårdcentral</strong>
                 </div>
-                <div style={{ marginBottom: "4px", color: "#a0aec0" }}>
+                <div className={styles.injuryReportingEmergencyInfoRowSecondary}>
                   Västra Storgatan 15, Nyköping
                 </div>
-                <div style={{ marginBottom: "4px", color: "#a0aec0" }}>
+                <div className={styles.injuryReportingEmergencyInfoRowSecondary}>
                   Tel: 0155-24 80 00
                 </div>
-                <div style={{ color: "#a0aec0" }}>
+                <div className={styles.injuryReportingEmergencyInfoRowSecondary}>
                   Öppet: Mån-Fre 8-17, Akut: 24/7
                 </div>
               </div>
             </div>
-
-            <div style={{
-              background: "#2d3748",
-              padding: "16px",
-              borderRadius: "8px"
-            }}>
-              <h4 style={{ margin: "0 0 12px 0" }}>🚑 Första Hjälpen</h4>
-              <div style={{ fontSize: "14px" }}>
-                <div style={{ marginBottom: "8px" }}>
+            <div className={styles.injuryReportingEmergencyInfoCard}>
+              <h4 className={styles.injuryReportingEmergencyInfoTitle}>🚑 Första Hjälpen</h4>
+              <div className={styles.injuryReportingEmergencyInfoText}>
+                <div className={styles.injuryReportingEmergencyInfoRow}>
                   <strong>RICE-metoden:</strong>
                 </div>
-                <ul style={{ margin: 0, paddingLeft: "16px", color: "#a0aec0" }}>
+                <ul className={styles.injuryReportingEmergencyInfoList}>
                   <li>Rest (Vila)</li>
                   <li>Ice (Kyla)</li>
                   <li>Compression (Kompression)</li>

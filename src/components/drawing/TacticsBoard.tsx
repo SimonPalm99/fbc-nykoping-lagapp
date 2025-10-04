@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect, useCallback } from "react";
 import { DrawingElement, TacticDrawing, DrawingAnimation, DrawingTemplate } from "../../types/tactics";
 import { useAuth } from "../../context/AuthContext";
 import { useToast } from "../ui/Toast";
-import { useTheme } from "../../context/ThemeContext";
 
 interface Props {
   tactic?: TacticDrawing;
@@ -22,7 +21,7 @@ const TacticsBoard: React.FC<Props> = ({
   templates = []
 }) => {
   const { user, isLeader } = useAuth();
-  const { theme: _theme } = useTheme();
+  // Removed unused _theme variable
   const toast = useToast();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -32,21 +31,17 @@ const TacticsBoard: React.FC<Props> = ({
   const [selectedTool, setSelectedTool] = useState<string>("select");
   const [selectedTeam, setSelectedTeam] = useState<"home" | "away">("home");
   const [selectedElement, setSelectedElement] = useState<string | null>(null);
-  const [_isDrawing, _setIsDrawing] = useState(false);
   const [draggedElement, setDraggedElement] = useState<string | null>(null);
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   const [title, setTitle] = useState(tactic?.title || "");
   const [description, setDescription] = useState(tactic?.description || "");
   const [category, setCategory] = useState<"offense" | "defense" | "special_teams" | "general">(tactic?.category || "general");
-  const [type, _setType] = useState<"formation" | "powerplay" | "penalty" | "faceoff" | "exercise" | "play">(tactic?.type || "formation");
   const [showGrid, setShowGrid] = useState(true);
   const [zoom, setZoom] = useState(1);
   const [showShareModal, setShowShareModal] = useState(false);
   const [showTemplateModal, setShowTemplateModal] = useState(false);
-  const [_showVersionModal, _setShowVersionModal] = useState(false);
-  const [_showAnimationPanel, _setShowAnimationPanel] = useState(false);
   const [showDiscussionPanel, setShowDiscussionPanel] = useState(false);
-  const [animations, _setAnimations] = useState<DrawingAnimation[]>(tactic?.animations || []);
+  const [animations] = useState<DrawingAnimation[]>(tactic?.animations || []);
   const [leaderComment, setLeaderComment] = useState("");
   const [history, setHistory] = useState<DrawingElement[][]>([elements]);
   const [historyIndex, setHistoryIndex] = useState(0);
@@ -58,12 +53,10 @@ const TacticsBoard: React.FC<Props> = ({
     zones: true,
     text: true
   });
-  
   // Touch and mobile support
-  const [_touchStart, setTouchStart] = useState<{ x: number; y: number } | null>(null);
-  const [_touchScale, _setTouchScale] = useState(1);
+  // Removed unused touchStart state
   const [canvasSize, setCanvasSize] = useState({ width: 800, height: 500 });
-  const [isLoading, _setIsLoading] = useState(false);
+  const [isLoading] = useState(false);
 
   // Enhanced tools for leaders
   const leaderTools = [
@@ -116,6 +109,142 @@ const TacticsBoard: React.FC<Props> = ({
   };
 
   // Responsive canvas sizing
+  const drawArrow = (ctx: CanvasRenderingContext2D, x1: number, y1: number, x2: number, y2: number) => {
+    const headLength = 15;
+    const angle = Math.atan2(y2 - y1, x2 - x1);
+
+    // Rita linje
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    ctx.stroke();
+
+    // Rita pilhuvud
+    ctx.beginPath();
+    ctx.moveTo(x2, y2);
+    ctx.lineTo(
+      x2 - headLength * Math.cos(angle - Math.PI / 6),
+      y2 - headLength * Math.sin(angle - Math.PI / 6)
+    );
+    ctx.moveTo(x2, y2);
+    ctx.lineTo(
+      x2 - headLength * Math.cos(angle + Math.PI / 6),
+      y2 - headLength * Math.sin(angle + Math.PI / 6)
+    );
+    ctx.stroke();
+  };
+
+  const drawCurve = (ctx: CanvasRenderingContext2D, x1: number, y1: number, x2: number, y2: number) => {
+    const midX = (x1 + x2) / 2;
+    const midY = (y1 + y2) / 2 - 30;
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.quadraticCurveTo(midX, midY, x2, y2);
+    ctx.stroke();
+    // Rita pilhuvud vid slutet
+    const angle = Math.atan2(y2 - midY, x2 - midX);
+    const headLength = 10;
+    ctx.beginPath();
+    ctx.moveTo(x2, y2);
+    ctx.lineTo(
+      x2 - headLength * Math.cos(angle - Math.PI / 6),
+      y2 - headLength * Math.sin(angle - Math.PI / 6)
+    );
+    ctx.moveTo(x2, y2);
+    ctx.lineTo(
+      x2 - headLength * Math.cos(angle + Math.PI / 6),
+      y2 - headLength * Math.sin(angle + Math.PI / 6)
+    );
+    ctx.stroke();
+  };
+
+  // Move drawElement above drawCanvas
+  const drawElement = React.useCallback((ctx: CanvasRenderingContext2D, element: DrawingElement) => {
+    ctx.save();
+    const teamColors = {
+      home: "#4299e1",
+      away: "#f56565",
+      neutral: "#a0aec0"
+    };
+    ctx.fillStyle = element.color || teamColors[element.team || "neutral"];
+    ctx.strokeStyle = element.color || teamColors[element.team || "neutral"];
+    ctx.lineWidth = element.strokeWidth || 2;
+    if (selectedElement === element.id) {
+      ctx.shadowColor = "#fbbf24";
+      ctx.shadowBlur = 8;
+    }
+    switch(element.type) {
+      case "player":
+      case "opponent":
+        ctx.beginPath();
+        ctx.arc(element.x, element.y, 15, 0, 2 * Math.PI);
+        ctx.fill();
+        if (element.playerNumber) {
+          ctx.fillStyle = "#fff";
+          ctx.font = "12px bold Arial";
+          ctx.textAlign = "center";
+          ctx.fillText(
+            element.playerNumber.toString(), 
+            element.x, 
+            element.y + 4
+          );
+        }
+        break;
+      case "ball":
+        ctx.beginPath();
+        ctx.arc(element.x, element.y, 8, 0, 2 * Math.PI);
+        ctx.fill();
+        break;
+      case "arrow":
+        drawArrow(ctx, element.x, element.y, 
+                  element.x + (element.width || 50), 
+                  element.y + (element.height || 0));
+        break;
+      case "curve":
+        drawCurve(ctx, element.x, element.y, 
+                 element.x + (element.width || 50), 
+                 element.y + (element.height || 0));
+        break;
+      case "line":
+        ctx.beginPath();
+        ctx.moveTo(element.x, element.y);
+        ctx.lineTo(element.x + (element.width || 50), element.y + (element.height || 0));
+        ctx.stroke();
+        break;
+      case "circle":
+        ctx.beginPath();
+        ctx.arc(element.x, element.y, element.width || 20, 0, 2 * Math.PI);
+        ctx.stroke();
+        break;
+      case "rectangle":
+      case "zone":
+        ctx.strokeRect(element.x, element.y, element.width || 50, element.height || 50);
+        if (element.type === "zone") {
+          ctx.globalAlpha = 0.3;
+          ctx.fillRect(element.x, element.y, element.width || 50, element.height || 50);
+          ctx.globalAlpha = 1;
+        }
+        break;
+      case "text":
+        ctx.fillStyle = element.color || "#fff";
+        ctx.font = `${element.fontSize || 14}px Arial`;
+        ctx.fillText(element.text || "Text", element.x, element.y);
+        break;
+      case "cone":
+        const size = 10;
+        ctx.beginPath();
+        ctx.moveTo(element.x, element.y - size);
+        ctx.lineTo(element.x - size, element.y + size);
+        ctx.lineTo(element.x + size, element.y + size);
+        ctx.closePath();
+        ctx.fill();
+        break;
+      case "goal":
+        ctx.strokeRect(element.x - 15, element.y - 8, 30, 16);
+        break;
+    }
+    ctx.restore();
+  }, [selectedElement]);
   useEffect(() => {
     const updateCanvasSize = () => {
       const container = containerRef.current;
@@ -142,76 +271,8 @@ const TacticsBoard: React.FC<Props> = ({
     return () => window.removeEventListener('resize', updateCanvasSize);
   }, []);
 
-  useEffect(() => {
-    drawCanvas();
-  }, [elements, selectedElement, zoom, showGrid, canvasSize]);
-
-  // Touch event handlers
-  const handleTouchStart = (e: React.TouchEvent<HTMLCanvasElement>) => {
-    e.preventDefault();
-    if (readonly || !isLeader()) return;
-
-    const touch = e.touches[0];
-    const canvas = canvasRef.current;
-    if (!canvas || !touch) return;
-
-    const rect = canvas.getBoundingClientRect();
-    const x = (touch.clientX - rect.left) / zoom;
-    const y = (touch.clientY - rect.top) / zoom;
-
-    setTouchStart({ x, y });
-
-    if (selectedTool === "select") {
-      const clickedElement = getElementAtPosition(x, y);
-      if (clickedElement) {
-        setSelectedElement(clickedElement.id);
-        setDraggedElement(clickedElement.id);
-        setDragOffset({
-          x: x - clickedElement.x,
-          y: y - clickedElement.y
-        });
-      } else {
-        setSelectedElement(null);
-      }
-    } else {
-      createNewElement(x, y);
-    }
-  };
-
-  const handleTouchMove = (e: React.TouchEvent<HTMLCanvasElement>) => {
-    e.preventDefault();
-    if (!draggedElement || readonly || !isLeader()) return;
-
-    const touch = e.touches[0];
-    const canvas = canvasRef.current;
-    if (!canvas || !touch) return;
-
-    const rect = canvas.getBoundingClientRect();
-    const x = (touch.clientX - rect.left) / zoom;
-    const y = (touch.clientY - rect.top) / zoom;
-
-    setElements(prev => prev.map(element => {
-      if (element.id === draggedElement) {
-        return {
-          ...element,
-          x: x - dragOffset.x,
-          y: y - dragOffset.y
-        };
-      }
-      return element;
-    }));
-  };
-
-  const handleTouchEnd = (e: React.TouchEvent<HTMLCanvasElement>) => {
-    e.preventDefault();
-    if (draggedElement) {
-      addToHistory(elements);
-      setDraggedElement(null);
-    }
-    setTouchStart(null);
-  };
-
-  const drawCanvas = () => {
+  const drawCanvas = React.useCallback(() => {
+    // ...existing code...
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -245,7 +306,143 @@ const TacticsBoard: React.FC<Props> = ({
     });
 
     ctx.restore();
+  }, [elements, zoom, showGrid, canvasSize, layers, drawElement]);
+
+  useEffect(() => {
+    drawCanvas();
+  }, [drawCanvas]);
+
+  // Touch event handlers
+  const handleTouchStart = (e: React.TouchEvent<HTMLCanvasElement>) => {
+    e.preventDefault();
+    if (readonly || !isLeader()) return;
+
+    const touch = e.touches[0];
+    const canvas = canvasRef.current;
+    if (!canvas || !touch) return;
+
+    const rect = canvas.getBoundingClientRect();
+    const x = (touch.clientX - rect.left) / zoom;
+    const y = (touch.clientY - rect.top) / zoom;
+
+    // Removed setTouchStart
+
+    if (selectedTool === "select") {
+      const clickedElement = getElementAtPosition(x, y);
+      if (clickedElement) {
+        setSelectedElement(clickedElement.id);
+        setDraggedElement(clickedElement.id);
+        setDragOffset({
+          x: x - clickedElement.x,
+          y: y - clickedElement.y
+        });
+      } else {
+        setSelectedElement(null);
+      }
+    } else {
+      createNewElement(x, y);
+    }
+
+    // Helper to find element at position
+    function getElementAtPosition(x: number, y: number): DrawingElement | null {
+      // Check from topmost to bottom
+      for (let i = elements.length - 1; i >= 0; i--) {
+        const el = elements[i];
+        if (!el) continue;
+        switch (el.type) {
+          case "player":
+          case "opponent":
+            // Circle hit test
+            if (Math.hypot(x - el.x, y - el.y) <= 15) return el;
+            break;
+          case "ball":
+            if (Math.hypot(x - el.x, y - el.y) <= 8) return el;
+            break;
+          case "cone":
+            // Triangle hit test (approximate as circle)
+            if (Math.hypot(x - el.x, y - el.y) <= 12) return el;
+            break;
+          case "goal":
+            if (
+              x >= el.x - 15 &&
+              x <= el.x + 15 &&
+              y >= el.y - 8 &&
+              y <= el.y + 8
+            ) return el;
+            break;
+          case "circle":
+            if (Math.hypot(x - el.x, y - el.y) <= (el.width || 20)) return el;
+            break;
+          case "zone":
+          case "rectangle":
+            if (
+              x >= el.x &&
+              x <= el.x + (el.width || 50) &&
+              y >= el.y &&
+              y <= el.y + (el.height || 50)
+            ) return el;
+            break;
+          case "text":
+            // Approximate text hit box
+            if (
+              x >= el.x - 30 &&
+              x <= el.x + 30 &&
+              y >= el.y - 15 &&
+              y <= el.y + 15
+            ) return el;
+            break;
+          case "arrow":
+          case "curve":
+          case "line":
+            // Approximate line hit test
+            const x2 = el.x + (el.width || 50);
+            const y2 = el.y + (el.height || 0);
+            const dist =
+              Math.abs(
+                (y2 - el.y) * x - (x2 - el.x) * y + x2 * el.y - y2 * el.x
+              ) / Math.hypot(x2 - el.x, y2 - el.y);
+            if (dist < 10) return el;
+            break;
+        }
+      }
+      return null;
+    }
   };
+
+  const handleTouchMove = (e: React.TouchEvent<HTMLCanvasElement>) => {
+    e.preventDefault();
+    if (!draggedElement || readonly || !isLeader()) return;
+
+    const touch = e.touches[0];
+    const canvas = canvasRef.current;
+    if (!canvas || !touch) return;
+
+    const rect = canvas.getBoundingClientRect();
+    const x = (touch.clientX - rect.left) / zoom;
+    const y = (touch.clientY - rect.top) / zoom;
+
+    setElements(prev => prev.map(element => {
+      if (element.id === draggedElement) {
+        return {
+          ...element,
+          x: x - dragOffset.x,
+          y: y - dragOffset.y
+        };
+      }
+      return element;
+    }));
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent<HTMLCanvasElement>) => {
+    e.preventDefault();
+    if (draggedElement) {
+      addToHistory(elements);
+      setDraggedElement(null);
+    }
+    // Removed setTouchStart(null)
+  };
+
+  // Removed duplicate drawCanvas definition
 
   const getElementLayer = (type: string): string => {
     switch(type) {
@@ -312,199 +509,8 @@ const TacticsBoard: React.FC<Props> = ({
     ctx.strokeRect(width - 20 - goalWidth, 20, goalWidth, height - 40);
   };
 
-  const drawElement = (ctx: CanvasRenderingContext2D, element: DrawingElement) => {
-    ctx.save();
-    
-    const teamColors = {
-      home: "#4299e1",
-      away: "#f56565",
-      neutral: "#a0aec0"
-    };
 
-    ctx.fillStyle = element.color || teamColors[element.team || "neutral"];
-    ctx.strokeStyle = element.color || teamColors[element.team || "neutral"];
-    ctx.lineWidth = element.strokeWidth || 2;
-
-    // Markera valt element
-    if (selectedElement === element.id) {
-      ctx.shadowColor = "#fbbf24";
-      ctx.shadowBlur = 8;
-    }
-
-    switch(element.type) {
-      case "player":
-      case "opponent":
-        // Rita spelare som cirkel med nummer
-        ctx.beginPath();
-        ctx.arc(element.x, element.y, 15, 0, 2 * Math.PI);
-        ctx.fill();
-        
-        if (element.playerNumber) {
-          ctx.fillStyle = "#fff";
-          ctx.font = "12px bold Arial";
-          ctx.textAlign = "center";
-          ctx.fillText(
-            element.playerNumber.toString(), 
-            element.x, 
-            element.y + 4
-          );
-        }
-        break;
-
-      case "ball":
-        ctx.beginPath();
-        ctx.arc(element.x, element.y, 8, 0, 2 * Math.PI);
-        ctx.fill();
-        break;
-
-      case "arrow":
-        drawArrow(ctx, element.x, element.y, 
-                  element.x + (element.width || 50), 
-                  element.y + (element.height || 0));
-        break;
-
-      case "curve":
-        drawCurve(ctx, element.x, element.y, 
-                 element.x + (element.width || 50), 
-                 element.y + (element.height || 0));
-        break;
-
-      case "line":
-        ctx.beginPath();
-        ctx.moveTo(element.x, element.y);
-        ctx.lineTo(element.x + (element.width || 50), element.y + (element.height || 0));
-        ctx.stroke();
-        break;
-
-      case "circle":
-        ctx.beginPath();
-        ctx.arc(element.x, element.y, element.width || 20, 0, 2 * Math.PI);
-        ctx.stroke();
-        break;
-
-      case "rectangle":
-      case "zone":
-        ctx.strokeRect(element.x, element.y, element.width || 50, element.height || 50);
-        if (element.type === "zone") {
-          ctx.globalAlpha = 0.3;
-          ctx.fillRect(element.x, element.y, element.width || 50, element.height || 50);
-          ctx.globalAlpha = 1;
-        }
-        break;
-
-      case "text":
-        ctx.fillStyle = element.color || "#fff";
-        ctx.font = `${element.fontSize || 14}px Arial`;
-        ctx.fillText(element.text || "Text", element.x, element.y);
-        break;
-
-      case "cone":
-        // Rita kon som triangel
-        const size = 10;
-        ctx.beginPath();
-        ctx.moveTo(element.x, element.y - size);
-        ctx.lineTo(element.x - size, element.y + size);
-        ctx.lineTo(element.x + size, element.y + size);
-        ctx.closePath();
-        ctx.fill();
-        break;
-
-      case "goal":
-        // Rita mål som rektangel
-        ctx.strokeRect(element.x - 15, element.y - 8, 30, 16);
-        break;
-    }
-
-    ctx.restore();
-  };
-
-  const drawArrow = (ctx: CanvasRenderingContext2D, x1: number, y1: number, x2: number, y2: number) => {
-    const headLength = 15;
-    const angle = Math.atan2(y2 - y1, x2 - x1);
-
-    // Rita linje
-    ctx.beginPath();
-    ctx.moveTo(x1, y1);
-    ctx.lineTo(x2, y2);
-    ctx.stroke();
-
-    // Rita pilhuvud
-    ctx.beginPath();
-    ctx.moveTo(x2, y2);
-    ctx.lineTo(
-      x2 - headLength * Math.cos(angle - Math.PI / 6),
-      y2 - headLength * Math.sin(angle - Math.PI / 6)
-    );
-    ctx.moveTo(x2, y2);
-    ctx.lineTo(
-      x2 - headLength * Math.cos(angle + Math.PI / 6),
-      y2 - headLength * Math.sin(angle + Math.PI / 6)
-    );
-    ctx.stroke();
-  };
-
-  const drawCurve = (ctx: CanvasRenderingContext2D, x1: number, y1: number, x2: number, y2: number) => {
-    const midX = (x1 + x2) / 2;
-    const midY = (y1 + y2) / 2 - 30;
-    
-    ctx.beginPath();
-    ctx.moveTo(x1, y1);
-    ctx.quadraticCurveTo(midX, midY, x2, y2);
-    ctx.stroke();
-    
-    // Rita pilhuvud vid slutet
-    const angle = Math.atan2(y2 - midY, x2 - midX);
-    const headLength = 10;
-    ctx.beginPath();
-    ctx.moveTo(x2, y2);
-    ctx.lineTo(
-      x2 - headLength * Math.cos(angle - Math.PI / 6),
-      y2 - headLength * Math.sin(angle - Math.PI / 6)
-    );
-    ctx.moveTo(x2, y2);
-    ctx.lineTo(
-      x2 - headLength * Math.cos(angle + Math.PI / 6),
-      y2 - headLength * Math.sin(angle + Math.PI / 6)
-    );
-    ctx.stroke();
-  };
-
-  const getElementAtPosition = (x: number, y: number): DrawingElement | null => {
-    for (let i = elements.length - 1; i >= 0; i--) {
-      const element = elements[i];
-      if (!element) continue;
-      
-      const distance = Math.sqrt((element.x - x) ** 2 + (element.y - y) ** 2);
-      
-      switch(element.type) {
-        case "player":
-        case "opponent":
-          if (distance <= 15) return element;
-          break;
-        case "ball":
-          if (distance <= 8) return element;
-          break;
-        case "text":
-        case "cone":
-        case "goal":
-          if (distance <= 20) return element;
-          break;
-        case "rectangle":
-        case "zone":
-          if (x >= element.x && x <= element.x + (element.width || 50) &&
-              y >= element.y && y <= element.y + (element.height || 50)) {
-            return element;
-          }
-          break;
-        case "circle":
-          if (distance <= (element.width || 20)) return element;
-          break;
-        default:
-          if (distance <= 10) return element;
-      }
-    }
-    return null;
-  };
+  // (Removed duplicate drawArrow function. The correct implementation is already defined above.)
 
   const handleMouseDown = (e: React.MouseEvent<HTMLCanvasElement>) => {
     if (readonly || !isLeader()) return;
@@ -530,6 +536,66 @@ const TacticsBoard: React.FC<Props> = ({
       }
     } else {
       createNewElement(x, y);
+    }
+
+    // Helper to find element at position
+    function getElementAtPosition(x: number, y: number): DrawingElement | null {
+      for (let i = elements.length - 1; i >= 0; i--) {
+        const el = elements[i];
+        if (!el) continue;
+        switch (el.type) {
+          case "player":
+          case "opponent":
+            if (Math.hypot(x - el.x, y - el.y) <= 15) return el;
+            break;
+          case "ball":
+            if (Math.hypot(x - el.x, y - el.y) <= 8) return el;
+            break;
+          case "cone":
+            if (Math.hypot(x - el.x, y - el.y) <= 12) return el;
+            break;
+          case "goal":
+            if (
+              x >= el.x - 15 &&
+              x <= el.x + 15 &&
+              y >= el.y - 8 &&
+              y <= el.y + 8
+            ) return el;
+            break;
+          case "circle":
+            if (Math.hypot(x - el.x, y - el.y) <= (el.width || 20)) return el;
+            break;
+          case "zone":
+          case "rectangle":
+            if (
+              x >= el.x &&
+              x <= el.x + (el.width || 50) &&
+              y >= el.y &&
+              y <= el.y + (el.height || 50)
+            ) return el;
+            break;
+          case "text":
+            if (
+              x >= el.x - 30 &&
+              x <= el.x + 30 &&
+              y >= el.y - 15 &&
+              y <= el.y + 15
+            ) return el;
+            break;
+          case "arrow":
+          case "curve":
+          case "line":
+            const x2 = el.x + (el.width || 50);
+            const y2 = el.y + (el.height || 0);
+            const dist =
+              Math.abs(
+                (y2 - el.y) * x - (x2 - el.x) * y + x2 * el.y - y2 * el.x
+              ) / Math.hypot(x2 - el.x, y2 - el.y);
+            if (dist < 10) return el;
+            break;
+        }
+      }
+      return null;
     }
   };
 
@@ -656,7 +722,7 @@ const TacticsBoard: React.FC<Props> = ({
       id: tactic?.id || Date.now().toString(),
       title: title.trim(),
       description: description.trim(),
-      type,
+      type: tactic?.type || "formation",
       category,
       createdBy: user?.id || "current-user",
       createdAt: tactic?.createdAt || new Date().toISOString(),
@@ -782,14 +848,10 @@ const TacticsBoard: React.FC<Props> = ({
                   key={tool.id}
                   onClick={() => setSelectedTool(tool.id)}
                   title={tool.description}
-                  className={`tactics-board__tool-button ${
-                    selectedTool === tool.id ? 'tactics-board__tool-button--active' : ''
-                  }`}
-                  style={{
-                    backgroundColor: selectedTool === tool.id ? tool.color : 'var(--color-gray-600)'
-                  }}
+                  className={`tacticsBoard__toolButton${selectedTool === tool.id ? ' tacticsBoard__toolButtonActive' : ''}`}
+                  data-toolcolor={selectedTool === tool.id ? tool.color : undefined}
                 >
-                  <span className="tactics-board__tool-icon">{tool.icon}</span>
+                  <span className="tacticsBoard__toolIcon">{tool.icon}</span>
                   <span>{tool.name}</span>
                 </button>
               ))}
@@ -797,23 +859,17 @@ const TacticsBoard: React.FC<Props> = ({
 
             {/* Lagval */}
             <div className="tactics-board__team-selector">
-              <h4 className="tactics-board__panel-title" style={{ fontSize: '0.875rem', margin: '0 0 0.5rem 0' }}>Lag</h4>
+              <h4 className="tacticsBoard__panelTitleSmall">Lag</h4>
               <div className="tactics-board__team-buttons">
                 <button
                   onClick={() => setSelectedTeam("home")}
-                  className="tactics-board__team-button"
-                  style={{
-                    backgroundColor: selectedTeam === "home" ? "#4299e1" : "var(--color-gray-600)"
-                  }}
+                  className={`tacticsBoard__teamButton${selectedTeam === "home" ? ' tacticsBoard__teamButtonHome' : ''}`}
                 >
                   Hemma
                 </button>
                 <button
                   onClick={() => setSelectedTeam("away")}
-                  className="tactics-board__team-button"
-                  style={{
-                    backgroundColor: selectedTeam === "away" ? "#f56565" : "var(--color-gray-600)"
-                  }}
+                  className={`tacticsBoard__teamButton${selectedTeam === "away" ? ' tacticsBoard__teamButtonAway' : ''}`}
                 >
                   Borta
                 </button>
@@ -829,20 +885,14 @@ const TacticsBoard: React.FC<Props> = ({
                 <button
                   onClick={undo}
                   disabled={historyIndex <= 0}
-                  className="tactics-board__history-button"
-                  style={{
-                    backgroundColor: historyIndex <= 0 ? "var(--color-gray-600)" : "#48bb78"
-                  }}
+                  className={`tacticsBoard__historyButton${historyIndex <= 0 ? '' : ' tacticsBoard__historyButtonActive'}`}
                 >
                   ↶ Ångra
                 </button>
                 <button
                   onClick={redo}
                   disabled={historyIndex >= history.length - 1}
-                  className="tactics-board__history-button"
-                  style={{
-                    backgroundColor: historyIndex >= history.length - 1 ? "var(--color-gray-600)" : "#48bb78"
-                  }}
+                  className={`tacticsBoard__historyButton${historyIndex >= history.length - 1 ? '' : ' tacticsBoard__historyButtonActive'}`}
                 >
                   ↷ Gör om
                 </button>
@@ -852,42 +902,33 @@ const TacticsBoard: React.FC<Props> = ({
             <div className="tactics-board__action-grid">
               <button
                 onClick={clearCanvas}
-                className="tactics-board__action-button"
-                style={{ backgroundColor: "#f56565" }}
+                className="tacticsBoard__actionButton tacticsBoard__actionButtonDanger"
               >
                 🗑️ Rensa
               </button>
               <button
                 onClick={() => setShowGrid(!showGrid)}
-                className="tactics-board__action-button"
-                style={{
-                  backgroundColor: showGrid ? "#48bb78" : "var(--color-gray-600)"
-                }}
+                className={`tacticsBoard__actionButton${showGrid ? ' tacticsBoard__actionButtonPrimary' : ''}`}
               >
                 # Rutnät
               </button>
               <button
                 onClick={deleteSelectedElement}
                 disabled={!selectedElement}
-                className="tactics-board__action-button"
-                style={{
-                  backgroundColor: !selectedElement ? "var(--color-gray-600)" : "#f56565"
-                }}
+                className={`tacticsBoard__actionButton${!selectedElement ? '' : ' tacticsBoard__actionButtonDanger'}`}
               >
                 ❌ Ta bort
               </button>
               <button
                 onClick={exportAsImage}
-                className="tactics-board__action-button"
-                style={{ backgroundColor: "#10b981" }}
+                className="tacticsBoard__actionButton tacticsBoard__actionButtonPrimary"
               >
                 📸 Exportera
               </button>
               {templates.length > 0 && (
                 <button
                   onClick={() => setShowTemplateModal(true)}
-                  className="tactics-board__action-button"
-                  style={{ backgroundColor: "#8b5cf6" }}
+                  className="tacticsBoard__actionButton tacticsBoard__actionButtonSecondary"
                 >
                   📋 Mallar
                 </button>
@@ -896,19 +937,19 @@ const TacticsBoard: React.FC<Props> = ({
 
             {/* Zoom - Dölj på mobil för touch-zoom */}
             <div className="tactics-board__zoom-controls">
-              <span style={{ fontSize: '0.75rem' }}>🔍 Zoom:</span>
+              <span className="tacticsBoard__zoomLabel">🔍 Zoom:</span>
               <button
                 onClick={() => setZoom(Math.max(0.5, zoom - 0.1))}
-                className="tactics-board__zoom-button"
+                className="tacticsBoard__zoomButton"
               >
                 -
               </button>
               <span className="tactics-board__zoom-display">
-                {Math.round(zoom * 100)}%
+                <span className="tacticsBoard__zoomDisplay">{Math.round(zoom * 100)}%</span>
               </span>
               <button
                 onClick={() => setZoom(Math.min(2, zoom + 0.1))}
-                className="tactics-board__zoom-button"
+                className="tacticsBoard__zoomButton"
               >
                 +
               </button>
@@ -929,7 +970,7 @@ const TacticsBoard: React.FC<Props> = ({
                       [layer]: e.target.checked
                     }))}
                   />
-                  <span style={{ textTransform: "capitalize" }}>
+                  <span className="tacticsBoard__capitalize">
                     {layer === "players" ? "Spelare" :
                      layer === "opponents" ? "Motståndare" :
                      layer === "ball" ? "Boll" :
@@ -973,26 +1014,21 @@ const TacticsBoard: React.FC<Props> = ({
             <button
               onClick={handleSave}
               disabled={!title.trim()}
-              className="tactics-board__save-button"
-              style={{
-                backgroundColor: !title.trim() ? "var(--color-gray-600)" : "#48bb78"
-              }}
+              className={`tacticsBoard__saveButton${!title.trim() ? ' tacticsBoard__saveButtonDisabled' : ''}`}
             >
               💾 Spara taktik
             </button>
             {tactic && onShare && (
               <button
                 onClick={() => setShowShareModal(true)}
-                className="tactics-board__secondary-button"
-                style={{ backgroundColor: "#4299e1" }}
+                className="tacticsBoard__secondaryButton"
               >
                 📤 Dela med lag
               </button>
             )}
             <button
               onClick={() => setShowDiscussionPanel(true)}
-              className="tactics-board__secondary-button"
-              style={{ backgroundColor: "#8b5cf6" }}
+              className="tacticsBoard__secondaryButton"
             >
               💬 Diskutera med ledare
             </button>
@@ -1028,13 +1064,13 @@ const TacticsBoard: React.FC<Props> = ({
             <div className="tactics-board__modal-actions">
               <button
                 onClick={() => setShowShareModal(false)}
-                className="tactics-board__modal-button tactics-board__modal-button--cancel"
+                className="tacticsBoard__modalButton tacticsBoard__modalButtonCancel"
               >
                 Avbryt
               </button>
               <button
                 onClick={handleShareTactic}
-                className="tactics-board__modal-button tactics-board__modal-button--primary"
+                className="tacticsBoard__modalButton tacticsBoard__modalButtonPrimary"
               >
                 Dela nu
               </button>
@@ -1061,14 +1097,14 @@ const TacticsBoard: React.FC<Props> = ({
                   setShowDiscussionPanel(false);
                   setLeaderComment("");
                 }}
-                className="tactics-board__modal-button tactics-board__modal-button--cancel"
+                className="tacticsBoard__modalButton tacticsBoard__modalButtonCancel"
               >
                 Avbryt
               </button>
               <button
                 onClick={handleDiscussWithLeaders}
                 disabled={!leaderComment.trim()}
-                className="tactics-board__modal-button tactics-board__modal-button--primary"
+                className="tacticsBoard__modalButton tacticsBoard__modalButtonPrimary"
               >
                 Skicka kommentar
               </button>
@@ -1085,46 +1121,20 @@ const TacticsBoard: React.FC<Props> = ({
             <p className="tactics-board__modal-description">
               Välj en fördefinierad mall att utgå från. Din nuvarande taktik kommer att ersättas.
             </p>
-            <div style={{ 
-              display: 'grid', 
-              gap: '0.5rem', 
-              marginBottom: '1rem',
-              maxHeight: '300px',
-              overflowY: 'auto'
-            }}>
+            <div className="tacticsBoard__templateGrid">
               {templates.map(template => (
                 <button
                   key={template.id}
                   onClick={() => resetToTemplate(template)}
-                  style={{
-                    padding: '0.75rem',
-                    background: 'var(--color-gray-700)',
-                    border: '1px solid var(--color-gray-600)',
-                    borderRadius: '0.375rem',
-                    color: 'var(--color-text-primary)',
-                    cursor: 'pointer',
-                    textAlign: 'left',
-                    transition: 'all 0.2s'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = 'var(--color-gray-600)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = 'var(--color-gray-700)';
-                  }}
+                  className="tacticsBoard__templateBtn"
                 >
-                  <div style={{ fontWeight: '600', marginBottom: '0.25rem' }}>
+                  <div className="tacticsBoard__templateName">
                     {template.name}
                   </div>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--color-text-secondary)' }}>
+                  <div className="tacticsBoard__templateDesc">
                     {template.description}
                   </div>
-                  <div style={{ 
-                    fontSize: '0.75rem', 
-                    color: 'var(--color-text-secondary)',
-                    marginTop: '0.25rem',
-                    textTransform: 'capitalize'
-                  }}>
+                  <div className="tacticsBoard__templateCat">
                     {template.category}
                   </div>
                 </button>
@@ -1133,7 +1143,7 @@ const TacticsBoard: React.FC<Props> = ({
             <div className="tactics-board__modal-actions">
               <button
                 onClick={() => setShowTemplateModal(false)}
-                className="tactics-board__modal-button tactics-board__modal-button--cancel"
+                className="tacticsBoard__modalButton tacticsBoard__modalButtonCancel"
               >
                 Avbryt
               </button>
