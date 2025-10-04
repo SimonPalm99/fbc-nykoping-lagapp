@@ -1,6 +1,17 @@
+
 import styles from "./MatchPlanCreator.module.css";
 import { useState } from "react";
 import { useToast } from "../ui/Toast";
+
+interface MatchPlanCreatorProps {
+  matchId: string | null;
+  initialMatchTitle: string;
+  initialOpponent: string;
+  initialDate: string;
+  initialVenue: string;
+  onSave: (plan: any) => void;
+  onCancel: () => void;
+}
 
 interface Formation {
   id: string;
@@ -11,7 +22,7 @@ interface Formation {
   players: { line: number }[];
 }
 
-function MatchPlanCreator() {
+function MatchPlanCreator(props: MatchPlanCreatorProps) {
   const [formations, setFormations] = useState<Formation[]>([]);
   const [currentTab] = useState<string>("formations");
   const [tactics, setTactics] = useState<any[]>([]);
