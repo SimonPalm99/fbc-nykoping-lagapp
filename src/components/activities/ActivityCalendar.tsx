@@ -124,7 +124,7 @@ function ActivityCalendar({
     const dateObj = new Date(a.date);
     const dateStr = formatDate(dateObj);
     if (dateStr) {
-      if (!byDate[dateStr]) byDate[dateStr] = [];
+      byDate[dateStr] = byDate[dateStr] || [];
       byDate[dateStr].push(a);
     }
   });
