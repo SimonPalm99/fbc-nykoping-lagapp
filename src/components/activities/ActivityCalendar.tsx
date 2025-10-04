@@ -127,7 +127,7 @@ function ActivityCalendar({
       if (!Array.isArray(byDate[dateStr])) {
         byDate[dateStr] = [];
       }
-      byDate[dateStr].push(a);
+  (byDate[dateStr] as Activity[]).push(a);
     }
   });
 
