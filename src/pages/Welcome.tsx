@@ -24,6 +24,15 @@ const initialRegister = {
 
 const Welcome: React.FC = () => {
   // ...existing code...
+  const { user, isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+
+  // Redirect till Home om inloggad
+  React.useEffect(() => {
+    if (isAuthenticated && user) {
+      navigate("/", { replace: true });
+    }
+  }, [isAuthenticated, user, navigate]);
   const [activeTab, setActiveTab] = useState<'login' | 'register'>('login');
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
@@ -37,8 +46,8 @@ const Welcome: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [loginError, setLoginError] = useState<string | null>(null);
+  const [registerError, setRegisterError] = useState<string | null>(null);
   const { login } = useAuth();
-  const navigate = useNavigate();
 
 
   // Login
@@ -56,9 +65,9 @@ const Welcome: React.FC = () => {
         }
         navigate("/");
       } else {
-        setLoginError("Felaktiga inloggningsuppgifter. Försök igen.");
+        setLoginError("Felaktiga inloggningsuppgifter. Kontrollera e-post och lösenord.");
       }
-    } catch (err) {
+    } catch (err: any) {
       setLoginError("Tekniskt fel. Försök igen senare.");
     }
     setLoading(false);
@@ -98,7 +107,7 @@ const Welcome: React.FC = () => {
     e.preventDefault();
     if (!validateStep()) return;
     setLoading(true);
-    // Skapa rätt payload till backend
+    setRegisterError(null);
     let dataToSend: any = {
       email: registerData.email,
       password: registerData.password,
@@ -106,7 +115,6 @@ const Welcome: React.FC = () => {
       role: registerData.role,
       profileImageUrl: imagePreview || registerData.profileImageUrl
     };
-    // Skapa name från firstName + lastName
     if (registerData.firstName && registerData.lastName) {
       dataToSend.name = `${registerData.firstName} ${registerData.lastName}`;
     } else if (registerData.firstName) {
@@ -125,10 +133,10 @@ const Welcome: React.FC = () => {
           setActiveTab('login');
         }, 3000);
       } else {
-        alert('Registrering misslyckades: ' + (res.error || 'Okänt fel'));
+        setRegisterError(res.error || "Registrering misslyckades. Kontrollera dina uppgifter.");
       }
-    } catch (err) {
-      alert('Tekniskt fel vid registrering. Försök igen senare.');
+    } catch (err: any) {
+      setRegisterError("Tekniskt fel vid registrering. Försök igen senare.");
     }
     setLoading(false);
   };
@@ -241,7 +249,7 @@ const Welcome: React.FC = () => {
               </label>
             </div>
             {loginError && (
-              <div className={styles.loginError} role="alert">
+              <div className={styles.welcomeAlert} role="alert">
                 {loginError}
               </div>
             )}
@@ -278,6 +286,11 @@ const Welcome: React.FC = () => {
                 {registerStep === 3 ? "Väntar på ledargodkännande..." : "Fyll i alla steg för att skicka ansökan"}
               </div>
             </div>
+            {registerError && (
+              <div className={styles.welcomeAlert} role="alert">
+                {registerError}
+              </div>
+            )}
             {registerStep === 1 && (
               <div className={fade ? styles.registerStepFadeVisible : styles.registerStepFade}>
                 {/* Profilbilds-uppladdning */}
