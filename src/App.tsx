@@ -4,8 +4,8 @@ import { ThemeProvider } from "./context/ThemeContext";
 import Providers from "./Providers";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Welcome from "./pages/Welcome";
+import AuthGate from "./components/AuthGate";
 import Login from "./pages/Login";
-import Home from "./pages/Home";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import CookiePolicy from "./pages/CookiePolicy";
 import TermsOfService from "./pages/TermsOfService";
@@ -55,8 +55,8 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/welcome" element={<Welcome />} />
           <Route path="/login" element={<Login />} />
-          {/* Redirect från / till /welcome */}
-          <Route path="/" element={<Welcome />} />
+          {/* Route '/' visar Home om inloggad, annars Welcome */}
+          <Route path="/" element={<AuthGate />} />
           <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
           <Route path="/matchverktyg" element={<ProtectedRoute><Matchverktyg /></ProtectedRoute>} />
           <Route path="/matchanalys" element={<ProtectedRoute><Matchanalys /></ProtectedRoute>} />
