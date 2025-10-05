@@ -1,0 +1,105 @@
+.modalOverlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 32, 0, 0.65);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modalContent {
+  background: #122a12;
+  border-radius: 1.2rem;
+  box-shadow: 0 4px 32px rgba(46,125,50,0.18);
+  padding: 2.2rem 2.2rem 1.5rem 2.2rem;
+  min-width: 340px;
+  max-width: 98vw;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+.modalTitle {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #2E7D32;
+  margin-bottom: 0.7rem;
+}
+.modalInput {
+  width: 100%;
+  padding: 0.7rem;
+  border-radius: 0.7rem;
+  border: 2px solid #2E7D32;
+  background: #1b2e1b;
+  color: #fff;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+.userList {
+  max-height: 220px;
+  overflow-y: auto;
+  margin-bottom: 0.7rem;
+  border-radius: 0.7rem;
+  background: #183218;
+  padding: 0.5rem 0.2rem;
+}
+.userRow {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.5rem 0.7rem;
+  border-bottom: 1px solid #2E7D3222;
+}
+.userAvatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #2E7D32;
+}
+.userName {
+  flex: 1;
+  font-weight: 600;
+  color: #C8E6C9;
+}
+.modalError {
+  color: #ff5252;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+.modalBtnRow {
+  display: flex;
+  gap: 1.2rem;
+  margin-top: 0.7rem;
+}
+.modalBtn {
+  background: #2E7D32;
+  color: #fff;
+  border: none;
+  border-radius: 0.7rem;
+  padding: 0.7rem 1.3rem;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(46,125,50,0.10);
+  transition: background 0.2s;
+}
+.modalBtn:disabled {
+  background: #888;
+  cursor: not-allowed;
+}
+.modalBtnCancel {
+  background: #222;
+  color: #fff;
+  border: none;
+  border-radius: 0.7rem;
+  padding: 0.7rem 1.3rem;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(46,125,50,0.10);
+  transition: background 0.2s;
+}
+.modalBtnCancel:hover {
+  background: #155e1a;
+}

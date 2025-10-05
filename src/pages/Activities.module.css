@@ -1,22 +1,163 @@
+/* Tillbaka-knapp högst upp till höger */
+.activitiesBackBtn {
+  position: absolute;
+  top: 1.5rem;
+  right: 2rem;
+  background: #222;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.7rem 1.2rem;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  transition: background 0.2s;
+}
+.activitiesBackBtn:hover {
+  background: #155e1a;
+}
+@media (max-width: 600px) {
+  .activitiesBackBtn {
+    top: 0.7rem;
+    right: 0.7rem;
+    padding: 0.5rem 0.8rem;
+    font-size: 0.95rem;
+  }
+}
+.activityCardAddFormBtnRow {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  margin-top: 1rem;
+}
+.activityCardAddFormBtnCancel {
+  background: #222;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.7rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 0.5rem;
+}
+@media (max-width: 900px) {
+  .activitiesContainer {
+    max-width: 98vw;
+    padding: 1.2rem 0.5rem;
+  }
+  .activitiesHeader {
+    font-size: 1.5rem;
+    padding-top: 1rem;
+    padding-bottom: 0.7rem;
+  }
+  .activitiesHeaderLogo {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 0.7rem;
+  }
+  .activitiesGradientTop {
+    height: 70px;
+  }
+  .activitiesList {
+    gap: 0.7rem;
+  }
+  .activityCard {
+    padding: 0.7rem;
+    border-radius: 0.7rem;
+    font-size: 0.95rem;
+  }
+  .activitiesFilterRow {
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 0.7rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .activitiesContainer {
+    max-width: 100vw;
+    padding: 0.5rem 0.2rem;
+  }
+  .activitiesHeader {
+    font-size: 1.1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.3rem;
+  }
+  .activitiesHeaderLogo {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 0.4rem;
+  }
+  .activitiesGradientTop {
+    height: 40px;
+  }
+  .activitiesList {
+    gap: 0.3rem;
+  }
+  .activityCard {
+    padding: 0.4rem;
+    border-radius: 0.4rem;
+    font-size: 0.9rem;
+  }
+  .activitiesFilterRow {
+    flex-direction: column;
+    gap: 0.3rem;
+    margin-bottom: 0.3rem;
+  }
+}
 .activitiesWrapper {
   min-height: 100vh;
   background: linear-gradient(135deg, #0A0A0A 0%, #0D1B0D 30%, #1B2E1B 100%);
   color: #F1F8E9;
-  padding: 2rem 0.5rem;
+  padding: 0;
   transition: background 0.5s;
+}
+
+.activitiesGradientTop {
+  width: 100%;
+  height: 110px;
+  background: linear-gradient(135deg, #2E7D32 0%, #388E3C 50%, #4CAF50 100%);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
 }
 .activitiesContainer {
   max-width: 900px;
   margin: 0 auto;
-  padding: 0.5rem;
+  padding: 2rem 0.5rem;
+  position: relative;
+  z-index: 1;
 }
 .activitiesHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
   font-weight: 900;
-  font-size: 2.1rem;
-  color: #2E7D32;
-  margin-bottom: 0.7rem;
+  font-size: 2.2rem;
+  color: #fff;
+  margin-bottom: 1.2rem;
   letter-spacing: 1px;
+  text-shadow: 0 2px 12px #1b5e20, 0 1px 2px #101820;
+  padding-top: 1.5rem;
+  padding-bottom: 1.2rem;
+  position: relative;
+  z-index: 2;
+}
+.activitiesHeaderLogo {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  box-shadow: 0 6px 24px #1b5e20, 0 2px 8px #101820;
+  display: block;
+  margin: 0 auto 1rem auto;
+  border: 4px solid #fff;
+  background: #fff;
+  object-fit: cover;
 }
 .activitiesCardBg {
   background: rgba(16, 32, 16, 0.97);

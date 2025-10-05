@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from './Activities.module.css';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useTitle } from '../hooks/useTitle';
 // ...existing code...
 import { activitiesAPI } from '../services/apiService';
@@ -9,6 +9,7 @@ import { useUser } from '../context/UserContext';
 
 
 const Activities: React.FC = () => {
+  const navigate = useNavigate();
   const { user } = useUser();
   // Redigera aktivitet state
   const [showAddTab, setShowAddTab] = useState(false);
@@ -121,9 +122,18 @@ const Activities: React.FC = () => {
 
   return (
     <div className={styles.activitiesWrapper}>
+      <button
+        className={styles.activitiesBackBtn}
+        onClick={() => navigate('/')}
+        aria-label="Tillbaka till startsidan"
+      >
+        Tillbaka
+      </button>
+      <div className={styles.activitiesGradientTop} />
       <div className={styles.activitiesContainer}>
-        {/* Välkomsttext */}
+        {/* Snygg header med logga */}
         <div className={styles.activitiesHeader}>
+          <img src="/fbc-logo.jpg" alt="FBC Nyköping" className={styles.activitiesHeaderLogo} />
           Välkommen till FBC Nyköpings aktivitetslista!
         </div>
         {/* Loading/Error */}
@@ -188,7 +198,7 @@ const Activities: React.FC = () => {
                         {activity.date}{activity.startTime ? ` • ${activity.startTime}` : ''}
                       </span>
                       <span className={styles.activityCardLocation}>{activity.location}</span>
-                      {(user?.role === 'leader' || activity.createdBy === user?.id) && (
+                      {(user?.role === 'leader' || user?.role === 'admin') && (
                         <>
                           <button
                             className={styles.activityCardEditBtn}
@@ -422,7 +432,10 @@ const Activities: React.FC = () => {
                   <input placeholder="Starttid" value={newCustom.startTime} onChange={e => setNewCustom({ ...newCustom, startTime: e.target.value })} className={styles.activityCardAddFormInput} />
                   <input placeholder="Plats" value={newCustom.location} onChange={e => setNewCustom({ ...newCustom, location: e.target.value })} className={styles.activityCardAddFormInput} />
                   <input placeholder="Beskrivning" value={newCustom.description} onChange={e => setNewCustom({ ...newCustom, description: e.target.value })} className={styles.activityCardAddFormInput} />
-                  <button type="submit" className={styles.activityCardAddFormBtn}>Lägg till</button>
+                  <div className={styles.activityCardAddFormBtnRow}>
+                    <button type="submit" className={styles.activityCardAddFormBtn}>Lägg till</button>
+                    <button type="button" className={styles.activityCardAddFormBtnCancel} onClick={() => setShowAddTab(false)}>Avbryt</button>
+                  </div>
                 </form>
             )
           )}

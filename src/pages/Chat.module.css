@@ -1,3 +1,83 @@
+/* Like/reaction-knapp i chatbubblan */
+.fbcChatMessageReactions {
+  margin-top: 0.5rem;
+  display: flex;
+  gap: 0.5rem;
+}
+.fbcChatLikeBtn {
+  background: #fff;
+  color: #2E7D32;
+  border: 1.5px solid #2E7D32;
+  border-radius: 1.2rem;
+  padding: 0.25rem 0.8rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(46,125,50,0.10);
+  transition: background 0.2s, color 0.2s;
+}
+.fbcChatLikeBtn:hover {
+  background: #e8f5e9;
+  color: #388E3C;
+}
+/* Messenger/FBC-inspirerad header */
+.fbcChatHeader {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 1.5rem 2.5rem;
+  background: #fff;
+  border-bottom: 2px solid #2E7D32;
+}
+.fbcChatHeaderAvatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #eee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.fbcChatHeaderAvatarLetter {
+  font-weight: 700;
+  font-size: 2rem;
+  color: #2E7D32;
+}
+.fbcChatHeaderAvatarImg {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.fbcChatHeaderName {
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: #2E7D32;
+}
+.fbcChatHeaderDesc {
+  color: #666;
+  font-size: 1rem;
+}
+/* Input-ikoner */
+.fbcChatInputIconBtn {
+  background: none;
+  border: none;
+  color: #2E7D32;
+  font-size: 1.3rem;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  margin-right: 0.2rem;
+  transition: background 0.2s;
+}
+.fbcChatInputIconBtn:hover {
+  background: #e8f5e9;
+}
 .fbcChatRoot {
   min-height: 100vh;
   background: linear-gradient(135deg, #0A0A0A 0%, #0D1B0D 30%, #1B2E1B 100%);
