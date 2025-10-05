@@ -22,7 +22,7 @@ interface Formation {
   players: { line: number }[];
 }
 
-function MatchPlanCreator(props: MatchPlanCreatorProps) {
+const MatchPlanCreator: React.FC<MatchPlanCreatorProps> = () => {
   const [formations, setFormations] = useState<Formation[]>([]);
   const [currentTab] = useState<string>("formations");
   const [tactics, setTactics] = useState<any[]>([]);
