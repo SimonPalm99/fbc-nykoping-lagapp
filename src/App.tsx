@@ -52,10 +52,11 @@ const App: React.FC = () => {
   return (
     <ThemeProvider>
       <Providers>
-  <Routes>
+        <Routes>
           <Route path="/welcome" element={<Welcome />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+          {/* Redirect från / till /welcome */}
+          <Route path="/" element={<Welcome />} />
           <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
           <Route path="/matchverktyg" element={<ProtectedRoute><Matchverktyg /></ProtectedRoute>} />
           <Route path="/matchanalys" element={<ProtectedRoute><Matchanalys /></ProtectedRoute>} />
