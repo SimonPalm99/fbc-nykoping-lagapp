@@ -6,7 +6,8 @@ import Welcome from "../pages/Welcome";
 const AuthGate: React.FC = () => {
   const { user, isLoading } = useAuth();
 
-  if (isLoading) return null; // eller en loader
+  // Visa Welcome även under laddning
+  if (isLoading) return <Welcome />;
   return user ? <Home /> : <Welcome />;
 };
 
