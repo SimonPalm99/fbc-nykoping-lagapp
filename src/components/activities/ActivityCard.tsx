@@ -1,4 +1,5 @@
-import React from "react";
+
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Activity } from "../../types/activity";
 
@@ -8,17 +9,23 @@ interface ActivityCardProps {
   onCheckIn?: () => void;
   onCheckOut?: () => void;
   onAbsence?: () => void;
+  expandable?: boolean;
 }
 
-const ActivityCard: React.FC<ActivityCardProps> = ({ activity, styles, onCheckIn, onCheckOut, onAbsence }) => {
+const ActivityCard: React.FC<ActivityCardProps> = ({ activity, styles, onCheckIn, onCheckOut, onAbsence, expandable }) => {
   const navigate = useNavigate();
+  const [expanded, setExpanded] = useState(false);
+  const handleCardClick = (e: React.MouseEvent) => {
+    if ((e.target as HTMLElement).tagName !== "BUTTON") {
+      if (expandable) setExpanded((prev) => !prev);
+      else navigate("/activities");
+    }
+  };
   return (
     <div
       key={activity.id}
-      className={styles.kort}
-      onClick={e => {
-        if ((e.target as HTMLElement).tagName !== "BUTTON") navigate("/activities");
-      }}
+      className={styles.kort + (expanded ? " " + styles.expanded : "") + " " + styles.kortPointer}
+      onClick={handleCardClick}
     >
       <div className={styles.rubrikrad}>
         <span className={styles.rubrik}>{activity.title}</span>
@@ -74,6 +81,36 @@ const ActivityCard: React.FC<ActivityCardProps> = ({ activity, styles, onCheckIn
           </button>
         )}
       </div>
+      {expanded && (
+        <div className={styles.activityCardExpanded}>
+          {/* Visa mer info, t.ex. laguttagning och matchinfo */}
+          {activity.matchInfo && (
+            <div className={styles.activityCardMatchInfo}>
+              <div className={styles.activityCardMatchInfoTitle}>Matchinfo</div>
+              <div className={styles.activityCardMatchInfoText}>{activity.matchInfo}</div>
+            </div>
+          )}
+          {activity.lineup && (
+            <div className={styles.activityCardLineupRow}>
+              <div className={styles.activityCardLineupTitle}>Laguttagning</div>
+              {/* Hantera olika laguppställningsstrukturer */}
+              {/* Hantera laguppställning som objekt med grupper */}
+              {activity.lineup && typeof activity.lineup === 'object' && (
+                Object.entries(activity.lineup).map(([group, players]) => (
+                  Array.isArray(players) && players.length > 0 ? (
+                    <div key={group}>
+                      <div className={styles.activityCardLineupTitle}>{group}</div>
+                      {players.map((player, idx) => (
+                        <div key={idx} className={styles.activityCardLineupCol}>{player}</div>
+                      ))}
+                    </div>
+                  ) : null
+                ))
+              )}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };

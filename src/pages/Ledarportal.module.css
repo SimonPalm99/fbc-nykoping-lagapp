@@ -1,1 +1,215 @@
-/* Tom CSS-modul för Ledarportal. Lägg till stilar här vid behov. */
+.historyModalContent {
+	max-height: 80vh;
+	overflow-y: auto;
+}
+.historyActivityGroup {
+	margin-bottom: 1.2rem;
+}
+.historyActivityTitle {
+	font-weight: bold;
+	color: #2E7D32;
+	font-size: 1.08rem;
+	margin-bottom: 0.4rem;
+}
+.historyAbsenceItem {
+	background: rgba(34,51,34,0.18);
+	border-radius: 0.7rem;
+	padding: 0.7rem;
+	margin-bottom: 0.3rem;
+}
+.historyAbsenceUser {
+	font-weight: 600;
+	color: #2E7D32;
+}
+.historyAbsenceComment {
+	color: #FFB300;
+}
+.historyAbsenceDate {
+	color: #388E3C;
+	font-size: 0.95rem;
+}
+
+.ledarportalRoot {
+	min-height: 100vh;
+	background: linear-gradient(135deg, #0A0A0A 0%, #0D1B0D 30%, #1B2E1B 100%);
+	color: #F1F8E9;
+	padding: 0;
+	transition: background 0.5s;
+}
+
+.ledarportalHeader {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	font-weight: 900;
+	font-size: 2.2rem;
+	color: #fff;
+	margin-bottom: 1.2rem;
+	letter-spacing: 1px;
+	text-shadow: 0 2px 12px #1b5e20, 0 1px 2px #101820;
+	padding-top: 1.5rem;
+	padding-bottom: 1.2rem;
+	position: relative;
+	z-index: 2;
+}
+.ledarportalHeaderStyled {
+	background: linear-gradient(135deg, #2E7D32 0%, #388E3C 50%, #4CAF50 100%);
+	border-radius: 1rem;
+	box-shadow: 0 2px 8px #22c55e22;
+	padding: 1rem;
+}
+.ledarportalTitle {
+	font-size: 2.2rem;
+	font-weight: 900;
+	color: #fff;
+	margin-bottom: 0.5rem;
+}
+.ledarportalSubtitle {
+	font-size: 1.1rem;
+	color: #C8E6C9;
+	margin-bottom: 1.2rem;
+}
+.ledarportalSection {
+	max-width: 900px;
+	margin: 0 auto;
+	padding: 2rem 0.5rem;
+	position: relative;
+	z-index: 1;
+}
+.ledarportalCardsWrapper {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 2rem;
+	justify-content: center;
+}
+.cardAbsence, .cardCheckInOut, .cardSurvey, .cardPendingUsers {
+	background: rgba(16, 32, 16, 0.97);
+	border-radius: 1rem;
+	padding: 1rem;
+	color: #F1F8E9;
+	box-shadow: 0 2px 8px #22c55e22;
+	min-width: 320px;
+	max-width: 420px;
+	flex: 1 1 320px;
+}
+.cardTitleAbsence, .cardCheckInOutTitle, .cardSurveyTitle, .cardPendingUsersTitle {
+	font-weight: bold;
+	font-size: 1.15rem;
+	color: #2E7D32;
+	margin-bottom: 0.7rem;
+}
+.cardAbsenceEmpty, .cardCheckInOutEmpty, .cardSurveyDesc, .cardPendingUsersEmpty {
+	color: #C8E6C9;
+	background: rgba(34,51,34,0.13);
+	border-radius: 0.7rem;
+	padding: 1rem;
+	text-align: center;
+	margin-bottom: 0.7rem;
+}
+.cardAbsenceList, .cardCheckInOutActivityList, .cardPendingUsersList {
+	display: flex;
+	flex-direction: column;
+	gap: 0.7rem;
+}
+.cardAbsenceItem, .cardCheckInOutActivityItem, .cardPendingUsersItem {
+	background: rgba(34,51,34,0.18);
+	border-radius: 0.7rem;
+	padding: 0.7rem;
+	color: #F1F8E9;
+	box-shadow: 0 2px 8px #22c55e22;
+}
+.cardAbsenceUser, .cardCheckInOutActivityUser, .cardPendingUsersName {
+	font-weight: 600;
+	color: #2E7D32;
+}
+.cardAbsenceActivity, .cardCheckInOutActivityDate, .cardPendingUsersEmail {
+	color: #C8E6C9;
+	font-size: 0.98rem;
+}
+.cardAbsenceComment {
+	color: #FFB300;
+	font-size: 0.98rem;
+}
+.cardAbsenceDate {
+	color: #388E3C;
+	font-size: 0.95rem;
+}
+.cardCheckInOutEditBtn, .cardCheckInOutAddOptionBtn, .cardCheckInOutDeleteBtn, .cardCheckInOutCancelBtn, .cardCheckInOutEditBtn, .cardPendingUsersApproveBtn {
+	background: #2E7D32;
+	color: #fff;
+	border: none;
+	border-radius: 0.7rem;
+	padding: 0.3rem 1rem;
+	font-weight: 600;
+	cursor: pointer;
+	margin-top: 0.5rem;
+	margin-right: 0.5rem;
+	transition: background 0.2s;
+}
+.cardCheckInOutEditBtn:hover, .cardCheckInOutAddOptionBtn:hover, .cardCheckInOutDeleteBtn:hover, .cardCheckInOutCancelBtn:hover, .cardPendingUsersApproveBtn:hover {
+	background: #155e1a;
+}
+.cardCheckInOutActivityBtn {
+	border: 2px solid #2E7D32;
+	border-radius: 1rem;
+	padding: 0.5rem 1.2rem;
+	font-weight: bold;
+	font-size: 1rem;
+	background: transparent;
+	color: #2E7D32;
+	cursor: pointer;
+	margin-right: 0.5rem;
+	margin-bottom: 0.5rem;
+}
+.cardCheckInOutActivityBtnActive {
+	background: #2E7D32;
+	color: #fff;
+	box-shadow: 0 2px 8px #2E7D3233;
+}
+.cardCheckInOutActivityStats {
+	display: flex;
+	gap: 1.2rem;
+	margin-bottom: 0.7rem;
+}
+.avgRed { color: #e53935; font-weight: bold; }
+.avgGold { color: #FFB300; font-weight: bold; }
+.avgYellow { color: #FBC02D; font-weight: bold; }
+.avgGreen { color: #2E7D32; font-weight: bold; }
+.cardPendingUsersStatus {
+	color: #FBC02D;
+	font-size: 0.98rem;
+}
+.cardPendingUsersLoading {
+	color: #2E7D32;
+	font-size: 1.1rem;
+	text-align: center;
+	margin-bottom: 0.7rem;
+}
+.cardPendingUsersError {
+	color: #e53935;
+	font-size: 1.1rem;
+	text-align: center;
+	margin-bottom: 0.7rem;
+}
+.ledarportalFooter {
+	background: rgba(16, 32, 16, 0.97);
+	color: #C8E6C9;
+	border-radius: 1rem;
+	padding: 1.2rem;
+	text-align: center;
+	margin-top: 2rem;
+	box-shadow: 0 2px 8px #22c55e22;
+}
+.ledarportalFooterLinks {
+	margin-top: 0.7rem;
+	display: flex;
+	gap: 1.2rem;
+	justify-content: center;
+}
+.ledarportalFooterLink {
+	color: #2E7D32;
+	text-decoration: underline;
+	font-size: 1rem;
+}

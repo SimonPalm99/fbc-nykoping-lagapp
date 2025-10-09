@@ -1,3 +1,38 @@
+html, body, #root {
+  min-height: 100vh;
+  background: radial-gradient(ellipse at top left, #1B2E1B 0%, #0A0A0A 70%, #101820 100%);
+  background-attachment: fixed;
+}
+/* Chatbubbla nere till höger */
+.homeChatBubble {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 1000;
+  background: #1976d2;
+  color: white;
+  border-radius: 50%;
+  width: 64px;
+  height: 64px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  cursor: pointer;
+  transition: box-shadow 0.2s;
+}
+@media (max-width: 600px) {
+  .homeChatBubble {
+    right: 12px;
+    bottom: 12px;
+    width: 48px;
+    height: 48px;
+    font-size: 1.5rem;
+    background: linear-gradient(135deg, #0A0A0A 0%, #0D1B0D 30%, #1B2E1B 100%);
+  }
+}
 /* Forum edit/delete modal */
 .homeEditTitle {
   color: #2E7D32;
@@ -267,7 +302,7 @@
   justify-content: flex-start;
   padding: 0.3rem 0.5rem 0.2rem 0.5rem;
   border-bottom: 2px solid #22c55e;
-  background: linear-gradient(120deg, #2E7D32 0%, #388E3C 100%);
+  background: transparent;
   border-radius: 0 0 1rem 1rem;
   box-shadow: 0 2px 8px rgba(46, 125, 50, 0.10);
   position: relative;
@@ -384,3 +419,61 @@
 }
 
 /* Add more classes as needed for popups, buttons, etc. */
+
+/* Modern bakgrund för hela sidan */
+body, #root {
+  min-height: 100vh;
+  background: radial-gradient(ellipse at top left, #1B2E1B 0%, #0A0A0A 70%, #101820 100%);
+  background-attachment: fixed;
+}
+
+/* Snyggare kort/sektioner */
+.homeSection, .activitiesCardBg {
+  background: rgba(16, 32, 16, 0.97);
+  border-radius: 1.2rem;
+  box-shadow: 0 4px 24px #22c55e33, 0 1.5px 6px #10182099;
+  padding: 2rem 1.5rem;
+  margin-bottom: 2rem;
+  transition: box-shadow 0.2s, transform 0.2s;
+  border: 1.5px solid #22c55e33;
+}
+.homeSection:hover, .activitiesCardBg:hover {
+  box-shadow: 0 8px 32px #22c55e55, 0 2px 12px #101820cc;
+  transform: translateY(-2px) scale(1.01);
+}
+
+/* Snyggare rubriker */
+.homeSectionTitle, .activitiesHeader {
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: #fff;
+  text-shadow: 0 2px 12px #22c55e, 0 1px 2px #101820;
+  margin-bottom: 1.2rem;
+  letter-spacing: 1px;
+}
+
+/* Modernare knappar */
+.fbc-btn {
+  background: linear-gradient(120deg, #22c55e 0%, #388E3C 100%);
+  color: #fff;
+  border-radius: 0.7rem;
+  border: none;
+  font-weight: 700;
+  font-size: 1.08rem;
+  padding: 0.7rem 1.5rem;
+  box-shadow: 0 2px 8px #22c55e22;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+  cursor: pointer;
+}
+.fbc-btn:hover {
+  background: linear-gradient(120deg, #388E3C 0%, #22c55e 100%);
+  box-shadow: 0 4px 16px #22c55e44;
+  transform: scale(1.04);
+}
+
+/* Snyggare forum och aktivitetstext */
+.activitiesList, .homeSectionText {
+  color: #C8E6C9;
+  font-size: 1.1rem;
+  margin-bottom: 0.7rem;
+}

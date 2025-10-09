@@ -1,3 +1,81 @@
+/* Flex-header för aktiviteter */
+.activitiesHeaderFlex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+/* Pointer-cursor för kort */
+.kortPointer {
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .activitiesContainer {
+    max-width: 98vw;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+  .activitiesCardBg {
+    max-width: 98vw;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+  .activitiesHeader {
+    max-width: 98vw;
+    font-size: 1.5rem;
+    padding-top: 1rem;
+    padding-bottom: 0.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .activitiesContainer {
+    max-width: 100vw;
+    padding-left: 0.2rem;
+    padding-right: 0.2rem;
+  }
+  .activitiesCardBg {
+    max-width: 100vw;
+    padding-left: 0.2rem;
+    padding-right: 0.2rem;
+    border-radius: 0.7rem;
+  }
+  .activitiesHeader {
+    max-width: 100vw;
+    font-size: 1.1rem;
+    padding-top: 0.7rem;
+    padding-bottom: 0.3rem;
+  }
+}
+/* Böter-varning längst ner på Home-sidan */
+.finesWarningCard {
+  background: #ffeaea;
+  color: #b71c1c;
+  border: 2px solid #e53935;
+  margin: 2rem auto 0 auto;
+  max-width: 500px;
+  text-align: center;
+  font-weight: 700;
+  border-radius: 1rem;
+  box-shadow: 0 2px 8px #e5393522;
+  padding: 1.2rem 1rem;
+}
+.finesWarningTitle {
+  font-size: 1.2rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+.finesWarningText {
+  font-size: 0.95rem;
+  margin-top: 0.5rem;
+}
+/* Extra för Home-sektioner */
+.homeSectionMargin {
+  margin-top: 0.7rem;
+}
+.homeHeaderMargin {
+  margin-bottom: 0.2rem;
+}
 /* Tillbaka-knapp högst upp till höger */
 .activitiesBackBtn {
   position: absolute;
@@ -126,10 +204,14 @@
 }
 .activitiesContainer {
   max-width: 900px;
+  width: 100%;
   margin: 0 auto;
-  padding: 2rem 0.5rem;
+  padding: 0.7rem 0.5rem;
   position: relative;
   z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .activitiesHeader {
   display: flex;
@@ -163,37 +245,32 @@
   background: rgba(16, 32, 16, 0.97);
   color: #2E7D32;
   border-radius: 1rem;
-  padding: 1rem;
+  padding: 1.2rem 1.5rem;
   text-align: center;
-  margin-bottom: 1rem;
-  font-weight: 600;
-}
-.activitiesError {
-  background: #e53935;
-  color: #fff;
-  border-radius: 1rem;
-  padding: 1rem;
-  text-align: center;
-  margin-bottom: 1rem;
-  font-weight: 600;
-}
-.activitiesFilterRow {
-  display: flex;
-  gap: 0.7rem;
   margin-bottom: 1.2rem;
-  align-items: center;
+  font-weight: 600;
+  width: 100%;
+  box-shadow: 0 2px 12px #22c55e22;
+  max-width: 900px;
 }
-.activitiesFilterBtn {
-  border: 2px solid #2E7D32;
-  border-radius: 1rem;
-  padding: 0.5rem 1.2rem;
-  font-weight: bold;
-  font-size: 1rem;
-  box-shadow: none;
-  transition: all 0.2s;
-  cursor: pointer;
-  background: transparent;
-  color: #2E7D32;
+.activitiesHeader {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  text-align: left;
+  font-weight: 900;
+  font-size: 2rem;
+  color: #fff;
+  margin-bottom: 1rem;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 12px #1b5e20, 0 1px 2px #101820;
+  padding-top: 1.2rem;
+  padding-bottom: 0.7rem;
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 900px;
 }
 .activitiesFilterBtnActive {
   background: #2E7D32;

@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { finesAPI } from "../services/apiService";
 import stylesCss from "./home.module.css";
+import activitiesStyles from "./Activities.module.css";
 import { useNavigate } from "react-router-dom";
-import { useTheme } from "../context/ThemeContext";
+// import { useTheme } from "../context/ThemeContext"; // Borttagen, ej använd
 import { useUser } from "../context/UserContext";
 import { useAuth } from "../context/AuthContext";
 import { Activity } from "../types/activity";
@@ -10,27 +12,40 @@ import { apiService } from "../services/apiService";
 import ActivityCard from "../components/activities/ActivityCard";
 import ProfileCard from "../components/common/ProfileCard";
 import MenuPopup from "../components/common/MenuPopup";
+// import ChatWindow, { ChatMessage } from "../components/chat/ChatWindow";
+import { usersData } from "../types/user";
 
-const getStyles = (isDark: boolean) => ({
-    primaryGreen: "#2E7D32",
-    accentGreen: "#4CAF50",
-    fbcGold: "#FFB300",
-    cardBackground: isDark ? "rgba(16, 32, 16, 0.97)" : "#FFFFFF",
-    textPrimary: isDark ? "#F1F8E9" : "#1B5E20",
-    textSecondary: isDark ? "#C8E6C9" : "#4A5568",
-    gradients: {
-        primary: "linear-gradient(135deg, #2E7D32 0%, #388E3C 50%, #4CAF50 100%)",
-        gold: "linear-gradient(135deg, #FFB300 0%, #FF8F00 100%)",
-        body: isDark 
-            ? "linear-gradient(135deg, #0A0A0A 0%, #0D1B0D 30%, #1B2E1B 100%)"
-            : "linear-gradient(135deg, #FAFAFA 0%, #F1F8E9 30%, #E8F5E9 100%)",
-        cardHover: isDark
-            ? "linear-gradient(135deg, rgba(46, 125, 50, 0.25) 0%, rgba(56, 142, 60, 0.25) 100%)"
-            : "linear-gradient(135deg, rgba(46, 125, 50, 0.07) 0%, rgba(56, 142, 60, 0.07) 100%)",
-    }
-});
+// ...getStyles borttagen, ej använd...
 
 const Home: React.FC = () => {
+  // Motiverande veckotexter
+  const today = new Date();
+  const motivationalTexts = [
+    "Ge aldrig upp – varje träning gör dig starkare!",
+    "Tillsammans är vi starka. Stötta varandra!",
+    "Du missar 100% av skotten du inte tar.",
+    "Var stolt över din insats, oavsett resultat.",
+    "Små framsteg är också framsteg!",
+    "Glädje och gemenskap gör oss bättre.",
+    "Träning är nyckeln till framgång!",
+    "Varje dag är en ny chans att utvecklas.",
+    "Motgångar bygger vinnare.",
+    "Din attityd avgör din prestation!"
+  ];
+  // Veckonummer (ISO)
+  const weekNr = Math.floor((today.getTime() - new Date(today.getFullYear(),0,1).getTime()) / (7*24*60*60*1000));
+  const motivationalText = motivationalTexts[weekNr % motivationalTexts.length];
+  // Skapa lista med {namn, datum, ålder}
+  const upcomingBirthdays = usersData.map(u => {
+    const birthDate = new Date(u.birthday);
+    // Beräkna nästa födelsedag (år = idag om inte passerat, annars nästa år)
+    const nextBirthday = new Date(today.getFullYear(), birthDate.getMonth(), birthDate.getDate());
+    if (nextBirthday < today) nextBirthday.setFullYear(today.getFullYear() + 1);
+    // Beräkna ålder vid nästa födelsedag
+    const age = nextBirthday.getFullYear() - birthDate.getFullYear();
+    return { name: u.name, date: nextBirthday, age };
+  }).sort((a, b) => a.date.getTime() - b.date.getTime());
+  const nextBirthday = upcomingBirthdays[0];
   // Responsiv design: lägg till media queries för mobil/surfplatta
   React.useEffect(() => {
     const style = document.createElement('style');
@@ -65,11 +80,34 @@ const Home: React.FC = () => {
   const [forumLoading, setForumLoading] = useState(false);
   const [forumError, setForumError] = useState<string | null>(null);
   // ...existing code...
-    const navigate = useNavigate();
-    const { isDark } = useTheme();
-    const { user: authUser } = useUser();
-    const { logout } = useAuth();
-    const styles = getStyles(isDark);
+  const [userFines, setUserFines] = useState<{ total: number; paid: number; outstanding: number } | null>(null);
+  // Chatt-meddelanden (dummy-data)
+
+
+  // ...existing code...
+
+  // ...övrig kod...
+
+  const { user: authUser } = useUser();
+  const { logout } = useAuth();
+  const navigate = useNavigate();
+
+  // Flytta useEffect för böter hit, efter att authUser är definierad
+  useEffect(() => {
+    if (!authUser?.id) return;
+    finesAPI.getByUser(authUser.id).then(res => {
+      if (res.success && Array.isArray(res.data) && res.data.length > 0) {
+        // Summera böter
+        const total = res.data.reduce((sum, fine) => sum + (fine.amount || 0), 0);
+        const paid = res.data.filter(f => f.paid).reduce((sum, fine) => sum + (fine.amount || 0), 0);
+        const outstanding = total - paid;
+        setUserFines({ total, paid, outstanding });
+      } else {
+        setUserFines({ total: 0, paid: 0, outstanding: 0 });
+      }
+    });
+  }, [authUser?.id]);
+  // const styles = getStyles(isDark); // Borttagen, ej använd
   const [upcomingActivities, setUpcomingActivities] = useState<Activity[]>([]);
   const [activitiesLoading, setActivitiesLoading] = useState(false);
   const [activitiesError, setActivitiesError] = useState<string | null>(null);
@@ -298,39 +336,32 @@ return (
       </div>
     )}
     {/* Kommande aktiviteter */}
-    <section className={stylesCss.homeSection}>
-      <div className={stylesCss.homeSectionHeader}>
-        <span className={stylesCss.homeSectionTitle}>Nästa aktivitet</span>
-        <button className={stylesCss.homeSectionBtn} onClick={() => navigate("/activities")} aria-label="Se alla aktiviteter" tabIndex={0}>
-          Se alla aktiviteter
-        </button>
-      </div>
-      <div className={stylesCss.homeForumList}>
-        {/* Loading/error för aktiviteter */}
-        {activitiesLoading ? (
-          <div className={stylesCss.homeLoading}>Laddar aktiviteter...</div>
-        ) : activitiesError ? (
-          <div className={stylesCss.homeError}>{activitiesError}</div>
-        ) : nextActivity ? (
-          <ActivityCard
-            activity={nextActivity}
-            styles={styles}
-            onCheckIn={() => {
-              // Här kan du lägga logik för check in, t.ex. API-anrop eller popup
-              alert('Du har checkat in på aktiviteten!');
-            }}
-            onCheckOut={() => {
-              // Här kan du lägga logik för check ut, t.ex. API-anrop eller popup
-              alert('Du har checkat ut från aktiviteten!');
-            }}
-            onAbsence={() => {
-              setAbsenceActivity(nextActivity);
-              setShowAbsencePopup(true);
-            }}
-          />
-        ) : (
-          <div className={stylesCss.homeEmpty}>Ingen kommande aktivitet</div>
-        )}
+    <section className={`${activitiesStyles.activitiesContainer} ${activitiesStyles.homeSectionMargin}`}>
+      <div className={activitiesStyles.activitiesCardBg}>
+        <div className={`${activitiesStyles.activitiesHeader} ${activitiesStyles.homeHeaderMargin} ${activitiesStyles.activitiesHeaderFlex}`}>
+          <span>Nästa aktivitet</span>
+          <button className={activitiesStyles.activitiesAddBtn} onClick={() => navigate("/activities")} aria-label="Se alla aktiviteter" tabIndex={0}>
+            Se alla aktiviteter
+          </button>
+        </div>
+        <div className={activitiesStyles.activitiesList}>
+          {activitiesLoading ? (
+            <div className={activitiesStyles.activitiesCardBg}>Laddar aktiviteter...</div>
+          ) : activitiesError ? (
+            <div className={activitiesStyles.activitiesError}>{activitiesError}</div>
+          ) : nextActivity ? (
+            <ActivityCard
+              activity={nextActivity}
+              styles={activitiesStyles}
+              onCheckIn={() => alert('Du har checkat in på aktiviteten!')}
+              onCheckOut={() => alert('Du har checkat ut från aktiviteten!')}
+              onAbsence={() => { setAbsenceActivity(nextActivity); setShowAbsencePopup(true); }}
+              expandable={true}
+            />
+          ) : (
+            <div className={activitiesStyles.activitiesEmpty}>Ingen kommande aktivitet</div>
+          )}
+        </div>
       </div>
     </section>
 
@@ -344,7 +375,6 @@ return (
               </div>
               <label className={stylesCss.homeAbsenceLabel}>Anledning</label>
               <input type="text" value={absenceReason} onChange={e => setAbsenceReason(e.target.value)} className={stylesCss.homeAbsenceInput} placeholder="Sjuk, bortrest, etc." />
-              <label className={stylesCss.homeAbsenceLabel}>Kommentar (valfritt)</label>
               <textarea value={absenceComment} onChange={e => setAbsenceComment(e.target.value)} className={stylesCss.homeAbsenceTextarea} placeholder="Exempel: Krya på dig!" />
               <div className={stylesCss.homeAbsenceBtnRow}>
                 <button className={`fbc-btn ${stylesCss.homeAbsenceSendBtn}`} onClick={handleAbsenceSubmit} disabled={absenceSubmitting || !absenceReason}>
@@ -356,56 +386,101 @@ return (
           </div>
         )}
 
-				{/* Forumsektion, nu först */}
-    <section className={stylesCss.homeForumSection}>
-      <div className={stylesCss.homeForumHeader}>
-        <span className={stylesCss.homeForumTitle}>Forum</span>
-        <button className={stylesCss.homeForumBtn} onClick={() => navigate('/forum')} aria-label="Se alla foruminlägg" tabIndex={0}>
-          Se alla inlägg
-        </button>
-      </div>
-      <div className={stylesCss.homeForumList}>
-        {forumLoading ? (
-          <div className={stylesCss.homeLoading}>Laddar forum...</div>
-        ) : forumError ? (
-          <div className={stylesCss.homeError}>{forumError}</div>
-        ) : forumPosts.length === 0 ? (
-          <div className={stylesCss.homeEmpty}>Inga inlägg ännu.</div>
-        ) : null}
-        {/* Modal för redigering */}
-        {editPostId && (
-          <div className={stylesCss.homePopupOverlay}>
-            <div className={stylesCss.homeAbsencePopup}>
-              <div className={`${stylesCss.homeAbsenceTitle} ${stylesCss.homeEditTitle}`}>Redigera inlägg</div>
-              <textarea value={editContent} onChange={e => setEditContent(e.target.value)} className={stylesCss.homeEditTextarea} placeholder="Redigera inlägg..." />
-              <div className={stylesCss.homeAbsenceBtnRow}>
-                <button className={`fbc-btn ${stylesCss.homeEditSaveBtn}`} onClick={handleSaveEdit}>Spara</button>
-                <button className={`fbc-btn fbc-btn-logout ${stylesCss.homeEditCancelBtn}`} onClick={() => setEditPostId(null)}>Avbryt</button>
-              </div>
+        {/* Forumsektion */}
+        <section className={`${activitiesStyles.activitiesContainer} ${activitiesStyles.homeSectionMargin}`}>
+          <div className={activitiesStyles.activitiesCardBg}>
+            <div className={`${activitiesStyles.activitiesHeader} ${activitiesStyles.homeHeaderMargin}`}>Forum</div>
+            <button className={activitiesStyles.activitiesAddBtn} onClick={() => navigate('/forum')} aria-label="Se alla foruminlägg" tabIndex={0}>
+              Se alla inlägg
+            </button>
+            <div className={activitiesStyles.activitiesList}>
+              {forumLoading ? (
+                <div className={activitiesStyles.activitiesCardBg}>Laddar forum...</div>
+              ) : forumError ? (
+                <div className={activitiesStyles.activitiesError}>{forumError}</div>
+              ) : forumPosts.length === 0 ? (
+                <div className={activitiesStyles.activitiesEmpty}>Inga inlägg ännu.</div>
+              ) : null}
+              {/* Modal för redigering */}
+              {editPostId && (
+                <div className={stylesCss.homePopupOverlay}>
+                  <div className={activitiesStyles.activitiesCardBg}>
+                    <div className={stylesCss.homeEditTitle}>Redigera inlägg</div>
+                    <textarea value={editContent} onChange={e => setEditContent(e.target.value)} className={stylesCss.homeEditTextarea} placeholder="Redigera inlägg..." />
+                    <div className={stylesCss.homeAbsenceBtnRow}>
+                      <button className={`fbc-btn ${stylesCss.homeEditSaveBtn}`} onClick={handleSaveEdit}>Spara</button>
+                      <button className={`fbc-btn fbc-btn-logout ${stylesCss.homeEditCancelBtn}`} onClick={() => setEditPostId(null)}>Avbryt</button>
+                    </div>
+                  </div>
+                </div>
+              )}
+              {/* Modal för ta bort */}
+              {showDeleteId && (
+                <div className={stylesCss.homePopupOverlay}>
+                  <div className={activitiesStyles.activitiesCardBg}>
+                    <div className={stylesCss.homeDeleteTitle}>Ta bort inlägg</div>
+                    <div className={stylesCss.homeAbsenceText}>Är du säker på att du vill ta bort detta inlägg?</div>
+                    <div className={stylesCss.homeAbsenceBtnRow}>
+                      <button className={`fbc-btn fbc-btn-logout ${stylesCss.homeDeleteBtn}`} onClick={() => handleDeletePost(showDeleteId)}>Ta bort</button>
+                      <button className={`fbc-btn ${stylesCss.homeDeleteCancelBtn}`} onClick={() => setShowDeleteId(null)}>Avbryt</button>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
+        </section>
+
+        {/* Chatbubbla nere till höger */}
+        {!menuOpen && (
+          <button
+            className={stylesCss.homeChatBubble}
+            aria-label="Öppna chatten"
+            onClick={() => navigate('/chat')}
+          >
+            💬
+          </button>
         )}
-        {/* Modal för ta bort */}
-        {showDeleteId && (
-          <div className={stylesCss.homePopupOverlay}>
-            <div className={stylesCss.homeAbsencePopup}>
-              <div className={`${stylesCss.homeAbsenceTitle} ${stylesCss.homeDeleteTitle}`}>Ta bort inlägg</div>
-              <div className={stylesCss.homeAbsenceText}>Är du säker på att du vill ta bort detta inlägg?</div>
-              <div className={stylesCss.homeAbsenceBtnRow}>
-                <button className={`fbc-btn fbc-btn-logout ${stylesCss.homeDeleteBtn}`} onClick={() => handleDeletePost(showDeleteId)}>Ta bort</button>
-                <button className={`fbc-btn ${stylesCss.homeDeleteCancelBtn}`} onClick={() => setShowDeleteId(null)}>Avbryt</button>
-              </div>
+
+        {/* Motiverande veckotext */}
+        <section className={`${activitiesStyles.activitiesContainer} ${activitiesStyles.homeSectionMargin}`}>
+          <div className={activitiesStyles.activitiesCardBg}>
+            <div className={`${activitiesStyles.activitiesHeader} ${activitiesStyles.homeHeaderMargin}`}>Veckans motivation</div>
+            <div className={activitiesStyles.activitiesList}>
+              <span className={activitiesStyles.finesWarningTitle}>
+                💡 {motivationalText}
+              </span>
             </div>
           </div>
+        </section>
+
+        {/* Nästa födelsedag */}
+        {nextBirthday && (
+          <section className={`${activitiesStyles.activitiesContainer} ${activitiesStyles.homeSectionMargin}`}>
+            <div className={activitiesStyles.activitiesCardBg}>
+              <div className={`${activitiesStyles.activitiesHeader} ${activitiesStyles.homeHeaderMargin}`}>Nästa födelsedag</div>
+              <div className={activitiesStyles.activitiesList}>
+                <span className={activitiesStyles.finesWarningTitle}>
+                  🎂 {nextBirthday.name} fyller år {nextBirthday.date.toLocaleDateString("sv-SE", { day: "numeric", month: "long" })} och blir {nextBirthday.age} år!
+                </span>
+              </div>
+            </div>
+          </section>
         )}
-      </div>
-    </section>
 
     {/* Statistik borttagen */}
 
     {/* Meny-popup med modern stil */}
 <MenuPopup open={menuOpen} onClose={() => setMenuOpen(false)} menuItems={menuItems} navigate={navigate} />
 				{/* Footer med copyright och länk till policyer */}
+        {/* Böter längst ner */}
+        {userFines && userFines.outstanding > 0 && (
+          <div className={activitiesStyles.activitiesCardBg}>
+            <span className={activitiesStyles.finesWarningTitle}>⚠️ Du har obetalda böter!</span>
+            <span>Summa att betala: <b>{userFines.outstanding} kr</b></span>
+            <div className={activitiesStyles.finesWarningText}>Betala till lagets böteskonto snarast.</div>
+          </div>
+        )}
         <footer className={stylesCss.homeFooter}>
           <div className={stylesCss.homeFooterCopyright}>
             &copy; {new Date().getFullYear()} FBC - Alla rättigheter förbehållna.
