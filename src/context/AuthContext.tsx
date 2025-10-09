@@ -48,30 +48,47 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   // Ta bort mock/demo-användare. Använd tom array eller hämta från backend i produktion.
   const [users, setUsers] = useState<User[]>([]);
 
-  // Vid mount: hämta aktuell användare från backend med token
+  // Vid mount: hämta aktuell användare från backend med token/cookie och försök förnya sessionen om nödvändigt
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        // Hämta användarinfo från backend, cookie skickas automatiskt
-        const res = await fetch(`${process.env.REACT_APP_API_BASE_URL || ''}/users/me`, {
-          method: 'GET',
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json'
+        // Försök hämta accessToken från localStorage
+        const token = authService.getAccessToken();
+        let user = null;
+        if (token) {
+          // Hämta användare med token
+          const res = await authService.getCurrentUserFromBackend(token);
+          if (res && res.success && res.data) {
+            user = { ...res.data, id: res.data._id || res.data.id };
+            setAuthState({ user, isAuthenticated: true, isLoading: false, error: null });
+            return;
+          } else if (res.error && res.error.toLowerCase().includes('expired')) {
+            // Token expired, försök förnya
+            try {
+              const newToken = await authService.refreshAccessToken();
+              const refreshedRes = await authService.getCurrentUserFromBackend(newToken);
+              if (refreshedRes && refreshedRes.success && refreshedRes.data) {
+                user = { ...refreshedRes.data, id: refreshedRes.data._id || refreshedRes.data.id };
+                setAuthState({ user, isAuthenticated: true, isLoading: false, error: null });
+                return;
+              }
+            } catch (refreshErr) {
+              // Misslyckades att förnya, logga ut
+              authService.logout();
+              setAuthState({ user: null, isAuthenticated: false, isLoading: false, error: null });
+              return;
+            }
           }
-        });
-        const result = await res.json();
-        if (result && result.success && result.data) {
-          const userObj = { ...result.data, id: result.data._id || result.data.id };
-          setAuthState({ user: userObj, isAuthenticated: true, isLoading: false, error: null });
-        } else {
-          setAuthState({ user: null, isAuthenticated: false, isLoading: false, error: null });
         }
+        // Om ingen token eller misslyckad hämtning, logga ut
+        setAuthState({ user: null, isAuthenticated: false, isLoading: false, error: null });
       } catch {
         setAuthState({ user: null, isAuthenticated: false, isLoading: false, error: null });
       }
     };
     fetchUser();
+    // Sätt upp automatisk token-refresh
+    authService.setupTokenRefresh();
   }, []);
 
   const login = async (credentials: LoginCredentials): Promise<boolean> => {
