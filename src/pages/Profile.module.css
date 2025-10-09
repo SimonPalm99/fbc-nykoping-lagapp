@@ -83,15 +83,21 @@
   font-size: 1.08rem;
 }
 .profileLogWrapper {
-  max-width: 420px;
+  max-width: 600px;
   margin: 0 auto;
   padding: 1.2rem 0;
+  background: rgba(16, 32, 16, 0.97);
+  border-radius: 1.2rem;
+  box-shadow: 0 2px 8px #22c55e22;
+  color: #F1F8E9;
 }
 .profileLogHeader {
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: #22c55e;
-  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #2E7D32;
+  margin-bottom: 1.2rem;
+  text-align: center;
+  letter-spacing: 1px;
 }
 .profileLogStatsRow {
   display: flex;
@@ -100,7 +106,8 @@
   margin-bottom: 1.2rem;
   background: rgba(34,197,94,0.07);
   border-radius: 1rem;
-  padding: 1rem 0.7rem;
+  padding: 1.2rem 0.7rem;
+  box-shadow: 0 1px 8px #22c55e22;
 }
 .profileLogStatsCol {
   text-align: center;
@@ -108,7 +115,7 @@
 .profileLogStatsValue {
   font-size: 1.3rem;
   font-weight: bold;
-  color: #22c55e;
+  color: #2E7D32;
 }
 .profileLogStatsLabel {
   color: #C8E6C9;
@@ -123,18 +130,20 @@
   background: rgba(16,32,16,0.97);
   border-radius: 1rem;
   margin-bottom: 0.7rem;
-  padding: 0.9rem 1.2rem;
+  padding: 1.1rem 1.5rem;
   color: #F1F8E9;
-  box-shadow: 0 1px 8px #22c55e22;
+  box-shadow: 0 2px 8px #22c55e22;
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
   position: relative;
+  transition: box-shadow 0.2s;
 }
 .profileLogType {
   font-weight: bold;
   color: #22c55e;
   font-size: 1.08rem;
+  box-shadow: 0 4px 16px #2E7D3233;
 }
 .profileLogMeta {
   font-size: 0.98rem;
@@ -150,15 +159,19 @@
   margin-top: 0.5rem;
 }
 .profileLogBtn {
-  background: #14532d;
+  background: #2E7D32;
   color: #fff;
   border: none;
-  border-radius: 0.5rem;
-  padding: 0.3rem 0.8rem;
+  border-radius: 1rem;
+  padding: 0.5rem 1.2rem;
+  font-weight: bold;
+  font-size: 1rem;
   cursor: pointer;
+  box-shadow: 0 2px 8px #2E7D3233;
+  transition: background 0.2s;
 }
 .profileLogBtnDelete {
-  background: #b91c1c;
+  background: #e53935;
 }
 .profileForm {
   background: rgba(16,32,16,0.97);
@@ -172,15 +185,15 @@
   gap: 0.7rem;
 }
 .profileFormBtn {
-  background: #22c55e;
+  background: #2E7D32;
   color: #fff;
   border: none;
-  border-radius: 0.9rem;
+  border-radius: 1rem;
   padding: 0.8rem 1.3rem;
   font-weight: bold;
   font-size: 1.08rem;
   cursor: pointer;
-  box-shadow: 0 1px 8px #22c55e33;
+  box-shadow: 0 2px 8px #2E7D3233;
   margin-bottom: 1rem;
   margin-top: 0.5rem;
 }

@@ -1,262 +1,229 @@
-
-
 import React, { useState } from 'react';
+import styles from './Forum.module.css';
+import ForumPostCard, { ForumPost } from '../components/ForumPostCard';
+import { socketService } from '../services/socketService';
 import { useNavigate } from 'react-router-dom';
-import '../pages/Forum.css';
-
-// Mockade inlägg
-const posts = [
-	{
-		id: '1',
-		author: 'Tobias Palm',
-		role: 'Administratör',
-		avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
-		time: '10 tim',
-		date: '2025-10-06 19:45',
-		content:
-			'Nån som har ett par vita “fotbollsstrumpor” att låna ut? (Helst adidas)',
-		image: '',
-		likes: 2,
-		comments: [
-			{
-				id: 'c1',
-				author: 'Rasmus Widén',
-				role: 'Stigande medskapare',
-				avatar: 'https://randomuser.me/api/portraits/men/65.jpg',
-				text:
-					'Kan hämta upp honom,👌\nmen har vi någon som gillar att åka tidigt som kan köra tillbaka honom?',
-				date: '2025-10-06 20:01',
-			},
-			{
-				id: 'c2',
-				author: 'Tobias Palm',
-				role: 'Administratör',
-				avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
-				text: '@alla',
-				date: '2025-10-06 20:05',
-			},
-		],
-	},
-	{
-		id: '2',
-		author: 'Sebastian Karlsson',
-		role: 'Administratör',
-		avatar: 'https://randomuser.me/api/portraits/men/45.jpg',
-		time: 'Igår kl. 10:56',
-		date: '2025-10-05 10:56',
-		content:
-			'Skön start på helgen - fler såna tack! 💚\n\nHär kommer samtliga XpG (förväntade mål) FÖR och EMOT i olika spelfaser för att se hur vi kan spetsa till oss i avgörande lägen men också vad vi ska fortsätta göra för att skapa målchanser. 🔥\n\nKolla igenom filmklippet, funkar det inte så skickar jag en länk. 🎥',
-		image:
-			'https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=600&q=80',
-		likes: 1,
-		comments: [],
-	},
-];
 
 const Forum: React.FC = () => {
-	const [openComments, setOpenComments] = useState<string | null>(null);
-	const [likes, setLikes] = useState<Record<string, number>>(() => {
-		const likeObj: Record<string, number> = {};
-		posts.forEach((post) => {
-			likeObj[post.id] = post.likes || 0;
-		});
-		return likeObj;
-	});
-	const [expandedPosts, setExpandedPosts] = useState<Record<string, boolean>>({});
-
-	const handleLike = (id: string) => {
-		setLikes((l) => ({ ...l, [id]: (l[id] ?? 0) + 1 }));
-	};
-
 	const navigate = useNavigate();
-	const handleBack = () => {
-		navigate('/');
+
+	// Live-uppdatering: anslut till socket vid mount
+	React.useEffect(() => {
+		socketService.connect();
+		socketService.joinRoom('forum');
+		socketService.socket?.on('newPost', (newPost: ForumPost) => {
+			setPosts(prev => [newPost, ...prev]);
+		});
+		socketService.socket?.on('newComment', (data: { postId: string; comment: any }) => {
+			setPosts(prev => prev.map(post =>
+				post.id === data.postId
+					? { ...post, comments: (post.comments ?? 0) + 1 } // eller uppdatera commentList om det finns
+					: post
+			));
+		});
+		return () => {
+			socketService.disconnect();
+		};
+	}, []);
+	const [posts, setPosts] = useState<ForumPost[]>([
+		{
+			id: '1',
+			author: 'Simon Palm',
+			avatar: '/default-avatar.png',
+			role: 'Tränare',
+			date: '9 okt',
+			time: '10:15',
+			content: 'Välkommen till forumet! Här kan du diskutera allt kring laget.',
+			likes: 12,
+			comments: 3,
+		},
+		{
+			id: '2',
+			author: 'Anna Svensson',
+			avatar: '/default-avatar.png',
+			role: 'Spelare',
+			date: '8 okt',
+			time: '18:42',
+			content: 'Bra träning idag! Någon som vill ses och köra extra pass imorgon?',
+			likes: 7,
+			comments: 2,
+		},
+	]);
+	const [showForm, setShowForm] = useState(false);
+	const [newPostText, setNewPostText] = useState('');
+	const [files, setFiles] = useState<File[]>([]);
+	// Poll state
+	const [showPoll, setShowPoll] = useState(false);
+	const [pollQuestion, setPollQuestion] = useState('');
+	const [pollOptions, setPollOptions] = useState<string[]>(['', '']);
+
+	const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		if (e.target.files) {
+			setFiles(Array.from(e.target.files));
+		}
 	};
 
-	const toggleExpand = (id: string) => {
-		setExpandedPosts((prev) => ({ ...prev, [id]: !prev[id] }));
+	const handleRemoveFile = (idx: number) => {
+		setFiles(files => files.filter((_, i) => i !== idx));
+	};
+
+	const handlePollOptionChange = (idx: number, value: string) => {
+		setPollOptions(opts => opts.map((opt, i) => i === idx ? value : opt));
+	};
+
+	const handleAddPollOption = () => {
+		setPollOptions(opts => [...opts, '']);
+	};
+
+	const handleRemovePollOption = (idx: number) => {
+		setPollOptions(opts => opts.filter((_, i) => i !== idx));
+	};
+
+	const handleCreatePost = (e: React.FormEvent) => {
+		e.preventDefault();
+		if (!newPostText.trim() && !showPoll) return;
+		const now = new Date();
+		const post: ForumPost = {
+			id: Math.random().toString(36).slice(2),
+			author: 'Ditt Namn', // Byt ut mot inloggad användare
+			avatar: '/default-avatar.png',
+			role: 'Spelare',
+			date: now.toLocaleDateString('sv-SE', { day: 'numeric', month: 'short' }),
+			time: now.toLocaleTimeString('sv-SE', { hour: '2-digit', minute: '2-digit' }),
+			content: newPostText,
+			likes: 0,
+			comments: 0,
+			...(showPoll && pollQuestion.trim() ? {
+				poll: {
+					question: pollQuestion,
+					options: pollOptions.filter(opt => opt.trim()),
+				}
+			} : {}),
+			// You can add a files property if ForumPost supports it
+		};
+	setPosts([post, ...posts]);
+	// Skicka till server via socket för live-uppdatering
+	socketService.socket?.emit('newPost', post);
+		setNewPostText('');
+		setFiles([]);
+		setShowPoll(false);
+		setPollQuestion('');
+		setPollOptions(['', '']);
+		setShowForm(false);
 	};
 
 	return (
-		<div className="forum-bg">
-			<header className="forum-header">
-				<button className="forum-back-btn" onClick={handleBack}>
-					Tillbaka
-				</button>
-				<h1 className="forum-title">FBC Nyköpings Forum</h1>
-			</header>
-			<main className="forum-main">
-				<div className="forum-feed">
-					{posts.map((post) => {
-						const latestComments = post.comments.slice(-3);
-						const showAll = openComments === post.id;
-						const isLong = post.content.length > 220;
-						const expanded = expandedPosts[post.id];
-						return (
-							<div key={post.id} className="forum-card">
-								<div className="forum-card-header">
-									<img src={post.avatar} alt="avatar" className="forum-avatar" />
-									<div className="forum-author-info">
-										<span className="forum-author">{post.author}</span>
-										<span className="forum-role">{post.role}</span>
-										<span className="forum-time">{post.time}</span>
-										<span className="forum-date">{post.date}</span>
-									</div>
-								</div>
-								<div className="forum-card-content">
-									<div className="forum-card-text">
-										{isLong && !expanded
-											? post.content.slice(0, 220) + '...'
-											: post.content}
-									</div>
-									{isLong && (
-										<button
-											className="forum-expand-btn"
-											onClick={() => toggleExpand(post.id)}
-										>
-											{expanded ? 'Visa mindre' : 'Visa mer'}
+		<div className={styles.forumWrapper}>
+			<button
+				className={styles.forumBackBtn}
+				onClick={() => navigate('/')}
+				aria-label="Tillbaka till startsidan"
+			>
+				Tillbaka
+			</button>
+			<div className={styles.forumGradientTop} />
+			<div className={styles.forumContainer}>
+				<div className={styles.forumHeader}>
+					<img src="/fbc-logo.jpg" alt="FBC Nyköping" className={styles.forumHeaderLogo} />
+					<span className={styles.forumTitle}>FBC Nyköpings Forum</span>
+				</div>
+				<div className={styles.forumCreatePostRow}>
+					<button
+						className={styles.forumCreatePostBtn}
+						onClick={() => setShowForm(f => !f)}
+					>
+						Skapa inlägg
+					</button>
+				</div>
+				{showForm && (
+					<form className={styles.forumCreatePostForm} onSubmit={handleCreatePost}>
+						<textarea
+							className={styles.forumCreatePostTextarea}
+							value={newPostText}
+							onChange={e => setNewPostText(e.target.value)}
+							placeholder="Skriv ditt inlägg här..."
+							rows={3}
+						/>
+						<label className={styles.forumCreatePostFileBtn}>
+							<span role="img" aria-label="Bifoga fil">📎</span> Bifoga fil/bild
+							<input
+								type="file"
+								multiple
+								accept="image/*,video/*,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt"
+								className={styles.forumCreatePostFileInput}
+								onChange={handleFileChange}
+							/>
+						</label>
+						{files.length > 0 && (
+							<div className={styles.forumCreatePostFilePreviewRow}>
+								{files.map((file, idx) => (
+									<div key={idx} className={styles.forumCreatePostFilePreview}>
+										{file.type.startsWith('image/') ? (
+											<img
+												src={URL.createObjectURL(file)}
+												alt={file.name}
+												className={styles.forumCreatePostFileImg}
+											/>
+										) : (
+											<span className={styles.forumCreatePostFileName}>{file.name}</span>
+										)}
+										<button type="button" className={styles.forumCreatePostFileRemoveBtn} onClick={() => handleRemoveFile(idx)}>
+											Ta bort
 										</button>
-									)}
-									{post.image && (
-										<img
-											src={post.image}
-											alt="post"
-											className="forum-card-image"
+									</div>
+								))}
+							</div>
+						)}
+						<div className={styles.forumCreatePostPollRow}>
+							<button
+								type="button"
+								className={styles.forumCreatePostPollBtn}
+								onClick={() => setShowPoll(p => !p)}
+							>
+								{showPoll ? 'Ta bort omröstning' : 'Lägg till omröstning'}
+							</button>
+						</div>
+						{showPoll && (
+							<div className={styles.forumCreatePostPollForm}>
+								<input
+									className={styles.forumCreatePostPollQuestion}
+									type="text"
+									value={pollQuestion}
+									onChange={e => setPollQuestion(e.target.value)}
+									placeholder="Omröstningsfråga..."
+								/>
+								{pollOptions.map((opt, idx) => (
+									<div key={idx} className={styles.forumCreatePostPollOptionRow}>
+										<input
+											className={styles.forumCreatePostPollOption}
+											type="text"
+											value={opt}
+											onChange={e => handlePollOptionChange(idx, e.target.value)}
+											placeholder={`Alternativ ${idx + 1}`}
 										/>
-									)}
-								</div>
-								{/* Actions direkt under inlägget */}
-								<div className="forum-card-actions">
-									<button
-										className="forum-like-btn"
-										onClick={() => handleLike(post.id)}
-									>
-										<span className="forum-icon" role="img" aria-label="like">
-											👍
-										</span>
-										<span className="forum-action-label">{likes[post.id]}</span>
-									</button>
-									<button
-										className="forum-comment-btn"
-										onClick={() => setOpenComments(showAll ? null : post.id)}
-									>
-										<span className="forum-icon" role="img" aria-label="comment">
-											💬
-										</span>
-										<span className="forum-action-label">
-											{post.comments.length}
-										</span>
-									</button>
-								</div>
-								{/* Visa de 3 senaste kommentarerna */}
-								{latestComments.length > 0 && !showAll && (
-									<div className="forum-comments-preview">
-										{latestComments.map((comment) => (
-											<div key={comment.id} className="forum-comment">
-												<div className="forum-comment-header">
-													<img
-														src={comment.avatar}
-														alt="avatar"
-														className="forum-comment-avatar"
-													/>
-													<span className="forum-comment-author">
-														{comment.author}
-													</span>
-													<span className="forum-comment-role">
-														{comment.role}
-													</span>
-													<span className="forum-comment-date">
-														{comment.date}
-													</span>
-												</div>
-												<div className="forum-comment-text">{comment.text}</div>
-												<div className="forum-comment-actions">
-													<span className="forum-icon" role="img" aria-label="like">
-														👍
-													</span>
-													<span className="forum-comment-likes">1</span>
-													<button className="forum-comment-like-btn" disabled>
-														Gilla
-													</button>
-													<button className="forum-comment-reply-btn" disabled>
-														Svara
-													</button>
-												</div>
-											</div>
-										))}
-										{post.comments.length > 3 && (
-											<button
-												className="forum-show-all-btn"
-												onClick={() => setOpenComments(post.id)}
-											>
-												Visa alla kommentarer
+										{pollOptions.length > 2 && (
+											<button type="button" className={styles.forumCreatePostPollRemoveBtn} onClick={() => handleRemovePollOption(idx)}>
+												Ta bort
 											</button>
 										)}
 									</div>
-								)}
-								{/* Visa alla kommentarer om öppnad */}
-								{showAll && (
-									<div className="forum-comments">
-										{post.comments.length === 0 ? (
-											<div className="forum-no-comments">
-												Inga kommentarer ännu.
-											</div>
-										) : (
-											post.comments.map((comment) => (
-												<div key={comment.id} className="forum-comment">
-													<div className="forum-comment-header">
-														<img
-															src={comment.avatar}
-															alt="avatar"
-															className="forum-comment-avatar"
-														/>
-														<span className="forum-comment-author">
-															{comment.author}
-														</span>
-														<span className="forum-comment-role">
-															{comment.role}
-														</span>
-														<span className="forum-comment-date">
-															{comment.date}
-														</span>
-													</div>
-													<div className="forum-comment-text">{comment.text}</div>
-													<div className="forum-comment-actions">
-														<span className="forum-icon" role="img" aria-label="like">
-															👍
-														</span>
-														<span className="forum-comment-likes">1</span>
-														<button className="forum-comment-like-btn" disabled>
-															Gilla
-														</button>
-														<button className="forum-comment-reply-btn" disabled>
-															Svara
-														</button>
-													</div>
-												</div>
-											))
-										)}
-										<button
-											className="forum-hide-all-btn"
-											onClick={() => setOpenComments(null)}
-										>
-											Stäng kommentarer
-										</button>
-										<div className="forum-comment-input">
-											<input
-												type="text"
-												placeholder="Skriv en kommentar..."
-												disabled
-											/>
-											<button disabled>Skicka</button>
-										</div>
-									</div>
-								)}
+								))}
+								<button type="button" className={styles.forumCreatePostPollAddBtn} onClick={handleAddPollOption}>
+									Lägg till alternativ
+								</button>
 							</div>
-						);
-					})}
+						)}
+						<button type="submit" className={styles.forumCreatePostSubmitBtn}>
+							Publicera
+						</button>
+					</form>
+				)}
+				<div className={styles.forumFeed}>
+					{posts.map(post => (
+						<ForumPostCard key={post.id} post={post} />
+					))}
 				</div>
-			</main>
+			</div>
 		</div>
 	);
 };

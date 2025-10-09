@@ -620,8 +620,8 @@ const Profile = () => {
   };
 
   return (
-  <div className={styles.profilePageWrapper}>
-      <div className={styles.profilePageContent}>
+    <div className={styles.profileRoot}>
+      <div className={styles.profileContainer}>
         {/* Profilkortet högst upp */}
         <ProfileCard user={{ ...user, profileImageUrl: user?.profileImageUrl }} />
         {/* Feedback vid sparad profil */}
@@ -631,7 +631,7 @@ const Profile = () => {
           </div>
         )}
         {/* Flikmeny */}
-        <nav className={styles.profileTabsNav}>
+        <nav className={styles.profileTabs}>
           {tabs.map(tab => (
             <button
               key={tab.key}
@@ -647,7 +647,7 @@ const Profile = () => {
           {renderTabContent({ ...user, profileImageUrl: user?.profileImageUrl })}
         </div>
       </div>
-  </div>
+    </div>
   );
 };
 
