@@ -7,7 +7,6 @@ import { useAuth } from "../context/AuthContext";
 import { Activity } from "../types/activity";
 import { forumAPI } from "../services/apiService";
 import { apiService } from "../services/apiService";
-import ForumPostCard from "../components/forum/ForumPostCard";
 import ActivityCard from "../components/activities/ActivityCard";
 import ProfileCard from "../components/common/ProfileCard";
 import MenuPopup from "../components/common/MenuPopup";
@@ -366,16 +365,13 @@ return (
         </button>
       </div>
       <div className={stylesCss.homeForumList}>
-        {/* Visa endast senaste inlägget, om det finns */}
         {forumLoading ? (
           <div className={stylesCss.homeLoading}>Laddar forum...</div>
         ) : forumError ? (
           <div className={stylesCss.homeError}>{forumError}</div>
         ) : forumPosts.length === 0 ? (
           <div className={stylesCss.homeEmpty}>Inga inlägg ännu.</div>
-        ) : (
-          forumPosts[0] !== undefined ? <ForumPostCard post={forumPosts[0]!} /> : null
-        )}
+        ) : null}
         {/* Modal för redigering */}
         {editPostId && (
           <div className={stylesCss.homePopupOverlay}>

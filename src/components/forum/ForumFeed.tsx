@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import ForumPostCard from "./ForumPostCard";
 import { useUser } from "../../context/UserContext";
 import { forumAPI } from "../../services/apiService";
 import styles from "./ForumFeed.module.css";
@@ -131,9 +130,7 @@ const ForumFeed: React.FC = () => {
             <div className={styles.forumEmpty}>Inga inlägg ännu.</div>
           ) : (
             <div className={styles.forumPostsList}>
-              {posts.map(post => (
-                <ForumPostCard key={post.id} post={post} />
-              ))}
+              {/* ForumPostCard borttagen, lägg till ny komponent här om du vill visa foruminlägg */}
             </div>
           )
         )}
