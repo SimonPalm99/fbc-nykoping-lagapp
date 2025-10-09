@@ -60,7 +60,15 @@ const Gamification: React.FC = () => {
   const todaysChallenge = getRandomChallenge();
 
   return (
-  <div className={css.root}>
+    <div className={css.root}>
+      <div className={css.backBtnWrap}>
+        <button
+          className={css.backBtn}
+          onClick={() => window.location.href = '/'}
+        >
+          Tillbaka
+        </button>
+      </div>
       {/* Rubrik och förklaring */}
       <div className={css.center}>
         <h1 className={css.heading}>FBC Gamification</h1>

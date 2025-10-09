@@ -30,6 +30,8 @@ interface Analysis {
 
 const Tactics: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'taktiker'|'ovningar'|'analyser'>('taktiker');
+  const [search, setSearch] = useState("");
+  const [modal, setModal] = useState<{type: 'tactic'|'exercise'|'analysis', item: any}|null>(null);
 
   // Riktig data från API
   const [tactics, setTactics] = useState<Tactic[]>([]);
@@ -51,6 +53,14 @@ const Tactics: React.FC = () => {
 
   return (
     <div className="tacticsRoot">
+      <div className="backBtnWrap">
+        <button
+          className="backBtn"
+          onClick={() => window.location.href = '/'}
+        >
+          Tillbaka
+        </button>
+      </div>
       <div className="tacticsHeaderGradient" />
       <header className="tacticsHeader">
         Taktik & Övningar
@@ -62,27 +72,44 @@ const Tactics: React.FC = () => {
         <button
           onClick={() => setActiveTab('taktiker')}
           className={`tacticsTabButton${activeTab==='taktiker' ? '' : ' tacticsTabButtonInactive'}`}
-        >Taktiker</button>
+        >🧠 Taktiker</button>
         <button
           onClick={() => setActiveTab('ovningar')}
           className={`tacticsTabButton${activeTab==='ovningar' ? '' : ' tacticsTabButtonInactive'}`}
-        >Övningar</button>
+        >🏃‍♂️ Övningar</button>
         <button
           onClick={() => setActiveTab('analyser')}
           className={`tacticsTabButton${activeTab==='analyser' ? '' : ' tacticsTabButtonInactive'}`}
-        >Analyser</button>
+        >📊 Analyser</button>
+      </div>
+      <div className="tacticsSearchRow">
+        <input
+          className="tacticsSearchInput"
+          type="text"
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          placeholder="Sök titel, tagg eller beskrivning..."
+        />
       </div>
       <section className="tacticsSection">
         {activeTab === 'taktiker' && (
           <div className="tacticsList">
             {tactics.length === 0 ? (
-              <div className="tacticsEmpty">Inga taktiker ännu.</div>
+              <div className="tacticsEmpty">
+                <span role="img" aria-label="empty">🧠</span> Inga taktiker ännu.
+              </div>
             ) : (
-              tactics.map((t) => (
-                <div key={t.id} className="tacticsCard">
-                  <div className="tacticsCardTitle">{t.title}</div>
+              tactics.filter(t =>
+                t.title.toLowerCase().includes(search.toLowerCase()) ||
+                t.description.toLowerCase().includes(search.toLowerCase()) ||
+                (t.tags && t.tags.join(" ").toLowerCase().includes(search.toLowerCase()))
+              ).map((t) => (
+                <div key={t.id} className="tacticsCard" tabIndex={0} role="button" onClick={() => setModal({type: 'tactic', item: t})}>
+                  <div className="tacticsCardTitle">🧠 {t.title}</div>
                   <div className="tacticsCardDesc">{t.description}</div>
-                  <div className="tacticsCardMeta">Senast uppdaterad: {t.updated}</div>
+                  {t.tags && <div className="tacticsCardTags">{t.tags.map((tag, i) => <span key={i} className="tacticsTag">#{tag}</span>)}</div>}
+                  <div className="tacticsCardMeta">Senast uppdaterad: {t.updated || "-"}</div>
+                  <div className="tacticsCardMeta tacticsCardLeader">Skapad av: Ledare</div>
                 </div>
               ))
             )}
@@ -91,13 +118,21 @@ const Tactics: React.FC = () => {
         {activeTab === 'ovningar' && (
           <div className="tacticsList">
             {exercises.length === 0 ? (
-              <div className="tacticsEmpty">Inga övningar ännu.</div>
+              <div className="tacticsEmpty">
+                <span role="img" aria-label="empty">🏃‍♂️</span> Inga övningar ännu.
+              </div>
             ) : (
-              exercises.map((e) => (
-                <div key={e.id} className="tacticsCard">
-                  <div className="tacticsCardTitle">{e.title}</div>
+              exercises.filter(e =>
+                e.title.toLowerCase().includes(search.toLowerCase()) ||
+                e.description.toLowerCase().includes(search.toLowerCase()) ||
+                (e.tags && e.tags.join(" ").toLowerCase().includes(search.toLowerCase()))
+              ).map((e) => (
+                <div key={e.id} className="tacticsCard" tabIndex={0} role="button" onClick={() => setModal({type: 'exercise', item: e})}>
+                  <div className="tacticsCardTitle">🏃‍♂️ {e.title}</div>
                   <div className="tacticsCardDesc">{e.description}</div>
-                  <div className="tacticsCardMeta">Senast uppdaterad: {e.updated}</div>
+                  {e.tags && <div className="tacticsCardTags">{e.tags.map((tag, i) => <span key={i} className="tacticsTag">#{tag}</span>)}</div>}
+                  <div className="tacticsCardMeta">Senast uppdaterad: {e.updated || "-"}</div>
+                  <div className="tacticsCardMeta tacticsCardLeader">Skapad av: Ledare</div>
                   {e.image && <img src={e.image} alt={e.title} className="tacticsCardImage" />}
                 </div>
               ))
@@ -107,13 +142,19 @@ const Tactics: React.FC = () => {
         {activeTab === 'analyser' && (
           <div className="tacticsList">
             {analyses.length === 0 ? (
-              <div className="tacticsEmpty">Inga analyser ännu.</div>
+              <div className="tacticsEmpty">
+                <span role="img" aria-label="empty">📊</span> Inga analyser ännu.
+              </div>
             ) : (
-              analyses.map((a) => (
-                <div key={a.id} className="tacticsCard">
-                  <div className="tacticsCardTitle">{a.match}</div>
+              analyses.filter(a =>
+                a.match.toLowerCase().includes(search.toLowerCase()) ||
+                a.summary.toLowerCase().includes(search.toLowerCase())
+              ).map((a) => (
+                <div key={a.id} className="tacticsCard" tabIndex={0} role="button" onClick={() => setModal({type: 'analysis', item: a})}>
+                  <div className="tacticsCardTitle">📊 {a.match}</div>
                   <div className="tacticsCardDesc">{a.summary}</div>
                   <div className="tacticsCardMeta">Datum: {a.date}</div>
+                  <div className="tacticsCardMeta tacticsCardLeader">Skapad av: Ledare</div>
                   <div className="tacticsCardMeta tacticsCardMetaKeySituation">
                     <div className="tacticsKeyTitle">Nyckelsituationer:</div>
                     <ul className="tacticsKeyList">
@@ -126,6 +167,47 @@ const Tactics: React.FC = () => {
           </div>
         )}
       </section>
+      {/* Modal for detail view */}
+      {modal && (
+        <div className="tacticsModalOverlay" onClick={() => setModal(null)}>
+          <div className="tacticsModal" onClick={e => e.stopPropagation()}>
+            <button className="tacticsModalClose" onClick={() => setModal(null)} aria-label="Stäng">×</button>
+            {modal.type === 'tactic' && (
+              <>
+                <h2 className="tacticsModalTitle">🧠 {modal.item.title}</h2>
+                <div className="tacticsModalDesc">{modal.item.description}</div>
+                {modal.item.tags && <div className="tacticsCardTags">{modal.item.tags.map((tag: string, i: number) => <span key={i} className="tacticsTag">#{tag}</span>)}</div>}
+                <div className="tacticsCardMeta">Senast uppdaterad: {modal.item.updated || "-"}</div>
+                <div className="tacticsCardMeta tacticsCardLeader">Skapad av: Ledare</div>
+              </>
+            )}
+            {modal.type === 'exercise' && (
+              <>
+                <h2 className="tacticsModalTitle">🏃‍♂️ {modal.item.title}</h2>
+                <div className="tacticsModalDesc">{modal.item.description}</div>
+                {modal.item.tags && <div className="tacticsCardTags">{modal.item.tags.map((tag: string, i: number) => <span key={i} className="tacticsTag">#{tag}</span>)}</div>}
+                <div className="tacticsCardMeta">Senast uppdaterad: {modal.item.updated || "-"}</div>
+                <div className="tacticsCardMeta tacticsCardLeader">Skapad av: Ledare</div>
+                {modal.item.image && <img src={modal.item.image} alt={modal.item.title} className="tacticsModalImage" />}
+              </>
+            )}
+            {modal.type === 'analysis' && (
+              <>
+                <h2 className="tacticsModalTitle">📊 {modal.item.match}</h2>
+                <div className="tacticsModalDesc">{modal.item.summary}</div>
+                <div className="tacticsCardMeta">Datum: {modal.item.date}</div>
+                <div className="tacticsCardMeta tacticsCardLeader">Skapad av: Ledare</div>
+                <div className="tacticsCardMeta tacticsCardMetaKeySituation">
+                  <div className="tacticsKeyTitle">Nyckelsituationer:</div>
+                  <ul className="tacticsKeyList">
+                    {modal.item.keyMoments?.map((m: string, idx: number) => <li key={idx}>{m}</li>)}
+                  </ul>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      )}
       <footer className="tacticsFooter">
         <div className="tacticsFooterText">
           &copy; {new Date().getFullYear()} FBC - Alla rättigheter förbehållna.
