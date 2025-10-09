@@ -69,6 +69,7 @@ const Ledarportal: React.FC = () => {
     }
   }, [isDark, styles.gradients.body, styles.textPrimary, styles.primaryGreen]);
   const [absences, setAbsences] = useState<Absence[]>([]);
+  const [showHistory, setShowHistory] = useState(false);
   const [pendingUsers, setPendingUsers] = useState<PendingUser[]>([]);
   const [loadingPending, setLoadingPending] = useState(true);
   const [errorPending, setErrorPending] = useState<string | null>(null);
@@ -131,11 +132,12 @@ const Ledarportal: React.FC = () => {
         <div className={stylesModule.ledarportalCardsWrapper}>
           <div className={stylesModule.cardAbsence}>
             <div className={stylesModule.cardTitleAbsence}>Frånvaroanmälningar</div>
+            <button className={`${stylesModule.cardCheckInOutEditBtn} ${stylesModule.cardAbsenceHistoryBtn}`} onClick={() => setShowHistory(true)}>Historik</button>
             {absences.length === 0 ? (
               <div className={stylesModule.cardAbsenceEmpty}>Inga frånvaroanmälningar ännu.</div>
             ) : (
               <div className={stylesModule.cardAbsenceList}>
-                {absences.map((a, idx) => (
+                {absences.slice(0, 5).map((a, idx) => (
                   <div key={idx} className={stylesModule.cardAbsenceItem}>
                     <div className={stylesModule.cardAbsenceUser}>{a.userName} ({a.reason})</div>
                     <div className={stylesModule.cardAbsenceActivity}>Aktivitet: {a.activityTitle}</div>
@@ -143,6 +145,38 @@ const Ledarportal: React.FC = () => {
                     <div className={stylesModule.cardAbsenceDate}>Anmäld: {new Date(a.date).toLocaleString('sv-SE')}</div>
                   </div>
                 ))}
+                {absences.length > 5 && <div className={stylesModule.cardAbsenceComment}>Visa alla i historik...</div>}
+              </div>
+            )}
+            {/* Historik-modal */}
+            {showHistory && (
+              <div className={stylesModule.activityCardEditModal}>
+                <div className={`${stylesModule.activityCardEditModalContent} ${stylesModule.historyModalContent}`}>
+                  <div className={stylesModule.activityCardEditModalTitle}>Historik – Frånvaro per aktivitet</div>
+                  <button className={stylesModule.activityCardEditModalBtnCancel} onClick={() => setShowHistory(false)}>Stäng</button>
+                  {/* Gruppera frånvaro per aktivitet */}
+                  {Object.entries(
+                    absences.reduce((acc, a) => {
+                      if (!acc[a.activityTitle]) acc[a.activityTitle] = [];
+                      (acc[a.activityTitle] as Absence[]).push(a);
+                      return acc;
+                    }, {} as Record<string, Absence[]>)
+                  ).map(([activity, items]) => {
+                    const arr = Array.isArray(items) ? items : [];
+                    return (
+                      <div key={activity} className={stylesModule.historyActivityGroup}>
+                        <div className={stylesModule.historyActivityTitle}>{activity}</div>
+                        {arr.map((a, idx) => (
+                          <div key={idx} className={stylesModule.historyAbsenceItem}>
+                            <div className={stylesModule.historyAbsenceUser}>{a.userName} ({a.reason})</div>
+                            {a.comment && <div className={stylesModule.historyAbsenceComment}>{a.comment}</div>}
+                            <div className={stylesModule.historyAbsenceDate}>Anmäld: {new Date(a.date).toLocaleString('sv-SE')}</div>
+                          </div>
+                        ))}
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             )}
           </div>
