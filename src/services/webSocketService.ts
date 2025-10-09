@@ -290,7 +290,7 @@ class WebSocketService {
 
 // Create default WebSocket service instance
 export const wsService = new WebSocketService({
-  url: process.env.REACT_APP_WS_URL || 'ws://localhost:3001/ws'
+  url: process.env.REACT_APP_WS_URL || 'wss://fbc-backend-chlg.onrender.com/ws'
 });
 
 // Convenience functions for common operations

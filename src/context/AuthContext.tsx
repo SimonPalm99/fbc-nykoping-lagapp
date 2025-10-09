@@ -45,7 +45,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const toast = useToast();
 
-  // Ta bort mock/demo-användare. Använd tom array eller hämta från backend i produktion.
+  // Använd endast riktig data från backend
   const [users, setUsers] = useState<User[]>([]);
 
   // Vid mount: hämta aktuell användare från backend med token/cookie och försök förnya sessionen om nödvändigt

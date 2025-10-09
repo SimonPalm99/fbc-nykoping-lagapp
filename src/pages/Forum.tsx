@@ -1,54 +1,21 @@
 import React, { useState } from 'react';
 import styles from './Forum.module.css';
 import ForumPostCard, { ForumPost } from '../components/ForumPostCard';
-import { socketService } from '../services/socketService';
+import { forumAPI } from '../services/apiService';
 import { useNavigate } from 'react-router-dom';
 
 const Forum: React.FC = () => {
 	const navigate = useNavigate();
 
-	// Live-uppdatering: anslut till socket vid mount
+	// Hämta inlägg från backend vid mount
+	const [posts, setPosts] = useState<ForumPost[]>([]);
 	React.useEffect(() => {
-		socketService.connect();
-		socketService.joinRoom('forum');
-		socketService.socket?.on('newPost', (newPost: ForumPost) => {
-			setPosts(prev => [newPost, ...prev]);
+		forumAPI.getPosts().then((res: any) => {
+			if (res.success && Array.isArray(res.data?.posts)) {
+				setPosts(res.data.posts);
+			}
 		});
-		socketService.socket?.on('newComment', (data: { postId: string; comment: any }) => {
-			setPosts(prev => prev.map(post =>
-				post.id === data.postId
-					? { ...post, comments: (post.comments ?? 0) + 1 } // eller uppdatera commentList om det finns
-					: post
-			));
-		});
-		return () => {
-			socketService.disconnect();
-		};
 	}, []);
-	const [posts, setPosts] = useState<ForumPost[]>([
-		{
-			id: '1',
-			author: 'Simon Palm',
-			avatar: '/default-avatar.png',
-			role: 'Tränare',
-			date: '9 okt',
-			time: '10:15',
-			content: 'Välkommen till forumet! Här kan du diskutera allt kring laget.',
-			likes: 12,
-			comments: 3,
-		},
-		{
-			id: '2',
-			author: 'Anna Svensson',
-			avatar: '/default-avatar.png',
-			role: 'Spelare',
-			date: '8 okt',
-			time: '18:42',
-			content: 'Bra träning idag! Någon som vill ses och köra extra pass imorgon?',
-			likes: 7,
-			comments: 2,
-		},
-	]);
 	const [showForm, setShowForm] = useState(false);
 	const [newPostText, setNewPostText] = useState('');
 	const [files, setFiles] = useState<File[]>([]);
@@ -82,28 +49,21 @@ const Forum: React.FC = () => {
 	const handleCreatePost = (e: React.FormEvent) => {
 		e.preventDefault();
 		if (!newPostText.trim() && !showPoll) return;
-		const now = new Date();
-		const post: ForumPost = {
-			id: Math.random().toString(36).slice(2),
-			author: 'Ditt Namn', // Byt ut mot inloggad användare
-			avatar: '/default-avatar.png',
-			role: 'Spelare',
-			date: now.toLocaleDateString('sv-SE', { day: 'numeric', month: 'short' }),
-			time: now.toLocaleTimeString('sv-SE', { hour: '2-digit', minute: '2-digit' }),
+		// Skapa inlägg via backend
+		const postData: any = {
 			content: newPostText,
-			likes: 0,
-			comments: 0,
-			...(showPoll && pollQuestion.trim() ? {
-				poll: {
-					question: pollQuestion,
-					options: pollOptions.filter(opt => opt.trim()),
-				}
-			} : {}),
-			// You can add a files property if ForumPost supports it
+			poll: showPoll && pollQuestion.trim() ? {
+				question: pollQuestion,
+				options: pollOptions.filter(opt => opt.trim()),
+			} : undefined,
+			files,
 		};
-	setPosts([post, ...posts]);
+		forumAPI.createPost(postData).then((res: any) => {
+			if (res.success && res.data) {
+				setPosts(prev => [res.data, ...prev]);
+			}
+		});
 	// Skicka till server via socket för live-uppdatering
-	socketService.socket?.emit('newPost', post);
 		setNewPostText('');
 		setFiles([]);
 		setShowPoll(false);
@@ -219,9 +179,13 @@ const Forum: React.FC = () => {
 					</form>
 				)}
 				<div className={styles.forumFeed}>
-					{posts.map(post => (
-						<ForumPostCard key={post.id} post={post} />
-					))}
+					{posts.length === 0 ? (
+						<div>Inga inlägg ännu.</div>
+					) : (
+						posts.map(post => (
+							<ForumPostCard key={post.id} post={post} />
+						))
+					)}
 				</div>
 			</div>
 		</div>
