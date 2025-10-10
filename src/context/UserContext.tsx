@@ -24,7 +24,13 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   const refreshUser = async () => {
     try {
       // Hämta user från backend, cookie skickas automatiskt
-      const res = await fetch(`${process.env.REACT_APP_API_BASE_URL || ''}/users/me`, {
+      const apiUrl = process.env.REACT_APP_API_URL ? process.env.REACT_APP_API_URL.replace(/\/api$/, '') : '';
+      if (!apiUrl) {
+        console.error('UserContext: REACT_APP_API_URL är inte satt!');
+        setUser(null);
+        return;
+      }
+      const res = await fetch(`${apiUrl}/users/me`, {
         method: 'GET',
         credentials: 'include',
         headers: {
