@@ -7,6 +7,9 @@ import styles from './Profile.module.css';
 
 const Profile = () => {
   const { user, updateUser } = useUser();
+  React.useEffect(() => {
+    console.log('Profile: user från context', user);
+  }, [user]);
   // State for profile editing
   const [editProfile, setEditProfile] = useState<any>(user ? { ...user } : {});
   // Profilbilds-uppladdning
@@ -57,7 +60,8 @@ const Profile = () => {
 
   // Snyggt profilkort
   const ProfileCard = (props: { user: any }) => {
-    const { user } = props;
+  const { user } = props;
+  console.log('ProfileCard: props.user', user);
     return (
       <div className={styles.profileCard}>
         <div className={styles.profileImageWrapper}>
@@ -111,6 +115,7 @@ const Profile = () => {
 
   // Innehåll för varje flik
   const renderTabContent = (user: any) => {
+  console.log('Profile: renderTabContent user', user);
   switch (activeTab) {
       case 'training':
         // Statistik och träningsloggar från backend

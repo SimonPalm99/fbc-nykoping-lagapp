@@ -32,16 +32,20 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         }
       });
       const result = await res.json();
+      console.log('UserContext: /users/me response', result);
       if (result.success && result.data) {
         const userObj = {
           ...result.data,
           id: result.data._id || result.data.id // alltid mappa till id
         };
+        console.log('UserContext: userObj mapped', userObj);
         setUser(userObj);
       } else {
+        console.warn('UserContext: Ingen användare hittades eller success=false', result);
         setUser(null);
       }
     } catch (err) {
+      console.error('UserContext: Error vid hämtning av user', err);
       setUser(null);
     }
   };
