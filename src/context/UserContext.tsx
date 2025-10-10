@@ -24,7 +24,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   const refreshUser = async () => {
     try {
       // Hämta user från backend, cookie skickas automatiskt
-      const apiUrl = process.env.REACT_APP_API_URL ? process.env.REACT_APP_API_URL.replace(/\/api$/, '') : '';
+      const apiUrl = process.env.REACT_APP_API_URL || '';
       if (!apiUrl) {
         console.error('UserContext: REACT_APP_API_URL är inte satt!');
         setUser(null);
